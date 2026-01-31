@@ -3,6 +3,10 @@ Analytics Routes - Portfolio analytics and insights
 """
 from fastapi import APIRouter
 from typing import List, Dict
+import logging
+
+# Setup logger
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -10,6 +14,7 @@ router = APIRouter()
 @router.post("/allocation")
 async def get_allocation(holdings: List[Dict]):
     """Calculate allocation by category, AMC, and style"""
+    logger.info(f"Calculating allocation for {len(holdings)} holdings")
     
     category_totals = {}
     amc_totals = {}

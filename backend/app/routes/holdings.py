@@ -8,6 +8,10 @@ from typing import List, Dict, Optional
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.fund_holdings import FundMaster, FundHolding, FundSectorAllocation
+import logging
+
+# Setup logger
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/holdings", tags=["Holdings"])
 
@@ -28,7 +32,10 @@ def normalize_fund_name(name: str) -> str:
 @router.get("/")
 async def list_funds(db: Session = Depends(get_db)):
     """Get list of all available funds from database"""
+    logger.info("Fetching list of all available funds from database")
+    
     funds = db.query(FundMaster).all()
+    logger.debug(f"Found {len(funds)} funds in database")
     
     fund_list = []
     for fund in funds:
@@ -40,6 +47,8 @@ async def list_funds(db: Session = Depends(get_db)):
             "category": fund.category,
             "holdings_count": holdings_count
         })
+    
+    logger.info(f"Returning {len(fund_list)} funds with holdings data")
     
     return {
         "total": len(fund_list),

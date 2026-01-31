@@ -3,6 +3,16 @@
  * Lightweight, no dependencies, works everywhere
  */
 
+// Ensure toast is defined immediately as a stub (will be replaced)
+window.toast = window.toast || {
+    success: (msg) => console.log('[Toast]', msg),
+    error: (msg) => console.error('[Toast]', msg),
+    warning: (msg) => console.warn('[Toast]', msg),
+    info: (msg) => console.log('[Toast]', msg),
+    loading: (msg) => { console.log('[Toast Loading]', msg); return null; },
+    hideLoading: () => {}
+};
+
 class ToastManager {
     constructor() {
         this.container = null;

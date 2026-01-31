@@ -1,23 +1,27 @@
 """
 MFHelper - FastAPI Application Entry Point
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, RedirectResponse
 import os
 import logging
+import time
 
 from app.config import settings
 from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings
 from app.database import engine, Base
 
-# Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+# Setup centralized logging
+from app.utils.logger import setup_logging, log_request
+setup_logging(
+    log_level=logging.DEBUG if settings.DEBUG else logging.INFO,
+    enable_file_logging=True
 )
+
 logger = logging.getLogger(__name__)
+logger.info(f"Starting {settings.APP_NAME} - Debug Mode: {settings.DEBUG}")
 
 # Create database tables
 # Base.metadata.create_all(bind=engine)
@@ -29,6 +33,33 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc"
 )
+
+# Request logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Log all HTTP requests with timing"""
+    start_time = time.time()
+    
+    # Log incoming request
+    logger.info(f"→ {request.method} {request.url.path}")
+    
+    try:
+        response = await call_next(request)
+        duration_ms = (time.time() - start_time) * 1000
+        
+        # Log response
+        log_request(
+            method=request.method,
+            path=request.url.path,
+            status_code=response.status_code,
+            duration_ms=duration_ms
+        )
+        
+        return response
+    except Exception as e:
+        duration_ms = (time.time() - start_time) * 1000
+        logger.error(f"✗ {request.method} {request.url.path} - Failed after {duration_ms:.2f}ms: {str(e)}")
+        raise
 
 # CORS middleware for frontend
 app.add_middleware(

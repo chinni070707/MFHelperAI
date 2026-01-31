@@ -1,5 +1,5 @@
 // MFHelper Service Worker - Enables offline support and PWA features
-const CACHE_NAME = 'mfhelper-v1';
+const CACHE_NAME = 'mfhelper-v2';
 const OFFLINE_URL = '/offline.html';
 
 // Assets to cache on install

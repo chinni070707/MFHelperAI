@@ -3,6 +3,10 @@ Rebalancing Routes - Portfolio rebalancing calculator
 """
 from fastapi import APIRouter
 from typing import List, Dict
+import logging
+
+# Setup logger
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -25,6 +29,8 @@ async def calculate_rebalance(
         target_small: Target % for small cap
         mode: "fresh" = add fresh money, "rebalance" = sell and buy
     """
+    logger.info(f"Calculating rebalance for {len(holdings)} holdings")
+    logger.debug(f"Targets: Large={target_large}%, Mid={target_mid}%, Small={target_small}%, Mode={mode}")
     
     # Categorize holdings into market cap buckets
     large_cap_categories = ['Large Cap', 'Flexi Cap', 'Multi Cap', 'Large & Mid', 'ELSS', 'Focused', 'Contra']

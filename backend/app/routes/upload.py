@@ -9,6 +9,10 @@ import io
 import re
 from typing import Optional
 from datetime import datetime
+import logging
+
+# Setup logger
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -22,18 +26,24 @@ def find_header_row(df: pd.DataFrame) -> int:
         row_values = df.iloc[idx].astype(str).str.lower().str.strip()
         for keyword in header_keywords:
             if any(keyword in str(val) for val in row_values):
+                logger.debug(f"Header row found at index {idx}")
                 return idx
+    logger.warning("No clear header row found, using first row as default")
     return 0  # Default to first row
 
 
 def parse_excel(file_content: bytes, filename: str) -> dict:
     """Parse Excel file and extract portfolio data"""
+    logger.info(f"Starting Excel parsing for file: {filename} (size: {len(file_content)} bytes)")
+    
     try:
         # Read Excel file without headers first to detect structure
         if filename.endswith('.csv'):
             df_raw = pd.read_csv(io.BytesIO(file_content), header=None)
+            logger.debug(f"CSV file loaded: {df_raw.shape[0]} rows, {df_raw.shape[1]} columns")
         else:
             df_raw = pd.read_excel(io.BytesIO(file_content), header=None)
+            logger.debug(f"Excel file loaded: {df_raw.shape[0]} rows, {df_raw.shape[1]} columns")
         
         # Find the header row
         header_row = find_header_row(df_raw)
@@ -193,6 +203,9 @@ def parse_excel(file_content: bytes, filename: str) -> dict:
         total_current = sum(float(h.get('current_value', 0)) for h in clean_holdings)
         total_gain = total_current - total_invested
         
+        logger.info(f"Excel parsing successful: {len(clean_holdings)} holdings, Total: ₹{total_current:,.0f}")
+        logger.debug(f"Portfolio summary - Invested: ₹{total_invested:,.0f}, Gain: ₹{total_gain:,.0f}")
+        
         return {
             "success": True,
             "source": "excel",
@@ -211,7 +224,7 @@ def parse_excel(file_content: bytes, filename: str) -> dict:
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error parsing Excel: {str(e)}")
+        logger.error(f\"Error parsing Excel file {filename}: {str(e)}\", exc_info=True)\n        raise HTTPException(status_code=400, detail=f"Error parsing Excel: {str(e)}")
 
 
 def detect_amc_from_name(fund_name: str) -> str:
@@ -319,21 +332,27 @@ def detect_style_from_name(fund_name: str) -> str:
 # ============ CAS PDF Parser ============
 def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
     """Parse CAMS/KFintech CAS PDF and extract portfolio data"""
+    logger.info(f"Starting CAS PDF parsing (size: {len(file_content)} bytes)")
+    
     try:
         import fitz  # PyMuPDF
         
         # Open PDF
         doc = fitz.open(stream=file_content, filetype="pdf")
+        logger.debug(f"PDF opened: {doc.page_count} pages, encrypted: {doc.is_encrypted}")
         
         # If password protected, try to decrypt
         if doc.is_encrypted:
             if not password:
+                logger.warning("CAS PDF is encrypted but no password provided")
                 raise HTTPException(
                     status_code=400, 
                     detail="CAS PDF is password protected. Please provide your PAN as password."
                 )
             if not doc.authenticate(password):
+                logger.error(f"Failed to authenticate PDF with provided password")
                 raise HTTPException(status_code=400, detail="Invalid password. CAS password is usually your PAN.")
+            logger.info("PDF successfully authenticated")
         
         # Extract text from all pages
         full_text = ""
@@ -341,6 +360,7 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
             full_text += page.get_text()
         
         doc.close()
+        logger.debug(f"Extracted {len(full_text)} characters from PDF")
         
         # Parse the text to extract holdings
         holdings = extract_holdings_from_cas_text(full_text)

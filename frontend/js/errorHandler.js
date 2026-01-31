@@ -223,28 +223,41 @@ window.safeAsync = safeAsync;
  */
 class LoadingManager {
     constructor() {
-        this.activeLoaders = new Set();
+        this.activeLoaders = new Map(); // Fixed: was Set, should be Map
     }
 
     show(message = 'Loading...', id = 'default') {
-        const loadingToast = safeToast.loading(message);
-        this.activeLoaders.set(id, loadingToast);
-        return id;
+        try {
+            const loadingToast = safeToast.loading(message);
+            this.activeLoaders.set(id, loadingToast);
+            return id;
+        } catch (e) {
+            console.error('[LoadingManager] Error showing loader:', e);
+            return id;
+        }
     }
 
     hide(id = 'default') {
-        const loadingToast = this.activeLoaders.get(id);
-        if (loadingToast) {
-            safeToast.hideLoading(loadingToast);
-            this.activeLoaders.delete(id);
+        try {
+            const loadingToast = this.activeLoaders.get(id);
+            if (loadingToast) {
+                safeToast.hideLoading(loadingToast);
+                this.activeLoaders.delete(id);
+            }
+        } catch (e) {
+            console.error('[LoadingManager] Error hiding loader:', e);
         }
     }
 
     hideAll() {
-        this.activeLoaders.forEach((loadingToast) => {
-            safeToast.hideLoading(loadingToast);
-        });
-        this.activeLoaders.clear();
+        try {
+            this.activeLoaders.forEach((loadingToast) => {
+                safeToast.hideLoading(loadingToast);
+            });
+            this.activeLoaders.clear();
+        } catch (e) {
+            console.error('[LoadingManager] Error hiding all loaders:', e);
+        }
     }
 }
 

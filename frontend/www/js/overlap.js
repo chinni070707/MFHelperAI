@@ -25,7 +25,12 @@ class OverlapAnalyzer {
             this.overlapData = await response.json();
             loading.hide(loadingId);
             
-            toast.success('Overlap analysis complete!');
+            // Use safeToast if available, otherwise console
+            if (typeof safeToast !== 'undefined') {
+                safeToast.success('Overlap analysis complete!');
+            } else if (typeof toast !== 'undefined') {
+                toast.success('Overlap analysis complete!');
+            }
             this.displayResults();
             
         } catch (error) {
