@@ -2043,6 +2043,22 @@
         function showShareModal() {
             haptic.medium();
             
+            if (!portfolioData || !portfolioData.holdings || portfolioData.holdings.length === 0) {
+                toast.error('No portfolio data to share');
+                return;
+            }
+            
+            const summary = calculateSummary(portfolioData);
+            const categoryData = getCategoryBreakdown(portfolioData);
+            const now = new Date();
+            const timestamp = now.toLocaleString('en-IN', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
             const overlay = document.createElement('div');
             overlay.className = 'context-menu-overlay';
             overlay.onclick = hideShareModal;
@@ -2052,14 +2068,122 @@
             modal.className = 'share-modal';
             modal.id = 'shareModal';
             
+            // Generate category breakdown HTML
+            let categoryHTML = '';
+            for (const [category, data] of Object.entries(categoryData)) {
+                if (data.percentage > 0) {
+                    categoryHTML += `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 12px; color: #666;">${category}</span>
+                            <span style="font-size: 12px; font-weight: 600; color: #1a1a1a;">${data.percentage.toFixed(1)}%</span>
+                        </div>
+                    `;
+                }
+            }
+            
             modal.innerHTML = `
-                <h2 style="margin-bottom: var(--space-4);">Share Portfolio</h2>
+                <h2 style="margin-bottom: var(--space-4);">📊 Share Portfolio Report</h2>
                 
-                <div class="share-preview" id="sharePreview">
-                    <div style="text-align: center; padding: var(--space-4);">
-                        <p style="font-size: 13px; color: var(--text-secondary);">Total Portfolio</p>
-                        <p style="font-size: 28px; font-weight: 700;">₹${portfolioData ? formatNumber(calculateSummary(portfolioData).total_value) : '0'}</p>
-                        <p style="color: var(--accent-green); font-size: 14px;">MFHelper Portfolio Tracker</p>
+                <div class="share-preview" id="sharePreview" style="
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    border-radius: 16px;
+                    padding: 24px;
+                    color: white;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+                    min-height: 400px;
+                    position: relative;
+                ">
+                    <!-- Header -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 4px;">MFHelper</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Portfolio Report Card</div>
+                    </div>
+                    
+                    <!-- Main Value -->
+                    <div style="
+                        background: rgba(255,255,255,0.15);
+                        backdrop-filter: blur(10px);
+                        border-radius: 12px;
+                        padding: 20px;
+                        text-align: center;
+                        margin-bottom: 16px;
+                        border: 1px solid rgba(255,255,255,0.2);
+                    ">
+                        <div style="font-size: 13px; opacity: 0.9; margin-bottom: 8px;">Total Portfolio Value</div>
+                        <div style="font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 8px;">
+                            ₹${formatNumber(summary.total_value)}
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 16px; font-size: 13px;">
+                            <div>
+                                <span style="opacity: 0.8;">Returns:</span>
+                                <span style="font-weight: 600; color: ${summary.total_returns >= 0 ? '#4ade80' : '#f87171'};">
+                                    ${summary.total_returns >= 0 ? '+' : ''}₹${formatNumber(summary.total_returns)}
+                                </span>
+                            </div>
+                            <div>
+                                <span style="opacity: 0.8;">Gain:</span>
+                                <span style="font-weight: 600; color: ${summary.percentage_returns >= 0 ? '#4ade80' : '#f87171'};">
+                                    ${summary.percentage_returns >= 0 ? '+' : ''}${summary.percentage_returns.toFixed(2)}%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Grid -->
+                    <div style="
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 12px;
+                        margin-bottom: 16px;
+                    ">
+                        <div style="
+                            background: rgba(255,255,255,0.1);
+                            border-radius: 10px;
+                            padding: 12px;
+                            text-align: center;
+                            border: 1px solid rgba(255,255,255,0.15);
+                        ">
+                            <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px;">Invested</div>
+                            <div style="font-size: 16px; font-weight: 700;">₹${formatNumber(summary.total_invested)}</div>
+                        </div>
+                        <div style="
+                            background: rgba(255,255,255,0.1);
+                            border-radius: 10px;
+                            padding: 12px;
+                            text-align: center;
+                            border: 1px solid rgba(255,255,255,0.15);
+                        ">
+                            <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px;">Funds</div>
+                            <div style="font-size: 16px; font-weight: 700;">${portfolioData.holdings.length}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Breakdown -->
+                    <div style="
+                        background: rgba(255,255,255,0.1);
+                        border-radius: 10px;
+                        padding: 12px;
+                        margin-bottom: 16px;
+                        border: 1px solid rgba(255,255,255,0.15);
+                    ">
+                        <div style="font-size: 11px; font-weight: 600; margin-bottom: 8px; opacity: 0.9;">Asset Allocation</div>
+                        ${categoryHTML || '<div style="font-size: 11px; opacity: 0.7;">No allocation data</div>'}
+                    </div>
+                    
+                    <!-- Footer -->
+                    <div style="
+                        position: absolute;
+                        bottom: 16px;
+                        left: 24px;
+                        right: 24px;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 10px;
+                        opacity: 0.7;
+                    ">
+                        <div>Generated: ${timestamp}</div>
+                        <div>mfhelper.app</div>
                     </div>
                 </div>
                 
@@ -2100,48 +2224,87 @@
         
         async function downloadAsImage() {
             if (typeof html2canvas === 'undefined') {
-                toast.error('Image export not available');
+                toast.error('Image export not available. Please check your internet connection.');
                 return;
             }
             
-            toast.info('Generating image...');
+            toast.info('Generating report card image...');
+            hideShareModal();  // Close modal first for better UX
             
             try {
                 const preview = document.getElementById('sharePreview');
+                if (!preview) {
+                    toast.error('Report card not found');
+                    return;
+                }
+                
+                // Generate canvas with high quality settings
                 const canvas = await html2canvas(preview, {
-                    backgroundColor: '#ffffff',
-                    scale: 2
+                    backgroundColor: null,  // Transparent background
+                    scale: 3,  // High resolution for social media (3x)
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    width: 1080,  // Instagram/Twitter optimized width
+                    height: 1350,  // 4:5 aspect ratio (best for social)
+                    windowWidth: 1080,
+                    windowHeight: 1350
                 });
                 
+                // Create download link
                 const link = document.createElement('a');
-                link.download = 'mfhelper-portfolio.png';
-                link.href = canvas.toDataURL('image/png');
+                const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
+                const date = new Date().toISOString().split('T')[0];
+                link.download = `mfhelper-portfolio-${date}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);  // Maximum quality
                 link.click();
                 
                 haptic.success();
-                toast.success('Image saved!');
-            } catch (e) {
-                toast.error('Failed to generate image');
+                toast.success('✅ Report card saved! Share it on social media 📱');
+                
+                // Track download event (for future analytics)
+                console.log('Report card downloaded:', {
+                    value: summary.total_value,
+                    funds: portfolioData?.holdings?.length || 0,
+                    timestamp: new Date().toISOString()
+                });
+                
+            } catch (error) {
+                console.error('Image generation failed:', error);
+                toast.error('Failed to generate image. Please try again.');
             }
         }
         
         function shareViaWhatsApp() {
             const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
-            const text = `My portfolio is worth ₹${formatNumber(summary.total_value)}! Track yours at MFHelper 📊`;
+            const returns = summary.total_returns >= 0 ? `+${summary.percentage_returns.toFixed(2)}%` : `${summary.percentage_returns.toFixed(2)}%`;
+            const emoji = summary.total_returns >= 0 ? '📈' : '📊';
+            
+            const text = `${emoji} My mutual fund portfolio is worth ₹${formatNumber(summary.total_value)}! ${returns} returns on ₹${formatNumber(summary.total_invested)} invested.\n\nTrack your portfolio for FREE at MFHelper.app 🚀`;
+            
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+            haptic.success();
             hideShareModal();
+            toast.success('Opening WhatsApp...');
         }
         
         function shareViaTwitter() {
             const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
-            const text = `My mutual fund portfolio is worth ₹${formatNumber(summary.total_value)}! Tracking with #MFHelper 📊`;
-            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            const returns = summary.total_returns >= 0 ? `+${summary.percentage_returns.toFixed(2)}%` : `${summary.percentage_returns.toFixed(2)}%`;
+            const emoji = summary.total_returns >= 0 ? '🚀' : '📊';
+            
+            const text = `${emoji} My mutual fund portfolio: ₹${formatNumber(summary.total_value)} (${returns} returns)\n\nTracking with #MFHelper - Free portfolio tracker for Indian investors!\n\n#MutualFunds #Investing #PersonalFinance`;
+            
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=https://mfhelper.app`, '_blank');
+            haptic.success();
             hideShareModal();
+            toast.success('Opening Twitter...');
         }
         
         function copyShareLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                toast.success('Link copied!');
+            const text = window.location.origin + '/';
+            navigator.clipboard.writeText(text).then(() => {
+                toast.success('✅ Link copied to clipboard!');
                 haptic.success();
             }).catch(() => {
                 toast.error('Failed to copy link');

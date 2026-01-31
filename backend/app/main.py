@@ -10,7 +10,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas
 from app.database import engine, Base
 
 # Setup centralized logging
@@ -78,6 +78,7 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(upload.router, prefix="/api/upload", tags=["Upload"])
+app.include_router(cas.router, tags=["CAS Import"])
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["Portfolio"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(rebalance.router, prefix="/api/rebalance", tags=["Rebalancing"])
