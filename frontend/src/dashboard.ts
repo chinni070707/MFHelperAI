@@ -11,17 +11,63 @@ import type { Portfolio, Holding } from '@types/portfolio';
 export class DashboardController {
   private portfolio: Portfolio | null = null;
   private isLoading: boolean = false;
+  private currentView: string = 'home';
 
   constructor() {
     this.init();
   }
 
   private async init(): Promise<void> {
+    // Make functions globally available for onclick handlers
+    this.exposeGlobalFunctions();
+    
     // Try to load portfolio from storage or server
     await this.loadPortfolio();
     
     // Set up event listeners
     this.setupEventListeners();
+    
+    // Initialize view
+    this.switchView('home');
+  }
+
+  private exposeGlobalFunctions(): void {
+    // Expose functions that are called from HTML onclick handlers
+    (window as any).switchView = this.switchView.bind(this);
+    (window as any).uploadFile = this.handleFileSelect.bind(this);
+    (window as any).loadDemo = this.loadDemoData.bind(this);
+    (window as any).exportData = this.exportData.bind(this);
+    (window as any).clearAllData = this.clearAllData.bind(this);
+  }
+
+  public switchView(viewName: string): void {
+    // Hide all views
+    document.querySelectorAll('.view-content').forEach(view => {
+      view.classList.remove('active');
+    });
+    
+    // Show selected view
+    const targetView = document.getElementById(`${viewName}View`);
+    if (targetView) {
+      targetView.classList.add('active');
+    }
+    
+    // Update navigation
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.remove('active');
+    });
+    
+    const activeNavItem = document.querySelector(`a[href="#${viewName}"]`);
+    if (activeNavItem) {
+      activeNavItem.classList.add('active');
+    }
+    
+    this.currentView = viewName;
+    
+    // Load specific view data
+    if (viewName === 'analyze' && this.portfolio) {
+      setTimeout(() => this.renderAnalytics(), 100);
+    }
   }
 
   private setupEventListeners(): void {
@@ -31,17 +77,35 @@ export class DashboardController {
       fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
     }
 
-    // Load demo data
-    const demoBtn = document.getElementById('load-demo-btn');
-    if (demoBtn) {
-      demoBtn.addEventListener('click', () => this.loadDemoData());
+    // Search input
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => this.handleSearch(e));
     }
+  }
 
-    // Refresh button
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => this.refreshPortfolio());
+  private handleFileSelect(): void {
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
     }
+  }
+
+  private handleSearch(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const searchTerm = input.value.toLowerCase();
+    
+    if (!this.portfolio?.holdings) return;
+    
+    const filtered = searchTerm
+      ? this.portfolio.holdings.filter(h => 
+          h.fund_name.toLowerCase().includes(searchTerm) ||
+          h.amc.toLowerCase().includes(searchTerm) ||
+          h.category.toLowerCase().includes(searchTerm)
+        )
+      : this.portfolio.holdings;
+    
+    this.renderHoldingsGrid(filtered);
   }
 
   async loadPortfolio(): Promise<void> {
@@ -63,7 +127,7 @@ export class DashboardController {
       console.error('Error loading portfolio:', error);
       // Try to load from local storage
       const cachedPortfolio = storage.get<Portfolio>('portfolio');
-      if (cachedPortfolio) {
+      if (cachedPortfolio && cachedPortfolio.holdings?.length > 0) {
         this.portfolio = cachedPortfolio;
         this.renderPortfolio();
         toast.info('Loaded cached portfolio');
@@ -127,91 +191,197 @@ export class DashboardController {
     }
   }
 
-  private async refreshPortfolio(): Promise<void> {
-    await this.loadPortfolio();
-  }
-
   private renderPortfolio(): void {
     if (!this.portfolio) return;
 
     // Render summary cards
     this.renderSummary();
 
-    // Render holdings table
-    this.renderHoldingsTable();
+    // Render holdings
+    this.renderHoldingsGrid(this.portfolio.holdings);
 
-    // Render charts
-    this.renderCharts();
+    // Render charts on home view
+    this.renderHomeCharts();
 
     // Hide empty state
     this.hideEmptyState();
+    
+    // Update holdings count
+    const countBadge = document.getElementById('holdingsCount');
+    if (countBadge) {
+      countBadge.textContent = this.portfolio.holdings.length.toString();
+    }
   }
 
   private renderSummary(): void {
     if (!this.portfolio?.summary) return;
 
     const { summary } = this.portfolio;
-
-    // Update summary cards
-    this.updateElement('total-funds', summary.total_funds.toString());
-    this.updateElement('total-invested', Formatter.currency(summary.total_invested));
-    this.updateElement('total-current', Formatter.currency(summary.total_current));
-    this.updateElement('total-gain', Formatter.currency(summary.total_gain));
+    const summaryDiv = document.getElementById('portfolioSummary');
     
-    const returnElement = document.getElementById('total-return');
-    if (returnElement) {
-      const { text, className } = Formatter.returnWithClass(summary.return_pct);
-      returnElement.textContent = text;
-      returnElement.className = className;
-    }
+    if (!summaryDiv) return;
+
+    summaryDiv.innerHTML = `
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="summary-label">Total Invested</div>
+          <div class="summary-value">${Formatter.currency(summary.total_invested)}</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Current Value</div>
+          <div class="summary-value">${Formatter.currency(summary.total_current)}</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Total Gain</div>
+          <div class="summary-value ${summary.total_gain >= 0 ? 'text-success' : 'text-danger'}">
+            ${Formatter.currency(summary.total_gain)}
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Returns</div>
+          <div class="summary-value ${summary.return_pct >= 0 ? 'text-success' : 'text-danger'}">
+            ${Formatter.percentage(summary.return_pct)}
+          </div>
+        </div>
+      </div>
+    `;
   }
 
-  private renderHoldingsTable(): void {
-    const tbody = document.getElementById('holdings-tbody');
-    if (!tbody || !this.portfolio?.holdings) return;
+  private renderHoldingsGrid(holdings: Holding[]): void {
+    const grid = document.getElementById('holdingsGrid');
+    if (!grid) return;
 
-    tbody.innerHTML = this.portfolio.holdings.map((holding, index) => `
-      <tr>
-        <td>${index + 1}</td>
-        <td>
+    if (holdings.length === 0) {
+      grid.innerHTML = '<div class="text-center p-6">No holdings found</div>';
+      return;
+    }
+
+    grid.innerHTML = holdings.map(holding => `
+      <div class="holding-card">
+        <div class="holding-header">
           <div class="fund-name">${holding.fund_name}</div>
-          <div class="fund-meta">${holding.amc} • ${holding.category}</div>
-        </td>
-        <td class="text-right">${Formatter.currency(holding.invested)}</td>
-        <td class="text-right">${Formatter.currency(holding.current_value)}</td>
-        <td class="text-right">
-          <span class="${holding.current_value >= holding.invested ? 'text-success' : 'text-danger'}">
-            ${Formatter.currency(holding.current_value - holding.invested)}
-          </span>
-        </td>
-        <td class="text-right">
-          <span class="${holding.current_value >= holding.invested ? 'text-success' : 'text-danger'}">
-            ${Formatter.percentage(((holding.current_value - holding.invested) / holding.invested) * 100)}
-          </span>
-        </td>
-      </tr>
+          <div class="fund-category">${holding.category}</div>
+        </div>
+        <div class="holding-details">
+          <div class="detail-row">
+            <span>AMC:</span>
+            <span>${holding.amc}</span>
+          </div>
+          <div class="detail-row">
+            <span>Invested:</span>
+            <span>${Formatter.currency(holding.invested)}</span>
+          </div>
+          <div class="detail-row">
+            <span>Current:</span>
+            <span>${Formatter.currency(holding.current_value)}</span>
+          </div>
+          <div class="detail-row">
+            <span>Gain:</span>
+            <span class="${holding.current_value >= holding.invested ? 'text-success' : 'text-danger'}">
+              ${Formatter.currency(holding.current_value - holding.invested)}
+            </span>
+          </div>
+          <div class="detail-row">
+            <span>Return:</span>
+            <span class="${holding.current_value >= holding.invested ? 'text-success' : 'text-danger'}">
+              ${Formatter.percentage(((holding.current_value - holding.invested) / holding.invested) * 100)}
+            </span>
+          </div>
+        </div>
+      </div>
     `).join('');
   }
 
-  private async renderCharts(): Promise<void> {
+  private async renderHomeCharts(): Promise<void> {
     if (!this.portfolio?.holdings) return;
 
     try {
       // Get allocation data
       const allocation = await api.calculateAllocation(this.portfolio.holdings);
       
-      // Render category allocation pie chart
-      const categories = Object.keys(allocation.by_category);
-      const categoryValues = categories.map(cat => allocation.by_category[cat].value);
-      chartManager.createPieChart('category-chart', categories, categoryValues);
+      const allocationDiv = document.getElementById('assetAllocation');
+      if (allocationDiv) {
+        // Create container for charts
+        allocationDiv.innerHTML = `
+          <div class="card">
+            <h3>Asset Allocation</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+              <div>
+                <h4>By Category</h4>
+                <canvas id="category-chart" height="200"></canvas>
+              </div>
+              <div>
+                <h4>By AMC</h4>
+                <canvas id="amc-chart" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+        `;
 
-      // Render AMC distribution
-      const amcs = Object.keys(allocation.by_amc);
-      const amcValues = amcs.map(amc => allocation.by_amc[amc].value);
-      chartManager.createBarChart('amc-chart', amcs, amcValues, 'AMC Distribution');
+        // Wait for DOM update
+        await new Promise(resolve => setTimeout(resolve, 50));
+        
+        // Render category allocation pie chart
+        const categories = Object.keys(allocation.by_category);
+        const categoryValues = categories.map(cat => allocation.by_category[cat].value);
+        chartManager.createPieChart('category-chart', categories, categoryValues);
 
+        // Render AMC distribution
+        const amcs = Object.keys(allocation.by_amc).slice(0, 10); // Top 10
+        const amcValues = amcs.map(amc => allocation.by_amc[amc].value);
+        chartManager.createBarChart('amc-chart', amcs, amcValues);
+      }
     } catch (error) {
       console.error('Error rendering charts:', error);
+    }
+  }
+
+  private async renderAnalytics(): Promise<void> {
+    if (!this.portfolio?.holdings) return;
+
+    try {
+      const performance = await api.calculatePerformance(this.portfolio.holdings);
+      
+      // Render performance chart
+      const perfChart = document.getElementById('performanceChart');
+      if (perfChart) {
+        const fundNames = performance.map(p => p.fund_name.substring(0, 20));
+        const returns = performance.map(p => p.return_pct);
+        
+        chartManager.createBarChart('performanceChart', fundNames, returns, 'Fund Returns (%)');
+      }
+    } catch (error) {
+      console.error('Error rendering analytics:', error);
+    }
+  }
+
+  private exportData(): void {
+    if (!this.portfolio) {
+      toast.warning('No portfolio data to export');
+      return;
+    }
+    
+    const dataStr = JSON.stringify(this.portfolio, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'mfhelper-portfolio.json';
+    link.click();
+    URL.revokeObjectURL(url);
+    
+    toast.success('Portfolio exported!');
+  }
+
+  private clearAllData(): void {
+    if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+      storage.clear();
+      
+      toast.success('All data cleared');
+      
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     }
   }
 
@@ -235,13 +405,8 @@ export class DashboardController {
     this.isLoading = loading;
     const loader = document.getElementById('loader');
     if (loader) {
-      loader.style.display = loading ? 'block' : 'none';
+      loader.style.display = loading ? 'flex' : 'none';
     }
-  }
-
-  private updateElement(id: string, text: string): void {
-    const element = document.getElementById(id);
-    if (element) element.textContent = text;
   }
 }
 
