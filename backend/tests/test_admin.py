@@ -39,68 +39,75 @@ def setup_database():
 
 
 @pytest.fixture
-def test_data(setup_database):
+def test_data():
     """Create test data"""
+    # First ensure database and tables exist
+    Base.metadata.create_all(bind=engine)
+    
     db = TestingSessionLocal()
     
-    # Create test users
-    users = [
-        User(
-            email=f"user{i}@test.com",
-            full_name=f"Test User {i}",
-            hashed_password="hashed",
-            pan=f"ABCDE{i:04d}F",
-            is_active=True,
-            is_verified=(i % 2 == 0),
-            created_at=datetime.utcnow() - timedelta(days=i)
-        )
-        for i in range(5)
-    ]
-    db.add_all(users)
-    db.commit()
-    
-    # Create test portfolios
-    portfolios = []
-    for user in users:
-        portfolio = Portfolio(
-            user_id=user.id,
-            name=f"Portfolio {user.id}",
-            total_current=100000 * user.id,
-            total_invested=90000 * user.id,
-            total_returns=10000 * user.id,
-            percentage_returns=11.11,
-            created_at=datetime.utcnow() - timedelta(days=user.id)
-        )
-        portfolios.append(portfolio)
-        db.add(portfolio)
-    db.commit()
-    
-    # Create test holdings
-    for portfolio in portfolios:
-        holdings = [
-            Holding(
-                portfolio_id=portfolio.id,
-                scheme_code=f"SC{i:04d}",
-                fund_name=f"Test Fund {i}",
-                amc="Test AMC" if i < 3 else "Another AMC",
-                category="Equity",
-                current_value=10000 * (i + 1),
-                invested_value=9000 * (i + 1),
-                returns=1000 * (i + 1),
-                return_pct=11.11,
-                units=100.0
+    try:
+        # Create test users
+        users = [
+            User(
+                email=f"user{i}@test.com",
+                full_name=f"Test User {i}",
+                hashed_password="hashed",
+                pan=f"ABCDE{i:04d}F",
+                is_active=True,
+                is_verified=(i % 2 == 0),
+                created_at=datetime.utcnow() - timedelta(days=i)
             )
-            for i in range(3)
+            for i in range(5)
         ]
-        db.add_all(holdings)
-    db.commit()
-    
-    db.close()
-    return {
-        "users_count": len(users),
-        "portfolios_count": len(portfolios),
-        "holdings_count": len(portfolios) * 3
-    }
+        db.add_all(users)
+        db.commit()
+        
+        # Create test portfolios
+        portfolios = []
+        for user in users:
+            portfolio = Portfolio(
+                user_id=user.id,
+                name=f"Portfolio {user.id}",
+                total_current=100000 * user.id,
+                total_invested=90000 * user.id,
+                total_returns=10000 * user.id,
+                percentage_returns=11.11,
+                created_at=datetime.utcnow() - timedelta(days=user.id)
+            )
+            portfolios.append(portfolio)
+            db.add(portfolio)
+        db.commit()
+        
+        # Create test holdings
+        for portfolio in portfolios:
+            holdings = [
+                Holding(
+                    portfolio_id=portfolio.id,
+                    scheme_code=f"SC{i:04d}",
+                    fund_name=f"Test Fund {i}",
+                    amc="Test AMC" if i < 3 else "Another AMC",
+                    category="Equity",
+                    current_value=10000 * (i + 1),
+                    invested_value=9000 * (i + 1),
+                    returns=1000 * (i + 1),
+                    return_pct=11.11,
+                    units=100.0
+                )
+                for i in range(3)
+            ]
+            db.add_all(holdings)
+        db.commit()
+        
+        yield {
+            "users_count": len(users),
+            "portfolios_count": len(portfolios),
+            "holdings_count": len(portfolios) * 3
+        }
+    finally:
+        db.close()
+        # Clean up: drop all tables after test
+        Base.metadata.drop_all(bind=engine)
 
 
 class TestAdminStats:

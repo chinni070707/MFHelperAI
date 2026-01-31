@@ -1,0 +1,2747 @@
+{
+  "statement_period": {
+    "from_": "01-Apr-2025",
+    "to": "01-Feb-2026"
+  },
+  "folios": [
+    {
+      "folio": "111954/ 49",
+      "amc": "360 ONE Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "ONE Focused Fund Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "IFIGDG",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF579M01902",
+          "amfi": "131580",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "52.6568",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "1019330824",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Aditya Birla Sun Life ELSS Tax Saver Fund- (ELSS U/S 80C of IT ACT) - Growth-Direct Plan",
+          "advisor": "DIRECT",
+          "rta_code": "B02GZ",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF209K01UN8",
+          "amfi": "119544",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "68.48",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "90521186673",
+      "amc": "AXIS Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Axis ELSS Tax Saver Fund - Direct Growth",
+          "advisor": "INA200005166",
+          "rta_code": "128TSDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF846K01EW2",
+          "amfi": "120503",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "545.861",
+          "close": "289.900",
+          "close_calculated": "289.900",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "107.1897",
+            "cost": "26569.02",
+            "value": "31074.29"
+          },
+          "transactions": [
+            {
+              "date": "2025-07-09",
+              "description": "Redemption",
+              "amount": "-24759.34",
+              "units": "-224.488",
+              "nav": "110.2936",
+              "balance": "321.373",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "*** STT Paid ***",
+              "amount": "0.25",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "Switch Over In (From Axis ELSS Tax Saver Fund - Regular Growth\t\tF.No:90521186673)",
+              "amount": "15499.23",
+              "units": "140.527",
+              "nav": "110.2936",
+              "balance": "461.900",
+              "type": "SWITCH_IN",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.77",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "*** Refund Taxsaver non Multiples of 500 Residual Refund ***",
+              "amount": "56.70",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "MISC",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-29",
+              "description": "Redemption",
+              "amount": "-18889.04",
+              "units": "-172.000",
+              "nav": "109.8211",
+              "balance": "289.900",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-29",
+              "description": "*** STT Paid ***",
+              "amount": "0.19",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "Axis ELSS Tax Saver Fund - Regular Growth",
+          "advisor": "ARN-0010",
+          "rta_code": "128TSGPG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF846K01131",
+          "amfi": "112323",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "788.535",
+          "close": "584.012",
+          "close_calculated": "584.012",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "94.5415",
+            "cost": "46560.89",
+            "value": "55213.37"
+          },
+          "transactions": [
+            {
+              "date": "2025-04-07",
+              "description": "Systematic Investment (112/115)",
+              "amount": "1499.93",
+              "units": "17.532",
+              "nav": "85.5533",
+              "balance": "806.067",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-04-07",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-05",
+              "description": "Systematic Investment (113/115)",
+              "amount": "1499.93",
+              "units": "16.075",
+              "nav": "93.3059",
+              "balance": "822.142",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-05",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-05",
+              "description": "Systematic Investment (114/115)",
+              "amount": "1499.93",
+              "units": "15.736",
+              "nav": "95.3170",
+              "balance": "837.878",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-05",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-07",
+              "description": "Systematic Investment (115/115)",
+              "amount": "1499.93",
+              "units": "15.399",
+              "nav": "97.4038",
+              "balance": "853.277",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-07",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "Switch Over Out (To Axis ELSS Tax Saver Fund - Direct Growth\t\tF.No:90521186673)",
+              "amount": "-15556.70",
+              "units": "-159.265",
+              "nav": "97.6791",
+              "balance": "694.012",
+              "type": "SWITCH_OUT",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "*** STT Paid ***",
+              "amount": "0.16",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-08",
+              "description": "Redemption",
+              "amount": "-10646.16",
+              "units": "-110.000",
+              "nav": "96.7843",
+              "balance": "584.012",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-08",
+              "description": "*** STT Paid ***",
+              "amount": "0.11",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "910107589892",
+      "amc": "AXIS Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Axis ELSS Tax Saver Fund - Direct Growth",
+          "advisor": "INZ000305337",
+          "rta_code": "128TSDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF846K01EW2",
+          "amfi": "120503",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "386.952",
+          "close": "61.926",
+          "close_calculated": "61.926",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "107.1897",
+            "cost": "4595.81",
+            "value": "6637.83"
+          },
+          "transactions": [
+            {
+              "date": "2025-06-27",
+              "description": "Redemption",
+              "amount": "-35993.00",
+              "units": "-325.026",
+              "nav": "110.7400",
+              "balance": "61.926",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-27",
+              "description": "*** STT Paid ***",
+              "amount": "0.36",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "5442434/ 29",
+      "amc": "Bandhan Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Bandhan Nifty Alpha 50 Index Fund-Direct Plan-Growth",
+          "advisor": "INA200005166",
+          "rta_code": "GD387",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF194KB1HA2",
+          "amfi": "152177",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "71.423",
+          "close": "0.000",
+          "close_calculated": "0.0000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "12.8179",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": [
+            {
+              "date": "2025-07-09",
+              "description": "Redemption - Electronic Payment-BSE - - 1144492326",
+              "amount": "-1001.28",
+              "units": "-71.4230",
+              "nav": "14.0191",
+              "balance": "0.000",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-09",
+              "description": "*** STT Paid ***",
+              "amount": "0.01",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "Bandhan Small Cap Fund-Direct Plan-Growth",
+          "advisor": "INA200005166",
+          "rta_code": "GD340",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF194KB1AL4",
+          "amfi": "147946",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "6945.431",
+          "close_calculated": "6945.431",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "48.855",
+            "cost": "360000.00",
+            "value": "339319.03"
+          },
+          "transactions": [
+            {
+              "date": "2025-11-19",
+              "description": "Net Purchase-BSE - via Online",
+              "amount": "59997.00",
+              "units": "1149.963",
+              "nav": "52.173",
+              "balance": "1149.963",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-19",
+              "description": "*** Stamp Duty ***",
+              "amount": "3.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-06",
+              "description": "Net Purchase-BSE - via Online",
+              "amount": "299985.00",
+              "units": "5795.468",
+              "nav": "51.762",
+              "balance": "6945.431",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-06",
+              "description": "*** Stamp Duty ***",
+              "amount": "15.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "3639214/ 96",
+      "amc": "DSP Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "DSP ELSS Tax Saver Fund - Direct Plan - Growth",
+          "advisor": "DIRECT",
+          "rta_code": "D739",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF740K01OK1",
+          "amfi": "119242",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "158.731",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "DSP Small Cap Fund - Direct Plan - Growth",
+          "advisor": "DIRECT",
+          "rta_code": "D788",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF740K01QD1",
+          "amfi": "119212",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "205.240",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "91043571806",
+      "amc": "Edelweiss Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Edelweiss Liquid Fund - Regular Plan Growth",
+          "advisor": "ARN-306070",
+          "rta_code": "118ILSGG",
+          "rta": "KFINTECH",
+          "type": "DEBT",
+          "isin": "INF754K01GZ6",
+          "amfi": "140182",
+          "nominees": [
+            "CHINNI JAYASRI LAKSHMI SASIKALA"
+          ],
+          "open": "0.000",
+          "close": "43.462",
+          "close_calculated": "43.462",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "3452.2233",
+            "cost": "150000.00",
+            "value": "150040.53"
+          },
+          "transactions": [
+            {
+              "date": "2026-01-29",
+              "description": "Purchase",
+              "amount": "149992.50",
+              "units": "43.462",
+              "nav": "3451.1524",
+              "balance": "43.462",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-29",
+              "description": "*** Stamp Duty ***",
+              "amount": "7.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "19811780",
+      "amc": "Franklin Templeton Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Franklin India Focused Equity Fund - Direct Plan - Growth",
+          "advisor": "INZ000305337",
+          "rta_code": "FTI482",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF090I01IW2",
+          "amfi": "118564",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.001",
+          "close": "0.000",
+          "close_calculated": "0.0000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "121.2203",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": [
+            {
+              "date": "2025-11-17",
+              "description": "Redemption Of Units - Electronic Payment-BSE - - CITIN25656618009",
+              "amount": "-0.13",
+              "units": "-0.0010",
+              "nav": "126.0399",
+              "balance": "0.000",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-17",
+              "description": "*** STT Paid ***",
+              "amount": "0.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "Franklin India Focused Equity Fund - Growth",
+          "advisor": "ARN-0010",
+          "rta_code": "FTI273",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF090I01981",
+          "amfi": "105817",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "159.617",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "107.1553",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": [
+            {
+              "date": "2025-04-11",
+              "description": "Systematic Investment Purchase - 112/997 - via Internet - ARN-0010",
+              "amount": "1499.93",
+              "units": "15.540",
+              "nav": "96.5177",
+              "balance": "175.157",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-04-11",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-12",
+              "description": "Systematic Investment Purchase - 113/997 - via Internet - ARN-0010",
+              "amount": "1499.93",
+              "units": "14.287",
+              "nav": "104.9892",
+              "balance": "189.444",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-12",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-10",
+              "description": "Systematic Investment Purchase - 114/997 - via Internet - ARN-0010",
+              "amount": "1499.93",
+              "units": "13.951",
+              "nav": "107.5126",
+              "balance": "203.395",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-10",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-10",
+              "description": "Systematic Investment Purchase - 115/997 - via Internet - ARN-0010",
+              "amount": "1499.93",
+              "units": "13.864",
+              "nav": "108.1882",
+              "balance": "217.259",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-10",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.07",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-10",
+              "description": "Redemption Of Units - Electronic Payment - via Internet -\t\tCITIN25592918591",
+              "amount": "-21784.66",
+              "units": "-203.395",
+              "nav": "107.1063",
+              "balance": "13.864",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-10",
+              "description": "*** STT Paid ***",
+              "amount": "0.22",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-10",
+              "description": "CITIN25592918591 *** STT Paid ***",
+              "amount": "0.22",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-18",
+              "description": "Redemption Of Units - Electronic Payment-BSE - - CITIN25596730036",
+              "amount": "-1472.89",
+              "units": "-13.864",
+              "nav": "106.2390",
+              "balance": "0.000",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-18",
+              "description": "*** STT Paid ***",
+              "amount": "0.01",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "22645733",
+      "amc": "Franklin Templeton Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Franklin India Focused Equity Fund - Direct Plan - Growth",
+          "advisor": "INZ000305337",
+          "rta_code": "FTI482",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF090I01IW2",
+          "amfi": "118564",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "121.2203",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "33370083",
+      "amc": "Franklin Templeton Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Franklin India Focused Equity Fund - Direct Plan - Growth",
+          "advisor": "INZ000305337",
+          "rta_code": "FTI482",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF090I01IW2",
+          "amfi": "118564",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "121.2203",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "15984470/ 92",
+      "amc": "HDFC Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "HDFC Flexi Cap Fund - Direct Plan - Growth Option",
+          "advisor": "INA200005166",
+          "rta_code": "H02T",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF179K01UT0",
+          "amfi": "118955",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "317.232",
+          "close_calculated": "317.232",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "2243.711",
+            "cost": "720000.00",
+            "value": "711776.93"
+          },
+          "transactions": [
+            {
+              "date": "2025-08-28",
+              "description": "Purchase-BSE - Online",
+              "amount": "19999.00",
+              "units": "9.266",
+              "nav": "2158.208",
+              "balance": "9.266",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-28",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-10-01",
+              "description": "SIP Purchase-BSE - Instalment No - 1 Online",
+              "amount": "19999.00",
+              "units": "9.044",
+              "nav": "2211.335",
+              "balance": "18.310",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-10-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-03",
+              "description": "SIP Purchase-BSE - Instalment No - 2/348 Online",
+              "amount": "19999.00",
+              "units": "8.802",
+              "nav": "2272.057",
+              "balance": "27.112",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-03",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-01",
+              "description": "SIP Purchase-BSE - Instalment No - 3/348 Online",
+              "amount": "19999.00",
+              "units": "8.761",
+              "nav": "2282.654",
+              "balance": "35.873",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-01",
+              "description": "Purchase-BSE - Online",
+              "amount": "99995.00",
+              "units": "43.806",
+              "nav": "2282.654",
+              "balance": "79.679",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "5.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-31",
+              "description": "Purchase-BSE - Online",
+              "amount": "499975.00",
+              "units": "220.005",
+              "nav": "2272.565",
+              "balance": "299.684",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-31",
+              "description": "*** Stamp Duty ***",
+              "amount": "25.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-01",
+              "description": "SIP Purchase-BSE - Instalment No - 1 Online",
+              "amount": "39998.00",
+              "units": "17.548",
+              "nav": "2279.307",
+              "balance": "317.232",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "2.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "HDFC Large Cap Fund - Direct Plan - Growth Option",
+          "advisor": "DIRECT",
+          "rta_code": "H44T",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF179K01YV8",
+          "amfi": "119018",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "1244.189",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "HDFC Small Cap Fund - Direct Growth Plan",
+          "advisor": "DIRECT",
+          "rta_code": "HACG1G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF179KA1RW5",
+          "amfi": "130503",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "152.905",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "2680623/ 13",
+      "amc": "HSBC Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "HSBC Value Fund - Regular Growth",
+          "advisor": "ARN-0010",
+          "rta_code": "OFIVFG",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF677K01023",
+          "amfi": "151110",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "113.0535",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "14748189/ 43",
+      "amc": "ICICI Prudential Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "ICICI Prudential Large Cap Fund - Direct Plan - Growth",
+          "advisor": "INA200005166",
+          "rta_code": "P8042",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF109K016L0",
+          "amfi": "120586",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "1761.095",
+          "close": "1761.095",
+          "close_calculated": "1761.095",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "123.16",
+            "cost": "200000.00",
+            "value": "216896.46"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "ICICI Prudential US Bluechip Equity Fund - Direct Plan - Growth",
+          "advisor": "INA200005166",
+          "rta_code": "P8133",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF109K01Z71",
+          "amfi": "120186",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "84.01",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "14748190/ 40",
+      "amc": "ICICI Prudential Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "ICICI Prudential US Bluechip Equity Fund - Direct Plan - Growth",
+          "advisor": "INA200005166",
+          "rta_code": "P8133",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF109K01Z71",
+          "amfi": "120186",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "84.01",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "14956540/ 58",
+      "amc": "ICICI Prudential Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "ICICI Prudential US Bluechip Equity Fund - Direct Plan - Growth",
+          "advisor": "INA200005166",
+          "rta_code": "P8133",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF109K01Z71",
+          "amfi": "120186",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "84.01",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "16433643/ 97",
+      "amc": "ICICI Prudential Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "ICICI Prudential US Bluechip Equity Fund - Direct Plan - Growth",
+          "advisor": "DIRECT",
+          "rta_code": "P8133",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF109K01Z71",
+          "amfi": "120186",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "84.01",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "31039073393",
+      "amc": "Invesco Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Invesco India Midcap Fund - Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "120MCD1G",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF205K01MV6",
+          "amfi": "120403",
+          "nominees": [
+            "CHINNI JAYASRI LAKSHMI SASIKALA"
+          ],
+          "open": "0.000",
+          "close": "1344.172",
+          "close_calculated": "1344.172",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "208.14",
+            "cost": "300000.00",
+            "value": "279775.96"
+          },
+          "transactions": [
+            {
+              "date": "2025-11-20",
+              "description": "New Purchase",
+              "amount": "39998.00",
+              "units": "177.840",
+              "nav": "224.91",
+              "balance": "177.840",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-20",
+              "description": "*** Stamp Duty ***",
+              "amount": "2.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-06",
+              "description": "Additional Purchase",
+              "amount": "259987.00",
+              "units": "1166.332",
+              "nav": "222.91",
+              "balance": "1344.172",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-06",
+              "description": "*** Stamp Duty ***",
+              "amount": "13.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "31041810593",
+      "amc": "Invesco Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Invesco India Liquid Fund - Regular Growth",
+          "advisor": "ARN-306070",
+          "rta_code": "120LFSGG",
+          "rta": "KFINTECH",
+          "type": "DEBT",
+          "isin": "INF205K01HM5",
+          "amfi": "104486",
+          "nominees": [
+            "CHINNI JAYASRI LAKSHMI SASIKALA"
+          ],
+          "open": "0.000",
+          "close": "40.440",
+          "close_calculated": "40.440",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "3710.1651",
+            "cost": "150000.00",
+            "value": "150039.08"
+          },
+          "transactions": [
+            {
+              "date": "2026-01-29",
+              "description": "New Purchase(NAV Dt : 29/01/2026)",
+              "amount": "149992.50",
+              "units": "40.440",
+              "nav": "3709.0207",
+              "balance": "40.440",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-29",
+              "description": "*** Stamp Duty ***",
+              "amount": "7.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "18208055",
+      "amc": "Kotak Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Kotak Multicap Fund Direct Plan - Growth",
+          "advisor": "INA200005166",
+          "rta_code": "K1155D",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF174KA1HV3",
+          "amfi": "149185",
+          "nominees": [
+            "CHINNI JAYASRI LAKSHMI SASIKALA"
+          ],
+          "open": "0.000",
+          "close": "4618.493",
+          "close_calculated": "4618.493",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "20.482",
+            "cost": "100000.00",
+            "value": "94595.97"
+          },
+          "transactions": [
+            {
+              "date": "2026-01-02",
+              "description": "Purchase-BSE -",
+              "amount": "99995.00",
+              "units": "4618.493",
+              "nav": "21.651",
+              "balance": "4618.493",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "5.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "77742759196",
+      "amc": "Mirae Asset Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan",
+          "advisor": "INA200005166",
+          "rta_code": "117FPD1G",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF769K01HH0",
+          "amfi": "148928",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "429.274",
+          "close": "429.274",
+          "close_calculated": "429.274",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "35.829",
+            "cost": "5000.00",
+            "value": "15380.46"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "77744727293",
+      "amc": "Mirae Asset Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan",
+          "advisor": "INA200005166",
+          "rta_code": "117 FPD1G",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF769K01HH0",
+          "amfi": "148928",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "2544.862",
+          "close": "2544.862",
+          "close_calculated": "2544.862",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "35.829",
+            "cost": "30000.00",
+            "value": "91179.86"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "9106688844",
+      "amc": "MOTILAL OSWAL MUTUAL FUND",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Motilal Oswal Large and Midcap Fund - Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "127LMGDG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF247L01999",
+          "amfi": "147704",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "20325.045",
+          "close": "20325.045",
+          "close_calculated": "20325.045",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "34.9197",
+            "cost": "648221.00",
+            "value": "709744.47"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "Motilal Oswal Midcap Fund - Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "127FMGDG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF247L01445",
+          "amfi": "127042",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "3978.572",
+          "close": "3978.572",
+          "close_calculated": "3978.572",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "105.8740",
+            "cost": "423343.00",
+            "value": "421227.33"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "9104703384",
+      "amc": "NAVI MF",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Navi Nasdaq100 US Specific Equity Passive Fund of Fund - Direct Plan- Growth",
+          "advisor": "INA200005166",
+          "rta_code": "PLFNQGDG",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF959L01FZ1",
+          "amfi": "149910",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "7807.802",
+          "close": "7807.802",
+          "close_calculated": "7807.802",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "20.9654",
+            "cost": "70000.00",
+            "value": "163693.69"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "9104790381",
+      "amc": "NAVI MF",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Navi Nasdaq100 US Specific Equity Passive Fund of Fund - Direct Plan- Growth",
+          "advisor": "INA200005166",
+          "rta_code": "PLFNQGDG",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF959L01FZ1",
+          "amfi": "149910",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "6906.585",
+          "close": "6906.585",
+          "close_calculated": "6906.585",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "20.9654",
+            "cost": "60000.00",
+            "value": "144799.32"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "10697180",
+      "amc": "PPFAS Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Parag Parikh Flexi Cap Fund - Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "PP001ZG",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF879O01027",
+          "amfi": "122639",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "5355.210",
+          "close": "11083.206",
+          "close_calculated": "11083.206",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "93.5212",
+            "cost": "840280.00",
+            "value": "1036514.72"
+          },
+          "transactions": [
+            {
+              "date": "2025-04-01",
+              "description": "Purchase Systematic-BSE - Instalment No - 3/348",
+              "amount": "9999.50",
+              "units": "117.691",
+              "nav": "84.9643",
+              "balance": "5472.901",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-04-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "Purchase Systematic-BSE - Instalment No - 4/348",
+              "amount": "9999.50",
+              "units": "113.650",
+              "nav": "87.9847",
+              "balance": "5586.551",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "Purchase Systematic-BSE - Instalment No - 1",
+              "amount": "19999.00",
+              "units": "222.255",
+              "nav": "89.9823",
+              "balance": "5808.806",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "Purchase Systematic-BSE - Instalment No - 2/348",
+              "amount": "19999.00",
+              "units": "215.789",
+              "nav": "92.6786",
+              "balance": "6024.595",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-03",
+              "description": "Purchase-BSE -",
+              "amount": "99995.00",
+              "units": "1081.550",
+              "nav": "92.4553",
+              "balance": "7106.145",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-03",
+              "description": "*** Stamp Duty ***",
+              "amount": "5.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-11",
+              "description": "Purchase-BSE -",
+              "amount": "32998.35",
+              "units": "358.280",
+              "nav": "92.1021",
+              "balance": "7464.425",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-11",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.65",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-15",
+              "description": "Purchase-BSE -",
+              "amount": "234988.25",
+              "units": "2542.648",
+              "nav": "92.4187",
+              "balance": "10007.073",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-15",
+              "description": "*** Stamp Duty ***",
+              "amount": "11.75",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "Purchase Systematic-BSE - Instalment No - 3/348",
+              "amount": "19999.00",
+              "units": "218.975",
+              "nav": "91.3302",
+              "balance": "10226.048",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-09-01",
+              "description": "Purchase Systematic-BSE - Instalment No - 4/348",
+              "amount": "19999.00",
+              "units": "218.519",
+              "nav": "91.5207",
+              "balance": "10444.567",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-09-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-10-01",
+              "description": "Purchase Systematic-BSE - Instalment No - 5/348",
+              "amount": "19999.00",
+              "units": "216.266",
+              "nav": "92.4742",
+              "balance": "10660.833",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-10-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-03",
+              "description": "Purchase Systematic-BSE - Instalment No - 6/348",
+              "amount": "19999.00",
+              "units": "211.724",
+              "nav": "94.4577",
+              "balance": "10872.557",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-11-03",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-01",
+              "description": "Purchase Systematic-BSE - Instalment No - 7/348",
+              "amount": "19999.00",
+              "units": "210.649",
+              "nav": "94.9398",
+              "balance": "11083.206",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "1.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "5105190552",
+      "amc": "Quant MF",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "quant Flexi Cap Fund - Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "166PEDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF966L01911",
+          "amfi": "120843",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "3866.254",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "104.7485",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": [
+            {
+              "date": "2025-12-29",
+              "description": "Redemption",
+              "amount": "-424838.68",
+              "units": "-3866.254",
+              "nav": "109.8849",
+              "balance": "0.000",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-12-29",
+              "description": "*** STT Paid ***",
+              "amount": "4.25",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "quant Focused Fund - Direct Plan",
+          "advisor": "INA200005166",
+          "rta_code": "166LSDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF966L01853",
+          "amfi": "120834",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "345.321",
+          "close": "345.321",
+          "close_calculated": "345.321",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "91.8925",
+            "cost": "21000.00",
+            "value": "31732.41"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "quant Mid Cap Fund - Direct Plan",
+          "advisor": "INA200005166",
+          "rta_code": "166OFDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF966L01887",
+          "amfi": "120841",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "1270.193",
+          "close": "381.004",
+          "close_calculated": "381.004",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "217.3627",
+            "cost": "88423.26",
+            "value": "82816.06"
+          },
+          "transactions": [
+            {
+              "date": "2025-04-01",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "44.117",
+              "nav": "226.6597",
+              "balance": "1314.310",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-04-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "42.592",
+              "nav": "234.7715",
+              "balance": "1356.902",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "41.153",
+              "nav": "242.9849",
+              "balance": "1398.055",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "40.274",
+              "nav": "248.2882",
+              "balance": "1438.329",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "42.455",
+              "nav": "235.5340",
+              "balance": "1480.784",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-02",
+              "description": "Redemption",
+              "amount": "-260000.00",
+              "units": "-1099.780",
+              "nav": "236.4132",
+              "balance": "381.004",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-02",
+              "description": "*** STT Paid ***",
+              "amount": "2.60",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "quant Multi Cap Fund - Direct Plan",
+          "advisor": "INA200005166",
+          "rta_code": "166GFDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF966L01614",
+          "amfi": "120823",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "315.838",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "631.7570",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": [
+            {
+              "date": "2025-04-01",
+              "description": "Systematic Investment (1)",
+              "amount": "3999.80",
+              "units": "6.335",
+              "nav": "631.4047",
+              "balance": "322.173",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-04-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.20",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "Systematic Investment (1)",
+              "amount": "3999.80",
+              "units": "6.194",
+              "nav": "645.7091",
+              "balance": "328.367",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.20",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "Systematic Investment (1)",
+              "amount": "3999.80",
+              "units": "5.901",
+              "nav": "677.7954",
+              "balance": "334.268",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.20",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-27",
+              "description": "Redemption",
+              "amount": "-172851.00",
+              "units": "-247.520",
+              "nav": "698.3377",
+              "balance": "86.748",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-27",
+              "description": "*** STT Paid ***",
+              "amount": "1.73",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "Systematic Investment (1)",
+              "amount": "3999.80",
+              "units": "5.731",
+              "nav": "697.9503",
+              "balance": "92.479",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.20",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "Systematic Investment (1)",
+              "amount": "3999.80",
+              "units": "6.040",
+              "nav": "662.2505",
+              "balance": "98.519",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.20",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.20",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-01",
+              "description": "Redemption",
+              "amount": "-65995.71",
+              "units": "-98.519",
+              "nav": "669.8847",
+              "balance": "0.000",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-01",
+              "description": "*** STT Paid ***",
+              "amount": "0.66",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        },
+        {
+          "scheme": "quant Small Cap Fund - Direct Plan Growth",
+          "advisor": "INA200005166",
+          "rta_code": "166IBDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF966L01689",
+          "amfi": "120828",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "2254.615",
+          "close": "1365.181",
+          "close_calculated": "1365.181",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "256.2755",
+            "cost": "384513.61",
+            "value": "349862.44"
+          },
+          "transactions": [
+            {
+              "date": "2025-04-01",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "40.246",
+              "nav": "248.4608",
+              "balance": "2294.861",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-04-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "39.070",
+              "nav": "255.9363",
+              "balance": "2333.931",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-05-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "36.632",
+              "nav": "272.9752",
+              "balance": "2370.563",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-06-02",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "35.150",
+              "nav": "284.4809",
+              "balance": "2405.713",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-07-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "Systematic Investment (1)",
+              "amount": "9999.50",
+              "units": "36.419",
+              "nav": "274.5672",
+              "balance": "2442.132",
+              "type": "PURCHASE_SIP",
+              "dividend_rate": null
+            },
+            {
+              "date": "2025-08-01",
+              "description": "*** Stamp Duty ***",
+              "amount": "0.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-02",
+              "description": "Redemption",
+              "amount": "-300000.00",
+              "units": "-1076.951",
+              "nav": "278.5669",
+              "balance": "1365.181",
+              "type": "REDEMPTION",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-02",
+              "description": "*** STT Paid ***",
+              "amount": "3.00",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STT_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "5109645205",
+      "amc": "Quant MF",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "quant Multi Cap Fund - Direct Plan",
+          "advisor": "INZ000305337",
+          "rta_code": "166GFDGG",
+          "rta": "KFINTECH",
+          "type": "EQUITY",
+          "isin": "INF966L01614",
+          "amfi": "120823",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "28.646",
+          "close": "28.646",
+          "close_calculated": "28.646",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "631.7570",
+            "cost": "12464.00",
+            "value": "18097.31"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "15083014",
+      "amc": "SBI Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "SBI Healthcare Opportunities Fund Regular Growth",
+          "advisor": "ARN0010",
+          "rta_code": "L035G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01446",
+          "amfi": "102823",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "405.9177",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "SBI Large Cap Fund - Direct Plan - Growth",
+          "advisor": "DIRECT",
+          "rta_code": "LD103G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01QX4",
+          "amfi": "119598",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "104.8332",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "21546816",
+      "amc": "SBI Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "SBI Large & Midcap Fund Direct Growth",
+          "advisor": "INA200005166",
+          "rta_code": "LD017G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01UJ5",
+          "amfi": "119721",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "700.2620",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        },
+        {
+          "scheme": "SBI Small Cap Fund Direct Growth",
+          "advisor": "INA200005166",
+          "rta_code": "LD346G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01T51",
+          "amfi": "125497",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "183.3010",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "22826727",
+      "amc": "SBI Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "SBI Small Cap Fund Direct Growth",
+          "advisor": "INA200005166",
+          "rta_code": "LD346G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01T51",
+          "amfi": "125497",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "183.3010",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "24809437",
+      "amc": "SBI Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "SBI Flexicap Fund - Direct Plan - Growth",
+          "advisor": "INZ000305337",
+          "rta_code": "LD099G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01UG1",
+          "amfi": "119718",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "122.9457",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    },
+    {
+      "folio": "48528043",
+      "amc": "SBI Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": null,
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "SBI Contra Fund - Regular Plan - Growth",
+          "advisor": "ARN-306070",
+          "rta_code": "L036G",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF200K01362",
+          "amfi": "102414",
+          "nominees": [
+            "CHINNI JAYASRI LAKSHMI SASIKALA"
+          ],
+          "open": "0.000",
+          "close": "384.336",
+          "close_calculated": "384.336",
+          "valuation": {
+            "date": "2026-01-31",
+            "nav": "389.0762",
+            "cost": "150000.00",
+            "value": "149535.99"
+          },
+          "transactions": [
+            {
+              "date": "2026-01-29",
+              "description": "Purchase-BSE -",
+              "amount": "149992.50",
+              "units": "384.336",
+              "nav": "390.2641",
+              "balance": "384.336",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-29",
+              "description": "*** Stamp Duty ***",
+              "amount": "7.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "14457294/ 19",
+      "amc": "Tata Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Tata Digital India Fund Regular Plan Growth",
+          "advisor": "ARN-306070",
+          "rta_code": "TDIFG",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF277K01Z44",
+          "amfi": "135797",
+          "nominees": [
+            "CHINNI JAYASRI LAKSHMI SASIKALA"
+          ],
+          "open": "0.000",
+          "close": "3129.714",
+          "close_calculated": "3129.714",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "47.7032",
+            "cost": "150000.00",
+            "value": "149297.37"
+          },
+          "transactions": [
+            {
+              "date": "2026-01-29",
+              "description": "Purchase-BSE - Online - ARN-306070",
+              "amount": "149992.50",
+              "units": "3129.714",
+              "nav": "47.9253",
+              "balance": "3129.714",
+              "type": "PURCHASE",
+              "dividend_rate": null
+            },
+            {
+              "date": "2026-01-29",
+              "description": "*** Stamp Duty ***",
+              "amount": "7.50",
+              "units": null,
+              "nav": null,
+              "balance": null,
+              "type": "STAMP_DUTY_TAX",
+              "dividend_rate": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "folio": "3868989/ 53",
+      "amc": "Tata Mutual Fund",
+      "PAN": "AOLPC2904E",
+      "KYC": "OK",
+      "PANKYC": "OK",
+      "schemes": [
+        {
+          "scheme": "Tata Value Fund Direct Plan - Growth",
+          "advisor": "DIRECT",
+          "rta_code": "TEPEGZ",
+          "rta": "CAMS",
+          "type": "EQUITY",
+          "isin": "INF277K01ND1",
+          "amfi": "119231",
+          "nominees": [
+            "Chinni jayasri lakshmi sasikala"
+          ],
+          "open": "0.000",
+          "close": "0.000",
+          "close_calculated": "0.000",
+          "valuation": {
+            "date": "2026-01-30",
+            "nav": "401.0504",
+            "cost": "0.00",
+            "value": "0.00"
+          },
+          "transactions": []
+        }
+      ]
+    }
+  ],
+  "investor_info": {
+    "name": "CHINNI MAHESHKUMAR",
+    "email": "chinni070707@gmail.com",
+    "address": "Mahesh Kumar Chinni, Flat A 016 Svs Palms1, 11Th Cross,\nChinnapanahalli, Next Line Of Ekya School,\nDoddanekkundi, Doddanekkundi, Bengaluru, Karnataka,\nBengaluru - 560037\nKarnataka\nindia\nMobile     : 9952282170",
+    "mobile": "9952282170"
+  },
+  "cas_type": "DETAILED",
+  "file_type": "KFINTECH"
+}
