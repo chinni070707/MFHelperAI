@@ -1,18 +1,32 @@
 {
-  "name": "frontend",
+  "name": "mfhelper-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "MFHelper Portfolio Analytics - Frontend",
   "main": "sw.js",
+  "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["mutual-funds", "portfolio", "analytics"],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "@capacitor/android": "^8.0.2",
     "@capacitor/cli": "^8.0.2",
-    "@capacitor/core": "^8.0.2"
+    "@capacitor/core": "^8.0.2",
+    "chart.js": "^4.4.0",
+    "plotly.js-dist": "^2.27.0",
+    "html2canvas": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/plotly.js": "^2.12.29",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vite-plugin-html": "^3.2.0"
   }
 }

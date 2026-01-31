@@ -721,6 +721,190 @@
             font-size: 12px;
             color: var(--text-secondary);
         }
+        
+        /* Report Card Styles */
+        .report-card {
+            width: 1080px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            padding: 48px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .report-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200"><circle cx="200" cy="200" r="300" fill="rgba(255,255,255,0.05)"/><circle cx="1000" cy="800" r="400" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .report-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .report-card-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .report-card-title {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 0 0 12px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .report-card-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .report-card-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .report-stat {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .report-stat-label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .report-stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            margin: 0;
+        }
+        
+        .report-stat-change {
+            font-size: 16px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+        
+        .report-card-allocation {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .allocation-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+        }
+        
+        .allocation-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .allocation-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .allocation-bar-label {
+            min-width: 100px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .allocation-bar-track {
+            flex: 1;
+            height: 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .allocation-bar-fill {
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .allocation-bar-value {
+            min-width: 60px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .report-card-footer {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .report-card-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .report-card-branding-icon {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        
+        .report-card-cta {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+        
+        #reportCardContainer {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
@@ -756,6 +940,16 @@
             <div id="homeView" class="view-content active">
                 <div id="portfolioSummary"></div>
                 <div id="assetAllocation"></div>
+                
+                <!-- Report Card CTA -->
+                <div class="card mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+                    <div style="font-size: 32px; margin-bottom: 12px;">📸</div>
+                    <h3 style="margin: 0 0 8px 0; font-size: 20px;">Share Your Portfolio Report Card</h3>
+                    <p style="margin: 0 0 16px 0; opacity: 0.9; font-size: 14px;">Generate a beautiful report card and share with friends</p>
+                    <button class="btn btn-secondary" onclick="generateReportCard()" style="background: white; color: #667eea; border: none; font-weight: 700;">
+                        ✨ Generate Report Card
+                    </button>
+                </div>
                 
                 <section class="quick-actions mb-6">
                     <div class="grid grid-cols-3 gap-4">
