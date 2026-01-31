@@ -87,6 +87,11 @@ coverage.xml
 backend/uploads/*
 !backend/uploads/.gitkeep
 
+# Test scripts output
+backend/test-scripts/*.json
+backend/test-scripts/*.txt
+backend/test-scripts/*.pdf
+
 # Cache
 .cache/
 *.cache
