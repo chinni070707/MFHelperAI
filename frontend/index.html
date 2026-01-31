@@ -357,32 +357,19 @@
     
     <section class="hero">
         <h1>Track Your Mutual Fund Portfolio</h1>
-        <p>Upload your portfolio Excel or CAS statement to get instant analytics, rebalancing recommendations, and beautiful visualizations.</p>
+        <p>Upload your CAS statement to get instant analytics, rebalancing recommendations, and beautiful visualizations.</p>
     </section>
     
     <section class="upload-options">
-        <!-- Excel Upload Card -->
-        <div class="upload-card" onclick="openExcelModal()">
-            <div class="icon">📊</div>
-            <h3>Upload Excel</h3>
-            <p>Have your portfolio in Excel? Upload it directly.</p>
-            <ul>
-                <li>Supports .xlsx, .xls, .csv</li>
-                <li>Flexible column mapping</li>
-                <li>Download template available</li>
-            </ul>
-            <button class="btn btn-primary">Upload Excel</button>
-        </div>
-        
         <!-- CAS Upload Card -->
-        <div class="upload-card cas-card" onclick="openCASModal()">
+        <div class="upload-card cas-card" onclick="openCASModal()" style="max-width: 600px; margin: 0 auto;">
             <div class="icon">📄</div>
             <h3>Upload CAS Statement</h3>
-            <p>Get your official statement from CAMS/KFintech.</p>
+            <p>Get your official Consolidated Account Statement from CAMS/KFintech.</p>
             <ul>
-                <li>Consolidated Account Statement</li>
+                <li>Consolidated Account Statement (CAS)</li>
                 <li>Covers all AMCs automatically</li>
-                <li>Password: Your PAN number</li>
+                <li>Supports password-protected PDFs</li>
             </ul>
             <button class="btn btn-primary" style="background: linear-gradient(90deg, #7b2cbf, #e91e63);">Upload CAS PDF</button>
         </div>
@@ -453,7 +440,7 @@
                 <h5>📋 How to get your CAS:</h5>
                 <ol>
                     <li>Visit <a href="https://www.camsonline.com/Investors/Statements/Consolidated-Account-Statement" target="_blank">CAMS Online</a> or <a href="https://mfs.kfintech.com/investor/" target="_blank">KFintech</a></li>
-                    <li>Enter your Email & PAN</li>
+                    <li>Enter your Email and other required details</li>
                     <li>Select "Detailed" statement</li>
                     <li>PDF will be emailed in minutes</li>
                 </ol>
@@ -470,8 +457,8 @@
             </div>
             
             <div class="form-group">
-                <label>PDF Password (Your PAN)</label>
-                <input type="text" id="casPassword" placeholder="Enter your PAN (e.g., ABCDE1234F)" maxlength="10" style="text-transform: uppercase;">
+                <label>PDF Password</label>
+                <input type="text" id="casPassword" placeholder="Enter password (if PDF is password-protected)">
             </div>
             
             <button class="btn btn-primary" style="width: 100%; background: linear-gradient(90deg, #7b2cbf, #e91e63);" onclick="submitCAS()">
