@@ -1,6 +1,7 @@
 """
 Seed database with dummy test data
-Run: python -m backend.scripts.seed_database
+Run from backend directory: python scripts/seed_database.py
+Or from root: python -m backend.scripts.seed_database
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -8,12 +9,25 @@ from datetime import datetime, timedelta
 import sys
 import os
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add backend directory to path if not already there
+backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
 
-from app.models.models import User, UserSettings, Portfolio, Holding, Base
-from app.utils.auth import get_password_hash
-from app.config import settings
+# Also add parent of backend (root) to handle running from root
+root_dir = os.path.dirname(backend_dir)
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
+try:
+    from app.models.models import User, UserSettings, Portfolio, Holding, Base
+    from app.utils.auth import get_password_hash
+    from app.config import settings
+except ImportError:
+    # Try with backend prefix if running from root
+    from backend.app.models.models import User, UserSettings, Portfolio, Holding, Base
+    from backend.app.utils.auth import get_password_hash
+    from backend.app.config import settings
 
 # Create engine
 engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread": False})

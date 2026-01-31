@@ -78,6 +78,10 @@ app.include_router(portfolio.router, prefix="/api/portfolio", tags=["Portfolio"]
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(rebalance.router, prefix="/api/rebalance", tags=["Rebalancing"])
 app.include_router(holdings.router, tags=["Holdings & Overlap"])
+
+# Import and register admin routes
+from app.routes import admin
+app.include_router(admin.router, tags=["Admin"])
 app.include_router(errors.router, tags=["Error Logging"])
 
 # Serve static files (frontend)
@@ -118,6 +122,14 @@ async def dashboard_old():
     if os.path.exists(dashboard_path):
         return FileResponse(dashboard_path)
     return {"error": "Dashboard not found"}
+
+@app.get("/admin")
+async def admin_panel():
+    """Serve the admin dashboard"""
+    admin_path = os.path.join(frontend_path, "admin.html")
+    if os.path.exists(admin_path):
+        return FileResponse(admin_path)
+    return {"error": "Admin panel not found"}
 
 @app.get("/how-it-works")
 async def how_it_works():
