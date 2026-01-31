@@ -187,7 +187,7 @@ def determine_category_from_name(scheme_name: str) -> str:
 if __name__ == "__main__":
     # Test with the provided CAS file
     cas_file = r"C:\Users\mahchi01\Downloads\CAS_DEC2025_AA01244995_TXN.pdf"
-    password = "AOLPC2904E"
+    password = "YOUR_CAS_PASSWORD"
     
     if Path(cas_file).exists():
         result = test_cas_import(cas_file, password)

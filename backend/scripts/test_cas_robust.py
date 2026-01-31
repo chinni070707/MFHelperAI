@@ -310,7 +310,7 @@ class CASParser:
 
 def main():
     pdf_path = r"C:\Users\mahchi01\Downloads\CAS_DEC2025_AA01244995_TXN.pdf"
-    password = "AOLPC2904E"
+    password = "YOUR_CAS_PASSWORD"
     
     print("="*70)
     print("🔍 CAS PDF Parser (Robust PyMuPDF-based)")

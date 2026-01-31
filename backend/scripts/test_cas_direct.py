@@ -255,7 +255,7 @@ def save_to_file(data: dict, output_file: str):
 
 if __name__ == "__main__":
     cas_file = r"C:\Users\mahchi01\Downloads\CAS_DEC2025_AA01244995_TXN.pdf"
-    password = "AOLPC2904E"
+    password = "YOUR_CAS_PASSWORD"
     
     if not Path(cas_file).exists():
         print(f"❌ File not found: {cas_file}")
