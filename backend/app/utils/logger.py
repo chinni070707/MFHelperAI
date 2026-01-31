@@ -38,6 +38,8 @@ def setup_logging(log_level=logging.INFO, enable_file_logging=True):
         enable_file_logging: Whether to enable file logging
     """
     
+    log_file = None  # Initialize to None for type checking
+    
     # Create logs directory if it doesn't exist
     if enable_file_logging:
         log_dir = Path(__file__).parent.parent.parent / 'logs'
@@ -62,7 +64,7 @@ def setup_logging(log_level=logging.INFO, enable_file_logging=True):
     root_logger.addHandler(console_handler)
     
     # File Handler with rotation (if enabled)
-    if enable_file_logging:
+    if enable_file_logging and log_file is not None:
         file_handler = RotatingFileHandler(
             log_file,
             maxBytes=10*1024*1024,  # 10MB
@@ -107,7 +109,7 @@ def log_request(method: str, path: str, status_code: int, duration_ms: float):
     )
 
 
-def log_user_action(user_id: str, action: str, details: dict = None):
+def log_user_action(user_id: str, action: str, details: dict | None = None):
     """Log user actions for audit trail"""
     logger = logging.getLogger('mfhelper.audit')
     logger.info(
