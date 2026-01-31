@@ -9,8 +9,18 @@
     <link rel="stylesheet" href="/css/design-system.css">
     <link rel="stylesheet" href="/css/components.css">
     
-    <!-- TypeScript Module - replaces all inline scripts -->
-    <script type="module" src="/src/dashboard.ts"></script>
+    <!-- Utilities -->
+    <script src="/js/toast.js"></script>
+    <script src="/js/errorHandler.js"></script>
+    <script src="/js/responsive.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/overlap.js"></script>
+    
+    <!-- Chart Library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- HTML to Canvas for sharing -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     
     <style>
         body {
@@ -711,190 +721,6 @@
             font-size: 12px;
             color: var(--text-secondary);
         }
-        
-        /* Report Card Styles */
-        .report-card {
-            width: 1080px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 24px;
-            padding: 48px;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .report-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200"><circle cx="200" cy="200" r="300" fill="rgba(255,255,255,0.05)"/><circle cx="1000" cy="800" r="400" fill="rgba(255,255,255,0.05)"/></svg>');
-            background-size: cover;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-        
-        .report-card-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .report-card-header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 24px;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-        }
-        
-        .report-card-title {
-            font-size: 42px;
-            font-weight: 800;
-            margin: 0 0 12px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .report-card-subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-            margin: 0;
-        }
-        
-        .report-card-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-        
-        .report-stat {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-        }
-        
-        .report-stat-label {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .report-stat-value {
-            font-size: 36px;
-            font-weight: 800;
-            margin: 0;
-        }
-        
-        .report-stat-change {
-            font-size: 16px;
-            margin-top: 8px;
-            opacity: 0.9;
-        }
-        
-        .report-card-allocation {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-        
-        .allocation-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0 0 20px 0;
-        }
-        
-        .allocation-bars {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        
-        .allocation-bar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .allocation-bar-label {
-            min-width: 100px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .allocation-bar-track {
-            flex: 1;
-            height: 24px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        
-        .allocation-bar-fill {
-            height: 100%;
-            background: rgba(255,255,255,0.8);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #667eea;
-        }
-        
-        .allocation-bar-value {
-            min-width: 60px;
-            text-align: right;
-            font-size: 16px;
-            font-weight: 700;
-        }
-        
-        .report-card-footer {
-            text-align: center;
-            padding-top: 24px;
-            border-top: 2px solid rgba(255,255,255,0.2);
-        }
-        
-        .report-card-branding {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        .report-card-branding-icon {
-            width: 48px;
-            height: 48px;
-            background: white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-        
-        .report-card-cta {
-            font-size: 14px;
-            opacity: 0.8;
-            margin-top: 8px;
-        }
-        
-        #reportCardContainer {
-            position: fixed;
-            top: -9999px;
-            left: -9999px;
-            z-index: -1;
-        }
     </style>
 </head>
 <body>
@@ -930,16 +756,6 @@
             <div id="homeView" class="view-content active">
                 <div id="portfolioSummary"></div>
                 <div id="assetAllocation"></div>
-                
-                <!-- Report Card CTA -->
-                <div class="card mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
-                    <div style="font-size: 32px; margin-bottom: 12px;">📸</div>
-                    <h3 style="margin: 0 0 8px 0; font-size: 20px;">Share Your Portfolio Report Card</h3>
-                    <p style="margin: 0 0 16px 0; opacity: 0.9; font-size: 14px;">Generate a beautiful report card and share with friends</p>
-                    <button class="btn btn-secondary" onclick="generateReportCard()" style="background: white; color: #667eea; border: none; font-weight: 700;">
-                        ✨ Generate Report Card
-                    </button>
-                </div>
                 
                 <section class="quick-actions mb-6">
                     <div class="grid grid-cols-3 gap-4">
@@ -1205,7 +1021,1555 @@
         </a>
     </nav>
     
-    <!-- All JavaScript logic is now in TypeScript modules -->
-    <!-- See /src/dashboard.ts for main controller -->
+    <script>
+        let portfolioData = null;
+        let holdingsData = [];
+        let currentView = 'home';
+        
+        // View Switching Function (Modern Mobile App Style)
+        function switchView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view-content').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected view
+            const targetView = document.getElementById(`${viewName}View`);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const activeNav = document.querySelector(`.nav-item[onclick*="${viewName}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            currentView = viewName;
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Load view-specific data if needed
+            if (viewName === 'portfolio' && portfolioData) {
+                renderHoldings(portfolioData.holdings);
+            }
+        }
+        
+        // Load portfolio data on page load
+        async function loadPortfolio() {
+            // Show skeleton loading immediately
+            showSkeletons();
+            
+            try {
+                // Simulate network delay for demo (remove in production)
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // Try to load from sessionStorage first, then localStorage
+                let cached = sessionStorage.getItem('portfolioData');
+                if (!cached) {
+                    cached = localStorage.getItem('portfolioData');
+                }
+                
+                if (cached) {
+                    portfolioData = JSON.parse(cached);
+                    console.log('📊 Portfolio loaded:', portfolioData);
+                    renderDashboard();
+                    return;
+                }
+                
+                // If no cached data, show empty state
+                showEmptyState();
+                
+            } catch (error) {
+                console.error('Error loading portfolio:', error);
+                errorHandler.handleAPIError(error, { feature: 'portfolio_load' });
+                showEmptyState();
+            }
+        }
+        
+        function showSkeletons() {
+            document.getElementById('portfolioSummary').innerHTML = SkeletonLoader.portfolioSummary();
+            document.getElementById('assetAllocation').innerHTML = SkeletonLoader.assetAllocation();
+            document.getElementById('holdingsGrid').innerHTML = SkeletonLoader.fundCards(3);
+        }
+        
+        function showEmptyState() {
+            document.getElementById('portfolioSummary').innerHTML = `
+                <div class="empty-state card">
+                    <div class="empty-icon">📊</div>
+                    <h2 class="empty-title">No Portfolio Data</h2>
+                    <p class="empty-desc">Upload your portfolio Excel file to get started with professional analytics</p>
+                    <button class="btn btn-primary btn-lg" onclick="window.location.href='/'">
+                        Upload Portfolio
+                    </button>
+                </div>
+            `;
+        }
+        
+        function renderDashboard() {
+            if (!portfolioData) return;
+            
+            // Calculate summary data
+            const summary = calculateSummary(portfolioData);
+            
+            // Render portfolio summary
+            const summaryComponent = new PortfolioSummary(summary);
+            document.getElementById('portfolioSummary').innerHTML = summaryComponent.render();
+            
+            // Render asset allocation
+            const allocationData = calculateAllocation(portfolioData);
+            const allocationComponent = new AssetAllocation(allocationData);
+            document.getElementById('assetAllocation').innerHTML = allocationComponent.render();
+            
+            // Render charts
+            renderAllocationChart(allocationData);
+            renderSparkline(summary.history);
+            
+            // Render holdings
+            renderHoldings(portfolioData.holdings);
+            
+            // Check for milestones
+            checkMilestones();
+        }
+        
+        function calculateSummary(data) {
+            const holdings = data.holdings || [];
+            
+            const total_value = holdings.reduce((sum, h) => sum + (h.current_value || 0), 0);
+            const invested_value = holdings.reduce((sum, h) => sum + (h.invested_value || 0), 0);
+            const total_return = total_value - invested_value;
+            const percentage_return = invested_value > 0 ? (total_return / invested_value) * 100 : 0;
+            
+            // Mock day change (in real app, would come from API)
+            const day_change = total_value * 0.0066;
+            const day_change_percent = 0.66;
+            
+            // Get upload timestamp
+            const uploadedAt = data.uploadedAt ? new Date(data.uploadedAt) : new Date();
+            const timeAgo = getTimeAgo(uploadedAt);
+            const uploadedDate = uploadedAt.toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            return {
+                total_value,
+                invested_value,
+                total_return,
+                percentage_return,
+                day_change,
+                day_change_percent,
+                uploadedAt,
+                timeAgo,
+                uploadedDate,
+                uploadedFileName: data.uploadedFileName || 'portfolio.xlsx',
+                history: [] // Would contain historical data for sparkline
+            };
+        }
+        
+        function calculateAllocation(data) {
+            const holdings = data.holdings || [];
+            const categoryMap = {};
+            
+            holdings.forEach(h => {
+                const cat = h.category || 'Others';
+                if (!categoryMap[cat]) {
+                    categoryMap[cat] = 0;
+                }
+                categoryMap[cat] += h.current_value || 0;
+            });
+            
+            const total = Object.values(categoryMap).reduce((a, b) => a + b, 0);
+            const categories = Object.entries(categoryMap).map(([name, amount]) => ({
+                name,
+                amount,
+                percentage: ((amount / total) * 100).toFixed(1)
+            }));
+            
+            return {
+                total_funds: holdings.length,
+                categories
+            };
+        }
+        
+        function renderHoldings(holdings) {
+            holdingsData = holdings || [];
+            
+            if (holdingsData.length === 0) {
+                document.getElementById('holdingsGrid').innerHTML = `
+                    <div class="card text-center p-6">
+                        <p class="text-secondary">No holdings found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const html = holdingsData.map(holding => {
+                const card = new FundCard(holding);
+                return card.render();
+            }).join('');
+            
+            document.getElementById('holdingsGrid').innerHTML = html;
+        }
+        
+        function renderAllocationChart(data) {
+            const canvas = document.getElementById('allocationDonut');
+            if (!canvas) return;
+            
+            const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+            
+            new Chart(canvas, {
+                type: 'doughnut',
+                data: {
+                    labels: data.categories.map(c => c.name),
+                    datasets: [{
+                        data: data.categories.map(c => c.amount),
+                        backgroundColor: colors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1E293B',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed;
+                                    const label = context.label;
+                                    const percentage = ((value / context.dataset.data.reduce((a,b) => a+b, 0)) * 100).toFixed(1);
+                                    return `${label}: ₹${(value/100000).toFixed(1)}L (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function renderSparkline(history) {
+            // Mock sparkline - in real app would use actual historical data
+            const canvas = document.getElementById('miniSparkline');
+            if (!canvas) return;
+            
+            const mockData = Array.from({length: 30}, (_, i) => 100000 + Math.random() * 50000);
+            
+            new Chart(canvas, {
+                type: 'line',
+                data: {
+                    labels: mockData.map((_, i) => i),
+                    datasets: [{
+                        data: mockData,
+                        borderColor: 'rgba(255, 255, 255, 0.6)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    }
+                }
+            });
+        }
+        
+        function refreshPortfolio() {
+            loadPortfolio();
+            toast.success('Portfolio refreshed!');
+        }
+        
+        function sortHoldings(sortBy) {
+            if (sortBy === 'value') {
+                holdingsData.sort((a, b) => (b.current_value || 0) - (a.current_value || 0));
+            } else if (sortBy === 'returns') {
+                holdingsData.sort((a, b) => (b.percentage_return || 0) - (a.percentage_return || 0));
+            } else if (sortBy === 'name') {
+                holdingsData.sort((a, b) => (a.fund_name || '').localeCompare(b.fund_name || ''));
+            }
+            renderHoldings(holdingsData);
+        }
+        
+        function filterHoldings(category) {
+            if (category === 'all') {
+                renderHoldings(portfolioData.holdings);
+            } else {
+                const filtered = portfolioData.holdings.filter(h => 
+                    h.category.toLowerCase().includes(category)
+                );
+                renderHoldings(filtered);
+            }
+        }
+        
+        // Search Functionality
+        let searchTimeout = null;
+        
+        function searchFunds(query) {
+            const clearBtn = document.querySelector('.search-clear');
+            
+            // Show/hide clear button
+            if (query.length > 0) {
+                clearBtn.style.display = 'flex';
+            } else {
+                clearBtn.style.display = 'none';
+            }
+            
+            // Debounce search
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(query);
+            }, 200);
+        }
+        
+        function performSearch(query) {
+            if (!portfolioData || !portfolioData.holdings) return;
+            
+            const normalizedQuery = query.toLowerCase().trim();
+            
+            if (normalizedQuery === '') {
+                renderHoldings(portfolioData.holdings);
+                document.getElementById('noResults').style.display = 'none';
+                return;
+            }
+            
+            const filtered = portfolioData.holdings.filter(h => {
+                const fundName = (h.fund_name || '').toLowerCase();
+                const category = (h.category || '').toLowerCase();
+                const amc = (h.amc || '').toLowerCase();
+                
+                return fundName.includes(normalizedQuery) || 
+                       category.includes(normalizedQuery) ||
+                       amc.includes(normalizedQuery);
+            });
+            
+            if (filtered.length === 0) {
+                document.getElementById('holdingsGrid').innerHTML = '';
+                document.getElementById('noResults').style.display = 'block';
+            } else {
+                document.getElementById('noResults').style.display = 'none';
+                renderHoldings(filtered);
+            }
+            
+            // Haptic feedback on search
+            if (navigator.vibrate) {
+                navigator.vibrate(5);
+            }
+        }
+        
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            searchInput.focus();
+            document.querySelector('.search-clear').style.display = 'none';
+            document.getElementById('noResults').style.display = 'none';
+            
+            if (portfolioData && portfolioData.holdings) {
+                renderHoldings(portfolioData.holdings);
+            }
+        }
+        
+        function showOverlapAnalysis() {
+            switchView('analyze');
+        }
+        
+        function runOverlapAnalysis() {
+            if (portfolioData && portfolioData.holdings) {
+                const fundNames = [...new Set(portfolioData.holdings.map(h => h.fund_name))];
+                window.overlapAnalyzer.analyzePortfolio(fundNames);
+            } else {
+                toast.warning('Please upload a portfolio first');
+            }
+        }
+        
+        function showPerformance() {
+            toast.info('Performance analysis coming soon!');
+        }
+        
+        function showRebalancing() {
+            toast.info('Rebalancing calculator coming soon!');
+        }
+        
+        function viewFundDetails(fundName) {
+            toast.info(`Viewing details for ${fundName}`);
+        }
+        
+        function investMore(fundName) {
+            toast.info(`Invest more in ${fundName} - Coming soon!`);
+        }
+        
+        function rebalancePortfolio() {
+            toast.info('Rebalancing feature coming soon!');
+        }
+        
+        // Modern Mobile Features
+        
+        // Pull-to-Refresh
+        let startY = 0;
+        let pulling = false;
+        const pullThreshold = 80;
+        
+        document.addEventListener('touchstart', (e) => {
+            if (window.scrollY === 0) {
+                startY = e.touches[0].pageY;
+                pulling = true;
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (pulling && window.scrollY === 0) {
+                const currentY = e.touches[0].pageY;
+                const pullDistance = currentY - startY;
+                
+                if (pullDistance > pullThreshold) {
+                    pulling = false;
+                    refreshPortfolio();
+                }
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchend', () => {
+            pulling = false;
+        }, { passive: true });
+        
+        // Swipe Navigation (Left/Right)
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const swipeThreshold = 100;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) < swipeThreshold) return;
+            
+            const views = ['home', 'portfolio', 'analyze', 'profile'];
+            const currentIndex = views.indexOf(currentView);
+            
+            if (swipeDistance > 0 && currentIndex > 0) {
+                // Swipe right - go to previous view
+                switchView(views[currentIndex - 1]);
+            } else if (swipeDistance < 0 && currentIndex < views.length - 1) {
+                // Swipe left - go to next view
+                switchView(views[currentIndex + 1]);
+            }
+        }
+        
+        // Long Press Context Menu
+        let longPressTimer = null;
+        let longPressTarget = null;
+        const longPressDuration = 500; // ms
+        
+        function setupLongPress() {
+            document.addEventListener('touchstart', handleLongPressStart, { passive: true });
+            document.addEventListener('touchend', handleLongPressEnd, { passive: true });
+            document.addEventListener('touchmove', handleLongPressCancel, { passive: true });
+            
+            // For desktop (right-click simulation)
+            document.addEventListener('contextmenu', handleContextMenu);
+        }
+        
+        function handleLongPressStart(e) {
+            const fundCard = e.target.closest('.fund-card');
+            if (!fundCard) return;
+            
+            longPressTarget = fundCard;
+            fundCard.classList.add('pressing');
+            
+            longPressTimer = setTimeout(() => {
+                // Haptic feedback
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                const fundName = fundCard.dataset.fund;
+                const rect = fundCard.getBoundingClientRect();
+                showContextMenu(fundName, e.touches[0].clientX, e.touches[0].clientY);
+                
+                fundCard.classList.remove('pressing');
+            }, longPressDuration);
+        }
+        
+        function handleLongPressEnd() {
+            clearTimeout(longPressTimer);
+            if (longPressTarget) {
+                longPressTarget.classList.remove('pressing');
+                longPressTarget = null;
+            }
+        }
+        
+        function handleLongPressCancel() {
+            clearTimeout(longPressTimer);
+            if (longPressTarget) {
+                longPressTarget.classList.remove('pressing');
+                longPressTarget = null;
+            }
+        }
+        
+        function handleContextMenu(e) {
+            const fundCard = e.target.closest('.fund-card');
+            if (fundCard) {
+                e.preventDefault();
+                const fundName = fundCard.dataset.fund;
+                showContextMenu(fundName, e.clientX, e.clientY);
+            }
+        }
+        
+        function showContextMenu(fundName, x, y) {
+            // Remove existing menu
+            hideContextMenu();
+            
+            // Create overlay to capture outside clicks
+            const overlay = document.createElement('div');
+            overlay.className = 'context-menu-overlay';
+            overlay.onclick = hideContextMenu;
+            document.body.appendChild(overlay);
+            
+            // Create context menu
+            const menu = document.createElement('div');
+            menu.className = 'context-menu';
+            menu.innerHTML = `
+                <div class="context-menu-item" onclick="viewFundDetails('${fundName}'); hideContextMenu();">
+                    <span>📊</span> View Details
+                </div>
+                <div class="context-menu-item" onclick="investMore('${fundName}'); hideContextMenu();">
+                    <span>💰</span> Invest More
+                </div>
+                <div class="context-menu-item" onclick="startSIP('${fundName}'); hideContextMenu();">
+                    <span>🔄</span> Start SIP
+                </div>
+                <div class="context-menu-divider"></div>
+                <div class="context-menu-item" onclick="shareFund('${fundName}'); hideContextMenu();">
+                    <span>📤</span> Share
+                </div>
+                <div class="context-menu-item" onclick="compareFund('${fundName}'); hideContextMenu();">
+                    <span>⚖️</span> Compare
+                </div>
+                <div class="context-menu-divider"></div>
+                <div class="context-menu-item danger" onclick="removeFund('${fundName}'); hideContextMenu();">
+                    <span>🗑️</span> Remove
+                </div>
+            `;
+            
+            // Position menu
+            const menuWidth = 200;
+            const menuHeight = 280;
+            
+            // Keep menu in viewport
+            let posX = x;
+            let posY = y;
+            
+            if (x + menuWidth > window.innerWidth) {
+                posX = window.innerWidth - menuWidth - 10;
+            }
+            if (y + menuHeight > window.innerHeight) {
+                posY = window.innerHeight - menuHeight - 10;
+            }
+            
+            menu.style.left = `${posX}px`;
+            menu.style.top = `${posY}px`;
+            
+            document.body.appendChild(menu);
+        }
+        
+        function hideContextMenu() {
+            const menu = document.querySelector('.context-menu');
+            const overlay = document.querySelector('.context-menu-overlay');
+            if (menu) menu.remove();
+            if (overlay) overlay.remove();
+        }
+        
+        function startSIP(fundName) {
+            toast.info(`Starting SIP for ${fundName} - Coming soon!`);
+        }
+        
+        function shareFund(fundName) {
+            if (navigator.share) {
+                navigator.share({
+                    title: `Check out ${fundName}`,
+                    text: `I'm investing in ${fundName} - Track it on MFHelper!`,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                toast.info(`Share: ${fundName}`);
+            }
+        }
+        
+        function compareFund(fundName) {
+            toast.info(`Comparing ${fundName} - Coming soon!`);
+        }
+        
+        function removeFund(fundName) {
+            toast.warning(`Removed ${fundName} from tracking`);
+        }
+        
+        // Initialize long press on page load
+        setupLongPress();
+        
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-mode');
+            
+            // Save preference
+            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+            
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(10);
+            }
+            
+            toast.success(isDark ? 'Dark mode enabled' : 'Light mode enabled');
+        }
+        
+        // Initialize dark mode from preference
+        function initDarkMode() {
+            const savedPref = localStorage.getItem('darkMode');
+            
+            // Check saved preference first
+            if (savedPref === 'true') {
+                document.body.classList.add('dark-mode');
+            } else if (savedPref === 'false') {
+                document.body.classList.remove('dark-mode');
+            } else {
+                // Fall back to system preference
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark-mode');
+                }
+            }
+        }
+        
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (localStorage.getItem('darkMode') === null) {
+                document.body.classList.toggle('dark-mode', e.matches);
+            }
+        });
+        
+        // Initialize dark mode immediately
+        initDarkMode();
+        
+        // Haptic Feedback Utility
+        const haptic = {
+            light: () => navigator.vibrate && navigator.vibrate(5),
+            medium: () => navigator.vibrate && navigator.vibrate(15),
+            heavy: () => navigator.vibrate && navigator.vibrate(30),
+            success: () => navigator.vibrate && navigator.vibrate([10, 50, 10]),
+            error: () => navigator.vibrate && navigator.vibrate([50, 50, 50]),
+            warning: () => navigator.vibrate && navigator.vibrate([30, 30])
+        };
+        
+        // Add haptic to all buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.btn, .nav-item, button, .fund-card')) {
+                haptic.light();
+            }
+        });
+        
+        // Add haptic to view switching
+        const originalSwitchView = switchView;
+        switchView = function(viewName) {
+            haptic.medium();
+            originalSwitchView(viewName);
+        };
+        
+        // Export haptic for use elsewhere
+        window.haptic = haptic;
+        
+        // Success Animations
+        const celebrations = {
+            // Confetti effect
+            confetti: () => {
+                const container = document.createElement('div');
+                container.className = 'confetti-container';
+                document.body.appendChild(container);
+                
+                const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#F38181'];
+                
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 200 - 100}px`;
+                    confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    container.appendChild(confetti);
+                }
+                
+                setTimeout(() => container.remove(), 1500);
+                haptic.success();
+            },
+            
+            // Success modal
+            showSuccess: (title, message, callback) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'success-overlay';
+                overlay.innerHTML = `
+                    <div class="success-modal">
+                        <div class="success-icon">✓</div>
+                        <h2 class="success-title">${title}</h2>
+                        <p class="success-message">${message}</p>
+                        <button class="btn btn-primary" onclick="this.closest('.success-overlay').remove()">
+                            Continue
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+                
+                celebrations.confetti();
+                
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.remove();
+                        if (callback) callback();
+                    }
+                });
+            },
+            
+            // Milestone badge
+            showMilestone: (text) => {
+                const badge = document.createElement('div');
+                badge.className = 'milestone-badge';
+                badge.innerHTML = `🎉 ${text}`;
+                badge.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                `;
+                document.body.appendChild(badge);
+                
+                haptic.success();
+                
+                setTimeout(() => {
+                    badge.style.transition = 'opacity 0.5s ease';
+                    badge.style.opacity = '0';
+                    setTimeout(() => badge.remove(), 500);
+                }, 3000);
+            }
+        };
+        
+        window.celebrations = celebrations;
+        
+        // Check for milestones on portfolio load
+        function checkMilestones() {
+            if (!portfolioData) return;
+            
+            const summary = calculateSummary(portfolioData);
+            const total = summary.total_value;
+            
+            // Example milestones
+            const milestones = [
+                { value: 100000, text: 'First ₹1 Lakh!' },
+                { value: 500000, text: '₹5 Lakh Portfolio!' },
+                { value: 1000000, text: '₹10 Lakh Club!' },
+                { value: 2500000, text: '₹25 Lakh Investor!' },
+                { value: 5000000, text: '₹50 Lakh Wealth!' },
+                { value: 10000000, text: 'Crorepati Status! 🎉' }
+            ];
+            
+            const reachedMilestones = milestones.filter(m => total >= m.value);
+            const latestMilestone = reachedMilestones[reachedMilestones.length - 1];
+            
+            // Check if this is a new milestone
+            const lastShownMilestone = localStorage.getItem('lastMilestone');
+            if (latestMilestone && latestMilestone.value.toString() !== lastShownMilestone) {
+                localStorage.setItem('lastMilestone', latestMilestone.value.toString());
+                setTimeout(() => celebrations.showMilestone(latestMilestone.text), 1000);
+            }
+        }
+        
+        // ===========================================
+        // ONBOARDING FLOW
+        // ===========================================
+        
+        const onboardingSteps = [
+            {
+                icon: '👋',
+                title: 'Welcome to MFHelper!',
+                desc: 'Your personal mutual fund portfolio analyzer. Track, analyze, and optimize your investments.'
+            },
+            {
+                icon: '📱',
+                title: 'Swipe to Navigate',
+                desc: 'Swipe left or right to switch between Home, Portfolio, and Analysis views. Tap the bottom icons too!'
+            },
+            {
+                icon: '👆',
+                title: 'Long Press for Actions',
+                desc: 'Press and hold any fund card to see quick actions like View Details, Invest More, or Share.'
+            },
+            {
+                icon: '🌙',
+                title: 'Dark Mode Available',
+                desc: 'Tap the sun/moon icon in the header to switch between light and dark themes.'
+            },
+            {
+                icon: '🎉',
+                title: 'You\'re All Set!',
+                desc: 'Upload your portfolio to get started with professional analytics and insights.'
+            }
+        ];
+        
+        let currentOnboardingStep = 0;
+        
+        function showOnboarding() {
+            const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+            if (hasSeenOnboarding) return;
+            
+            renderOnboardingStep();
+        }
+        
+        function renderOnboardingStep() {
+            const step = onboardingSteps[currentOnboardingStep];
+            const isLast = currentOnboardingStep === onboardingSteps.length - 1;
+            const isFirst = currentOnboardingStep === 0;
+            
+            // Remove existing overlay
+            const existing = document.querySelector('.onboarding-overlay');
+            if (existing) existing.remove();
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'onboarding-overlay';
+            overlay.innerHTML = `
+                <div class="onboarding-card">
+                    <div class="onboarding-icon">${step.icon}</div>
+                    <h2 class="onboarding-title">${step.title}</h2>
+                    <p class="onboarding-desc">${step.desc}</p>
+                    
+                    <div class="onboarding-progress">
+                        ${onboardingSteps.map((_, i) => `
+                            <div class="onboarding-dot ${i === currentOnboardingStep ? 'active' : ''}"></div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="onboarding-actions">
+                        ${isFirst ? `
+                            <button class="btn btn-secondary" onclick="skipOnboarding()">Skip</button>
+                        ` : `
+                            <button class="btn btn-secondary" onclick="prevOnboardingStep()">Back</button>
+                        `}
+                        <button class="btn btn-primary" onclick="${isLast ? 'completeOnboarding()' : 'nextOnboardingStep()'}">
+                            ${isLast ? 'Get Started' : 'Next'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            haptic.light();
+        }
+        
+        function nextOnboardingStep() {
+            if (currentOnboardingStep < onboardingSteps.length - 1) {
+                currentOnboardingStep++;
+                renderOnboardingStep();
+            }
+        }
+        
+        function prevOnboardingStep() {
+            if (currentOnboardingStep > 0) {
+                currentOnboardingStep--;
+                renderOnboardingStep();
+            }
+        }
+        
+        function skipOnboarding() {
+            completeOnboarding();
+        }
+        
+        function completeOnboarding() {
+            localStorage.setItem('hasSeenOnboarding', 'true');
+            const overlay = document.querySelector('.onboarding-overlay');
+            if (overlay) {
+                overlay.style.animation = 'fadeIn 0.2s ease reverse';
+                setTimeout(() => overlay.remove(), 200);
+            }
+            haptic.success();
+            toast.success('Welcome aboard! 🎉');
+        }
+        
+        // ===========================================
+        // PROGRESSIVE DISCLOSURE - Fund Detail View
+        // ===========================================
+        
+        function viewFundDetails(fundName) {
+            const fund = holdingsData.find(h => h.fund_name === fundName);
+            if (!fund) return;
+            
+            haptic.medium();
+            
+            const modal = document.createElement('div');
+            modal.className = 'fund-detail-modal';
+            modal.id = 'fundDetailModal';
+            
+            const gainClass = (fund.percentage_return || 0) >= 0 ? 'positive' : 'negative';
+            const gain = (fund.current_value || 0) - (fund.invested_value || 0);
+            
+            modal.innerHTML = `
+                <div class="fund-detail-header">
+                    <button class="fund-detail-back" onclick="closeFundDetail()">←</button>
+                    <div style="flex: 1;">
+                        <h2 style="font-size: 16px; margin: 0;">${fund.fund_name}</h2>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">${fund.amc || ''}</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="shareFund('${fundName}')">Share</button>
+                </div>
+                
+                <div class="fund-detail-content">
+                    <div class="fund-detail-hero">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-4);">
+                            <div>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-1);">Current Value</p>
+                                <p style="font-size: 28px; font-weight: 700; margin: 0;">₹${formatNumber(fund.current_value || 0)}</p>
+                            </div>
+                            <div class="badge badge-${gainClass === 'positive' ? 'success' : 'danger'}">
+                                ${gainClass === 'positive' ? '↗' : '↘'} ${(fund.percentage_return || 0).toFixed(2)}%
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                            <div>
+                                <p style="font-size: 13px; color: var(--text-secondary);">Invested</p>
+                                <p style="font-size: 18px; font-weight: 600;">₹${formatNumber(fund.invested_value || 0)}</p>
+                            </div>
+                            <div>
+                                <p style="font-size: 13px; color: var(--text-secondary);">Total Gain/Loss</p>
+                                <p style="font-size: 18px; font-weight: 600;" class="text-${gainClass === 'positive' ? 'success' : 'danger'}">
+                                    ${gainClass === 'positive' ? '+' : '-'}₹${formatNumber(Math.abs(gain))}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fund-detail-section">
+                        <h3>Fund Information</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Category</span>
+                            <span class="detail-value">${fund.category || 'N/A'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">AMC</span>
+                            <span class="detail-value">${fund.amc || 'N/A'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Units</span>
+                            <span class="detail-value">${(fund.units || 0).toFixed(3)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">NAV</span>
+                            <span class="detail-value">₹${(fund.nav || 0).toFixed(2)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="fund-detail-section">
+                        <h3>Returns</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Absolute Return</span>
+                            <span class="detail-value ${gainClass === 'positive' ? 'text-success' : 'text-danger'}">${(fund.percentage_return || 0).toFixed(2)}%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">XIRR</span>
+                            <span class="detail-value">Coming soon</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4);">
+                        <button class="btn btn-secondary" onclick="startSIP('${fundName}')">Start SIP</button>
+                        <button class="btn btn-primary" onclick="investMore('${fundName}')">Invest More</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFundDetail() {
+            const modal = document.getElementById('fundDetailModal');
+            if (modal) {
+                modal.style.animation = 'slideUp 0.3s ease reverse';
+                setTimeout(() => {
+                    modal.remove();
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+            haptic.light();
+        }
+        
+        function formatNumber(num) {
+            if (num >= 10000000) return (num / 10000000).toFixed(2) + ' Cr';
+            if (num >= 100000) return (num / 100000).toFixed(2) + ' L';
+            if (num >= 1000) return (num / 1000).toFixed(1) + ' K';
+            return num.toFixed(0);
+        }
+        
+        // ===========================================
+        // SHARE FUNCTIONALITY
+        // ===========================================
+        
+        function showShareModal() {
+            haptic.medium();
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'context-menu-overlay';
+            overlay.onclick = hideShareModal;
+            document.body.appendChild(overlay);
+            
+            const modal = document.createElement('div');
+            modal.className = 'share-modal';
+            modal.id = 'shareModal';
+            
+            modal.innerHTML = `
+                <h2 style="margin-bottom: var(--space-4);">Share Portfolio</h2>
+                
+                <div class="share-preview" id="sharePreview">
+                    <div style="text-align: center; padding: var(--space-4);">
+                        <p style="font-size: 13px; color: var(--text-secondary);">Total Portfolio</p>
+                        <p style="font-size: 28px; font-weight: 700;">₹${portfolioData ? formatNumber(calculateSummary(portfolioData).total_value) : '0'}</p>
+                        <p style="color: var(--accent-green); font-size: 14px;">MFHelper Portfolio Tracker</p>
+                    </div>
+                </div>
+                
+                <div class="share-options">
+                    <button class="share-option" onclick="shareViaWhatsApp()">
+                        <div class="share-option-icon" style="background: #25D366;">📱</div>
+                        <span class="share-option-label">WhatsApp</span>
+                    </button>
+                    <button class="share-option" onclick="shareViaTwitter()">
+                        <div class="share-option-icon" style="background: #1DA1F2;">🐦</div>
+                        <span class="share-option-label">Twitter</span>
+                    </button>
+                    <button class="share-option" onclick="copyShareLink()">
+                        <div class="share-option-icon" style="background: var(--bg-tertiary);">🔗</div>
+                        <span class="share-option-label">Copy Link</span>
+                    </button>
+                    <button class="share-option" onclick="downloadAsImage()">
+                        <div class="share-option-icon" style="background: var(--primary-blue);">📷</div>
+                        <span class="share-option-label">Save Image</span>
+                    </button>
+                </div>
+                
+                <button class="btn btn-secondary" style="width: 100%;" onclick="hideShareModal()">Cancel</button>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function hideShareModal() {
+            const modal = document.getElementById('shareModal');
+            const overlay = document.querySelector('.context-menu-overlay');
+            if (modal) {
+                modal.style.animation = 'slideUp 0.3s ease reverse';
+                setTimeout(() => modal.remove(), 300);
+            }
+            if (overlay) overlay.remove();
+        }
+        
+        async function downloadAsImage() {
+            if (typeof html2canvas === 'undefined') {
+                toast.error('Image export not available');
+                return;
+            }
+            
+            toast.info('Generating image...');
+            
+            try {
+                const preview = document.getElementById('sharePreview');
+                const canvas = await html2canvas(preview, {
+                    backgroundColor: '#ffffff',
+                    scale: 2
+                });
+                
+                const link = document.createElement('a');
+                link.download = 'mfhelper-portfolio.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                haptic.success();
+                toast.success('Image saved!');
+            } catch (e) {
+                toast.error('Failed to generate image');
+            }
+        }
+        
+        function shareViaWhatsApp() {
+            const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
+            const text = `My portfolio is worth ₹${formatNumber(summary.total_value)}! Track yours at MFHelper 📊`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+            hideShareModal();
+        }
+        
+        function shareViaTwitter() {
+            const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
+            const text = `My mutual fund portfolio is worth ₹${formatNumber(summary.total_value)}! Tracking with #MFHelper 📊`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            hideShareModal();
+        }
+        
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                toast.success('Link copied!');
+                haptic.success();
+            }).catch(() => {
+                toast.error('Failed to copy link');
+            });
+            hideShareModal();
+        }
+        
+        // ===========================================
+        // BETTER ERROR STATES
+        // ===========================================
+        
+        function showErrorState(title, message, retryAction) {
+            return `
+                <div class="error-state card">
+                    <div class="error-icon">⚠️</div>
+                    <h3 class="error-title">${title}</h3>
+                    <p class="error-message">${message}</p>
+                    <div class="error-actions">
+                        ${retryAction ? `<button class="btn btn-primary" onclick="${retryAction}">Try Again</button>` : ''}
+                        <button class="btn btn-secondary" onclick="window.location.href='/'">Go Home</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showNetworkError() {
+            document.getElementById('portfolioSummary').innerHTML = showErrorState(
+                'Connection Lost',
+                'Unable to load your portfolio. Please check your internet connection.',
+                'loadPortfolio()'
+            );
+        }
+        
+        function showDataError() {
+            document.getElementById('portfolioSummary').innerHTML = showErrorState(
+                'Something Went Wrong',
+                'We couldn\'t load your portfolio data. Please try again.',
+                'loadPortfolio()'
+            );
+        }
+        
+        // ===========================================
+        // OPTIMISTIC UI UPDATES
+        // ===========================================
+        
+        const optimisticUI = {
+            // Update UI immediately, then sync
+            updateFund: async (fundName, updates) => {
+                // Find and update locally first
+                const fundIndex = holdingsData.findIndex(h => h.fund_name === fundName);
+                if (fundIndex === -1) return;
+                
+                // Store original for rollback
+                const original = { ...holdingsData[fundIndex] };
+                
+                // Apply optimistic update
+                holdingsData[fundIndex] = { ...holdingsData[fundIndex], ...updates };
+                renderHoldings(holdingsData);
+                
+                haptic.light();
+                toast.success('Updated!');
+                
+                // Sync with backend (when available)
+                try {
+                    // await api.updateFund(fundName, updates);
+                    // Success - already showing updated UI
+                } catch (error) {
+                    // Rollback on failure
+                    holdingsData[fundIndex] = original;
+                    renderHoldings(holdingsData);
+                    toast.error('Update failed. Reverted changes.');
+                    haptic.error();
+                }
+            },
+            
+            // Remove with undo
+            removeFundWithUndo: (fundName) => {
+                const fundIndex = holdingsData.findIndex(h => h.fund_name === fundName);
+                if (fundIndex === -1) return;
+                
+                const removed = holdingsData.splice(fundIndex, 1)[0];
+                renderHoldings(holdingsData);
+                
+                haptic.warning();
+                
+                // Show undo toast
+                const undoToast = toast.warning(`Removed ${fundName}`, {
+                    duration: 5000,
+                    action: {
+                        text: 'Undo',
+                        onClick: () => {
+                            holdingsData.splice(fundIndex, 0, removed);
+                            renderHoldings(holdingsData);
+                            toast.success('Restored!');
+                            haptic.success();
+                        }
+                    }
+                });
+            }
+        };
+        
+        window.optimisticUI = optimisticUI;
+        
+        // Update removeFund to use optimistic UI
+        function removeFund(fundName) {
+            optimisticUI.removeFundWithUndo(fundName);
+        }
+        
+        // Profile Functions
+        function exportData() {
+            if (!portfolioData) {
+                toast.warning('No portfolio data to export');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(portfolioData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'mfhelper-portfolio.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            haptic.success();
+            toast.success('Portfolio exported!');
+        }
+        
+        function showOnboardingManual() {
+            localStorage.removeItem('hasSeenOnboarding');
+            currentOnboardingStep = 0;
+            renderOnboardingStep();
+        }
+        
+        let hapticsEnabled = true;
+        
+        function toggleHaptics(enabled) {
+            hapticsEnabled = enabled;
+            localStorage.setItem('hapticsEnabled', enabled ? 'true' : 'false');
+            
+            if (enabled) {
+                haptic.success();
+                toast.success('Haptics enabled');
+            } else {
+                toast.success('Haptics disabled');
+            }
+        }
+        
+        // Override haptic to check if enabled
+        const originalHaptic = { ...haptic };
+        Object.keys(haptic).forEach(key => {
+            haptic[key] = () => {
+                if (hapticsEnabled) {
+                    originalHaptic[key]();
+                }
+            };
+        });
+        
+        // Load haptics preference
+        const savedHaptics = localStorage.getItem('hapticsEnabled');
+        if (savedHaptics === 'false') {
+            hapticsEnabled = false;
+        }
+        
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                sessionStorage.clear();
+                localStorage.removeItem('portfolioData');
+                localStorage.removeItem('lastMilestone');
+                localStorage.removeItem('hasSeenOnboarding');
+                
+                haptic.warning();
+                toast.success('All data cleared');
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+        
+        // ===========================================
+        // ANALYTICS - Performance Charts & Tables
+        // ===========================================
+        
+        let rebalanceMode = 'rebalance';
+        
+        function renderAnalytics() {
+            if (!portfolioData || !portfolioData.holdings) return;
+            
+            renderPerformanceChart(portfolioData.holdings);
+            renderRiskChart(portfolioData.holdings);
+            renderRiskTable(portfolioData.holdings);
+            initRebalanceCalculator();
+        }
+        
+        function renderPerformanceChart(holdings) {
+            const sorted = [...holdings].sort((a, b) => (b.percentage_return || 0) - (a.percentage_return || 0));
+            
+            const trace = {
+                x: sorted.map(h => h.percentage_return || 0),
+                y: sorted.map(h => (h.fund_name || 'Unknown').substring(0, 25)),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: sorted.map(h => (h.percentage_return || 0) > 0 ? '#00ff88' : '#ff4757'),
+                    line: { width: 0 }
+                },
+                text: sorted.map(h => `${(h.percentage_return || 0).toFixed(2)}%`),
+                textposition: 'outside',
+                hovertemplate: '<b>%{y}</b><br>Return: %{x:.2f}%<br>Invested: ₹%{customdata[0]}<br>Current: ₹%{customdata[1]}<extra></extra>',
+                customdata: sorted.map(h => [
+                    (h.invested_value || 0).toFixed(0),
+                    (h.current_value || 0).toFixed(0)
+                ])
+            };
+            
+            const layout = {
+                margin: { l: 150, r: 50, t: 20, b: 50 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#8892b0', size: 11 },
+                xaxis: { title: 'Return %', gridcolor: '#1e293b', color: '#8892b0' },
+                yaxis: { gridcolor: '#1e293b' },
+                height: Math.max(400, sorted.length * 35)
+            };
+            
+            Plotly.newPlot('performanceChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+        
+        function renderRiskChart(holdings) {
+            const trace = {
+                x: holdings.map(h => h.percentage_return || 0),
+                y: holdings.map(h => (h.return_5y || 0) - (h.percentage_return || 0)),
+                mode: 'markers+text',
+                marker: {
+                    size: holdings.map(h => Math.sqrt((h.current_value || 0) / 10000)),
+                    color: holdings.map(h => (h.percentage_return || 0) > 0 ? '#00ff88' : '#ff4757'),
+                    line: { width: 1, color: '#fff' }
+                },
+                text: holdings.map(h => (h.fund_name || '').substring(0, 15)),
+                textposition: 'top center',
+                textfont: { size: 9, color: '#8892b0' },
+                hovertemplate: '<b>%{text}</b><br>Current Return: %{x:.2f}%<br>Alpha: %{y:.2f}%<br>Value: ₹%{customdata}<extra></extra>',
+                customdata: holdings.map(h => (h.current_value || 0).toFixed(0))
+            };
+            
+            const layout = {
+                margin: { l: 50, r: 50, t: 20, b: 50 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#8892b0' },
+                xaxis: { title: 'Portfolio Return %', gridcolor: '#1e293b', zeroline: true, zerolinecolor: '#475569' },
+                yaxis: { title: 'Alpha (Outperformance)', gridcolor: '#1e293b', zeroline: true, zerolinecolor: '#475569' },
+                height: 400
+            };
+            
+            Plotly.newPlot('riskChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+        
+        function renderRiskTable(holdings) {
+            const tbody = document.getElementById('riskTableBody');
+            tbody.innerHTML = holdings.map(h => `
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 12px; color: var(--text-primary);">${h.fund_name || 'Unknown'}</td>
+                    <td style="padding: 12px; color: var(--text-secondary); font-size: 0.85rem;">${h.category || '-'}</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">₹${((h.invested_value || 0) / 1000).toFixed(0)}K</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-primary); font-weight: 600;">₹${((h.current_value || 0) / 1000).toFixed(0)}K</td>
+                    <td style="padding: 12px; text-align: right; color: ${(h.percentage_return || 0) >= 0 ? '#00ff88' : '#ff4757'}; font-weight: 600;">${(h.percentage_return || 0).toFixed(2)}%</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${((h.return_5y || 0) - (h.percentage_return || 0)).toFixed(1)}%</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${(h.return_1y || 0).toFixed(1)}%</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${(h.return_3y || 0).toFixed(1)}%</td>
+                </tr>
+            `).join('');
+        }
+        
+        function initRebalanceCalculator() {
+            if (!portfolioData || !portfolioData.holdings) return;
+            
+            const holdings = portfolioData.holdings;
+            const total = holdings.reduce((sum, h) => sum + (h.current_value || 0), 0);
+            
+            // Calculate current allocation
+            const cats = { large: 0, mid: 0, small: 0 };
+            holdings.forEach(h => {
+                const cat = (h.category || '').toLowerCase();
+                const val = h.current_value || 0;
+                if (cat.includes('large')) cats.large += val;
+                else if (cat.includes('mid')) cats.mid += val;
+                else if (cat.includes('small')) cats.small += val;
+            });
+            
+            const current = {
+                large: ((cats.large / total) * 100).toFixed(1),
+                mid: ((cats.mid / total) * 100).toFixed(1),
+                small: ((cats.small / total) * 100).toFixed(1)
+            };
+            
+            document.getElementById('largeCurrent').textContent = `Current: ${current.large}%`;
+            document.getElementById('midCurrent').textContent = `Current: ${current.mid}%`;
+            document.getElementById('smallCurrent').textContent = `Current: ${current.small}%`;
+            
+            updateRebalance();
+        }
+        
+        function setRebalanceMode(mode) {
+            rebalanceMode = mode;
+            document.getElementById('modeRebalance').className = mode === 'rebalance' ? 'btn btn-primary' : 'btn btn-secondary';
+            document.getElementById('modeFresh').className = mode === 'fresh' ? 'btn btn-primary' : 'btn btn-secondary';
+            
+            const desc = mode === 'rebalance' 
+                ? 'Sell from overweight categories, buy in underweight (may have tax implications)'
+                : 'Add fresh money to underweight categories without selling anything (tax-free)';
+            document.getElementById('modeDescription').textContent = desc;
+            
+            updateRebalance();
+        }
+        
+        function updateRebalance() {
+            if (!portfolioData) return;
+            
+            const largeTarget = parseInt(document.getElementById('largeSlider').value);
+            const midTarget = parseInt(document.getElementById('midSlider').value);
+            const smallTarget = parseInt(document.getElementById('smallSlider').value);
+            
+            document.getElementById('largeTarget').textContent = `${largeTarget}%`;
+            document.getElementById('midTarget').textContent = `${midTarget}%`;
+            document.getElementById('smallTarget').textContent = `${smallTarget}%`;
+            
+            const holdings = portfolioData.holdings;
+            const total = holdings.reduce((sum, h) => sum + (h.current_value || 0), 0);
+            
+            // Calculate current allocation
+            const cats = { large: 0, mid: 0, small: 0 };
+            holdings.forEach(h => {
+                const cat = (h.category || '').toLowerCase();
+                const val = h.current_value || 0;
+                if (cat.includes('large')) cats.large += val;
+                else if (cat.includes('mid')) cats.mid += val;
+                else if (cat.includes('small')) cats.small += val;
+            });
+            
+            const currentPct = {
+                large: (cats.large / total) * 100,
+                mid: (cats.mid / total) * 100,
+                small: (cats.small / total) * 100
+            };
+            
+            const diff = {
+                large: largeTarget - currentPct.large,
+                mid: midTarget - currentPct.mid,
+                small: smallTarget - currentPct.small
+            };
+            
+            document.getElementById('largeDiff').textContent = `${diff.large > 0 ? '+' : ''}${diff.large.toFixed(1)}%`;
+            document.getElementById('midDiff').textContent = `${diff.mid > 0 ? '+' : ''}${diff.mid.toFixed(1)}%`;
+            document.getElementById('smallDiff').textContent = `${diff.small > 0 ? '+' : ''}${diff.small.toFixed(1)}%`;
+            
+            // Color code the diffs
+            document.getElementById('largeDiff').style.color = diff.large >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('midDiff').style.color = diff.mid >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('smallDiff').style.color = diff.small >= 0 ? '#00ff88' : '#ff4757';
+            
+            // Show rebalancing actions
+            const actions = [];
+            if (rebalanceMode === 'rebalance') {
+                if (diff.large < 0) actions.push(`Sell ₹${Math.abs((diff.large * total / 100) / 1000).toFixed(0)}K from Large Cap`);
+                if (diff.mid < 0) actions.push(`Sell ₹${Math.abs((diff.mid * total / 100) / 1000).toFixed(0)}K from Mid Cap`);
+                if (diff.small < 0) actions.push(`Sell ₹${Math.abs((diff.small * total / 100) / 1000).toFixed(0)}K from Small Cap`);
+                
+                if (diff.large > 0) actions.push(`Buy ₹${((diff.large * total / 100) / 1000).toFixed(0)}K in Large Cap`);
+                if (diff.mid > 0) actions.push(`Buy ₹${((diff.mid * total / 100) / 1000).toFixed(0)}K in Mid Cap`);
+                if (diff.small > 0) actions.push(`Buy ₹${((diff.small * total / 100) / 1000).toFixed(0)}K in Small Cap`);
+            } else {
+                const freshNeeded = Math.max(
+                    diff.large > 0 ? (diff.large * total / 100) : 0,
+                    diff.mid > 0 ? (diff.mid * total / 100) : 0,
+                    diff.small > 0 ? (diff.small * total / 100) : 0
+                );
+                actions.push(`Add fresh ₹${(freshNeeded / 1000).toFixed(0)}K total`);
+                if (diff.large > 0) actions.push(`Invest ₹${((diff.large * total / 100) / 1000).toFixed(0)}K in Large Cap`);
+                if (diff.mid > 0) actions.push(`Invest ₹${((diff.mid * total / 100) / 1000).toFixed(0)}K in Mid Cap`);
+                if (diff.small > 0) actions.push(`Invest ₹${((diff.small * total / 100) / 1000).toFixed(0)}K in Small Cap`);
+            }
+            
+            document.getElementById('rebalanceResults').innerHTML = actions.length > 0
+                ? `<div class="card mt-4" style="background: var(--secondary-bg); border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 12px; color: var(--primary-blue);">📋 Actions Required:</h4>
+                    <ul style="margin: 0; padding-left: 20px; color: var(--text-secondary);">
+                        ${actions.map(a => `<li style="margin-bottom: 8px;">${a}</li>`).join('')}
+                    </ul>
+                   </div>`
+                : '<p class="text-secondary">Portfolio is balanced according to target allocation.</p>';
+        }
+        
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'just now';
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
+            
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+            
+            const days = Math.floor(hours / 24);
+            if (days < 7) return `${days} day${days > 1 ? 's' : ''} ago`;
+            
+            const weeks = Math.floor(days / 7);
+            if (weeks < 4) return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+            
+            const months = Math.floor(days / 30);
+            return `${months} month${months > 1 ? 's' : ''} ago`;
+        }
+        
+        // Load portfolio on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPortfolio();
+            showOnboarding();
+            
+            // Render analytics when switching to analyze view
+            const originalSwitchView = window.switchView;
+            window.switchView = function(viewName) {
+                originalSwitchView(viewName);
+                if (viewName === 'analyze' && portfolioData) {
+                    setTimeout(() => renderAnalytics(), 100);
+                }
+            };
+        });
+    </script>
 </body>
 </html>
