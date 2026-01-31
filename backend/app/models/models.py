@@ -1,0 +1,150 @@
+"""
+MFHelper - Database Models
+"""
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, JSON, Boolean
+from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.sql import func
+from datetime import datetime
+
+Base = declarative_base()
+
+
+class User(Base):
+    """User model for authentication"""
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    hashed_password = Column(String(255), nullable=False)
+    full_name = Column(String(255))
+    pan = Column(String(10), unique=True, index=True)  # PAN for MF lookup
+    phone = Column(String(15))
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    # Relationships
+    portfolios = relationship("Portfolio", back_populates="user")
+    holdings = relationship("Holding", back_populates="user")
+
+
+class Portfolio(Base):
+    """Portfolio model - represents a snapshot of user's MF portfolio"""
+    __tablename__ = "portfolios"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String(255), default="My Portfolio")
+    source = Column(String(50))  # 'excel', 'cas_pdf', 'cams_api', 'kfintech_api'
+    snapshot_date = Column(DateTime, default=func.now())
+    
+    # Summary metrics (cached)
+    total_invested = Column(Float, default=0)
+    total_current = Column(Float, default=0)
+    total_gain = Column(Float, default=0)
+    xirr = Column(Float)
+    
+    # Allocation percentages
+    large_cap_pct = Column(Float, default=0)
+    mid_cap_pct = Column(Float, default=0)
+    small_cap_pct = Column(Float, default=0)
+    
+    created_at = Column(DateTime, default=func.now())
+    
+    # Relationships
+    user = relationship("User", back_populates="portfolios")
+    holdings = relationship("Holding", back_populates="portfolio")
+
+
+class Holding(Base):
+    """Individual fund holding"""
+    __tablename__ = "holdings"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    portfolio_id = Column(Integer, ForeignKey("portfolios.id"), nullable=False)
+    
+    # Fund details
+    fund_name = Column(String(500), nullable=False)
+    scheme_code = Column(String(20))  # AMFI code
+    isin = Column(String(20))
+    folio_number = Column(String(50))
+    
+    # AMC & Category
+    amc = Column(String(100))
+    category = Column(String(50))  # Large Cap, Mid Cap, Small Cap, etc.
+    sub_category = Column(String(50))
+    investment_style = Column(String(50))  # GARP, Momentum, Value, etc.
+    
+    # Financial data
+    units = Column(Float, default=0)
+    nav = Column(Float)
+    invested_amount = Column(Float, default=0)
+    current_value = Column(Float, default=0)
+    gain_loss = Column(Float, default=0)
+    return_pct = Column(Float, default=0)
+    
+    # Performance metrics
+    one_year_return = Column(Float)
+    three_year_return = Column(Float)
+    five_year_return = Column(Float)
+    alpha = Column(Float)
+    beta = Column(Float)
+    sharpe_ratio = Column(Float)
+    down_capture = Column(Float)
+    
+    # Timestamps
+    last_transaction_date = Column(DateTime)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    # Relationships
+    user = relationship("User", back_populates="holdings")
+    portfolio = relationship("Portfolio", back_populates="holdings")
+
+
+class Transaction(Base):
+    """Fund transactions for XIRR calculation"""
+    __tablename__ = "transactions"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    holding_id = Column(Integer, ForeignKey("holdings.id"))
+    
+    fund_name = Column(String(500))
+    folio_number = Column(String(50))
+    transaction_type = Column(String(50))  # Purchase, Redemption, SIP, SWP, etc.
+    transaction_date = Column(DateTime, nullable=False)
+    amount = Column(Float, nullable=False)
+    units = Column(Float)
+    nav = Column(Float)
+    
+    created_at = Column(DateTime, default=func.now())
+
+
+class FundMaster(Base):
+    """Master data for mutual funds"""
+    __tablename__ = "fund_master"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    scheme_code = Column(String(20), unique=True, index=True)
+    isin = Column(String(20), index=True)
+    scheme_name = Column(String(500))
+    amc = Column(String(100))
+    category = Column(String(50))
+    sub_category = Column(String(50))
+    investment_style = Column(String(50))
+    
+    # Risk metrics
+    risk_grade = Column(String(20))
+    expense_ratio = Column(Float)
+    aum = Column(Float)
+    
+    # Performance
+    one_year_return = Column(Float)
+    three_year_return = Column(Float)
+    five_year_return = Column(Float)
+    
+    # Updated timestamp
+    updated_at = Column(DateTime, default=func.now())

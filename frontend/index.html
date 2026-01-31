@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MFHelper - Mutual Fund Portfolio Tracker</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Analyze your mutual fund portfolio with advanced insights, rebalancing tools, and tax optimization">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MFHelper">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- App Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    
+    <!-- Splash Screens for iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Core Utilities -->
+    <script src="/js/toast.js"></script>
+    <script src="/js/errorHandler.js"></script>
+    <script src="/js/responsive.js"></script>
+    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        /* PWA Install Banner */
+        .pwa-install-banner {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+            z-index: 10000;
+            animation: slideUp 0.5s ease;
+            max-width: 90%;
+            width: 400px;
+        }
+        .pwa-install-banner.show { display: flex; align-items: center; gap: 16px; }
+        .pwa-install-banner .icon { font-size: 32px; }
+        .pwa-install-banner .text h4 { font-size: 14px; margin-bottom: 4px; }
+        .pwa-install-banner .text p { font-size: 12px; opacity: 0.8; }
+        .pwa-install-banner .btn-install {
+            background: white;
+            color: #3b82f6;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .pwa-install-banner .btn-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+        
+        .navbar {
+            background: rgba(0,0,0,0.3);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);            background-clip: text;            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links a {
+            color: #8892b0;
+            text-decoration: none;
+            margin-left: 25px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #00d4ff; }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #8892b0;
+            margin-bottom: 40px;
+        }
+        
+        .upload-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .upload-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .upload-card:hover {
+            border-color: #00d4ff;
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,212,255,0.2);
+        }
+        .upload-card.cas-card:hover {
+            border-color: #7b2cbf;
+            box-shadow: 0 20px 40px rgba(123,44,191,0.2);
+        }
+        .upload-card .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .upload-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        .upload-card p {
+            color: #8892b0;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .upload-card ul {
+            text-align: left;
+            color: #8892b0;
+            font-size: 0.85rem;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        .upload-card li { margin: 8px 0; }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: none;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .btn-primary {
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            color: #fff;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+        }
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .feature-card h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            color: #8892b0;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .modal-header h3 {
+            font-size: 1.5rem;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: #8892b0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .close-btn:hover { color: #ff4757; }
+        
+        .drop-zone {
+            border: 2px dashed rgba(0,212,255,0.5);
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: #00d4ff;
+            background: rgba(0,212,255,0.1);
+        }
+        .drop-zone p { color: #8892b0; margin-bottom: 15px; }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            color: #8892b0;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            font-size: 1rem;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+        
+        .info-box {
+            background: rgba(255,193,7,0.1);
+            border: 1px solid rgba(255,193,7,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .info-box h5 { color: #ffc107; margin-bottom: 10px; }
+        .info-box ol {
+            color: #8892b0;
+            font-size: 0.85rem;
+            margin-left: 20px;
+        }
+        .info-box a { color: #00d4ff; }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        .loading.active { display: block; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0,212,255,0.3);
+            border-top-color: #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8892b0;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 80px;
+        }
+        .footer a { color: #00d4ff; text-decoration: none; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .upload-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">📊 MFHelper</div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How it Works</a>
+            <a href="/api/docs" target="_blank">API Docs</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>Track Your Mutual Fund Portfolio</h1>
+        <p>Upload your portfolio Excel or CAS statement to get instant analytics, rebalancing recommendations, and beautiful visualizations.</p>
+    </section>
+    
+    <section class="upload-options">
+        <!-- Excel Upload Card -->
+        <div class="upload-card" onclick="openExcelModal()">
+            <div class="icon">📊</div>
+            <h3>Upload Excel</h3>
+            <p>Have your portfolio in Excel? Upload it directly.</p>
+            <ul>
+                <li>Supports .xlsx, .xls, .csv</li>
+                <li>Flexible column mapping</li>
+                <li>Download template available</li>
+            </ul>
+            <button class="btn btn-primary">Upload Excel</button>
+        </div>
+        
+        <!-- CAS Upload Card -->
+        <div class="upload-card cas-card" onclick="openCASModal()">
+            <div class="icon">📄</div>
+            <h3>Upload CAS Statement</h3>
+            <p>Get your official statement from CAMS/KFintech.</p>
+            <ul>
+                <li>Consolidated Account Statement</li>
+                <li>Covers all AMCs automatically</li>
+                <li>Password: Your PAN number</li>
+            </ul>
+            <button class="btn btn-primary" style="background: linear-gradient(90deg, #7b2cbf, #e91e63);">Upload CAS PDF</button>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="feature-card">
+            <div class="icon">📈</div>
+            <h4>Portfolio Analytics</h4>
+            <p>Detailed breakdown by category, AMC, and investment style with interactive charts.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">⚖️</div>
+            <h4>Rebalancing Calculator</h4>
+            <p>Get personalized recommendations to achieve your target allocation.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">💡</div>
+            <h4>Smart Insights</h4>
+            <p>AI-powered insights on concentration risk, overlaps, and optimization opportunities.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🔒</div>
+            <h4>Privacy First</h4>
+            <p>Your data stays in your browser. We don't store your portfolio information.</p>
+        </div>
+    </section>
+    
+    <!-- Excel Upload Modal -->
+    <div class="modal" id="excelModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📊 Upload Excel Portfolio</h3>
+                <button class="close-btn" onclick="closeModal('excelModal')">&times;</button>
+            </div>
+            
+            <div class="drop-zone" id="excelDropZone" 
+                 ondragover="handleDragOver(event)" 
+                 ondragleave="handleDragLeave(event)"
+                 ondrop="handleExcelDrop(event)"
+                 onclick="document.getElementById('excelInput').click()">
+                <p>Drag & drop your Excel file here</p>
+                <p style="font-size: 0.85rem;">or click to browse</p>
+                <input type="file" id="excelInput" accept=".xlsx,.xls,.csv" style="display: none;" onchange="handleExcelUpload(event)">
+            </div>
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-secondary btn-small" onclick="downloadTemplate()">📥 Download Template</button>
+                <button class="btn btn-secondary btn-small" onclick="loadDemoData()">👁️ Load Demo</button>
+            </div>
+            
+            <div class="loading" id="excelLoading">
+                <div class="spinner"></div>
+                <p>Processing your portfolio...</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CAS Upload Modal -->
+    <div class="modal" id="casModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📄 Upload CAS Statement</h3>
+                <button class="close-btn" onclick="closeModal('casModal')">&times;</button>
+            </div>
+            
+            <div class="info-box">
+                <h5>📋 How to get your CAS:</h5>
+                <ol>
+                    <li>Visit <a href="https://www.camsonline.com/Investors/Statements/Consolidated-Account-Statement" target="_blank">CAMS Online</a> or <a href="https://mfs.kfintech.com/investor/" target="_blank">KFintech</a></li>
+                    <li>Enter your Email & PAN</li>
+                    <li>Select "Detailed" statement</li>
+                    <li>PDF will be emailed in minutes</li>
+                </ol>
+            </div>
+            
+            <div class="drop-zone" id="casDropZone"
+                 ondragover="handleDragOver(event)"
+                 ondragleave="handleDragLeave(event)"
+                 ondrop="handleCASDrop(event)"
+                 onclick="document.getElementById('casInput').click()">
+                <p>Drag & drop your CAS PDF here</p>
+                <p style="font-size: 0.85rem;">or click to browse</p>
+                <input type="file" id="casInput" accept=".pdf" style="display: none;" onchange="handleCASUpload(event)">
+            </div>
+            
+            <div class="form-group">
+                <label>PDF Password (Your PAN)</label>
+                <input type="text" id="casPassword" placeholder="Enter your PAN (e.g., ABCDE1234F)" maxlength="10" style="text-transform: uppercase;">
+            </div>
+            
+            <button class="btn btn-primary" style="width: 100%; background: linear-gradient(90deg, #7b2cbf, #e91e63);" onclick="submitCAS()">
+                Process CAS Statement
+            </button>
+            
+            <div class="loading" id="casLoading">
+                <div class="spinner"></div>
+                <p>Parsing your CAS statement...</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>MFHelper © 2026 | <a href="/api/docs">API Documentation</a> | Made with ❤️ for Indian Investors</p>
+    </footer>
+    
+    <script>
+        const API_BASE = '/api';
+        let selectedCASFile = null;
+        
+        // Modal functions
+        function openExcelModal() {
+            document.getElementById('excelModal').classList.add('active');
+        }
+        
+        function openCASModal() {
+            document.getElementById('casModal').classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // Close modal on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+        
+        // Drag and drop handlers
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('dragover');
+        }
+        
+        function handleDragLeave(e) {
+            e.currentTarget.classList.remove('dragover');
+        }
+        
+        function handleExcelDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) processExcelFile(file);
+        }
+        
+        function handleCASDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.pdf')) {
+                selectedCASFile = file;
+                document.getElementById('casDropZone').innerHTML = `
+                    <p style="color: #00ff88;">✓ ${file.name}</p>
+                    <p style="font-size: 0.85rem;">Click "Process CAS Statement" to continue</p>
+                `;
+            }
+        }
+        
+        function handleExcelUpload(e) {
+            const file = e.target.files[0];
+            if (file) processExcelFile(file);
+        }
+        
+        function handleCASUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                selectedCASFile = file;
+                document.getElementById('casDropZone').innerHTML = `
+                    <p style="color: #00ff88;">✓ ${file.name}</p>
+                    <p style="font-size: 0.85rem;">Enter your PAN below and click "Process"</p>
+                `;
+            }
+        }
+        
+        // Process Excel file
+        async function processExcelFile(file) {
+            document.getElementById('excelLoading').classList.add('active');
+            const loadingId = loading.show('Uploading and analyzing your portfolio...');
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload/excel`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Upload failed');
+                }
+                
+                const data = await response.json();
+                
+                // Store data and redirect to dashboard
+                localStorage.setItem('portfolioData', JSON.stringify(data));
+                
+                loading.hide(loadingId);
+                toast.success('Portfolio loaded successfully! Redirecting...', 2000);
+                
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 2000);
+                
+            } catch (error) {
+                loading.hide(loadingId);
+                errorHandler.handleFileError(error, file.name);
+                document.getElementById('excelLoading').classList.remove('active');
+            }
+        }
+        
+        // Process CAS file
+        async function submitCAS() {
+            if (!selectedCASFile) {
+                toast.warning('Please select a CAS PDF file first');
+                return;
+            }
+            
+            const password = document.getElementById('casPassword').value.toUpperCase();
+            
+            document.getElementById('casLoading').classList.add('active');
+            
+            const formData = new FormData();
+            formData.append('file', selectedCASFile);
+            if (password) {
+                formData.append('password', password);
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload/cas?password=${encodeURIComponent(password)}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Upload failed');
+                }
+                
+                const data = await response.json();
+                
+                // Store data and redirect to dashboard
+                localStorage.setItem('portfolioData', JSON.stringify(data));
+                window.location.href = '/dashboard';
+                
+            } catch (error) {
+                alert('Error processing CAS: ' + error.message);
+                document.getElementById('casLoading').classList.remove('active');
+            }
+        }
+        
+        // Download template
+        async function downloadTemplate() {
+            window.location.href = `${API_BASE}/upload/template`;
+        }
+        
+        // Load demo data
+        async function loadDemoData() {
+            const demoData = {
+                success: true,
+                source: 'demo',
+                holdings: [
+                    { fund_name: 'Parag Parikh Flexi Cap Fund', amc: 'PPFAS AMC', category: 'Flexi Cap', invested: 840238, current_value: 1043797, return_1y: '9.93%', return_3y: '22.01%', alpha: 9.59, style: 'GARP' },
+                    { fund_name: 'HDFC Flexicap Fund', amc: 'HDFC AMC', category: 'Flexi Cap', invested: 719964, current_value: 721249, return_1y: '15.3%', return_3y: '22.32%', alpha: 7.00, style: 'GARP' },
+                    { fund_name: 'Motilal Oswal Large & Midcap', amc: 'Motilal Oswal', category: 'Large & Mid', invested: 648189, current_value: 720897, return_1y: '2.96%', return_3y: '25.26%', alpha: 7.83, style: 'Quality' },
+                    { fund_name: 'Motilal Oswal Midcap Fund', amc: 'Motilal Oswal', category: 'Mid Cap', invested: 423322, current_value: 447135, return_1y: '-3.12%', return_3y: '25.44%', alpha: 3.99, style: 'Quality' },
+                    { fund_name: 'Quant Small Cap Fund', amc: 'Quant MF', category: 'Small Cap', invested: 384494, current_value: 363266, return_1y: '-0.58%', return_3y: '19.68%', alpha: 2.51, style: 'Momentum' },
+                    { fund_name: 'Bandhan Small Cap Fund', amc: 'Bandhan MF', category: 'Small Cap', invested: 359982, current_value: 348612, return_1y: '6.39%', return_3y: '30.91%', alpha: 9.72, style: 'Blend' },
+                    { fund_name: 'Navi Nasdaq 100 FoF', amc: 'Navi MF', category: 'International', invested: 129994, current_value: 305000, return_1y: '-', return_3y: '-', alpha: '-', style: 'Passive' },
+                    { fund_name: 'ICICI Prudential Large Cap', amc: 'ICICI Prudential', category: 'Large Cap', invested: 199990, current_value: 220278, return_1y: '13.01%', return_3y: '18.33%', alpha: 3.83, style: 'Quality' },
+                    { fund_name: 'Mirae Asset FANG+ ETF FoF', amc: 'Mirae Asset', category: 'International', invested: 34999, current_value: 106248, return_1y: '27.28%', return_3y: '63.84%', alpha: '-', style: 'Passive' },
+                    { fund_name: 'SBI Contra Fund', amc: 'SBI Mutual Fund', category: 'Contra', invested: 150000, current_value: 150000, return_1y: '-', return_3y: '-', alpha: '-', style: 'Value' },
+                    { fund_name: 'Tata Digital India Fund', amc: 'Tata AMC', category: 'Sectoral', invested: 150000, current_value: 150000, return_1y: '-', return_3y: '-', alpha: '-', style: 'Sectoral' },
+                    { fund_name: 'Edelweiss Liquid Fund', amc: 'Edelweiss AMC', category: 'Liquid', invested: 150000, current_value: 150000, return_1y: '~7%', return_3y: '~7%', alpha: '-', style: 'Liquid' }
+                ],
+                summary: {
+                    total_funds: 12,
+                    total_invested: 4941192,
+                    total_current: 5526482,
+                    total_gain: 585290,
+                    return_pct: 11.85
+                }
+            };
+            
+            localStorage.setItem('portfolioData', JSON.stringify(demoData));
+            window.location.href = '/dashboard';
+        }
+        
+        // Check if returning from dashboard
+        if (window.location.hash === '#uploaded') {
+            // Could show a success message
+        }
+    </script>
+
+    <!-- PWA Install Banner -->
+    <div class="pwa-install-banner" id="pwaInstallBanner">
+        <span class="icon">📱</span>
+        <div class="text">
+            <h4>Install MFHelper App</h4>
+            <p>Add to home screen for quick access</p>
+        </div>
+        <button class="btn-install" id="pwaInstallBtn">Install</button>
+        <button class="btn-close" id="pwaCloseBtn">×</button>
+    </div>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // PWA Install Prompt
+        let deferredPrompt;
+        const pwaInstallBanner = document.getElementById('pwaInstallBanner');
+        const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+        const pwaCloseBtn = document.getElementById('pwaCloseBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing
+            e.preventDefault();
+            // Save the event for later
+            deferredPrompt = e;
+            // Show install banner after 3 seconds
+            setTimeout(() => {
+                // Don't show if already installed or dismissed
+                if (!localStorage.getItem('pwaInstallDismissed')) {
+                    pwaInstallBanner.classList.add('show');
+                }
+            }, 3000);
+        });
+
+        pwaInstallBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for user response
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('PWA Install outcome:', outcome);
+            // Clear the deferred prompt
+            deferredPrompt = null;
+            // Hide banner
+            pwaInstallBanner.classList.remove('show');
+        });
+
+        pwaCloseBtn.addEventListener('click', () => {
+            pwaInstallBanner.classList.remove('show');
+            // Remember dismissal for 7 days
+            localStorage.setItem('pwaInstallDismissed', Date.now());
+        });
+
+        // Check if dismissed recently
+        const dismissedTime = localStorage.getItem('pwaInstallDismissed');
+        if (dismissedTime && (Date.now() - dismissedTime) > 7 * 24 * 60 * 60 * 1000) {
+            localStorage.removeItem('pwaInstallDismissed');
+        }
+
+        // Detect if running as installed PWA
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('🎉 Running as installed PWA');
+            // Could add PWA-specific features here
+        }
+    </script>
+</body>
+</html>

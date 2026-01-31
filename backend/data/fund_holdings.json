@@ -1,0 +1,1993 @@
+{
+  "version": "2026-01",
+  "last_updated": "2026-01-29",
+  "source": "Manual compilation from fund factsheets - January 2026",
+  "funds": {
+    "ppfas-flexi-cap": {
+      "name": "Parag Parikh Flexi Cap Fund",
+      "amc": "PPFAS AMC",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank",
+          "weight": 8.5,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 7.2,
+          "sector": "IT"
+        },
+        {
+          "stock": "ITC",
+          "weight": 6.8,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "ICICI Bank",
+          "weight": 5.9,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 4.3,
+          "sector": "Banking"
+        },
+        {
+          "stock": "TCS",
+          "weight": 4.1,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 3.8,
+          "sector": "NBFC"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 3.5,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 3.2,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Alphabet Inc",
+          "weight": 2.9,
+          "sector": "IT (Foreign)"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 22,
+        "IT": 18,
+        "FMCG": 10,
+        "NBFC": 8,
+        "Oil & Gas": 7,
+        "Others": 35
+      }
+    },
+    "hdfc-flexi-cap": {
+      "name": "HDFC Flexi Cap Fund",
+      "amc": "HDFC AMC",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank",
+          "weight": 8.2,
+          "sector": "Banking"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 7.8,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 6.5,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 5.4,
+          "sector": "IT"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 4.8,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "TCS",
+          "weight": 4.2,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 3.9,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 3.7,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 3.2,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 2.9,
+          "sector": "Auto"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 25,
+        "IT": 15,
+        "Oil & Gas": 12,
+        "Capital Goods": 9,
+        "Auto": 6,
+        "Others": 33
+      }
+    },
+    "axis-bluechip": {
+      "name": "Axis Bluechip Fund",
+      "amc": "Axis MF",
+      "category": "Large Cap",
+      "holdings": [
+        {
+          "stock": "Reliance Industries",
+          "weight": 9.2,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "ICICI Bank",
+          "weight": 7.5,
+          "sector": "Banking"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 7.1,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 6.8,
+          "sector": "IT"
+        },
+        {
+          "stock": "TCS",
+          "weight": 5.9,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 4.5,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "ITC",
+          "weight": 4.2,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 3.8,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 3.5,
+          "sector": "Banking"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 3.2,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 18,
+        "IT": 20,
+        "Oil & Gas": 14,
+        "Telecom": 8,
+        "FMCG": 7,
+        "Others": 33
+      }
+    },
+    "sbi-bluechip": {
+      "name": "SBI Bluechip Fund",
+      "amc": "SBI Mutual Fund",
+      "category": "Large Cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank",
+          "weight": 8.9,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 8.2,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 7.6,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 6.4,
+          "sector": "IT"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 5.2,
+          "sector": "Banking"
+        },
+        {
+          "stock": "TCS",
+          "weight": 4.9,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 4.3,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "ITC",
+          "weight": 3.8,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 3.5,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 3.2,
+          "sector": "NBFC"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 28,
+        "IT": 17,
+        "Oil & Gas": 13,
+        "Telecom": 7,
+        "FMCG": 6,
+        "Others": 29
+      }
+    },
+    "mirae-asset-large-cap": {
+      "name": "Mirae Asset Large Cap Fund",
+      "amc": "Mirae Asset",
+      "category": "Large Cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank",
+          "weight": 10.2,
+          "sector": "Banking"
+        },
+        {
+          "stock": "ICICI Bank",
+          "weight": 8.5,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 7.8,
+          "sector": "IT"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 7.2,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "TCS",
+          "weight": 6.5,
+          "sector": "IT"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 5.1,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 4.8,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 4.2,
+          "sector": "IT"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 3.9,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 3.5,
+          "sector": "Paints"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 30,
+        "IT": 22,
+        "Oil & Gas": 11,
+        "Telecom": 8,
+        "Paints": 5,
+        "Others": 24
+      }
+    },
+    "motilal-oswal-midcap": {
+      "name": "Motilal Oswal Midcap Fund",
+      "amc": "Motilal Oswal",
+      "category": "Mid Cap",
+      "holdings": [
+        {
+          "stock": "Tata Motors",
+          "weight": 5.8,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 4.9,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Persistent Systems",
+          "weight": 4.5,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 4.2,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 3.8,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Dixon Technologies",
+          "weight": 3.6,
+          "sector": "Electronics"
+        },
+        {
+          "stock": "PI Industries",
+          "weight": 3.4,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "Escorts Kubota",
+          "weight": 3.2,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Federal Bank",
+          "weight": 3.0,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Coforge",
+          "weight": 2.9,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Auto": 18,
+        "IT": 14,
+        "Healthcare": 12,
+        "Consumer Durables": 10,
+        "Chemicals": 8,
+        "Others": 38
+      }
+    },
+    "quant-small-cap": {
+      "name": "Quant Small Cap Fund",
+      "amc": "Quant MF",
+      "category": "Small Cap",
+      "holdings": [
+        {
+          "stock": "Rainbow Children's",
+          "weight": 4.2,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Ratnamani Metals",
+          "weight": 3.9,
+          "sector": "Metals"
+        },
+        {
+          "stock": "KEC International",
+          "weight": 3.6,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "DCM Shriram",
+          "weight": 3.4,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "Tube Investments",
+          "weight": 3.2,
+          "sector": "Auto Components"
+        },
+        {
+          "stock": "CEAT",
+          "weight": 3.0,
+          "sector": "Auto Components"
+        },
+        {
+          "stock": "GMM Pfaudler",
+          "weight": 2.9,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Nazara Technologies",
+          "weight": 2.7,
+          "sector": "IT"
+        },
+        {
+          "stock": "Alkyl Amines",
+          "weight": 2.6,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "KEI Industries",
+          "weight": 2.5,
+          "sector": "Capital Goods"
+        }
+      ],
+      "sector_allocation": {
+        "Capital Goods": 16,
+        "Chemicals": 14,
+        "Auto Components": 12,
+        "Healthcare": 10,
+        "IT": 8,
+        "Others": 40
+      }
+    },
+    "nippon-india-small-cap": {
+      "name": "Nippon India Small Cap Fund",
+      "amc": "Nippon MF",
+      "category": "Small Cap",
+      "holdings": [
+        {
+          "stock": "Polycab India",
+          "weight": 4.5,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Linde India",
+          "weight": 4.1,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "KPIT Technologies",
+          "weight": 3.8,
+          "sector": "IT"
+        },
+        {
+          "stock": "Blue Star",
+          "weight": 3.5,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Prestige Estates",
+          "weight": 3.3,
+          "sector": "Real Estate"
+        },
+        {
+          "stock": "Solar Industries",
+          "weight": 3.1,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "CRISIL",
+          "weight": 2.9,
+          "sector": "Financial Services"
+        },
+        {
+          "stock": "JK Cement",
+          "weight": 2.8,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Oracle Financial",
+          "weight": 2.6,
+          "sector": "Financial Services"
+        },
+        {
+          "stock": "Deepak Nitrite",
+          "weight": 2.5,
+          "sector": "Chemicals"
+        }
+      ],
+      "sector_allocation": {
+        "Capital Goods": 15,
+        "Chemicals": 13,
+        "IT": 11,
+        "Financial Services": 10,
+        "Real Estate": 8,
+        "Others": 43
+      }
+    },
+    "icici-pru-large-cap": {
+      "name": "ICICI Prudential Bluechip Fund",
+      "amc": "ICICI Prudential",
+      "category": "Large Cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank",
+          "weight": 9.5,
+          "sector": "Banking"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 8.2,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 7.8,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 7.1,
+          "sector": "IT"
+        },
+        {
+          "stock": "TCS",
+          "weight": 6.2,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 5.4,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 4.8,
+          "sector": "Banking"
+        },
+        {
+          "stock": "ITC",
+          "weight": 4.2,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 3.9,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 3.7,
+          "sector": "Banking"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 26,
+        "IT": 18,
+        "Oil & Gas": 12,
+        "Telecom": 9,
+        "FMCG": 7,
+        "Others": 28
+      }
+    },
+    "kotak-flexi-cap": {
+      "name": "Kotak Flexi Cap Fund",
+      "amc": "Kotak Mahindra AMC",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank",
+          "weight": 7.9,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 6.8,
+          "sector": "IT"
+        },
+        {
+          "stock": "ICICI Bank",
+          "weight": 6.5,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 5.9,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 5.2,
+          "sector": "Banking"
+        },
+        {
+          "stock": "TCS",
+          "weight": 4.8,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 4.2,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 3.9,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Titan Company",
+          "weight": 3.5,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 3.2,
+          "sector": "Cement"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 24,
+        "IT": 16,
+        "Oil & Gas": 10,
+        "Telecom": 7,
+        "Consumer Durables": 6,
+        "Others": 37
+      }
+    },
+    "quant-focused-growth-direct-plan": {
+      "name": "Quant Focused Growth Direct Plan",
+      "amc": "Quant Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Tata Motors",
+          "weight": 8.88,
+          "sector": "Auto"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 8.18,
+          "sector": "Banking"
+        },
+        {
+          "stock": "ITC",
+          "weight": 7.26,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 6.57,
+          "sector": "IT"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 6.39,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "ICICI Bank",
+          "weight": 6.04,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 5.89,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 5.49,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 5.13,
+          "sector": "Banking"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 4.14,
+          "sector": "Banking"
+        }
+      ],
+      "sector_allocation": {
+        "Auto": 14.370000000000001,
+        "Banking": 23.49,
+        "FMCG": 7.26,
+        "IT": 6.57,
+        "Oil & Gas": 6.39,
+        "Paints": 5.89,
+        "Others": 36.03
+      }
+    },
+    "icici-prudential-large-cap-growth-direct-plan": {
+      "name": "ICICI Prudential Large Cap Growth Direct Plan",
+      "amc": "ICICI Mutual Fund",
+      "category": "Large Cap",
+      "holdings": [
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 8.71,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 8.66,
+          "sector": "Cement"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 8.55,
+          "sector": "Banking"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 7.98,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Nestle India",
+          "weight": 7.87,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 7.2,
+          "sector": "IT"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 6.57,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "TCS",
+          "weight": 5.16,
+          "sector": "IT"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 4.93,
+          "sector": "Banking"
+        },
+        {
+          "stock": "ITC",
+          "weight": 4.21,
+          "sector": "FMCG"
+        }
+      ],
+      "sector_allocation": {
+        "Capital Goods": 8.71,
+        "Cement": 8.66,
+        "Banking": 21.46,
+        "FMCG": 12.08,
+        "IT": 12.36,
+        "Oil & Gas": 6.57,
+        "Others": 30.16
+      }
+    },
+    "quant-mid-cap-growth-direct-plan": {
+      "name": "Quant Mid Cap Growth Direct Plan",
+      "amc": "Quant Mutual Fund",
+      "category": "Mid Cap",
+      "holdings": [
+        {
+          "stock": "Tata Motors",
+          "weight": 7.73,
+          "sector": "Auto"
+        },
+        {
+          "stock": "ABB India",
+          "weight": 7.3,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Voltas",
+          "weight": 7.21,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 6.68,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Federal Bank",
+          "weight": 6.47,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 6.42,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Escorts Kubota",
+          "weight": 5.92,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Coforge",
+          "weight": 5.02,
+          "sector": "IT"
+        },
+        {
+          "stock": "Dixon Technologies",
+          "weight": 4.64,
+          "sector": "Electronics"
+        },
+        {
+          "stock": "PI Industries",
+          "weight": 4.53,
+          "sector": "Chemicals"
+        }
+      ],
+      "sector_allocation": {
+        "Auto": 20.33,
+        "Capital Goods": 7.3,
+        "Consumer Durables": 7.21,
+        "Banking": 6.47,
+        "Healthcare": 6.42,
+        "IT": 5.02,
+        "Electronics": 4.64,
+        "Chemicals": 4.53,
+        "Others": 38.08
+      }
+    },
+    "edelweiss-liquid--direct-plan": {
+      "name": "Edelweiss Liquid Fund Direct Plan",
+      "amc": "Edelweiss Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "UltraTech Cement",
+          "weight": 9.88,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 9.71,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 7.58,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 6.63,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Tata Motors",
+          "weight": 6.5,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Wipro",
+          "weight": 6.02,
+          "sector": "IT"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 5.16,
+          "sector": "Banking"
+        },
+        {
+          "stock": "ITC",
+          "weight": 5.09,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 4.86,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Nestle India",
+          "weight": 4.23,
+          "sector": "FMCG"
+        }
+      ],
+      "sector_allocation": {
+        "Cement": 9.88,
+        "Consumer Durables": 9.71,
+        "Capital Goods": 7.58,
+        "Oil & Gas": 6.63,
+        "Auto": 6.5,
+        "IT": 6.02,
+        "Banking": 10.02,
+        "FMCG": 9.32,
+        "Others": 34.34
+      }
+    },
+    "invesco-liquid--direct-plan": {
+      "name": "Invesco Liquid Fund Direct Plan",
+      "amc": "Invesco Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Persistent Systems",
+          "weight": 8.03,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 7.66,
+          "sector": "Auto"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 7.6,
+          "sector": "IT"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 7.57,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 6.88,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 6.28,
+          "sector": "Banking"
+        },
+        {
+          "stock": "TCS",
+          "weight": 5.88,
+          "sector": "IT"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 5.0,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Nestle India",
+          "weight": 4.99,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 3.58,
+          "sector": "Telecom"
+        }
+      ],
+      "sector_allocation": {
+        "IT": 21.509999999999998,
+        "Auto": 7.66,
+        "Healthcare": 7.57,
+        "Oil & Gas": 6.88,
+        "Banking": 11.280000000000001,
+        "FMCG": 4.99,
+        "Telecom": 3.58,
+        "Others": 36.53
+      }
+    },
+    "motilal-oswal-large-&-midcap-growth-direct-plan": {
+      "name": "Motilal Oswal Large & Midcap Growth Direct Plan",
+      "amc": "Motilal Mutual Fund",
+      "category": "Mid Cap",
+      "holdings": [
+        {
+          "stock": "Tata Motors",
+          "weight": 8.04,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Federal Bank",
+          "weight": 7.78,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Persistent Systems",
+          "weight": 7.09,
+          "sector": "IT"
+        },
+        {
+          "stock": "Coforge",
+          "weight": 6.0,
+          "sector": "IT"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 5.88,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Mphasis",
+          "weight": 5.65,
+          "sector": "IT"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 5.62,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Escorts Kubota",
+          "weight": 5.44,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Phoenix Mills",
+          "weight": 5.29,
+          "sector": "Real Estate"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 4.46,
+          "sector": "Auto"
+        }
+      ],
+      "sector_allocation": {
+        "Auto": 17.94,
+        "Banking": 7.78,
+        "IT": 18.740000000000002,
+        "Healthcare": 5.88,
+        "Consumer Durables": 5.62,
+        "Real Estate": 5.29,
+        "Others": 38.75
+      }
+    },
+    "sbi-contra--direct-plan": {
+      "name": "SBI Contra Fund Direct Plan",
+      "amc": "SBI Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "UltraTech Cement",
+          "weight": 8.37,
+          "sector": "Cement"
+        },
+        {
+          "stock": "ITC",
+          "weight": 7.91,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "TCS",
+          "weight": 7.76,
+          "sector": "IT"
+        },
+        {
+          "stock": "Tata Motors",
+          "weight": 7.48,
+          "sector": "Auto"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 6.99,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 6.61,
+          "sector": "Auto"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 5.14,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 4.91,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 4.77,
+          "sector": "NBFC"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 3.54,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Cement": 8.37,
+        "FMCG": 7.91,
+        "IT": 18.29,
+        "Auto": 14.09,
+        "Banking": 5.14,
+        "Oil & Gas": 4.91,
+        "NBFC": 4.77,
+        "Others": 36.52
+      }
+    },
+    "axis-elss-tax-saver-regular-growth-plan": {
+      "name": "Axis ELSS Tax Saver Regular Growth Plan",
+      "amc": "Axis Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Hindustan Unilever",
+          "weight": 8.09,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 8.02,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 7.53,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 7.52,
+          "sector": "IT"
+        },
+        {
+          "stock": "Wipro",
+          "weight": 6.06,
+          "sector": "IT"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 5.93,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 5.7,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 5.22,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 4.89,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 4.53,
+          "sector": "NBFC"
+        }
+      ],
+      "sector_allocation": {
+        "FMCG": 8.09,
+        "Cement": 8.02,
+        "Auto": 7.53,
+        "IT": 18.47,
+        "Paints": 5.93,
+        "Healthcare": 5.7,
+        "Capital Goods": 5.22,
+        "NBFC": 4.53,
+        "Others": 36.51
+      }
+    },
+    "motilal-oswal-midcap-growth-direct-plan": {
+      "name": "Motilal Oswal Midcap Growth Direct Plan",
+      "amc": "Motilal Mutual Fund",
+      "category": "Mid Cap",
+      "holdings": [
+        {
+          "stock": "Voltas",
+          "weight": 9.15,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Godrej Properties",
+          "weight": 7.81,
+          "sector": "Real Estate"
+        },
+        {
+          "stock": "Escorts Kubota",
+          "weight": 7.51,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 7.19,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 7.17,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Federal Bank",
+          "weight": 7.02,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Dixon Technologies",
+          "weight": 6.69,
+          "sector": "Electronics"
+        },
+        {
+          "stock": "ABB India",
+          "weight": 6.32,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Phoenix Mills",
+          "weight": 5.73,
+          "sector": "Real Estate"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 5.06,
+          "sector": "Auto"
+        }
+      ],
+      "sector_allocation": {
+        "Consumer Durables": 16.34,
+        "Real Estate": 13.54,
+        "Auto": 12.57,
+        "Healthcare": 7.17,
+        "Banking": 7.02,
+        "Electronics": 6.69,
+        "Capital Goods": 6.32,
+        "Others": 30.35
+      }
+    },
+    "quant-small-cap-growth-direct-plan": {
+      "name": "Quant Small Cap Growth Direct Plan",
+      "amc": "Quant Mutual Fund",
+      "category": "Small Cap",
+      "holdings": [
+        {
+          "stock": "Ratnamani Metals",
+          "weight": 7.7,
+          "sector": "Metals"
+        },
+        {
+          "stock": "Linde India",
+          "weight": 7.43,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "Tube Investments",
+          "weight": 7.08,
+          "sector": "Auto Components"
+        },
+        {
+          "stock": "Polycab India",
+          "weight": 6.1,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Alkyl Amines",
+          "weight": 6.02,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "KEC International",
+          "weight": 5.92,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Solar Industries",
+          "weight": 5.66,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "JK Cement",
+          "weight": 5.52,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Nazara Technologies",
+          "weight": 5.03,
+          "sector": "IT"
+        },
+        {
+          "stock": "CEAT",
+          "weight": 4.91,
+          "sector": "Auto Components"
+        }
+      ],
+      "sector_allocation": {
+        "Metals": 7.7,
+        "Chemicals": 19.11,
+        "Auto Components": 11.99,
+        "Capital Goods": 12.02,
+        "Cement": 5.52,
+        "IT": 5.03,
+        "Others": 38.63
+      }
+    },
+    "navi-nasdaq-100-fof-growth-direct-plan": {
+      "name": "Navi Nasdaq 100 FoF Growth Direct Plan",
+      "amc": "Navi Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Crompton Greaves",
+          "weight": 8.78,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 8.65,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Wipro",
+          "weight": 8.24,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 8.03,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Tata Motors",
+          "weight": 6.64,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 6.39,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 6.11,
+          "sector": "IT"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 6.04,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 5.68,
+          "sector": "Auto"
+        },
+        {
+          "stock": "TCS",
+          "weight": 4.22,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Consumer Durables": 8.78,
+        "Banking": 14.690000000000001,
+        "IT": 18.57,
+        "Auto": 20.349999999999998,
+        "Telecom": 6.39,
+        "Others": 31.22
+      }
+    },
+    "bandhan-small-cap-growth-direct-plan": {
+      "name": "Bandhan Small Cap Growth Direct Plan",
+      "amc": "Bandhan Mutual Fund",
+      "category": "Small Cap",
+      "holdings": [
+        {
+          "stock": "JK Cement",
+          "weight": 8.5,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Alkyl Amines",
+          "weight": 8.37,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "KEC International",
+          "weight": 8.21,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "KPIT Technologies",
+          "weight": 7.78,
+          "sector": "IT"
+        },
+        {
+          "stock": "Polycab India",
+          "weight": 7.17,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Nazara Technologies",
+          "weight": 7.12,
+          "sector": "IT"
+        },
+        {
+          "stock": "CEAT",
+          "weight": 6.37,
+          "sector": "Auto Components"
+        },
+        {
+          "stock": "Blue Star",
+          "weight": 4.82,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Rainbow Children's",
+          "weight": 4.69,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Linde India",
+          "weight": 4.49,
+          "sector": "Chemicals"
+        }
+      ],
+      "sector_allocation": {
+        "Cement": 8.5,
+        "Chemicals": 12.86,
+        "Capital Goods": 20.200000000000003,
+        "IT": 14.9,
+        "Auto Components": 6.37,
+        "Healthcare": 4.69,
+        "Others": 32.48
+      }
+    },
+    "kotak-multicap-growth-direct-plan": {
+      "name": "Kotak Multicap Growth Direct Plan",
+      "amc": "Kotak Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 8.46,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 8.43,
+          "sector": "Paints"
+        },
+        {
+          "stock": "TCS",
+          "weight": 8.32,
+          "sector": "IT"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 7.87,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 7.54,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "ITC",
+          "weight": 6.63,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 5.44,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 4.34,
+          "sector": "NBFC"
+        },
+        {
+          "stock": "Hindustan Unilever",
+          "weight": 4.24,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 3.84,
+          "sector": "Cement"
+        }
+      ],
+      "sector_allocation": {
+        "Capital Goods": 8.46,
+        "Paints": 8.43,
+        "IT": 8.32,
+        "Banking": 7.87,
+        "Healthcare": 7.54,
+        "FMCG": 10.870000000000001,
+        "Auto": 5.44,
+        "NBFC": 4.34,
+        "Cement": 3.84,
+        "Others": 34.89
+      }
+    },
+    "invesco-india-midcap-growth-direct-plan": {
+      "name": "Invesco India Midcap Growth Direct Plan",
+      "amc": "Invesco Mutual Fund",
+      "category": "Mid Cap",
+      "holdings": [
+        {
+          "stock": "Dixon Technologies",
+          "weight": 8.94,
+          "sector": "Electronics"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 8.09,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 7.17,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Mphasis",
+          "weight": 6.89,
+          "sector": "IT"
+        },
+        {
+          "stock": "Escorts Kubota",
+          "weight": 6.19,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 6.01,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Phoenix Mills",
+          "weight": 5.32,
+          "sector": "Real Estate"
+        },
+        {
+          "stock": "ABB India",
+          "weight": 5.14,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "PI Industries",
+          "weight": 4.85,
+          "sector": "Chemicals"
+        },
+        {
+          "stock": "Persistent Systems",
+          "weight": 4.82,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Electronics": 8.94,
+        "Healthcare": 8.09,
+        "Consumer Durables": 7.17,
+        "IT": 11.71,
+        "Auto": 12.2,
+        "Real Estate": 5.32,
+        "Capital Goods": 5.14,
+        "Chemicals": 4.85,
+        "Others": 36.58
+      }
+    },
+    "quant-multi-cap-growth-direct-plan": {
+      "name": "Quant Multi Cap Growth Direct Plan",
+      "amc": "Quant Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "HCL Technologies",
+          "weight": 8.93,
+          "sector": "IT"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 8.23,
+          "sector": "IT"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 8.14,
+          "sector": "Cement"
+        },
+        {
+          "stock": "ITC",
+          "weight": 7.07,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Hindustan Unilever",
+          "weight": 5.69,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 5.61,
+          "sector": "Auto"
+        },
+        {
+          "stock": "ICICI Bank",
+          "weight": 5.46,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 5.03,
+          "sector": "NBFC"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 4.95,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 4.41,
+          "sector": "Auto"
+        }
+      ],
+      "sector_allocation": {
+        "IT": 17.16,
+        "Cement": 8.14,
+        "FMCG": 12.760000000000002,
+        "Auto": 10.02,
+        "Banking": 5.46,
+        "NBFC": 5.03,
+        "Consumer Durables": 4.95,
+        "Others": 36.48
+      }
+    },
+    "tata-digital-india--direct-plan": {
+      "name": "Tata Digital India Fund Direct Plan",
+      "amc": "Tata Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Bharti Airtel",
+          "weight": 8.37,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 8.03,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Wipro",
+          "weight": 7.38,
+          "sector": "IT"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 6.34,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 5.78,
+          "sector": "IT"
+        },
+        {
+          "stock": "Tata Motors",
+          "weight": 5.61,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Nestle India",
+          "weight": 5.48,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "TCS",
+          "weight": 5.32,
+          "sector": "IT"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 5.09,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 3.66,
+          "sector": "Oil & Gas"
+        }
+      ],
+      "sector_allocation": {
+        "Telecom": 8.37,
+        "Cement": 8.03,
+        "IT": 18.48,
+        "Consumer Durables": 6.34,
+        "Auto": 10.7,
+        "FMCG": 5.48,
+        "Oil & Gas": 3.66,
+        "Others": 38.94
+      }
+    },
+    "axis-elss-tax-saver-growth-direct-plan": {
+      "name": "Axis ELSS Tax Saver Growth Direct Plan",
+      "amc": "Axis Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "HCL Technologies",
+          "weight": 10.02,
+          "sector": "IT"
+        },
+        {
+          "stock": "Tata Motors",
+          "weight": 9.42,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Reliance Industries",
+          "weight": 8.9,
+          "sector": "Oil & Gas"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 8.48,
+          "sector": "Paints"
+        },
+        {
+          "stock": "TCS",
+          "weight": 6.56,
+          "sector": "IT"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 5.32,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 4.97,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 4.51,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 4.36,
+          "sector": "IT"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 4.12,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "IT": 25.06,
+        "Auto": 13.93,
+        "Oil & Gas": 8.9,
+        "Paints": 8.48,
+        "Banking": 5.32,
+        "Consumer Durables": 4.97,
+        "Others": 33.34
+      }
+    },
+    "mirae-asset-nyse-fang-etf-fof-growth-direct-plan": {
+      "name": "Mirae Asset NYSE FANG ETF FoF Growth Direct Plan",
+      "amc": "Mirae Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Kotak Mahindra Bank",
+          "weight": 9.62,
+          "sector": "Banking"
+        },
+        {
+          "stock": "ITC",
+          "weight": 9.48,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "TCS",
+          "weight": 8.09,
+          "sector": "IT"
+        },
+        {
+          "stock": "Larsen & Toubro",
+          "weight": 7.92,
+          "sector": "Capital Goods"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 7.18,
+          "sector": "IT"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 6.79,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Hindustan Unilever",
+          "weight": 6.15,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 5.7,
+          "sector": "NBFC"
+        },
+        {
+          "stock": "UltraTech Cement",
+          "weight": 4.28,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Persistent Systems",
+          "weight": 4.09,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 9.62,
+        "FMCG": 15.63,
+        "IT": 19.36,
+        "Capital Goods": 7.92,
+        "Consumer Durables": 6.79,
+        "NBFC": 5.7,
+        "Cement": 4.28,
+        "Others": 30.7
+      }
+    },
+    "hdfc-flexicap-growth-direct-plan": {
+      "name": "HDFC Flexicap Growth Direct Plan",
+      "amc": "HDFC Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "State Bank of India",
+          "weight": 8.11,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Max Healthcare",
+          "weight": 7.94,
+          "sector": "Healthcare"
+        },
+        {
+          "stock": "HDFC Bank",
+          "weight": 7.88,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 7.81,
+          "sector": "Auto"
+        },
+        {
+          "stock": "TCS",
+          "weight": 7.63,
+          "sector": "IT"
+        },
+        {
+          "stock": "Tech Mahindra",
+          "weight": 6.74,
+          "sector": "IT"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 5.73,
+          "sector": "Banking"
+        },
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 5.3,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Bharti Airtel",
+          "weight": 5.28,
+          "sector": "Telecom"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 3.91,
+          "sector": "IT"
+        }
+      ],
+      "sector_allocation": {
+        "Banking": 21.72,
+        "Healthcare": 7.94,
+        "Auto": 13.11,
+        "IT": 18.28,
+        "Telecom": 5.28,
+        "Others": 33.67
+      }
+    },
+    "parag-parikh-flexi-cap-growth-direct-plan": {
+      "name": "Parag Parikh Flexi Cap Growth Direct Plan",
+      "amc": "Parag Parikh Mutual Fund",
+      "category": "Flexi Cap",
+      "holdings": [
+        {
+          "stock": "Maruti Suzuki",
+          "weight": 8.34,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Bajaj Finance",
+          "weight": 7.98,
+          "sector": "NBFC"
+        },
+        {
+          "stock": "Nestle India",
+          "weight": 7.43,
+          "sector": "FMCG"
+        },
+        {
+          "stock": "HCL Technologies",
+          "weight": 7.42,
+          "sector": "IT"
+        },
+        {
+          "stock": "Bajaj Auto",
+          "weight": 7.25,
+          "sector": "Auto"
+        },
+        {
+          "stock": "Infosys",
+          "weight": 6.48,
+          "sector": "IT"
+        },
+        {
+          "stock": "Wipro",
+          "weight": 4.99,
+          "sector": "IT"
+        },
+        {
+          "stock": "Asian Paints",
+          "weight": 4.61,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Crompton Greaves",
+          "weight": 4.19,
+          "sector": "Consumer Durables"
+        },
+        {
+          "stock": "Axis Bank",
+          "weight": 3.98,
+          "sector": "Banking"
+        }
+      ],
+      "sector_allocation": {
+        "Auto": 15.59,
+        "NBFC": 7.98,
+        "FMCG": 7.43,
+        "IT": 18.89,
+        "Paints": 4.61,
+        "Consumer Durables": 4.19,
+        "Banking": 3.98,
+        "Others": 37.33
+      }
+    }
+  }
+}

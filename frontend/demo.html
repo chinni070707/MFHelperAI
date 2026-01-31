@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MFHelper - Toast Demo</title>
+    <script src="/js/toast.js"></script>
+    <script src="/js/errorHandler.js"></script>
+    <script src="/js/responsive.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            color: #8892b0;
+            margin-bottom: 40px;
+        }
+        .demo-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .demo-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button.success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+        button.error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        button.warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        button.info {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: #8892b0;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Toast & Error Handling Demo</h1>
+        <p>Test the new notification system and responsive design</p>
+
+        <!-- Toast Notifications -->
+        <div class="demo-section">
+            <h2>Toast Notifications</h2>
+            <div class="button-grid">
+                <button class="success" onclick="toast.success('Portfolio uploaded successfully!')">
+                    ✓ Success Toast
+                </button>
+                <button class="error" onclick="toast.error('Failed to upload file')">
+                    ✕ Error Toast
+                </button>
+                <button class="warning" onclick="toast.warning('File size is large, may take time')">
+                    ⚠ Warning Toast
+                </button>
+                <button class="info" onclick="toast.info('Processing your portfolio...')">
+                    ℹ Info Toast
+                </button>
+            </div>
+            <div class="code-block">
+// Usage:<br>
+toast.success('Message here');<br>
+toast.error('Error message');<br>
+toast.warning('Warning message');<br>
+toast.info('Info message');
+            </div>
+        </div>
+
+        <!-- Loading States -->
+        <div class="demo-section">
+            <h2>Loading States</h2>
+            <div class="button-grid">
+                <button onclick="demoLoading()">
+                    ⟳ Show Loading
+                </button>
+                <button onclick="demoLoadingWithSuccess()">
+                    ⟳ Loading → Success
+                </button>
+                <button onclick="demoLoadingWithError()">
+                    ⟳ Loading → Error
+                </button>
+            </div>
+            <div class="code-block">
+// Usage:<br>
+const id = loading.show('Processing...');<br>
+// Do work...<br>
+loading.hide(id);
+            </div>
+        </div>
+
+        <!-- Error Handling -->
+        <div class="demo-section">
+            <h2>Error Handling</h2>
+            <div class="button-grid">
+                <button class="error" onclick="simulateAPIError()">
+                    Simulate API Error
+                </button>
+                <button class="error" onclick="simulateFileError()">
+                    Simulate File Error
+                </button>
+                <button class="error" onclick="throwError()">
+                    Throw Unhandled Error
+                </button>
+                <button onclick="showErrorStats()">
+                    Show Error Stats
+                </button>
+            </div>
+            <div class="code-block">
+// Usage:<br>
+try {<br>
+  &nbsp;&nbsp;await apiCall();<br>
+} catch (error) {<br>
+  &nbsp;&nbsp;errorHandler.handleAPIError(error);<br>
+}
+            </div>
+        </div>
+
+        <!-- Device Info -->
+        <div class="demo-section">
+            <h2>Device & Responsive Info</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="deviceType">-</div>
+                    <div class="stat-label">Device Type</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="viewport">-</div>
+                    <div class="stat-label">Viewport</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="orientation">-</div>
+                    <div class="stat-label">Orientation</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="touchDevice">-</div>
+                    <div class="stat-label">Touch Device</div>
+                </div>
+            </div>
+            <button onclick="updateDeviceInfo()" style="margin-top: 20px; width: 100%;">
+                🔄 Refresh Device Info
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update device info
+        function updateDeviceInfo() {
+            document.getElementById('deviceType').textContent = 
+                device.isMobile() ? 'Mobile' : 
+                device.isTablet() ? 'Tablet' : 'Desktop';
+            
+            document.getElementById('viewport').textContent = 
+                `${viewport.width()}×${viewport.height()}`;
+            
+            document.getElementById('orientation').textContent = 
+                viewport.orientation();
+            
+            document.getElementById('touchDevice').textContent = 
+                device.isTouchDevice() ? 'Yes' : 'No';
+        }
+        
+        // Initial update
+        updateDeviceInfo();
+        
+        // Update on resize
+        window.addEventListener('resize', updateDeviceInfo);
+
+        // Demo functions
+        function demoLoading() {
+            const id = loading.show('Processing your request...');
+            setTimeout(() => loading.hide(id), 3000);
+        }
+
+        function demoLoadingWithSuccess() {
+            const id = loading.show('Uploading file...');
+            setTimeout(() => {
+                loading.hide(id);
+                toast.success('File uploaded successfully!');
+            }, 2000);
+        }
+
+        function demoLoadingWithError() {
+            const id = loading.show('Connecting to server...');
+            setTimeout(() => {
+                loading.hide(id);
+                toast.error('Connection failed. Please try again.');
+            }, 2000);
+        }
+
+        function simulateAPIError() {
+            const mockError = new Error('Network request failed');
+            mockError.response = { status: 500 };
+            errorHandler.handleAPIError(mockError, { endpoint: '/api/upload' });
+        }
+
+        function simulateFileError() {
+            const mockError = new Error('Invalid file format');
+            errorHandler.handleFileError(mockError, 'portfolio.xlsx');
+        }
+
+        function throwError() {
+            // This will be caught by the global error handler
+            throw new Error('This is an unhandled error for testing!');
+        }
+
+        function showErrorStats() {
+            const stats = errorHandler.getStats();
+            toast.info(`Total Errors: ${stats.totalErrors} | Session: ${stats.sessionErrors}`);
+        }
+
+        // Show welcome toast
+        setTimeout(() => {
+            toast.info('👋 Welcome! Try clicking the buttons above', 5000);
+        }, 500);
+    </script>
+</body>
+</html>
