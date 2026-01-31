@@ -1,0 +1,20 @@
+<!-- MFHelper Logo Option 1: Modern Minimalist with Growth Chart -->
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#0066FF" opacity="0.1"/>
+  
+  <!-- Main Circle -->
+  <circle cx="100" cy="100" r="80" fill="#0066FF"/>
+  
+  <!-- Growth Chart Icon -->
+  <path d="M 60 120 L 75 110 L 90 95 L 105 100 L 120 80 L 135 85 L 140 75" 
+        stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- MF Text -->
+  <text x="100" y="145" font-family="Arial, sans-serif" font-size="32" font-weight="bold" 
+        fill="white" text-anchor="middle">MF</text>
+  
+  <!-- Trend Arrow -->
+  <path d="M 135 75 L 140 75 L 137 70 M 140 75 L 137 80" 
+        stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

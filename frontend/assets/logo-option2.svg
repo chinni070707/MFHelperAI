@@ -1,0 +1,16 @@
+<!-- MFHelper Logo Option 2: Shield with Chart (Trust & Security) -->
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield Shape -->
+  <path d="M 100 20 L 160 50 L 160 110 Q 160 150 100 180 Q 40 150 40 110 L 40 50 Z" 
+        fill="#10B981" stroke="#059669" stroke-width="3"/>
+  
+  <!-- Bar Chart Inside Shield -->
+  <rect x="65" y="100" width="12" height="40" fill="white" rx="2"/>
+  <rect x="82" y="85" width="12" height="55" fill="white" rx="2"/>
+  <rect x="99" y="70" width="12" height="70" fill="white" rx="2"/>
+  <rect x="116" y="90" width="12" height="50" fill="white" rx="2"/>
+  
+  <!-- MF Text -->
+  <text x="100" y="65" font-family="Arial, sans-serif" font-size="28" font-weight="bold" 
+        fill="white" text-anchor="middle">MF</text>
+</svg>

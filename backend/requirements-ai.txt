@@ -1,0 +1,31 @@
+# AI/ML Integration Requirements
+
+# Core AI/ML libraries
+openai>=1.12.0  # OpenAI API for GPT-4
+anthropic>=0.18.0  # Claude API (alternative)
+langchain>=0.1.0  # LLM orchestration
+langchain-openai>=0.0.5  # OpenAI integration
+python-dotenv>=1.0.0  # Environment variables
+
+# Vector DB and embeddings
+chromadb>=0.4.22  # Vector database for RAG
+sentence-transformers>=2.3.0  # Local embeddings
+
+# ML/Data Science
+scikit-learn>=1.4.0  # ML models for scoring
+pandas>=2.1.0  # Data manipulation
+numpy>=1.26.0  # Numerical computing
+scipy>=1.11.0  # Scientific computing
+
+# NLP and text processing
+nltk>=3.8.1  # Natural language toolkit
+spacy>=3.7.0  # Advanced NLP
+
+# Caching and performance
+redis>=5.0.0  # Cache AI responses
+diskcache>=5.6.3  # Persistent cache
+
+# Utilities
+pydantic>=2.5.0  # Data validation
+tenacity>=8.2.3  # Retry logic
+tiktoken>=0.5.0  # Token counting

@@ -10,7 +10,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai
 from app.database import engine, Base
 
 # Setup centralized logging
@@ -92,6 +92,9 @@ app.include_router(admin.router, tags=["Admin"])
 from app.routes import health
 app.include_router(health.router, tags=["Health & Monitoring"])
 app.include_router(errors.router, tags=["Error Logging"])
+
+# Register AI routes
+app.include_router(ai.router, prefix="/api", tags=["AI"])
 
 # Serve static files (frontend)
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "..", "frontend")
