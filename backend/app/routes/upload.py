@@ -224,7 +224,8 @@ def parse_excel(file_content: bytes, filename: str) -> dict:
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f\"Error parsing Excel file {filename}: {str(e)}\", exc_info=True)\n        raise HTTPException(status_code=400, detail=f"Error parsing Excel: {str(e)}")
+        logger.error(f"Error parsing Excel file {filename}: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=400, detail=f"Error parsing Excel: {str(e)}")
 
 
 def detect_amc_from_name(fund_name: str) -> str:

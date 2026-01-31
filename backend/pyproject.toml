@@ -1,0 +1,61 @@
+[tool.pytest.ini_options]
+# Pytest configuration
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Output options
+addopts = [
+    "-v",                           # Verbose output
+    "--strict-markers",             # Strict marker enforcement
+    "--tb=short",                   # Short traceback format
+    "--disable-warnings",           # Disable warnings
+    "-ra",                          # Show extra test summary
+    "--cov=app",                    # Coverage for app directory
+    "--cov-report=html",            # HTML coverage report
+    "--cov-report=term-missing",    # Show missing lines in terminal
+    "--cov-branch",                 # Branch coverage
+]
+
+# Markers for test categorization
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "api: marks tests as API tests",
+]
+
+# Test discovery patterns
+norecursedirs = [
+    ".*",
+    "build",
+    "dist",
+    "CVS",
+    "_darcs",
+    "{arch}",
+    "*.egg",
+    "venv",
+    "env",
+    "node_modules",
+]
+
+# Coverage options
+[tool.coverage.run]
+source = ["app"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/env/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+
+[tool.coverage.html]
+directory = "htmlcov"

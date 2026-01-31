@@ -828,10 +828,116 @@
             
             <!-- Analyze View -->
             <div id="analyzeView" class="view-content">
+                <!-- Performance Chart -->
+                <div class="card mb-4">
+                    <h2 class="mb-3">📊 Fund Performance - Returns Waterfall</h2>
+                    <p class="text-secondary mb-4" style="font-size: 0.9rem;">Sorted by absolute returns % | Hover for details</p>
+                    <div id="performanceChart" style="height: 400px; width: 100%;"></div>
+                </div>
+                
+                <!-- Risk-Return Analysis -->
+                <div class="card mb-4">
+                    <h2 class="mb-3">⚡ Risk-Return Analysis</h2>
+                    <p class="text-secondary mb-4" style="font-size: 0.9rem;">Alpha vs Category Performance</p>
+                    <div id="riskChart" style="height: 400px; width: 100%;"></div>
+                </div>
+                
+                <!-- Advanced Fund Analytics Table -->
+                <div class="card mb-4">
+                    <h2 class="mb-3">📈 Advanced Fund Analytics</h2>
+                    <p class="text-secondary mb-4" style="font-size: 0.9rem;">Detailed metrics for each fund</p>
+                    
+                    <div style="overflow-x: auto;">
+                        <table class="risk-table" id="riskTable" style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                            <thead>
+                                <tr style="background: var(--card-bg); border-bottom: 2px solid var(--border-color);">
+                                    <th style="padding: 12px; text-align: left; color: var(--text-primary);">Fund</th>
+                                    <th style="padding: 12px; text-align: left; color: var(--text-primary);">Category</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">Invested</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">Current</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">Return %</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">Alpha</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">1Y</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">3Y</th>
+                                </tr>
+                            </thead>
+                            <tbody id="riskTableBody"></tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="card mt-4" style="background: var(--secondary-bg); border: 1px solid var(--border-color);">
+                        <h4 style="margin-bottom: 12px; color: var(--primary-blue);">📊 Key Risk Metrics Explained:</h4>
+                        <div style="display: grid; gap: 12px; font-size: 0.85rem; color: var(--text-secondary);">
+                            <div><strong style="color: var(--text-primary);">Alpha:</strong> Excess return over benchmark. Higher is better, shows fund manager skill.</div>
+                            <div><strong style="color: var(--text-primary);">1Y/3Y Returns:</strong> Trailing returns. Compare with category average.</div>
+                            <div><strong style="color: var(--text-primary);">Category:</strong> Fund classification helps compare apples to apples.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Rebalancing Calculator -->
+                <div class="card mb-4">
+                    <h2 class="mb-3">🎯 Portfolio Rebalancing Calculator</h2>
+                    <p class="text-secondary mb-4" style="font-size: 0.9rem;">Adjust sliders to set your target allocation</p>
+                    
+                    <!-- Mode Selection -->
+                    <div class="mb-4" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button id="modeRebalance" class="btn btn-primary" onclick="setRebalanceMode('rebalance')" style="flex: 1; min-width: 150px;">🔄 Rebalance Existing</button>
+                        <button id="modeFresh" class="btn btn-secondary" onclick="setRebalanceMode('fresh')" style="flex: 1; min-width: 150px;">💰 Add Fresh Money</button>
+                    </div>
+                    
+                    <div id="modeDescription" class="mb-4" style="padding: 12px; background: var(--secondary-bg); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+                        Sell from overweight categories, buy in underweight (may have tax implications)
+                    </div>
+                    
+                    <!-- Sliders -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 24px;">
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="color: var(--primary-blue); font-weight: 600;">Large Cap Target</span>
+                                <span id="largeTarget" style="color: var(--primary-blue); font-weight: 700;">40%</span>
+                            </div>
+                            <input type="range" id="largeSlider" min="0" max="100" value="40" oninput="updateRebalance()" style="width: 100%;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                                <span id="largeCurrent">Current: -</span>
+                                <span id="largeDiff">-</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="color: #ffc107; font-weight: 600;">Mid Cap Target</span>
+                                <span id="midTarget" style="color: #ffc107; font-weight: 700;">30%</span>
+                            </div>
+                            <input type="range" id="midSlider" min="0" max="100" value="30" oninput="updateRebalance()" style="width: 100%;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                                <span id="midCurrent">Current: -</span>
+                                <span id="midDiff">-</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="color: #ff4757; font-weight: 600;">Small Cap Target</span>
+                                <span id="smallTarget" style="color: #ff4757; font-weight: 700;">20%</span>
+                            </div>
+                            <input type="range" id="smallSlider" min="0" max="100" value="20" oninput="updateRebalance()" style="width: 100%;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                                <span id="smallCurrent">Current: -</span>
+                                <span id="smallDiff">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="rebalanceResults"></div>
+                </div>
+                
+                <!-- Portfolio Overlap Analysis -->
                 <div class="card">
-                    <h2 class="mb-4">Portfolio Overlap Analysis</h2>
+                    <h2 class="mb-3">🔍 Portfolio Overlap Analysis</h2>
+                    <p class="text-secondary mb-4" style="font-size: 0.9rem;">Analyze stock and sector overlap between your funds to identify concentration risks</p>
                     <button class="btn btn-primary mb-4" onclick="runOverlapAnalysis()">
-                        🔍 Analyze Overlap
+                        📊 Analyze Overlap
                     </button>
                     <div id="overlap-container"></div>
                 </div>
@@ -963,10 +1069,15 @@
                 // Simulate network delay for demo (remove in production)
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
-                // Try to load from sessionStorage first
-                const cached = sessionStorage.getItem('portfolioData');
+                // Try to load from sessionStorage first, then localStorage
+                let cached = sessionStorage.getItem('portfolioData');
+                if (!cached) {
+                    cached = localStorage.getItem('portfolioData');
+                }
+                
                 if (cached) {
                     portfolioData = JSON.parse(cached);
+                    console.log('📊 Portfolio loaded:', portfolioData);
                     renderDashboard();
                     return;
                 }
@@ -975,6 +1086,7 @@
                 showEmptyState();
                 
             } catch (error) {
+                console.error('Error loading portfolio:', error);
                 errorHandler.handleAPIError(error, { feature: 'portfolio_load' });
                 showEmptyState();
             }
@@ -2195,10 +2307,233 @@
             }
         }
         
+        // ===========================================
+        // ANALYTICS - Performance Charts & Tables
+        // ===========================================
+        
+        let rebalanceMode = 'rebalance';
+        
+        function renderAnalytics() {
+            if (!portfolioData || !portfolioData.holdings) return;
+            
+            renderPerformanceChart(portfolioData.holdings);
+            renderRiskChart(portfolioData.holdings);
+            renderRiskTable(portfolioData.holdings);
+            initRebalanceCalculator();
+        }
+        
+        function renderPerformanceChart(holdings) {
+            const sorted = [...holdings].sort((a, b) => (b.percentage_return || 0) - (a.percentage_return || 0));
+            
+            const trace = {
+                x: sorted.map(h => h.percentage_return || 0),
+                y: sorted.map(h => (h.fund_name || 'Unknown').substring(0, 25)),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: sorted.map(h => (h.percentage_return || 0) > 0 ? '#00ff88' : '#ff4757'),
+                    line: { width: 0 }
+                },
+                text: sorted.map(h => `${(h.percentage_return || 0).toFixed(2)}%`),
+                textposition: 'outside',
+                hovertemplate: '<b>%{y}</b><br>Return: %{x:.2f}%<br>Invested: ₹%{customdata[0]}<br>Current: ₹%{customdata[1]}<extra></extra>',
+                customdata: sorted.map(h => [
+                    (h.invested_value || 0).toFixed(0),
+                    (h.current_value || 0).toFixed(0)
+                ])
+            };
+            
+            const layout = {
+                margin: { l: 150, r: 50, t: 20, b: 50 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#8892b0', size: 11 },
+                xaxis: { title: 'Return %', gridcolor: '#1e293b', color: '#8892b0' },
+                yaxis: { gridcolor: '#1e293b' },
+                height: Math.max(400, sorted.length * 35)
+            };
+            
+            Plotly.newPlot('performanceChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+        
+        function renderRiskChart(holdings) {
+            const trace = {
+                x: holdings.map(h => h.percentage_return || 0),
+                y: holdings.map(h => (h.return_5y || 0) - (h.percentage_return || 0)),
+                mode: 'markers+text',
+                marker: {
+                    size: holdings.map(h => Math.sqrt((h.current_value || 0) / 10000)),
+                    color: holdings.map(h => (h.percentage_return || 0) > 0 ? '#00ff88' : '#ff4757'),
+                    line: { width: 1, color: '#fff' }
+                },
+                text: holdings.map(h => (h.fund_name || '').substring(0, 15)),
+                textposition: 'top center',
+                textfont: { size: 9, color: '#8892b0' },
+                hovertemplate: '<b>%{text}</b><br>Current Return: %{x:.2f}%<br>Alpha: %{y:.2f}%<br>Value: ₹%{customdata}<extra></extra>',
+                customdata: holdings.map(h => (h.current_value || 0).toFixed(0))
+            };
+            
+            const layout = {
+                margin: { l: 50, r: 50, t: 20, b: 50 },
+                paper_bgcolor: 'transparent',
+                plot_bgcolor: 'transparent',
+                font: { color: '#8892b0' },
+                xaxis: { title: 'Portfolio Return %', gridcolor: '#1e293b', zeroline: true, zerolinecolor: '#475569' },
+                yaxis: { title: 'Alpha (Outperformance)', gridcolor: '#1e293b', zeroline: true, zerolinecolor: '#475569' },
+                height: 400
+            };
+            
+            Plotly.newPlot('riskChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+        
+        function renderRiskTable(holdings) {
+            const tbody = document.getElementById('riskTableBody');
+            tbody.innerHTML = holdings.map(h => `
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 12px; color: var(--text-primary);">${h.fund_name || 'Unknown'}</td>
+                    <td style="padding: 12px; color: var(--text-secondary); font-size: 0.85rem;">${h.category || '-'}</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">₹${((h.invested_value || 0) / 1000).toFixed(0)}K</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-primary); font-weight: 600;">₹${((h.current_value || 0) / 1000).toFixed(0)}K</td>
+                    <td style="padding: 12px; text-align: right; color: ${(h.percentage_return || 0) >= 0 ? '#00ff88' : '#ff4757'}; font-weight: 600;">${(h.percentage_return || 0).toFixed(2)}%</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${((h.return_5y || 0) - (h.percentage_return || 0)).toFixed(1)}%</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${(h.return_1y || 0).toFixed(1)}%</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${(h.return_3y || 0).toFixed(1)}%</td>
+                </tr>
+            `).join('');
+        }
+        
+        function initRebalanceCalculator() {
+            if (!portfolioData || !portfolioData.holdings) return;
+            
+            const holdings = portfolioData.holdings;
+            const total = holdings.reduce((sum, h) => sum + (h.current_value || 0), 0);
+            
+            // Calculate current allocation
+            const cats = { large: 0, mid: 0, small: 0 };
+            holdings.forEach(h => {
+                const cat = (h.category || '').toLowerCase();
+                const val = h.current_value || 0;
+                if (cat.includes('large')) cats.large += val;
+                else if (cat.includes('mid')) cats.mid += val;
+                else if (cat.includes('small')) cats.small += val;
+            });
+            
+            const current = {
+                large: ((cats.large / total) * 100).toFixed(1),
+                mid: ((cats.mid / total) * 100).toFixed(1),
+                small: ((cats.small / total) * 100).toFixed(1)
+            };
+            
+            document.getElementById('largeCurrent').textContent = `Current: ${current.large}%`;
+            document.getElementById('midCurrent').textContent = `Current: ${current.mid}%`;
+            document.getElementById('smallCurrent').textContent = `Current: ${current.small}%`;
+            
+            updateRebalance();
+        }
+        
+        function setRebalanceMode(mode) {
+            rebalanceMode = mode;
+            document.getElementById('modeRebalance').className = mode === 'rebalance' ? 'btn btn-primary' : 'btn btn-secondary';
+            document.getElementById('modeFresh').className = mode === 'fresh' ? 'btn btn-primary' : 'btn btn-secondary';
+            
+            const desc = mode === 'rebalance' 
+                ? 'Sell from overweight categories, buy in underweight (may have tax implications)'
+                : 'Add fresh money to underweight categories without selling anything (tax-free)';
+            document.getElementById('modeDescription').textContent = desc;
+            
+            updateRebalance();
+        }
+        
+        function updateRebalance() {
+            if (!portfolioData) return;
+            
+            const largeTarget = parseInt(document.getElementById('largeSlider').value);
+            const midTarget = parseInt(document.getElementById('midSlider').value);
+            const smallTarget = parseInt(document.getElementById('smallSlider').value);
+            
+            document.getElementById('largeTarget').textContent = `${largeTarget}%`;
+            document.getElementById('midTarget').textContent = `${midTarget}%`;
+            document.getElementById('smallTarget').textContent = `${smallTarget}%`;
+            
+            const holdings = portfolioData.holdings;
+            const total = holdings.reduce((sum, h) => sum + (h.current_value || 0), 0);
+            
+            // Calculate current allocation
+            const cats = { large: 0, mid: 0, small: 0 };
+            holdings.forEach(h => {
+                const cat = (h.category || '').toLowerCase();
+                const val = h.current_value || 0;
+                if (cat.includes('large')) cats.large += val;
+                else if (cat.includes('mid')) cats.mid += val;
+                else if (cat.includes('small')) cats.small += val;
+            });
+            
+            const currentPct = {
+                large: (cats.large / total) * 100,
+                mid: (cats.mid / total) * 100,
+                small: (cats.small / total) * 100
+            };
+            
+            const diff = {
+                large: largeTarget - currentPct.large,
+                mid: midTarget - currentPct.mid,
+                small: smallTarget - currentPct.small
+            };
+            
+            document.getElementById('largeDiff').textContent = `${diff.large > 0 ? '+' : ''}${diff.large.toFixed(1)}%`;
+            document.getElementById('midDiff').textContent = `${diff.mid > 0 ? '+' : ''}${diff.mid.toFixed(1)}%`;
+            document.getElementById('smallDiff').textContent = `${diff.small > 0 ? '+' : ''}${diff.small.toFixed(1)}%`;
+            
+            // Color code the diffs
+            document.getElementById('largeDiff').style.color = diff.large >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('midDiff').style.color = diff.mid >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('smallDiff').style.color = diff.small >= 0 ? '#00ff88' : '#ff4757';
+            
+            // Show rebalancing actions
+            const actions = [];
+            if (rebalanceMode === 'rebalance') {
+                if (diff.large < 0) actions.push(`Sell ₹${Math.abs((diff.large * total / 100) / 1000).toFixed(0)}K from Large Cap`);
+                if (diff.mid < 0) actions.push(`Sell ₹${Math.abs((diff.mid * total / 100) / 1000).toFixed(0)}K from Mid Cap`);
+                if (diff.small < 0) actions.push(`Sell ₹${Math.abs((diff.small * total / 100) / 1000).toFixed(0)}K from Small Cap`);
+                
+                if (diff.large > 0) actions.push(`Buy ₹${((diff.large * total / 100) / 1000).toFixed(0)}K in Large Cap`);
+                if (diff.mid > 0) actions.push(`Buy ₹${((diff.mid * total / 100) / 1000).toFixed(0)}K in Mid Cap`);
+                if (diff.small > 0) actions.push(`Buy ₹${((diff.small * total / 100) / 1000).toFixed(0)}K in Small Cap`);
+            } else {
+                const freshNeeded = Math.max(
+                    diff.large > 0 ? (diff.large * total / 100) : 0,
+                    diff.mid > 0 ? (diff.mid * total / 100) : 0,
+                    diff.small > 0 ? (diff.small * total / 100) : 0
+                );
+                actions.push(`Add fresh ₹${(freshNeeded / 1000).toFixed(0)}K total`);
+                if (diff.large > 0) actions.push(`Invest ₹${((diff.large * total / 100) / 1000).toFixed(0)}K in Large Cap`);
+                if (diff.mid > 0) actions.push(`Invest ₹${((diff.mid * total / 100) / 1000).toFixed(0)}K in Mid Cap`);
+                if (diff.small > 0) actions.push(`Invest ₹${((diff.small * total / 100) / 1000).toFixed(0)}K in Small Cap`);
+            }
+            
+            document.getElementById('rebalanceResults').innerHTML = actions.length > 0
+                ? `<div class="card mt-4" style="background: var(--secondary-bg); border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 12px; color: var(--primary-blue);">📋 Actions Required:</h4>
+                    <ul style="margin: 0; padding-left: 20px; color: var(--text-secondary);">
+                        ${actions.map(a => `<li style="margin-bottom: 8px;">${a}</li>`).join('')}
+                    </ul>
+                   </div>`
+                : '<p class="text-secondary">Portfolio is balanced according to target allocation.</p>';
+        }
+        
         // Load portfolio on page load
         window.addEventListener('DOMContentLoaded', () => {
             loadPortfolio();
             showOnboarding();
+            
+            // Render analytics when switching to analyze view
+            const originalSwitchView = window.switchView;
+            window.switchView = function(viewName) {
+                originalSwitchView(viewName);
+                if (viewName === 'analyze' && portfolioData) {
+                    setTimeout(() => renderAnalytics(), 100);
+                }
+            };
         });
     </script>
 </body>
