@@ -871,25 +871,93 @@ async def upload_excel(
 
 ## 🎯 Priority Recommendations
 
-### Immediate (This Week)
+### 🔥 Immediate (This Week) - Critical for Production
 1. ✅ Fix security vulnerabilities (secrets, CORS)
 2. ✅ Add input validation and file size limits
 3. ✅ Set up proper error logging
 4. ✅ Add basic unit tests
+5. 🆕 **Generate app icons** (72x72 to 512x512 PNG from SVG)
+6. 🆕 **Deploy to production** (Vercel/Railway/DigitalOcean)
+7. 🆕 **Test PWA installation** on Android/iOS
+8. 🆕 **Fix Excel parsing edge cases** (merged cells, malformed data)
 
-### Short Term (This Month)
+### 🟡 Short Term (This Month) - Production Readiness
 1. ✅ Migrate to PostgreSQL
 2. ✅ Add authentication & authorization
 3. ✅ Implement API versioning
 4. ✅ Add Redis caching
 5. ✅ Set up CI/CD
+6. 🆕 **XIRR calculator** (accurate returns calculation)
+7. 🆕 **Capital gains statement** generator
+8. 🆕 **Regular vs Direct plan** comparison
+9. 🆕 **Goal-based planning** calculator
+10. 🆕 **API rate limiting** (prevent abuse)
 
-### Long Term (Next Quarter)
-1. ✅ Microservices architecture
+### 💎 Medium Term (Month 2-3) - Differentiation Features
+1. 🆕 **Tax Optimization Suite**
+   - LTCG tax harvesting algorithm
+   - STCG vs LTCG calculator
+   - Grandfathering benefit calculation
+   - Exit load warnings
+   - Capital gains PDF report
+
+2. 🆕 **Advanced Analytics**
+   - XIRR calculation
+   - Rolling returns
+   - Drawdown analysis
+   - Benchmark comparison
+   - Diversification score
+   - Fund manager tracking
+
+3. 🆕 **Smart Features**
+   - Step-up SIP calculator
+   - SIP vs Lumpsum comparison
+   - Regular to Direct switch savings calculator
+   - What-if scenario analyzer
+
+### 🌟 Long Term (Quarter 2) - Premium Features
+1. 🆕 **AI-Powered Features**
+   - GPT-powered fund recommendations
+   - Portfolio health score (0-100)
+   - Natural language queries ("Show me best mid-cap funds")
+   - Automated insights generation
+   - Risk profiler questionnaire
+
 2. ✅ Real-time updates with WebSockets
 3. ✅ Mobile app features (biometric, push notifications)
-4. ✅ Machine learning for predictions
-5. ✅ Multi-currency support
+4. 🆕 **Multi-Asset Support**
+   - Stock portfolio tracking
+   - FD/PPF tracking
+   - Real estate valuation
+   - Gold/Silver prices
+   - Net worth dashboard
+
+5. 🆕 **Factor Analysis**
+   - Value, Growth, Quality scores
+   - Attribution analysis
+   - Peer comparison (anonymized)
+
+### 🏢 B2B/Enterprise (Quarter 3-4)
+1. 🆕 **Lead Generation Platform**
+   - Lead scoring algorithm
+   - Distributor dashboard
+   - Lead export API
+   - CRM integration (Zoho, Salesforce)
+   - White-label solution
+
+2. 🆕 **API & Integrations**
+   - Public API for partners
+   - Zerodha integration
+   - Groww integration
+   - Account Aggregator framework
+   - WhatsApp bot
+
+3. 🆕 **Family Office Features**
+   - Multi-PAN support
+   - Family portfolio view
+   - Succession planning
+   - HUF support
+   - NRI portfolio
 
 ---
 
@@ -918,6 +986,170 @@ async def upload_excel(
 - [Security Headers](https://securityheaders.com/)
 - [PostgreSQL Performance](https://wiki.postgresql.org/wiki/Performance_Optimization)
 - [Progressive Web Apps](https://web.dev/progressive-web-apps/)
+
+---
+
+## 🐛 Known Issues & Bugs
+
+| Issue | Priority | Impact | Status |
+|-------|----------|--------|--------|
+| Excel parsing fails for merged cells | 🔴 High | Crashes on some broker exports | Open |
+| Hardcoded secrets in config.py | 🔴 Critical | Security vulnerability | **Fix Now** |
+| Open CORS policy | 🔴 Critical | CSRF attacks possible | **Fix Now** |
+| Chart not responsive on small screens | 🟡 Medium | Poor mobile UX | Open |
+| Service worker cache issues on update | 🟢 Low | Users see old version | Open |
+| No file size validation | 🔴 High | Server crash on huge files | **Fix Now** |
+| SQLite in production | 🟡 Medium | Not scalable | Migrate to PostgreSQL |
+
+---
+
+## 🔧 Technical Debt Tracker
+
+### High Priority
+- [ ] Add unit tests for Excel parser (0% coverage)
+- [ ] Add integration tests for API endpoints
+- [ ] Refactor dashboard.html (85,000+ lines, needs splitting)
+- [ ] Split JavaScript into ES6 modules
+- [ ] Add proper error boundaries
+
+### Medium Priority
+- [ ] Add TypeScript for frontend type safety
+- [ ] Setup CI/CD pipeline (GitHub Actions)
+- [ ] Add code linting (ESLint, Black, Ruff)
+- [ ] Performance optimization (bundle splitting)
+- [ ] Accessibility audit (WCAG 2.1)
+
+### Low Priority
+- [ ] Comprehensive API documentation
+- [ ] Architecture decision records (ADRs)
+- [ ] Developer onboarding guide
+
+---
+
+## 📊 Success Metrics to Implement
+
+### Product Analytics
+- [ ] Setup Plausible/Google Analytics
+- [ ] Track page views per route
+- [ ] Track feature usage (rebalance, overlap, etc.)
+- [ ] Track file upload success rate
+- [ ] Track average time on dashboard
+- [ ] Track chart interactions
+
+### Business KPIs
+- [ ] User signups (goal: 100 by March 1)
+- [ ] Portfolio size distribution
+- [ ] Feature adoption rates
+- [ ] Conversion to premium tier
+- [ ] Referral tracking
+- [ ] User retention (D1, D7, D30)
+
+### Technical Metrics
+- [ ] API response times (p50, p95, p99)
+- [ ] Error rates by endpoint
+- [ ] Server resource usage
+- [ ] Database query performance
+- [ ] Cache hit rates
+
+---
+
+## 🚀 Deployment Roadmap
+
+### Week 1 (Feb 1-7, 2026)
+- [ ] Generate all app icon sizes (PWA requirements)
+- [ ] Fix critical security issues
+- [ ] Deploy to staging (Vercel/Railway)
+- [ ] Beta testing with 5-10 users
+- [ ] Fix critical bugs from testing
+
+### Week 2 (Feb 8-14, 2026)
+- [ ] Production deployment
+- [ ] Submit to PWA directories
+- [ ] Test on real Android/iOS devices
+- [ ] Monitor error rates
+- [ ] Quick-fix any deployment issues
+
+### Month 1 Target: MVP Launch (Feb 15, 2026)
+- 🎯 100% uptime
+- 🎯 <3s page load time
+- 🎯 Zero critical bugs
+- 🎯 10 beta users onboarded
+
+### Month 2 Target: First 100 Users (Mar 1, 2026)
+- 🎯 XIRR calculator live
+- 🎯 Tax reports functional
+- 🎯 <2s average API response
+- 🎯 80% test coverage
+
+---
+
+## 🏆 Competitive Analysis
+
+### Direct Competitors
+| Platform | Strength | Weakness | Our Edge |
+|----------|----------|----------|----------|
+| **Dezerv** | HNI focus, professional UI | Requires minimum ₹10L | Free, no minimum |
+| **Kuvera** | Tax harvesting, clean UX | Limited analytics | Advanced overlap analysis |
+| **ET Money Genius** | AI recommendations | Not open source | Privacy-first, PWA |
+| **INDMoney** | Multi-asset tracking | Too complex | Simple, focused |
+| **Tickertape** | Stock screeners | No MF focus | MF-first approach |
+
+### Key Differentiators
+1. ✅ **Portfolio Overlap Analysis** (with visual heatmap)
+2. 🔜 **Tax Optimization Suite** (LTCG/STCG calculator)
+3. 🔜 **Privacy-First** (data stays client-side)
+4. ✅ **PWA Native Experience** (install on phone)
+5. 🔜 **AI-Powered Insights** (GPT integration)
+
+---
+
+## 📅 Milestone Timeline
+
+| Milestone | Target Date | Deliverables | Status |
+|-----------|-------------|--------------|--------|
+| **MVP Launch** | Feb 15, 2026 | All Phase 1 features, PWA icons | 🟡 In Progress (90%) |
+| **First 100 Users** | Mar 1, 2026 | XIRR, Tax reports, Auth | ⬜ Not Started |
+| **Pro Tier Launch** | Apr 1, 2026 | Premium features, Payments | ⬜ Not Started |
+| **1,000 Users** | May 1, 2026 | Mobile apps, Integrations | ⬜ Not Started |
+| **Play Store** | Jun 1, 2026 | Native Android app | ⬜ Not Started |
+| **Premium Tier** | Jul 1, 2026 | AI features, Advanced analytics | ⬜ Not Started |
+| **10K Users** | Sep 1, 2026 | Multi-asset, Family office | ⬜ Not Started |
+| **B2B Launch** | Oct 1, 2026 | Distributor platform, APIs | ⬜ Not Started |
+
+---
+
+## 💡 Feature Ideas Backlog
+
+### High Demand (From User Feedback)
+- [ ] Email/WhatsApp weekly digest
+- [ ] Telegram notifications for NAV changes
+- [ ] Browser extension for quick NAV lookup
+- [ ] Google Sheets integration
+- [ ] Voice commands (Alexa/Google Home)
+
+### Nice to Have
+- [ ] Apple Watch complication
+- [ ] Slack integration for teams
+- [ ] Mutual fund news feed
+- [ ] Fund house AMAs calendar
+- [ ] Investment community/forum
+- [ ] Gamification (badges, streaks)
+
+---
+
+## 🆘 Resources Needed
+
+### Immediate Needs
+- [ ] UI/UX designer for mobile redesign
+- [ ] Legal consultant for T&C, Privacy Policy
+- [ ] CA/Tax consultant for tax accuracy
+- [ ] 10-20 beta testers
+
+### Future Needs
+- [ ] Content writer for SEO blog
+- [ ] DevOps engineer for scaling
+- [ ] Mobile app developer (React Native)
+- [ ] AI/ML engineer for recommendations
 
 ---
 
