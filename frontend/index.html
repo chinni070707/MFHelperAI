@@ -582,8 +582,13 @@
                 
                 const data = await response.json();
                 
-                // Store data and redirect to dashboard
-                localStorage.setItem('portfolioData', JSON.stringify(data));
+                // Store data with timestamp
+                const portfolioWithMeta = {
+                    ...data,
+                    uploadedAt: new Date().toISOString(),
+                    uploadedFileName: file.name
+                };
+                localStorage.setItem('portfolioData', JSON.stringify(portfolioWithMeta));
                 
                 loading.hide(loadingId);
                 toast.success('Portfolio loaded successfully! Redirecting...', 2000);

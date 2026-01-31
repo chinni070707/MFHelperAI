@@ -94,9 +94,12 @@ async def root():
 
 @app.get("/dashboard")
 async def dashboard():
-    """Redirect to the new professional dashboard"""
-    logger.info("Redirecting /dashboard to /dashboard-pro")
-    return RedirectResponse(url="/dashboard-pro", status_code=302)
+    """Serve the original dashboard page"""
+    logger.info("Serving dashboard.html")
+    dashboard_path = os.path.join(frontend_path, "dashboard.html")
+    if os.path.exists(dashboard_path):
+        return FileResponse(dashboard_path)
+    return {"error": "Dashboard not found"}
 
 @app.get("/dashboard-pro")
 async def dashboard_pro():
