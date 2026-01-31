@@ -252,8 +252,20 @@
         <div id="loginSection" style="display: none;">
             <div class="login-form">
                 <h2>🔐 Admin Login</h2>
-                <input type="password" id="apiKeyInput" placeholder="Enter Admin API Key">
+                <div style="background: #fef3c7; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
+                    <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">🧪 Test Mode</div>
+                    <div style="font-size: 13px; color: #92400e;">
+                        <strong>API Key:</strong> <code style="background: white; padding: 2px 6px; border-radius: 3px;">admin-secret-key-change-in-production</code>
+                    </div>
+                    <div style="font-size: 12px; color: #b45309; margin-top: 8px;">
+                        ⚠️ Change this key in production!
+                    </div>
+                </div>
+                <input type="password" id="apiKeyInput" placeholder="Enter Admin API Key" value="admin-secret-key-change-in-production">
                 <button onclick="login()">Login</button>
+                <div style="text-align: center; margin-top: 15px; font-size: 12px; color: #6b7280;">
+                    Or click Login with pre-filled test key
+                </div>
             </div>
         </div>
         

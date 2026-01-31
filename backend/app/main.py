@@ -23,6 +23,10 @@ setup_logging(
 logger = logging.getLogger(__name__)
 logger.info(f"Starting {settings.APP_NAME} - Debug Mode: {settings.DEBUG}")
 
+# Initialize Sentry for error tracking and monitoring
+from app.utils.sentry import init_sentry
+init_sentry()
+
 # Create database tables
 Base.metadata.create_all(bind=engine)
 logger.info("Database tables created/verified")
@@ -82,6 +86,10 @@ app.include_router(holdings.router, tags=["Holdings & Overlap"])
 # Import and register admin routes
 from app.routes import admin
 app.include_router(admin.router, tags=["Admin"])
+
+# Import and register health check routes
+from app.routes import health
+app.include_router(health.router, tags=["Health & Monitoring"])
 app.include_router(errors.router, tags=["Error Logging"])
 
 # Serve static files (frontend)
