@@ -145,6 +145,9 @@ class TestGetHoldings:
     
     def test_get_holdings_from_empty_portfolio(self, client):
         """Test getting holdings when portfolio is empty"""
+        # Delete any existing portfolio first
+        client.delete("/api/portfolio/")
+        
         response = client.get("/api/portfolio/holdings")
         
         assert response.status_code == 200
@@ -171,6 +174,9 @@ class TestGetSummary:
     
     def test_get_summary_from_empty_portfolio(self, client):
         """Test getting summary when portfolio is empty"""
+        # Delete any existing portfolio first
+        client.delete("/api/portfolio/")
+        
         response = client.get("/api/portfolio/summary")
         
         assert response.status_code == 200

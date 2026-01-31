@@ -128,11 +128,14 @@ class TestPerformance:
         assert response.status_code == 200
         data = response.json()
         
-        assert isinstance(data, list)
-        assert len(data) == len(holdings)
+        assert "holdings" in data
+        assert "best_performer" in data
+        assert "worst_performer" in data
+        assert isinstance(data["holdings"], list)
+        assert len(data["holdings"]) == len(holdings)
         
         # Check first fund
-        first_fund = data[0]
+        first_fund = data["holdings"][0]
         assert "fund_name" in first_fund
         assert "invested" in first_fund
         assert "current" in first_fund
@@ -149,16 +152,17 @@ class TestPerformance:
         
         response = client.post("/api/analytics/performance", json=holdings)
         data = response.json()
+        performance_list = data["holdings"]
         
         # Verify sorting (highest return first)
-        assert data[0]["fund_name"] == "High Performer"
-        assert data[1]["fund_name"] == "Mid Performer"
-        assert data[2]["fund_name"] == "Low Performer"
+        assert performance_list[0]["fund_name"] == "High Performer"
+        assert performance_list[1]["fund_name"] == "Mid Performer"
+        assert performance_list[2]["fund_name"] == "Low Performer"
         
         # Verify return percentages are calculated correctly
-        assert data[0]["return_pct"] == pytest.approx(50.0, rel=1e-2)
-        assert data[1]["return_pct"] == pytest.approx(25.0, rel=1e-2)
-        assert data[2]["return_pct"] == pytest.approx(5.0, rel=1e-2)
+        assert performance_list[0]["return_pct"] == pytest.approx(50.0, rel=1e-2)
+        assert performance_list[1]["return_pct"] == pytest.approx(25.0, rel=1e-2)
+        assert performance_list[2]["return_pct"] == pytest.approx(5.0, rel=1e-2)
     
     def test_performance_with_zero_investment(self, client):
         """Test performance calculation with zero investment"""
@@ -171,7 +175,7 @@ class TestPerformance:
         
         # Should handle gracefully
         assert response.status_code == 200
-        assert data[0]["return_pct"] == 0
+        assert data["holdings"][0]["return_pct"] == 0
     
     def test_performance_with_negative_returns(self, client):
         """Test performance calculation with losses"""
@@ -182,8 +186,8 @@ class TestPerformance:
         response = client.post("/api/analytics/performance", json=holdings)
         data = response.json()
         
-        assert data[0]["return_pct"] == pytest.approx(-20.0, rel=1e-2)
-        assert data[0]["gain"] == -20000
+        assert data["holdings"][0]["return_pct"] == pytest.approx(-20.0, rel=1e-2)
+        assert data["holdings"][0]["gain"] == -20000
 
 
 # Integration tests
