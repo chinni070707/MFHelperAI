@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 logger.info(f"Starting {settings.APP_NAME} - Debug Mode: {settings.DEBUG}")
 
 # Create database tables
-# Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
+logger.info("Database tables created/verified")
 
 app = FastAPI(
     title="MFHelper API",

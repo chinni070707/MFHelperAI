@@ -25,8 +25,39 @@ class User(Base):
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     
     # Relationships
-    portfolios = relationship("Portfolio", back_populates="user")
-    holdings = relationship("Holding", back_populates="user")
+    portfolios = relationship("Portfolio", back_populates="user", cascade="all, delete-orphan")
+    holdings = relationship("Holding", back_populates="user", cascade="all, delete-orphan")
+    settings = relationship("UserSettings", back_populates="user", uselist=False, cascade="all, delete-orphan")
+
+
+class UserSettings(Base):
+    """User preferences and settings"""
+    __tablename__ = "user_settings"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
+    
+    # UI Preferences
+    theme = Column(String(20), default="light")  # 'light', 'dark', 'auto'
+    language = Column(String(10), default="en")
+    currency = Column(String(10), default="INR")
+    date_format = Column(String(20), default="DD/MM/YYYY")
+    
+    # Notification Preferences
+    email_notifications = Column(Boolean, default=True)
+    portfolio_alerts = Column(Boolean, default=True)
+    market_updates = Column(Boolean, default=False)
+    
+    # Portfolio Preferences
+    default_view = Column(String(50), default="summary")  # 'summary', 'detailed', 'charts'
+    show_xirr = Column(Boolean, default=True)
+    group_by = Column(String(20), default="category")  # 'category', 'amc', 'none'
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    # Relationships
+    user = relationship("User", back_populates="settings")
 
 
 class Portfolio(Base):
