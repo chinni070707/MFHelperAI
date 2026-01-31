@@ -4,12 +4,20 @@ MFHelper - FastAPI Application Entry Point
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 import os
+import logging
 
 from app.config import settings
 from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings
 from app.database import engine, Base
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Create database tables
 # Base.metadata.create_all(bind=engine)
@@ -55,19 +63,34 @@ async def root():
 
 @app.get("/dashboard")
 async def dashboard():
-    """Serve the dashboard page"""
+    """Redirect to the new professional dashboard"""
+    logger.info("Redirecting /dashboard to /dashboard-pro")
+    return RedirectResponse(url="/dashboard-pro", status_code=302)
+
+@app.get("/dashboard-pro")
+async def dashboard_pro():
+    """Serve the professional dashboard page"""
+    logger.info("Serving dashboard-pro.html")
+    dashboard_path = os.path.join(frontend_path, "dashboard-pro.html")
+    if os.path.exists(dashboard_path):
+        return FileResponse(dashboard_path)
+    return {"error": "Professional dashboard not found"}
+
+@app.get("/dashboard-old")
+async def dashboard_old():
+    """Serve the old dashboard page (for reference)"""
     dashboard_path = os.path.join(frontend_path, "dashboard.html")
     if os.path.exists(dashboard_path):
         return FileResponse(dashboard_path)
     return {"error": "Dashboard not found"}
 
-@app.get("/dashboard-pro")
-async def dashboard_pro():
-    """Serve the professional dashboard page"""
-    dashboard_path = os.path.join(frontend_path, "dashboard-pro.html")
-    if os.path.exists(dashboard_path):
-        return FileResponse(dashboard_path)
-    return {"error": "Professional dashboard not found"}
+@app.get("/how-it-works")
+async def how_it_works():
+    """Serve the How It Works page"""
+    page_path = os.path.join(frontend_path, "how-it-works.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "How It Works page not found"}
 
 # Serve CSS and JS files
 @app.get("/css/{file_path:path}")
@@ -84,7 +107,50 @@ async def serve_js(file_path: str):
     js_path = os.path.join(frontend_path, "js", file_path)
     if os.path.exists(js_path):
         return FileResponse(js_path, media_type="application/javascript")
+    logger.warning(f"JS file not found: {file_path}")
     return {"error": "JS file not found"}
+
+@app.get("/sw.js")
+async def serve_service_worker():
+    """Serve service worker"""
+    sw_path = os.path.join(frontend_path, "sw.js")
+    if os.path.exists(sw_path):
+        return FileResponse(sw_path, media_type="application/javascript")
+    logger.warning("Service worker not found")
+    return {"error": "Service worker not found"}
+
+@app.get("/manifest.json")
+async def serve_manifest():
+    """Serve PWA manifest"""
+    manifest_path = os.path.join(frontend_path, "manifest.json")
+    if os.path.exists(manifest_path):
+        return FileResponse(manifest_path, media_type="application/json")
+    return {"error": "Manifest not found"}
+
+@app.get("/index.html")
+async def serve_index_html():
+    """Serve index.html for service worker"""
+    index_path = os.path.join(frontend_path, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return RedirectResponse(url="/")
+
+@app.get("/offline.html")
+async def serve_offline():
+    """Serve offline page for PWA"""
+    offline_path = os.path.join(frontend_path, "offline.html")
+    if os.path.exists(offline_path):
+        return FileResponse(offline_path)
+    return {"message": "You are offline"}
+
+@app.get("/icons/{file_path:path}")
+async def serve_icons(file_path: str):
+    """Serve icon files"""
+    icon_path = os.path.join(frontend_path, "icons", file_path)
+    if os.path.exists(icon_path):
+        return FileResponse(icon_path)
+    logger.warning(f"Icon not found: {file_path}")
+    return {"error": "Icon not found"}
 
 @app.get("/health")
 async def health_check():

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>How It Works - MFHelper</title>
+    
+    <!-- Design System -->
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/css/components.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1E40AF 100%);
+            color: white;
+            padding: var(--space-12) var(--space-4);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: var(--space-4);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            margin-bottom: var(--space-6);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-3);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-hero {
+            padding: var(--space-4) var(--space-6);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .btn-hero-primary {
+            background: white;
+            color: var(--primary-blue);
+            border: none;
+        }
+        
+        .btn-hero-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .btn-hero-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        
+        .btn-hero-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+        
+        /* Navigation */
+        .nav {
+            background: var(--bg-primary);
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-4);
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+        
+        /* Steps Section */
+        .steps-section {
+            padding: var(--space-12) var(--space-4);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: var(--space-10);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+            color: var(--text-primary);
+        }
+        
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+        
+        .step {
+            display: flex;
+            gap: var(--space-6);
+            align-items: flex-start;
+            background: var(--bg-primary);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+        
+        .step:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .step-number {
+            width: 64px;
+            height: 64px;
+            min-width: 64px;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .step-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--text-primary);
+        }
+        
+        .step-content p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+        }
+        
+        .step-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+        
+        .step-feature {
+            background: var(--bg-secondary);
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Features Grid */
+        .features-section {
+            background: var(--bg-primary);
+            padding: var(--space-12) var(--space-4);
+        }
+        
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .feature-card {
+            background: var(--bg-secondary);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--primary-blue-light) 0%, var(--primary-blue) 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto var(--space-4);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--text-primary);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+        
+        /* Supported Formats */
+        .formats-section {
+            padding: var(--space-12) var(--space-4);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+        
+        .format-card {
+            background: var(--bg-primary);
+            padding: var(--space-5);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: all var(--transition-base);
+        }
+        
+        .format-card:hover {
+            border-color: var(--primary-blue);
+        }
+        
+        .format-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-3);
+        }
+        
+        .format-card h4 {
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+        
+        .format-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background: var(--bg-primary);
+            padding: var(--space-12) var(--space-4);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-3);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: var(--space-5);
+            background: none;
+            border: none;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background var(--transition-fast);
+        }
+        
+        .faq-question:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .faq-icon {
+            font-size: 1.25rem;
+            transition: transform var(--transition-base);
+        }
+        
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            padding: 0 var(--space-5);
+            max-height: 0;
+            overflow: hidden;
+            transition: all var(--transition-base);
+        }
+        
+        .faq-item.open .faq-answer {
+            padding: 0 var(--space-5) var(--space-5);
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1E40AF 100%);
+            color: white;
+            padding: var(--space-12) var(--space-4);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .cta-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+        }
+        
+        .cta-content p {
+            opacity: 0.9;
+            margin-bottom: var(--space-6);
+            font-size: 1.125rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            padding: var(--space-8) var(--space-4);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: var(--space-4);
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary-blue);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin: 0 auto;
+            }
+            
+            .step-features {
+                justify-content: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <a href="/" class="nav-logo">MFHelper</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/how-it-works" class="nav-link" style="color: var(--primary-blue);">How It Works</a>
+                <a href="/dashboard-pro" class="nav-link">Dashboard</a>
+                <a href="/api/docs" class="nav-link">API</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Analyze Your Mutual Fund Portfolio in 3 Simple Steps</h1>
+            <p>No signup required. Upload your portfolio statement and get instant insights on overlap, diversification, and rebalancing recommendations.</p>
+            <div class="hero-buttons">
+                <a href="/" class="btn-hero btn-hero-primary">
+                    📤 Upload Portfolio
+                </a>
+                <a href="#steps" class="btn-hero btn-hero-secondary">
+                    📖 Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Steps Section -->
+    <section class="steps-section" id="steps">
+        <div class="section-title">
+            <h2>How It Works</h2>
+            <p>Get professional-grade analytics in under 2 minutes</p>
+        </div>
+        
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step animate-in delay-1">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Upload Your Portfolio</h3>
+                    <p>Export your Consolidated Account Statement (CAS) from MFCentral, CAMS, or Kfintech. You can also upload Excel exports from your broker or mutual fund app.</p>
+                    <div class="step-features">
+                        <span class="step-feature">📄 PDF supported</span>
+                        <span class="step-feature">📊 Excel/CSV</span>
+                        <span class="step-feature">🔒 100% private</span>
+                        <span class="step-feature">⚡ Instant parsing</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step animate-in delay-2">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>AI Analyzes Your Holdings</h3>
+                    <p>Our intelligent engine parses your statement, identifies each fund, and maps it against our comprehensive database of 5,000+ mutual funds with their underlying holdings.</p>
+                    <div class="step-features">
+                        <span class="step-feature">🤖 Smart parsing</span>
+                        <span class="step-feature">📈 5,000+ funds</span>
+                        <span class="step-feature">🏢 Stock-level data</span>
+                        <span class="step-feature">🔄 Weekly updates</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step animate-in delay-3">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Get Actionable Insights</h3>
+                    <p>View your complete portfolio breakdown with overlap analysis, asset allocation charts, and personalized rebalancing suggestions to optimize your investments.</p>
+                    <div class="step-features">
+                        <span class="step-feature">📊 Visual charts</span>
+                        <span class="step-feature">🔍 Overlap detection</span>
+                        <span class="step-feature">⚖️ Rebalancing tips</span>
+                        <span class="step-feature">💡 Smart insights</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="section-title">
+            <h2>Powerful Analytics Features</h2>
+            <p>Everything you need to manage your mutual fund portfolio</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Overlap Analysis</h3>
+                <p>Discover how much your funds overlap at the stock level. Avoid over-concentration in the same companies.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Asset Allocation</h3>
+                <p>See your true allocation across Large Cap, Mid Cap, Small Cap, Debt, and other categories.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚖️</div>
+                <h3>Rebalancing Calculator</h3>
+                <p>Get personalized recommendations to rebalance your portfolio to your target allocation.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🏢</div>
+                <h3>Sector Breakdown</h3>
+                <p>Understand your exposure to different sectors like Banking, IT, Pharma, and more.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Friendly</h3>
+                <p>Access your portfolio analytics on any device with our responsive mobile-first design.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Privacy First</h3>
+                <p>Your data stays on your device. We don't store your portfolio information on our servers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Formats -->
+    <section class="formats-section">
+        <div class="section-title">
+            <h2>Supported Formats</h2>
+            <p>Upload portfolio from any of these sources</p>
+        </div>
+        
+        <div class="formats-grid">
+            <div class="format-card">
+                <div class="format-icon">📄</div>
+                <h4>CAS PDF</h4>
+                <p>MFCentral, CAMS, Kfintech</p>
+            </div>
+            
+            <div class="format-card">
+                <div class="format-icon">📊</div>
+                <h4>Excel (.xlsx)</h4>
+                <p>Broker exports, Custom sheets</p>
+            </div>
+            
+            <div class="format-card">
+                <div class="format-icon">📝</div>
+                <h4>CSV Files</h4>
+                <p>Comma-separated values</p>
+            </div>
+            
+            <div class="format-card">
+                <div class="format-icon">🏦</div>
+                <h4>Broker Exports</h4>
+                <p>Zerodha, Groww, etc.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about MFHelper</p>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is my portfolio data safe?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes! Your portfolio data is processed entirely in your browser and stored locally on your device. We don't upload or store your financial information on any server. Your privacy is our top priority.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I get my CAS statement?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>You can request a Consolidated Account Statement (CAS) from:<br><br>
+                    1. <strong>MFCentral</strong> - Visit mfcentral.com → CAS Statement<br>
+                    2. <strong>CAMS</strong> - Visit camsonline.com → Investor Services<br>
+                    3. <strong>Kfintech</strong> - Visit kfintech.com → Investor Services<br><br>
+                    The statement will be sent to your registered email within minutes.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>What is portfolio overlap?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Portfolio overlap occurs when two or more of your mutual funds hold the same stocks. For example, if Fund A and Fund B both hold Reliance and HDFC Bank, your exposure to these stocks is multiplied. High overlap means less diversification and more concentrated risk.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How often is fund data updated?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Our fund holdings database is updated weekly. Mutual funds disclose their portfolios monthly, and we aggregate this data from AMFI, BSE, and individual AMC websites to provide you with the latest holdings information.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Is MFHelper free to use?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes! Basic portfolio analysis is completely free. We plan to offer premium features like advanced analytics, tax harvesting suggestions, and goal-based planning in the future, but core features will always remain free.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I use this on mobile?</span>
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely! MFHelper is built with a mobile-first design and works beautifully on smartphones and tablets. You can also install it as a PWA (Progressive Web App) for an app-like experience. Android app coming soon!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Ready to Analyze Your Portfolio?</h2>
+            <p>Join thousands of smart investors who use MFHelper to optimize their mutual fund investments.</p>
+            <a href="/" class="btn-hero btn-hero-primary">
+                🚀 Get Started Free
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <span style="font-weight: 600; color: var(--text-primary);">MFHelper</span>
+                <span style="color: var(--text-tertiary); margin-left: var(--space-2);">© 2026</span>
+            </div>
+            <div class="footer-links">
+                <a href="/" class="footer-link">Home</a>
+                <a href="/how-it-works" class="footer-link">How It Works</a>
+                <a href="/dashboard-pro" class="footer-link">Dashboard</a>
+                <a href="https://github.com/chinni070707/MFHelperAI" class="footer-link" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const isOpen = faqItem.classList.contains('open');
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('open');
+            });
+            
+            // Toggle current FAQ
+            if (!isOpen) {
+                faqItem.classList.add('open');
+            }
+        }
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all steps and feature cards
+        document.querySelectorAll('.step, .feature-card, .format-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

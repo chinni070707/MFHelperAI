@@ -1,0 +1,2205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Portfolio - MFHelper</title>
+    
+    <!-- Design System -->
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/css/components.css">
+    
+    <!-- Utilities -->
+    <script src="/js/toast.js"></script>
+    <script src="/js/errorHandler.js"></script>
+    <script src="/js/responsive.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/overlap.js"></script>
+    
+    <!-- Chart Library -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- HTML to Canvas for sharing -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    
+    <style>
+        body {
+            padding-bottom: 80px; /* Space for bottom nav on mobile */
+        }
+        
+        .main-content {
+            min-height: 100vh;
+            padding: var(--space-6) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: var(--space-4) 0;
+            }
+        }
+        
+        /* Top Header */
+        .top-header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--space-4) 0;
+            position: sticky;
+            top: 0;
+            z-index: var(--z-sticky);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: var(--space-3);
+            align-items: center;
+        }
+        
+        .refresh-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .refresh-btn:hover {
+            background: var(--bg-secondary);
+            transform: rotate(180deg);
+        }
+        
+        /* Holdings Section */
+        .holdings-section {
+            margin-top: var(--space-8);
+        }
+        
+        .holdings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: var(--space-2);
+        }
+        
+        .holdings-grid {
+            display: grid;
+            gap: var(--space-4);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--space-12);
+        }
+        
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-4);
+            opacity: 0.5;
+        }
+        
+        .empty-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+        }
+        
+        .empty-desc {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
+        }
+        
+        /* View Switching */
+        .view-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .view-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Search Bar Styles */
+        .search-container {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding: var(--space-2) 0;
+            background: var(--bg-secondary);
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: var(--space-4);
+            color: var(--text-tertiary);
+            pointer-events: none;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            padding-left: 48px;
+            padding-right: 44px;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all var(--transition-base);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-blue-light);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-tertiary);
+        }
+        
+        .search-clear {
+            position: absolute;
+            right: var(--space-3);
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--bg-tertiary);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+        }
+        
+        .search-clear:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        /* Context Menu (Long Press) */
+        .context-menu {
+            position: fixed;
+            z-index: 1000;
+            min-width: 200px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            padding: var(--space-2) 0;
+            animation: contextMenuIn 0.15s ease-out;
+        }
+        
+        @keyframes contextMenuIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .context-menu-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+        
+        .context-menu-item:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .context-menu-item.danger {
+            color: var(--accent-red);
+        }
+        
+        .context-menu-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: var(--space-2) 0;
+        }
+        
+        .context-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+        }
+        
+        /* Fund card long-press effect */
+        .fund-card.pressing {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+        
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-toggle:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .theme-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: absolute;
+        }
+        
+        .theme-icon.dark {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0);
+        }
+        
+        /* Dark Mode Styles */
+        body.dark-mode {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-tertiary: #64748B;
+            --border-color: #334155;
+            --border-light: #475569;
+        }
+        
+        body.dark-mode .theme-icon.light {
+            opacity: 0;
+            transform: rotate(90deg) scale(0);
+        }
+        
+        body.dark-mode .theme-icon.dark {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+        
+        body.dark-mode .portfolio-value-card {
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+        }
+        
+        body.dark-mode .card {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        
+        body.dark-mode .search-input {
+            background: var(--bg-tertiary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        body.dark-mode .bottom-nav {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        
+        body.dark-mode .context-menu {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+        
+        body.dark-mode .context-menu-item:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        /* Success Animations */
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+        }
+        
+        .confetti-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti 1s ease-out forwards;
+        }
+        
+        @keyframes checkmark {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+        
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .success-modal {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            text-align: center;
+            animation: scaleIn 0.3s ease;
+            max-width: 300px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-4);
+            font-size: 40px;
+            animation: scaleIn 0.3s ease 0.1s both;
+        }
+        
+        .success-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+        }
+        
+        .success-message {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
+        }
+        
+        /* Milestone celebration */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        
+        .milestone-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            background: linear-gradient(135deg, #F59E0B, #F97316);
+            color: white;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            animation: bounce 0.6s ease;
+        }
+        
+        /* Onboarding Overlay */
+        .onboarding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-6);
+        }
+        
+        .onboarding-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            max-width: 380px;
+            text-align: center;
+            animation: scaleIn 0.3s ease;
+        }
+        
+        .onboarding-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-4);
+        }
+        
+        .onboarding-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+            color: var(--text-primary);
+        }
+        
+        .onboarding-desc {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
+            line-height: 1.6;
+        }
+        
+        .onboarding-progress {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-6);
+        }
+        
+        .onboarding-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            transition: all 0.3s ease;
+        }
+        
+        .onboarding-dot.active {
+            background: var(--primary-blue);
+            width: 24px;
+            border-radius: 4px;
+        }
+        
+        .onboarding-actions {
+            display: flex;
+            gap: var(--space-3);
+        }
+        
+        .onboarding-actions .btn {
+            flex: 1;
+        }
+        
+        /* Error State Component */
+        .error-state {
+            text-align: center;
+            padding: var(--space-8);
+        }
+        
+        .error-icon {
+            font-size: 64px;
+            margin-bottom: var(--space-4);
+        }
+        
+        .error-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-2);
+        }
+        
+        .error-message {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-6);
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: var(--space-3);
+            justify-content: center;
+        }
+        
+        /* Fund Detail Modal */
+        .fund-detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-secondary);
+            z-index: 1001;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        .fund-detail-header {
+            background: var(--bg-primary);
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .fund-detail-back {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--text-primary);
+        }
+        
+        .fund-detail-content {
+            padding: var(--space-4);
+        }
+        
+        .fund-detail-hero {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            margin-bottom: var(--space-4);
+        }
+        
+        .fund-detail-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            margin-bottom: var(--space-4);
+        }
+        
+        .fund-detail-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            color: var(--text-primary);
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            color: var(--text-secondary);
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* Share Modal */
+        .share-modal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            padding: var(--space-6);
+            z-index: 1002;
+            animation: slideUp 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .share-preview {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+        
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-4);
+        }
+        
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3);
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: var(--radius-md);
+            transition: background 0.2s;
+        }
+        
+        .share-option:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .share-option-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .share-option-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo-text">MFHelper</h1>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+                        <span class="theme-icon light">☀️</span>
+                        <span class="theme-icon dark">🌙</span>
+                    </button>
+                    <button class="refresh-btn" onclick="refreshPortfolio()" aria-label="Refresh portfolio data">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                        <span class="text-sm">Refresh</span>
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="window.location.href='/'">
+                        Upload New
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content - Tab-Based Views -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Home View -->
+            <div id="homeView" class="view-content active">
+                <div id="portfolioSummary"></div>
+                <div id="assetAllocation"></div>
+                
+                <section class="quick-actions mb-6">
+                    <div class="grid grid-cols-3 gap-4">
+                        <button class="card card-compact flex flex-col items-center justify-center" onclick="switchView('analyze')">
+                            <div class="text-3xl mb-2">🔍</div>
+                            <div class="text-sm font-semibold">Analyze</div>
+                        </button>
+                        <button class="card card-compact flex flex-col items-center justify-center" onclick="showPerformance()">
+                            <div class="text-3xl mb-2">📊</div>
+                            <div class="text-sm font-semibold">Performance</div>
+                        </button>
+                        <button class="card card-compact flex flex-col items-center justify-center" onclick="showRebalancing()">
+                            <div class="text-3xl mb-2">⚖️</div>
+                            <div class="text-sm font-semibold">Rebalance</div>
+                        </button>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Portfolio View -->
+            <div id="portfolioView" class="view-content">
+                <section class="holdings-section">
+                    <!-- Search Bar -->
+                    <div class="search-container mb-4">
+                        <div class="search-input-wrapper">
+                            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input 
+                                type="text" 
+                                id="searchInput" 
+                                class="search-input" 
+                                placeholder="Search funds..." 
+                                oninput="searchFunds(this.value)"
+                                autocomplete="off"
+                            >
+                            <button class="search-clear" onclick="clearSearch()" style="display: none;">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="holdings-header">
+                        <h2>Your Holdings <span id="holdingsCount" class="badge badge-primary"></span></h2>
+                        <div class="filter-controls">
+                            <select class="btn btn-secondary btn-sm" onchange="sortHoldings(this.value)">
+                                <option value="value">Sort by Value</option>
+                                <option value="returns">Sort by Returns</option>
+                                <option value="name">Sort by Name</option>
+                            </select>
+                            <select class="btn btn-secondary btn-sm" onchange="filterHoldings(this.value)">
+                                <option value="all">All Categories</option>
+                                <option value="large">Large Cap</option>
+                                <option value="mid">Mid Cap</option>
+                                <option value="small">Small Cap</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="holdingsGrid" class="holdings-grid"></div>
+                    
+                    <!-- No Results Message -->
+                    <div id="noResults" class="card text-center p-6" style="display: none;">
+                        <div class="text-4xl mb-2">🔍</div>
+                        <p class="text-secondary">No funds match your search</p>
+                        <button class="btn btn-secondary btn-sm mt-4" onclick="clearSearch()">Clear Search</button>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Analyze View -->
+            <div id="analyzeView" class="view-content">
+                <div class="card">
+                    <h2 class="mb-4">Portfolio Overlap Analysis</h2>
+                    <button class="btn btn-primary mb-4" onclick="runOverlapAnalysis()">
+                        🔍 Analyze Overlap
+                    </button>
+                    <div id="overlap-container"></div>
+                </div>
+            </div>
+            
+            <!-- Profile View -->
+            <div id="profileView" class="view-content">
+                <div class="card mb-4">
+                    <div style="display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4);">
+                        <div style="width: 64px; height: 64px; background: var(--primary-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white;">👤</div>
+                        <div>
+                            <h2 style="margin: 0;">Investor</h2>
+                            <p class="text-secondary" style="margin: 0;">MFHelper User</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: var(--space-4);">Quick Actions</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                        <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="showShareModal()">
+                            📤 Share Portfolio
+                        </button>
+                        <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="exportData()">
+                            📥 Export Data
+                        </button>
+                        <button class="btn btn-secondary" style="justify-content: flex-start;" onclick="showOnboardingManual()">
+                            📖 View Tutorial
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <h3 style="margin-bottom: var(--space-4);">Settings</h3>
+                    <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-light);">
+                            <span>Dark Mode</span>
+                            <button class="theme-toggle" onclick="toggleDarkMode()">
+                                <span class="theme-icon light">☀️</span>
+                                <span class="theme-icon dark">🌙</span>
+                            </button>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-light);">
+                            <span>Haptic Feedback</span>
+                            <input type="checkbox" checked onchange="toggleHaptics(this.checked)">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-3) 0;">
+                            <span>Notifications</span>
+                            <input type="checkbox" checked>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: var(--space-4);">About</h3>
+                    <p class="text-secondary text-sm">MFHelper v1.0.0</p>
+                    <p class="text-secondary text-sm">Your personal mutual fund analytics platform</p>
+                    <button class="btn btn-secondary btn-sm mt-4" onclick="clearAllData()">Clear All Data</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <a href="#home" class="nav-item active" onclick="switchView('home'); return false;">
+            <div class="icon">🏠</div>
+            <span>Home</span>
+        </a>
+        <a href="#portfolio" class="nav-item" onclick="switchView('portfolio'); return false;">
+            <div class="icon">💼</div>
+            <span>Portfolio</span>
+        </a>
+        <a href="#analyze" class="nav-item" onclick="switchView('analyze'); return false;">
+            <div class="icon">📊</div>
+            <span>Analyze</span>
+        </a>
+        <a href="#profile" class="nav-item" onclick="switchView('profile'); return false;">
+            <div class="icon">👤</div>
+            <span>Profile</span>
+        </a>
+    </nav>
+    
+    <script>
+        let portfolioData = null;
+        let holdingsData = [];
+        let currentView = 'home';
+        
+        // View Switching Function (Modern Mobile App Style)
+        function switchView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view-content').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected view
+            const targetView = document.getElementById(`${viewName}View`);
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const activeNav = document.querySelector(`.nav-item[onclick*="${viewName}"]`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            currentView = viewName;
+            
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Load view-specific data if needed
+            if (viewName === 'portfolio' && portfolioData) {
+                renderHoldings(portfolioData.holdings);
+            }
+        }
+        
+        // Load portfolio data on page load
+        async function loadPortfolio() {
+            // Show skeleton loading immediately
+            showSkeletons();
+            
+            try {
+                // Simulate network delay for demo (remove in production)
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // Try to load from sessionStorage first
+                const cached = sessionStorage.getItem('portfolioData');
+                if (cached) {
+                    portfolioData = JSON.parse(cached);
+                    renderDashboard();
+                    return;
+                }
+                
+                // If no cached data, show empty state
+                showEmptyState();
+                
+            } catch (error) {
+                errorHandler.handleAPIError(error, { feature: 'portfolio_load' });
+                showEmptyState();
+            }
+        }
+        
+        function showSkeletons() {
+            document.getElementById('portfolioSummary').innerHTML = SkeletonLoader.portfolioSummary();
+            document.getElementById('assetAllocation').innerHTML = SkeletonLoader.assetAllocation();
+            document.getElementById('holdingsGrid').innerHTML = SkeletonLoader.fundCards(3);
+        }
+        
+        function showEmptyState() {
+            document.getElementById('portfolioSummary').innerHTML = `
+                <div class="empty-state card">
+                    <div class="empty-icon">📊</div>
+                    <h2 class="empty-title">No Portfolio Data</h2>
+                    <p class="empty-desc">Upload your portfolio Excel file to get started with professional analytics</p>
+                    <button class="btn btn-primary btn-lg" onclick="window.location.href='/'">
+                        Upload Portfolio
+                    </button>
+                </div>
+            `;
+        }
+        
+        function renderDashboard() {
+            if (!portfolioData) return;
+            
+            // Calculate summary data
+            const summary = calculateSummary(portfolioData);
+            
+            // Render portfolio summary
+            const summaryComponent = new PortfolioSummary(summary);
+            document.getElementById('portfolioSummary').innerHTML = summaryComponent.render();
+            
+            // Render asset allocation
+            const allocationData = calculateAllocation(portfolioData);
+            const allocationComponent = new AssetAllocation(allocationData);
+            document.getElementById('assetAllocation').innerHTML = allocationComponent.render();
+            
+            // Render charts
+            renderAllocationChart(allocationData);
+            renderSparkline(summary.history);
+            
+            // Render holdings
+            renderHoldings(portfolioData.holdings);
+            
+            // Check for milestones
+            checkMilestones();
+        }
+        
+        function calculateSummary(data) {
+            const holdings = data.holdings || [];
+            
+            const total_value = holdings.reduce((sum, h) => sum + (h.current_value || 0), 0);
+            const invested_value = holdings.reduce((sum, h) => sum + (h.invested_value || 0), 0);
+            const total_return = total_value - invested_value;
+            const percentage_return = invested_value > 0 ? (total_return / invested_value) * 100 : 0;
+            
+            // Mock day change (in real app, would come from API)
+            const day_change = total_value * 0.0066;
+            const day_change_percent = 0.66;
+            
+            return {
+                total_value,
+                invested_value,
+                total_return,
+                percentage_return,
+                day_change,
+                day_change_percent,
+                history: [] // Would contain historical data for sparkline
+            };
+        }
+        
+        function calculateAllocation(data) {
+            const holdings = data.holdings || [];
+            const categoryMap = {};
+            
+            holdings.forEach(h => {
+                const cat = h.category || 'Others';
+                if (!categoryMap[cat]) {
+                    categoryMap[cat] = 0;
+                }
+                categoryMap[cat] += h.current_value || 0;
+            });
+            
+            const total = Object.values(categoryMap).reduce((a, b) => a + b, 0);
+            const categories = Object.entries(categoryMap).map(([name, amount]) => ({
+                name,
+                amount,
+                percentage: ((amount / total) * 100).toFixed(1)
+            }));
+            
+            return {
+                total_funds: holdings.length,
+                categories
+            };
+        }
+        
+        function renderHoldings(holdings) {
+            holdingsData = holdings || [];
+            
+            if (holdingsData.length === 0) {
+                document.getElementById('holdingsGrid').innerHTML = `
+                    <div class="card text-center p-6">
+                        <p class="text-secondary">No holdings found</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const html = holdingsData.map(holding => {
+                const card = new FundCard(holding);
+                return card.render();
+            }).join('');
+            
+            document.getElementById('holdingsGrid').innerHTML = html;
+        }
+        
+        function renderAllocationChart(data) {
+            const canvas = document.getElementById('allocationDonut');
+            if (!canvas) return;
+            
+            const colors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
+            
+            new Chart(canvas, {
+                type: 'doughnut',
+                data: {
+                    labels: data.categories.map(c => c.name),
+                    datasets: [{
+                        data: data.categories.map(c => c.amount),
+                        backgroundColor: colors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1E293B',
+                            padding: 12,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed;
+                                    const label = context.label;
+                                    const percentage = ((value / context.dataset.data.reduce((a,b) => a+b, 0)) * 100).toFixed(1);
+                                    return `${label}: ₹${(value/100000).toFixed(1)}L (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function renderSparkline(history) {
+            // Mock sparkline - in real app would use actual historical data
+            const canvas = document.getElementById('miniSparkline');
+            if (!canvas) return;
+            
+            const mockData = Array.from({length: 30}, (_, i) => 100000 + Math.random() * 50000);
+            
+            new Chart(canvas, {
+                type: 'line',
+                data: {
+                    labels: mockData.map((_, i) => i),
+                    datasets: [{
+                        data: mockData,
+                        borderColor: 'rgba(255, 255, 255, 0.6)',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    scales: {
+                        x: { display: false },
+                        y: { display: false }
+                    }
+                }
+            });
+        }
+        
+        function refreshPortfolio() {
+            loadPortfolio();
+            toast.success('Portfolio refreshed!');
+        }
+        
+        function sortHoldings(sortBy) {
+            if (sortBy === 'value') {
+                holdingsData.sort((a, b) => (b.current_value || 0) - (a.current_value || 0));
+            } else if (sortBy === 'returns') {
+                holdingsData.sort((a, b) => (b.percentage_return || 0) - (a.percentage_return || 0));
+            } else if (sortBy === 'name') {
+                holdingsData.sort((a, b) => (a.fund_name || '').localeCompare(b.fund_name || ''));
+            }
+            renderHoldings(holdingsData);
+        }
+        
+        function filterHoldings(category) {
+            if (category === 'all') {
+                renderHoldings(portfolioData.holdings);
+            } else {
+                const filtered = portfolioData.holdings.filter(h => 
+                    h.category.toLowerCase().includes(category)
+                );
+                renderHoldings(filtered);
+            }
+        }
+        
+        // Search Functionality
+        let searchTimeout = null;
+        
+        function searchFunds(query) {
+            const clearBtn = document.querySelector('.search-clear');
+            
+            // Show/hide clear button
+            if (query.length > 0) {
+                clearBtn.style.display = 'flex';
+            } else {
+                clearBtn.style.display = 'none';
+            }
+            
+            // Debounce search
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(query);
+            }, 200);
+        }
+        
+        function performSearch(query) {
+            if (!portfolioData || !portfolioData.holdings) return;
+            
+            const normalizedQuery = query.toLowerCase().trim();
+            
+            if (normalizedQuery === '') {
+                renderHoldings(portfolioData.holdings);
+                document.getElementById('noResults').style.display = 'none';
+                return;
+            }
+            
+            const filtered = portfolioData.holdings.filter(h => {
+                const fundName = (h.fund_name || '').toLowerCase();
+                const category = (h.category || '').toLowerCase();
+                const amc = (h.amc || '').toLowerCase();
+                
+                return fundName.includes(normalizedQuery) || 
+                       category.includes(normalizedQuery) ||
+                       amc.includes(normalizedQuery);
+            });
+            
+            if (filtered.length === 0) {
+                document.getElementById('holdingsGrid').innerHTML = '';
+                document.getElementById('noResults').style.display = 'block';
+            } else {
+                document.getElementById('noResults').style.display = 'none';
+                renderHoldings(filtered);
+            }
+            
+            // Haptic feedback on search
+            if (navigator.vibrate) {
+                navigator.vibrate(5);
+            }
+        }
+        
+        function clearSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value = '';
+            searchInput.focus();
+            document.querySelector('.search-clear').style.display = 'none';
+            document.getElementById('noResults').style.display = 'none';
+            
+            if (portfolioData && portfolioData.holdings) {
+                renderHoldings(portfolioData.holdings);
+            }
+        }
+        
+        function showOverlapAnalysis() {
+            switchView('analyze');
+        }
+        
+        function runOverlapAnalysis() {
+            if (portfolioData && portfolioData.holdings) {
+                const fundNames = [...new Set(portfolioData.holdings.map(h => h.fund_name))];
+                window.overlapAnalyzer.analyzePortfolio(fundNames);
+            } else {
+                toast.warning('Please upload a portfolio first');
+            }
+        }
+        
+        function showPerformance() {
+            toast.info('Performance analysis coming soon!');
+        }
+        
+        function showRebalancing() {
+            toast.info('Rebalancing calculator coming soon!');
+        }
+        
+        function viewFundDetails(fundName) {
+            toast.info(`Viewing details for ${fundName}`);
+        }
+        
+        function investMore(fundName) {
+            toast.info(`Invest more in ${fundName} - Coming soon!`);
+        }
+        
+        function rebalancePortfolio() {
+            toast.info('Rebalancing feature coming soon!');
+        }
+        
+        // Modern Mobile Features
+        
+        // Pull-to-Refresh
+        let startY = 0;
+        let pulling = false;
+        const pullThreshold = 80;
+        
+        document.addEventListener('touchstart', (e) => {
+            if (window.scrollY === 0) {
+                startY = e.touches[0].pageY;
+                pulling = true;
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (pulling && window.scrollY === 0) {
+                const currentY = e.touches[0].pageY;
+                const pullDistance = currentY - startY;
+                
+                if (pullDistance > pullThreshold) {
+                    pulling = false;
+                    refreshPortfolio();
+                }
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchend', () => {
+            pulling = false;
+        }, { passive: true });
+        
+        // Swipe Navigation (Left/Right)
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const swipeThreshold = 100;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) < swipeThreshold) return;
+            
+            const views = ['home', 'portfolio', 'analyze', 'profile'];
+            const currentIndex = views.indexOf(currentView);
+            
+            if (swipeDistance > 0 && currentIndex > 0) {
+                // Swipe right - go to previous view
+                switchView(views[currentIndex - 1]);
+            } else if (swipeDistance < 0 && currentIndex < views.length - 1) {
+                // Swipe left - go to next view
+                switchView(views[currentIndex + 1]);
+            }
+        }
+        
+        // Long Press Context Menu
+        let longPressTimer = null;
+        let longPressTarget = null;
+        const longPressDuration = 500; // ms
+        
+        function setupLongPress() {
+            document.addEventListener('touchstart', handleLongPressStart, { passive: true });
+            document.addEventListener('touchend', handleLongPressEnd, { passive: true });
+            document.addEventListener('touchmove', handleLongPressCancel, { passive: true });
+            
+            // For desktop (right-click simulation)
+            document.addEventListener('contextmenu', handleContextMenu);
+        }
+        
+        function handleLongPressStart(e) {
+            const fundCard = e.target.closest('.fund-card');
+            if (!fundCard) return;
+            
+            longPressTarget = fundCard;
+            fundCard.classList.add('pressing');
+            
+            longPressTimer = setTimeout(() => {
+                // Haptic feedback
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+                
+                const fundName = fundCard.dataset.fund;
+                const rect = fundCard.getBoundingClientRect();
+                showContextMenu(fundName, e.touches[0].clientX, e.touches[0].clientY);
+                
+                fundCard.classList.remove('pressing');
+            }, longPressDuration);
+        }
+        
+        function handleLongPressEnd() {
+            clearTimeout(longPressTimer);
+            if (longPressTarget) {
+                longPressTarget.classList.remove('pressing');
+                longPressTarget = null;
+            }
+        }
+        
+        function handleLongPressCancel() {
+            clearTimeout(longPressTimer);
+            if (longPressTarget) {
+                longPressTarget.classList.remove('pressing');
+                longPressTarget = null;
+            }
+        }
+        
+        function handleContextMenu(e) {
+            const fundCard = e.target.closest('.fund-card');
+            if (fundCard) {
+                e.preventDefault();
+                const fundName = fundCard.dataset.fund;
+                showContextMenu(fundName, e.clientX, e.clientY);
+            }
+        }
+        
+        function showContextMenu(fundName, x, y) {
+            // Remove existing menu
+            hideContextMenu();
+            
+            // Create overlay to capture outside clicks
+            const overlay = document.createElement('div');
+            overlay.className = 'context-menu-overlay';
+            overlay.onclick = hideContextMenu;
+            document.body.appendChild(overlay);
+            
+            // Create context menu
+            const menu = document.createElement('div');
+            menu.className = 'context-menu';
+            menu.innerHTML = `
+                <div class="context-menu-item" onclick="viewFundDetails('${fundName}'); hideContextMenu();">
+                    <span>📊</span> View Details
+                </div>
+                <div class="context-menu-item" onclick="investMore('${fundName}'); hideContextMenu();">
+                    <span>💰</span> Invest More
+                </div>
+                <div class="context-menu-item" onclick="startSIP('${fundName}'); hideContextMenu();">
+                    <span>🔄</span> Start SIP
+                </div>
+                <div class="context-menu-divider"></div>
+                <div class="context-menu-item" onclick="shareFund('${fundName}'); hideContextMenu();">
+                    <span>📤</span> Share
+                </div>
+                <div class="context-menu-item" onclick="compareFund('${fundName}'); hideContextMenu();">
+                    <span>⚖️</span> Compare
+                </div>
+                <div class="context-menu-divider"></div>
+                <div class="context-menu-item danger" onclick="removeFund('${fundName}'); hideContextMenu();">
+                    <span>🗑️</span> Remove
+                </div>
+            `;
+            
+            // Position menu
+            const menuWidth = 200;
+            const menuHeight = 280;
+            
+            // Keep menu in viewport
+            let posX = x;
+            let posY = y;
+            
+            if (x + menuWidth > window.innerWidth) {
+                posX = window.innerWidth - menuWidth - 10;
+            }
+            if (y + menuHeight > window.innerHeight) {
+                posY = window.innerHeight - menuHeight - 10;
+            }
+            
+            menu.style.left = `${posX}px`;
+            menu.style.top = `${posY}px`;
+            
+            document.body.appendChild(menu);
+        }
+        
+        function hideContextMenu() {
+            const menu = document.querySelector('.context-menu');
+            const overlay = document.querySelector('.context-menu-overlay');
+            if (menu) menu.remove();
+            if (overlay) overlay.remove();
+        }
+        
+        function startSIP(fundName) {
+            toast.info(`Starting SIP for ${fundName} - Coming soon!`);
+        }
+        
+        function shareFund(fundName) {
+            if (navigator.share) {
+                navigator.share({
+                    title: `Check out ${fundName}`,
+                    text: `I'm investing in ${fundName} - Track it on MFHelper!`,
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                toast.info(`Share: ${fundName}`);
+            }
+        }
+        
+        function compareFund(fundName) {
+            toast.info(`Comparing ${fundName} - Coming soon!`);
+        }
+        
+        function removeFund(fundName) {
+            toast.warning(`Removed ${fundName} from tracking`);
+        }
+        
+        // Initialize long press on page load
+        setupLongPress();
+        
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-mode');
+            
+            // Save preference
+            localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+            
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(10);
+            }
+            
+            toast.success(isDark ? 'Dark mode enabled' : 'Light mode enabled');
+        }
+        
+        // Initialize dark mode from preference
+        function initDarkMode() {
+            const savedPref = localStorage.getItem('darkMode');
+            
+            // Check saved preference first
+            if (savedPref === 'true') {
+                document.body.classList.add('dark-mode');
+            } else if (savedPref === 'false') {
+                document.body.classList.remove('dark-mode');
+            } else {
+                // Fall back to system preference
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark-mode');
+                }
+            }
+        }
+        
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (localStorage.getItem('darkMode') === null) {
+                document.body.classList.toggle('dark-mode', e.matches);
+            }
+        });
+        
+        // Initialize dark mode immediately
+        initDarkMode();
+        
+        // Haptic Feedback Utility
+        const haptic = {
+            light: () => navigator.vibrate && navigator.vibrate(5),
+            medium: () => navigator.vibrate && navigator.vibrate(15),
+            heavy: () => navigator.vibrate && navigator.vibrate(30),
+            success: () => navigator.vibrate && navigator.vibrate([10, 50, 10]),
+            error: () => navigator.vibrate && navigator.vibrate([50, 50, 50]),
+            warning: () => navigator.vibrate && navigator.vibrate([30, 30])
+        };
+        
+        // Add haptic to all buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.btn, .nav-item, button, .fund-card')) {
+                haptic.light();
+            }
+        });
+        
+        // Add haptic to view switching
+        const originalSwitchView = switchView;
+        switchView = function(viewName) {
+            haptic.medium();
+            originalSwitchView(viewName);
+        };
+        
+        // Export haptic for use elsewhere
+        window.haptic = haptic;
+        
+        // Success Animations
+        const celebrations = {
+            // Confetti effect
+            confetti: () => {
+                const container = document.createElement('div');
+                container.className = 'confetti-container';
+                document.body.appendChild(container);
+                
+                const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E1D3', '#F38181'];
+                
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 200 - 100}px`;
+                    confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    container.appendChild(confetti);
+                }
+                
+                setTimeout(() => container.remove(), 1500);
+                haptic.success();
+            },
+            
+            // Success modal
+            showSuccess: (title, message, callback) => {
+                const overlay = document.createElement('div');
+                overlay.className = 'success-overlay';
+                overlay.innerHTML = `
+                    <div class="success-modal">
+                        <div class="success-icon">✓</div>
+                        <h2 class="success-title">${title}</h2>
+                        <p class="success-message">${message}</p>
+                        <button class="btn btn-primary" onclick="this.closest('.success-overlay').remove()">
+                            Continue
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+                
+                celebrations.confetti();
+                
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.remove();
+                        if (callback) callback();
+                    }
+                });
+            },
+            
+            // Milestone badge
+            showMilestone: (text) => {
+                const badge = document.createElement('div');
+                badge.className = 'milestone-badge';
+                badge.innerHTML = `🎉 ${text}`;
+                badge.style.cssText = `
+                    position: fixed;
+                    top: 100px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 9999;
+                `;
+                document.body.appendChild(badge);
+                
+                haptic.success();
+                
+                setTimeout(() => {
+                    badge.style.transition = 'opacity 0.5s ease';
+                    badge.style.opacity = '0';
+                    setTimeout(() => badge.remove(), 500);
+                }, 3000);
+            }
+        };
+        
+        window.celebrations = celebrations;
+        
+        // Check for milestones on portfolio load
+        function checkMilestones() {
+            if (!portfolioData) return;
+            
+            const summary = calculateSummary(portfolioData);
+            const total = summary.total_value;
+            
+            // Example milestones
+            const milestones = [
+                { value: 100000, text: 'First ₹1 Lakh!' },
+                { value: 500000, text: '₹5 Lakh Portfolio!' },
+                { value: 1000000, text: '₹10 Lakh Club!' },
+                { value: 2500000, text: '₹25 Lakh Investor!' },
+                { value: 5000000, text: '₹50 Lakh Wealth!' },
+                { value: 10000000, text: 'Crorepati Status! 🎉' }
+            ];
+            
+            const reachedMilestones = milestones.filter(m => total >= m.value);
+            const latestMilestone = reachedMilestones[reachedMilestones.length - 1];
+            
+            // Check if this is a new milestone
+            const lastShownMilestone = localStorage.getItem('lastMilestone');
+            if (latestMilestone && latestMilestone.value.toString() !== lastShownMilestone) {
+                localStorage.setItem('lastMilestone', latestMilestone.value.toString());
+                setTimeout(() => celebrations.showMilestone(latestMilestone.text), 1000);
+            }
+        }
+        
+        // ===========================================
+        // ONBOARDING FLOW
+        // ===========================================
+        
+        const onboardingSteps = [
+            {
+                icon: '👋',
+                title: 'Welcome to MFHelper!',
+                desc: 'Your personal mutual fund portfolio analyzer. Track, analyze, and optimize your investments.'
+            },
+            {
+                icon: '📱',
+                title: 'Swipe to Navigate',
+                desc: 'Swipe left or right to switch between Home, Portfolio, and Analysis views. Tap the bottom icons too!'
+            },
+            {
+                icon: '👆',
+                title: 'Long Press for Actions',
+                desc: 'Press and hold any fund card to see quick actions like View Details, Invest More, or Share.'
+            },
+            {
+                icon: '🌙',
+                title: 'Dark Mode Available',
+                desc: 'Tap the sun/moon icon in the header to switch between light and dark themes.'
+            },
+            {
+                icon: '🎉',
+                title: 'You\'re All Set!',
+                desc: 'Upload your portfolio to get started with professional analytics and insights.'
+            }
+        ];
+        
+        let currentOnboardingStep = 0;
+        
+        function showOnboarding() {
+            const hasSeenOnboarding = localStorage.getItem('hasSeenOnboarding');
+            if (hasSeenOnboarding) return;
+            
+            renderOnboardingStep();
+        }
+        
+        function renderOnboardingStep() {
+            const step = onboardingSteps[currentOnboardingStep];
+            const isLast = currentOnboardingStep === onboardingSteps.length - 1;
+            const isFirst = currentOnboardingStep === 0;
+            
+            // Remove existing overlay
+            const existing = document.querySelector('.onboarding-overlay');
+            if (existing) existing.remove();
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'onboarding-overlay';
+            overlay.innerHTML = `
+                <div class="onboarding-card">
+                    <div class="onboarding-icon">${step.icon}</div>
+                    <h2 class="onboarding-title">${step.title}</h2>
+                    <p class="onboarding-desc">${step.desc}</p>
+                    
+                    <div class="onboarding-progress">
+                        ${onboardingSteps.map((_, i) => `
+                            <div class="onboarding-dot ${i === currentOnboardingStep ? 'active' : ''}"></div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="onboarding-actions">
+                        ${isFirst ? `
+                            <button class="btn btn-secondary" onclick="skipOnboarding()">Skip</button>
+                        ` : `
+                            <button class="btn btn-secondary" onclick="prevOnboardingStep()">Back</button>
+                        `}
+                        <button class="btn btn-primary" onclick="${isLast ? 'completeOnboarding()' : 'nextOnboardingStep()'}">
+                            ${isLast ? 'Get Started' : 'Next'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            haptic.light();
+        }
+        
+        function nextOnboardingStep() {
+            if (currentOnboardingStep < onboardingSteps.length - 1) {
+                currentOnboardingStep++;
+                renderOnboardingStep();
+            }
+        }
+        
+        function prevOnboardingStep() {
+            if (currentOnboardingStep > 0) {
+                currentOnboardingStep--;
+                renderOnboardingStep();
+            }
+        }
+        
+        function skipOnboarding() {
+            completeOnboarding();
+        }
+        
+        function completeOnboarding() {
+            localStorage.setItem('hasSeenOnboarding', 'true');
+            const overlay = document.querySelector('.onboarding-overlay');
+            if (overlay) {
+                overlay.style.animation = 'fadeIn 0.2s ease reverse';
+                setTimeout(() => overlay.remove(), 200);
+            }
+            haptic.success();
+            toast.success('Welcome aboard! 🎉');
+        }
+        
+        // ===========================================
+        // PROGRESSIVE DISCLOSURE - Fund Detail View
+        // ===========================================
+        
+        function viewFundDetails(fundName) {
+            const fund = holdingsData.find(h => h.fund_name === fundName);
+            if (!fund) return;
+            
+            haptic.medium();
+            
+            const modal = document.createElement('div');
+            modal.className = 'fund-detail-modal';
+            modal.id = 'fundDetailModal';
+            
+            const gainClass = (fund.percentage_return || 0) >= 0 ? 'positive' : 'negative';
+            const gain = (fund.current_value || 0) - (fund.invested_value || 0);
+            
+            modal.innerHTML = `
+                <div class="fund-detail-header">
+                    <button class="fund-detail-back" onclick="closeFundDetail()">←</button>
+                    <div style="flex: 1;">
+                        <h2 style="font-size: 16px; margin: 0;">${fund.fund_name}</h2>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">${fund.amc || ''}</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="shareFund('${fundName}')">Share</button>
+                </div>
+                
+                <div class="fund-detail-content">
+                    <div class="fund-detail-hero">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-4);">
+                            <div>
+                                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-1);">Current Value</p>
+                                <p style="font-size: 28px; font-weight: 700; margin: 0;">₹${formatNumber(fund.current_value || 0)}</p>
+                            </div>
+                            <div class="badge badge-${gainClass === 'positive' ? 'success' : 'danger'}">
+                                ${gainClass === 'positive' ? '↗' : '↘'} ${(fund.percentage_return || 0).toFixed(2)}%
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+                            <div>
+                                <p style="font-size: 13px; color: var(--text-secondary);">Invested</p>
+                                <p style="font-size: 18px; font-weight: 600;">₹${formatNumber(fund.invested_value || 0)}</p>
+                            </div>
+                            <div>
+                                <p style="font-size: 13px; color: var(--text-secondary);">Total Gain/Loss</p>
+                                <p style="font-size: 18px; font-weight: 600;" class="text-${gainClass === 'positive' ? 'success' : 'danger'}">
+                                    ${gainClass === 'positive' ? '+' : '-'}₹${formatNumber(Math.abs(gain))}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fund-detail-section">
+                        <h3>Fund Information</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Category</span>
+                            <span class="detail-value">${fund.category || 'N/A'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">AMC</span>
+                            <span class="detail-value">${fund.amc || 'N/A'}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Units</span>
+                            <span class="detail-value">${(fund.units || 0).toFixed(3)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">NAV</span>
+                            <span class="detail-value">₹${(fund.nav || 0).toFixed(2)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="fund-detail-section">
+                        <h3>Returns</h3>
+                        <div class="detail-row">
+                            <span class="detail-label">Absolute Return</span>
+                            <span class="detail-value ${gainClass === 'positive' ? 'text-success' : 'text-danger'}">${(fund.percentage_return || 0).toFixed(2)}%</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">XIRR</span>
+                            <span class="detail-value">Coming soon</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-4);">
+                        <button class="btn btn-secondary" onclick="startSIP('${fundName}')">Start SIP</button>
+                        <button class="btn btn-primary" onclick="investMore('${fundName}')">Invest More</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFundDetail() {
+            const modal = document.getElementById('fundDetailModal');
+            if (modal) {
+                modal.style.animation = 'slideUp 0.3s ease reverse';
+                setTimeout(() => {
+                    modal.remove();
+                    document.body.style.overflow = '';
+                }, 300);
+            }
+            haptic.light();
+        }
+        
+        function formatNumber(num) {
+            if (num >= 10000000) return (num / 10000000).toFixed(2) + ' Cr';
+            if (num >= 100000) return (num / 100000).toFixed(2) + ' L';
+            if (num >= 1000) return (num / 1000).toFixed(1) + ' K';
+            return num.toFixed(0);
+        }
+        
+        // ===========================================
+        // SHARE FUNCTIONALITY
+        // ===========================================
+        
+        function showShareModal() {
+            haptic.medium();
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'context-menu-overlay';
+            overlay.onclick = hideShareModal;
+            document.body.appendChild(overlay);
+            
+            const modal = document.createElement('div');
+            modal.className = 'share-modal';
+            modal.id = 'shareModal';
+            
+            modal.innerHTML = `
+                <h2 style="margin-bottom: var(--space-4);">Share Portfolio</h2>
+                
+                <div class="share-preview" id="sharePreview">
+                    <div style="text-align: center; padding: var(--space-4);">
+                        <p style="font-size: 13px; color: var(--text-secondary);">Total Portfolio</p>
+                        <p style="font-size: 28px; font-weight: 700;">₹${portfolioData ? formatNumber(calculateSummary(portfolioData).total_value) : '0'}</p>
+                        <p style="color: var(--accent-green); font-size: 14px;">MFHelper Portfolio Tracker</p>
+                    </div>
+                </div>
+                
+                <div class="share-options">
+                    <button class="share-option" onclick="shareViaWhatsApp()">
+                        <div class="share-option-icon" style="background: #25D366;">📱</div>
+                        <span class="share-option-label">WhatsApp</span>
+                    </button>
+                    <button class="share-option" onclick="shareViaTwitter()">
+                        <div class="share-option-icon" style="background: #1DA1F2;">🐦</div>
+                        <span class="share-option-label">Twitter</span>
+                    </button>
+                    <button class="share-option" onclick="copyShareLink()">
+                        <div class="share-option-icon" style="background: var(--bg-tertiary);">🔗</div>
+                        <span class="share-option-label">Copy Link</span>
+                    </button>
+                    <button class="share-option" onclick="downloadAsImage()">
+                        <div class="share-option-icon" style="background: var(--primary-blue);">📷</div>
+                        <span class="share-option-label">Save Image</span>
+                    </button>
+                </div>
+                
+                <button class="btn btn-secondary" style="width: 100%;" onclick="hideShareModal()">Cancel</button>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function hideShareModal() {
+            const modal = document.getElementById('shareModal');
+            const overlay = document.querySelector('.context-menu-overlay');
+            if (modal) {
+                modal.style.animation = 'slideUp 0.3s ease reverse';
+                setTimeout(() => modal.remove(), 300);
+            }
+            if (overlay) overlay.remove();
+        }
+        
+        async function downloadAsImage() {
+            if (typeof html2canvas === 'undefined') {
+                toast.error('Image export not available');
+                return;
+            }
+            
+            toast.info('Generating image...');
+            
+            try {
+                const preview = document.getElementById('sharePreview');
+                const canvas = await html2canvas(preview, {
+                    backgroundColor: '#ffffff',
+                    scale: 2
+                });
+                
+                const link = document.createElement('a');
+                link.download = 'mfhelper-portfolio.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                haptic.success();
+                toast.success('Image saved!');
+            } catch (e) {
+                toast.error('Failed to generate image');
+            }
+        }
+        
+        function shareViaWhatsApp() {
+            const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
+            const text = `My portfolio is worth ₹${formatNumber(summary.total_value)}! Track yours at MFHelper 📊`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+            hideShareModal();
+        }
+        
+        function shareViaTwitter() {
+            const summary = portfolioData ? calculateSummary(portfolioData) : { total_value: 0 };
+            const text = `My mutual fund portfolio is worth ₹${formatNumber(summary.total_value)}! Tracking with #MFHelper 📊`;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            hideShareModal();
+        }
+        
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                toast.success('Link copied!');
+                haptic.success();
+            }).catch(() => {
+                toast.error('Failed to copy link');
+            });
+            hideShareModal();
+        }
+        
+        // ===========================================
+        // BETTER ERROR STATES
+        // ===========================================
+        
+        function showErrorState(title, message, retryAction) {
+            return `
+                <div class="error-state card">
+                    <div class="error-icon">⚠️</div>
+                    <h3 class="error-title">${title}</h3>
+                    <p class="error-message">${message}</p>
+                    <div class="error-actions">
+                        ${retryAction ? `<button class="btn btn-primary" onclick="${retryAction}">Try Again</button>` : ''}
+                        <button class="btn btn-secondary" onclick="window.location.href='/'">Go Home</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showNetworkError() {
+            document.getElementById('portfolioSummary').innerHTML = showErrorState(
+                'Connection Lost',
+                'Unable to load your portfolio. Please check your internet connection.',
+                'loadPortfolio()'
+            );
+        }
+        
+        function showDataError() {
+            document.getElementById('portfolioSummary').innerHTML = showErrorState(
+                'Something Went Wrong',
+                'We couldn\'t load your portfolio data. Please try again.',
+                'loadPortfolio()'
+            );
+        }
+        
+        // ===========================================
+        // OPTIMISTIC UI UPDATES
+        // ===========================================
+        
+        const optimisticUI = {
+            // Update UI immediately, then sync
+            updateFund: async (fundName, updates) => {
+                // Find and update locally first
+                const fundIndex = holdingsData.findIndex(h => h.fund_name === fundName);
+                if (fundIndex === -1) return;
+                
+                // Store original for rollback
+                const original = { ...holdingsData[fundIndex] };
+                
+                // Apply optimistic update
+                holdingsData[fundIndex] = { ...holdingsData[fundIndex], ...updates };
+                renderHoldings(holdingsData);
+                
+                haptic.light();
+                toast.success('Updated!');
+                
+                // Sync with backend (when available)
+                try {
+                    // await api.updateFund(fundName, updates);
+                    // Success - already showing updated UI
+                } catch (error) {
+                    // Rollback on failure
+                    holdingsData[fundIndex] = original;
+                    renderHoldings(holdingsData);
+                    toast.error('Update failed. Reverted changes.');
+                    haptic.error();
+                }
+            },
+            
+            // Remove with undo
+            removeFundWithUndo: (fundName) => {
+                const fundIndex = holdingsData.findIndex(h => h.fund_name === fundName);
+                if (fundIndex === -1) return;
+                
+                const removed = holdingsData.splice(fundIndex, 1)[0];
+                renderHoldings(holdingsData);
+                
+                haptic.warning();
+                
+                // Show undo toast
+                const undoToast = toast.warning(`Removed ${fundName}`, {
+                    duration: 5000,
+                    action: {
+                        text: 'Undo',
+                        onClick: () => {
+                            holdingsData.splice(fundIndex, 0, removed);
+                            renderHoldings(holdingsData);
+                            toast.success('Restored!');
+                            haptic.success();
+                        }
+                    }
+                });
+            }
+        };
+        
+        window.optimisticUI = optimisticUI;
+        
+        // Update removeFund to use optimistic UI
+        function removeFund(fundName) {
+            optimisticUI.removeFundWithUndo(fundName);
+        }
+        
+        // Profile Functions
+        function exportData() {
+            if (!portfolioData) {
+                toast.warning('No portfolio data to export');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(portfolioData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'mfhelper-portfolio.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            haptic.success();
+            toast.success('Portfolio exported!');
+        }
+        
+        function showOnboardingManual() {
+            localStorage.removeItem('hasSeenOnboarding');
+            currentOnboardingStep = 0;
+            renderOnboardingStep();
+        }
+        
+        let hapticsEnabled = true;
+        
+        function toggleHaptics(enabled) {
+            hapticsEnabled = enabled;
+            localStorage.setItem('hapticsEnabled', enabled ? 'true' : 'false');
+            
+            if (enabled) {
+                haptic.success();
+                toast.success('Haptics enabled');
+            } else {
+                toast.success('Haptics disabled');
+            }
+        }
+        
+        // Override haptic to check if enabled
+        const originalHaptic = { ...haptic };
+        Object.keys(haptic).forEach(key => {
+            haptic[key] = () => {
+                if (hapticsEnabled) {
+                    originalHaptic[key]();
+                }
+            };
+        });
+        
+        // Load haptics preference
+        const savedHaptics = localStorage.getItem('hapticsEnabled');
+        if (savedHaptics === 'false') {
+            hapticsEnabled = false;
+        }
+        
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                sessionStorage.clear();
+                localStorage.removeItem('portfolioData');
+                localStorage.removeItem('lastMilestone');
+                localStorage.removeItem('hasSeenOnboarding');
+                
+                haptic.warning();
+                toast.success('All data cleared');
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+        
+        // Load portfolio on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPortfolio();
+            showOnboarding();
+        });
+    </script>
+</body>
+</html>

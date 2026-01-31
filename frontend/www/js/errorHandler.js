@@ -3,43 +3,6 @@
  * Catches and logs all errors with context
  */
 
-// Safe toast wrapper - handles case when toast isn't loaded yet
-const safeToast = {
-    error: (msg) => {
-        if (typeof toast !== 'undefined' && toast.error) {
-            toast.error(msg);
-        } else {
-            console.error('[Toast Error]', msg);
-        }
-    },
-    warning: (msg) => {
-        if (typeof toast !== 'undefined' && toast.warning) {
-            toast.warning(msg);
-        } else {
-            console.warn('[Toast Warning]', msg);
-        }
-    },
-    success: (msg) => {
-        if (typeof toast !== 'undefined' && toast.success) {
-            toast.success(msg);
-        } else {
-            console.log('[Toast Success]', msg);
-        }
-    },
-    loading: (msg) => {
-        if (typeof toast !== 'undefined' && toast.loading) {
-            return toast.loading(msg);
-        }
-        console.log('[Toast Loading]', msg);
-        return null;
-    },
-    hideLoading: (t) => {
-        if (typeof toast !== 'undefined' && toast.hideLoading) {
-            toast.hideLoading(t);
-        }
-    }
-};
-
 class ErrorHandler {
     constructor() {
         this.errors = [];
@@ -127,25 +90,17 @@ class ErrorHandler {
 
         this.log(errorData);
 
-        // Show user-friendly toast (check if toast is available)
-        const showToast = (msg) => {
-            if (typeof toast !== 'undefined' && toast.error) {
-                toast.error(msg);
-            } else {
-                console.error('[Toast]', msg);
-            }
-        };
-        
+        // Show user-friendly toast
         if (error.response?.status === 413) {
-            showToast('File is too large. Please upload a smaller file.');
+            toast.error('File is too large. Please upload a smaller file.');
         } else if (error.response?.status === 400) {
-            showToast('Invalid file format. Please check your Excel file.');
+            toast.error('Invalid file format. Please check your Excel file.');
         } else if (error.response?.status >= 500) {
-            showToast('Server error. Please try again later.');
+            toast.error('Server error. Please try again later.');
         } else if (!navigator.onLine) {
-            showToast('No internet connection. Please check your network.');
+            toast.error('No internet connection. Please check your network.');
         } else {
-            showToast('Something went wrong. Please try again.');
+            toast.error('Something went wrong. Please try again.');
         }
 
         return errorData;
@@ -163,13 +118,13 @@ class ErrorHandler {
 
         // User-friendly messages
         if (error.message.includes('format')) {
-            safeToast.error(`Invalid file format: ${fileName}`);
+            toast.error(`Invalid file format: ${fileName}`);
         } else if (error.message.includes('size')) {
-            safeToast.error('File is too large. Maximum size is 10MB.');
+            toast.error('File is too large. Maximum size is 10MB.');
         } else if (error.message.includes('parse')) {
-            safeToast.error('Could not read file. Please check the file format.');
+            toast.error('Could not read file. Please check the file format.');
         } else {
-            safeToast.error(`Error processing file: ${fileName}`);
+            toast.error(`Error processing file: ${fileName}`);
         }
 
         return errorData;
@@ -211,7 +166,7 @@ async function safeAsync(fn, errorMessage = 'Operation failed') {
             message: errorMessage,
             error: error.stack
         });
-        safeToast.error(errorMessage);
+        toast.error(errorMessage);
         return null;
     }
 }
@@ -227,7 +182,7 @@ class LoadingManager {
     }
 
     show(message = 'Loading...', id = 'default') {
-        const loadingToast = safeToast.loading(message);
+        const loadingToast = toast.loading(message);
         this.activeLoaders.set(id, loadingToast);
         return id;
     }
@@ -235,14 +190,14 @@ class LoadingManager {
     hide(id = 'default') {
         const loadingToast = this.activeLoaders.get(id);
         if (loadingToast) {
-            safeToast.hideLoading(loadingToast);
+            toast.hideLoading(loadingToast);
             this.activeLoaders.delete(id);
         }
     }
 
     hideAll() {
         this.activeLoaders.forEach((loadingToast) => {
-            safeToast.hideLoading(loadingToast);
+            toast.hideLoading(loadingToast);
         });
         this.activeLoaders.clear();
     }
