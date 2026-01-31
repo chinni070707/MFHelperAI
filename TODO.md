@@ -223,13 +223,63 @@
 - [ ] Goal-based investing
 
 ### Data Management
-- [ ] CAS PDF import (CAMS/KFintech)
+- [ ] **CAS PDF import (CAMS/KFintech)** ⭐ MOVE TO HIGH PRIORITY
+  - Implement `/api/upload/cas` endpoint using casparser
+  - Get CAMS or KFintech CAS sample for testing
+  - Parse folios, schemes, transactions, valuations
+  - Calculate portfolio metrics (invested, current, gains, XIRR)
+  - Save to database with historical snapshots
+  - Add CAS upload UI to dashboard
+  - Handle password-protected PDFs
+  - See: `docs/CAS_PARSING_INVESTIGATION.md` for details
+  
+- [ ] **CDSL CAS Support (Low Priority)**
+  - casparser partially supports CDSL (accounts but not holdings)
+  - Option 1: Contribute holdings extraction to casparser
+  - Option 2: Build custom CDSL parser
+  - Option 3: Ask users for CAMS/KFin CAS instead
+  - Decision: Defer until CAMS/KFin implementation complete
+  
 - [ ] Automatic data refresh via APIs
 - [ ] Transaction history parsing
 - [ ] XIRR calculations
 - [ ] Tax planning (LTCG/STCG)
 
-### UI/UX Improvements
+### Auth & User Management (Partially Complete)
+- [x] ~~JWT authentication system~~ ✅
+- [x] ~~User registration/login~~ ✅
+- [x] ~~User settings with theme support~~ ✅
+- [x] ~~Database-backed storage~~ ✅
+- [ ] **Fix TypeScript compilation errors**
+  - Fix toast.js import in auth-ui.ts
+  - Compile TypeScript to JavaScript
+  - Test compiled output in browser
+- [ ] **Test auth UI in browser**
+  - Login/Register modals
+  - Settings modal (Profile/Preferences/Notifications tabs)
+  - Theme switching
+  - Form validation
+- [ ] **Write auth route tests**
+  - Registration tests (valid/invalid)
+  - Login tests (success/failure)
+  - Protected route tests
+  - Settings CRUD tests
+- [ ] Email verification system
+- [ ] Password reset flow
+- [ ] Social authentication (Google, GitHub)
+
+### Database Management
+- [x] ~~Seed database script created~~ ✅ `scripts/seed_database.py`
+- [ ] **Run seed script to populate test data**
+  - 3 test users (demo@mfhelper.com, test@example.com, investor@example.com)
+  - 2 portfolio snapshots for demo user (Feb + Jan 2026)
+  - Realistic holdings with NAV, returns, performance data
+  - Run: `python scripts/seed_database.py`
+- [ ] **Create Alembic migration system**
+  - Initialize Alembic
+  - Create initial migration from models
+  - Add UserSettings migration
+  - Document migration workflow
 - [ ] Accessibility (a11y)
 - [ ] Keyboard navigation
 - [ ] Dark mode improvements
@@ -298,22 +348,35 @@
 
 **Completed:**
 ✅ User authentication system (JWT)
-✅ User settings & preferences
-✅ Database-backed portfolio storage
-✅ Portfolio history tracking
+✅ User settings & preferences (theme, notifications, display)
+✅ Database-backed portfolio storage with history tracking
+✅ Portfolio history snapshots (never deletes old data)
 ✅ Theme support (light/dark/auto)
-✅ TypeScript frontend components
-✅ 61/61 backend tests passing
-✅ Rebalancing calculator
-✅ Analytics endpoints
+✅ TypeScript frontend components (auth-ui, auth service)
+✅ 61/61 backend tests passing (portfolio, upload, analytics, rebalance)
+✅ Rebalancing calculator with recommendations
+✅ Analytics endpoints (allocation, performance, risk)
+✅ Database seed script with test data
+✅ CAS parsing investigation completed
+✅ casparser library tested with CDSL format
+✅ Comprehensive CAS parsing documentation
 
 **In Progress:**
-🔄 TypeScript compilation fixes
-🔄 Frontend integration
+🔄 TypeScript compilation fixes (toast.js import issue)
+🔄 Frontend auth integration (add buttons, test modals)
+🔄 CAS import implementation (waiting for CAMS/KFin sample)
+
+**Next Up:**
+⏭️ Run database seed script
+⏭️ Fix TypeScript compilation
+⏭️ Get CAMS or KFintech CAS sample
+⏭️ Implement CAS upload endpoint
+⏭️ Test auth UI in browser
+⏭️ Write auth route tests
 
 **Blocked:**
-❌ None currently
+❌ CAS import - need CAMS/KFintech sample (CDSL partially works but missing holdings)
 
 ---
 
-**Last Updated:** February 1, 2026
+**Last Updated:** February 1, 2026 (after CAS parsing investigation)
