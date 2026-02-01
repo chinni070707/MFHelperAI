@@ -17,7 +17,8 @@ Notes:
 #>
 
 param(
-    [switch]$NoBrowser
+    [switch]$NoBrowser,
+    [switch]$ForceKill
 )
 
 function Test-OllamaRunning {
@@ -29,7 +30,48 @@ function Test-OllamaRunning {
     }
 }
 
+function Get-PidByPort {
+    param([int]$Port)
+    try {
+        $conn = Get-NetTCPConnection -LocalPort $Port -ErrorAction SilentlyContinue
+        if ($conn) { return $conn.OwningProcess }
+    } catch {
+        return $null
+    }
+}
+
+function Kill-ProcessIfExists {
+    param([int]$Port, [string]$Name)
+    $pid = Get-PidByPort -Port $Port
+    if ($pid) {
+        Write-Host "Found process listening on port $Port (PID: $pid)"
+        if ($ForceKill) {
+            Write-Host "Force killing PID $pid..."
+            try { Stop-Process -Id $pid -Force -ErrorAction Stop; Write-Host "Killed PID $pid" } catch { Write-Warning "Failed to kill PID $pid: $_" }
+            return $true
+        } else {
+            $proc = Get-Process -Id $pid -ErrorAction SilentlyContinue
+            $procName = if ($proc) { $proc.ProcessName } else { $Name }
+            $answer = Read-Host "Process $procName (PID $pid) is using port $Port. Kill it? (y/N)"
+            if ($answer -match '^[Yy]') {
+                try { Stop-Process -Id $pid -Force -ErrorAction Stop; Write-Host "Killed PID $pid" } catch { Write-Warning "Failed to kill PID $pid: $_" }
+                return $true
+            } else {
+                Write-Warning "Leaving existing process running. This may conflict."
+                return $false
+            }
+        }
+    }
+    return $false
+}
+
 function Ensure-OllamaStarted {
+    # If something is listening on Ollama port, ask/kill if requested
+    if (Get-PidByPort -Port 11434) {
+        $k = Kill-ProcessIfExists -Port 11434 -Name 'ollama'
+        if (-not $k -and (Test-OllamaRunning)) { Write-Host "Ollama already running at http://localhost:11434"; return $true }
+    }
+
     if (Test-OllamaRunning) {
         Write-Host "Ollama already running at http://localhost:11434"
         return $true
@@ -112,6 +154,11 @@ if ($ollamaOk) {
     Ensure-TinyLlamaModel | Out-Null
 } else {
     Write-Warning "Ollama not started. You may need to start it manually and run model pull."
+}
+
+# Optionally kill existing backend on port 8000
+if (Get-PidByPort -Port 8000) {
+    Kill-ProcessIfExists -Port 8000 -Name 'uvicorn' | Out-Null
 }
 
 # Step 3: Start backend
