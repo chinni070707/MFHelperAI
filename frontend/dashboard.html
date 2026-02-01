@@ -370,6 +370,21 @@
                 <div class="card-value" id="totalReturn">-</div>
                 <div class="card-sub">Portfolio Return</div>
             </div>
+            <div class="card xirr-card" id="xirr-card">
+                <div class="card-label">Portfolio XIRR</div>
+                <div class="xirr-value" id="portfolio-xirr">-- %</div>
+                <div class="card-sub">Internal Rate of Return (annualized)</div>
+                <div class="compare-box">
+                    <label style="font-size:0.9rem;">Portfolio ID: <input type="number" id="portfolio-id-input" style="width:120px; margin-left:6px;"></label>
+                    <div style="margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                        <label style="font-size:0.85rem;">Large %: <input id="large-rate" type="number" step="0.01" value="12" style="width:70px; margin-left:6px;">%</label>
+                        <label style="font-size:0.85rem;">Mid %: <input id="mid-rate" type="number" step="0.01" value="14" style="width:70px; margin-left:6px;">%</label>
+                        <label style="font-size:0.85rem;">Small %: <input id="small-rate" type="number" step="0.01" value="16" style="width:70px; margin-left:6px;">%</label>
+                        <button class="btn btn-secondary" id="fetch-xirr-btn">Fetch XIRR & Compare</button>
+                    </div>
+                    <div id="compare-results" style="margin-top:10px; font-size:0.9rem; color:#cbd5e1;"></div>
+                </div>
+            </div>
             <div class="card" id="liquidCard" style="display: none;">
                 <div class="card-label">Liquid Funds</div>
                 <div class="card-value" id="liquidValue">₹0</div>
@@ -1159,7 +1174,50 @@
             const input = document.getElementById('dashboardChatInput');
             if (sendBtn) sendBtn.addEventListener('click', () => sendDashboardChat());
             if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendDashboardChat(); });
+
+            // XIRR & Compare handlers
+            const fetchBtn = document.getElementById('fetch-xirr-btn');
+            if (fetchBtn) fetchBtn.addEventListener('click', () => fetchXirrAndCompare());
         });
+
+        async function fetchXirrAndCompare() {
+            const pid = document.getElementById('portfolio-id-input').value;
+            if (!pid) { toast.error('Enter a portfolio ID'); return; }
+            const large = parseFloat(document.getElementById('large-rate').value)/100 || 0.12;
+            const mid = parseFloat(document.getElementById('mid-rate').value)/100 || 0.14;
+            const small = parseFloat(document.getElementById('small-rate').value)/100 || 0.16;
+
+            // Prepare headers with auth if present
+            const headers = { 'Content-Type': 'application/json' };
+            const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
+            try {
+                // Fetch XIRR
+                const xresp = await fetch(`/api/analytics/xirr/${pid}`, { headers });
+                if (!xresp.ok) { const t = await xresp.text(); throw new Error(t || 'XIRR fetch failed'); }
+                const xdata = await xresp.json();
+                document.getElementById('portfolio-xirr').textContent = xdata.portfolio_xirr_pct ? xdata.portfolio_xirr_pct + ' %' : '-- %';
+
+                // Fetch comparison
+                const creq = `/api/analytics/compare_index/${pid}?large_rate=${large}&mid_rate=${mid}&small_rate=${small}`;
+                const cresp = await fetch(creq, { headers });
+                if (!cresp.ok) { const t = await cresp.text(); throw new Error(t || 'Compare fetch failed'); }
+                const cdata = await cresp.json();
+
+                // Render compare results
+                const el = document.getElementById('compare-results');
+                const lines = [];
+                lines.push(`<strong>Allocation:</strong> Large ${cdata.allocation_pct.Large?.toFixed(1) || 0}% | Mid ${cdata.allocation_pct.Mid?.toFixed(1) || 0}% | Small ${cdata.allocation_pct.Small?.toFixed(1) || 0}%`);
+                lines.push(`<strong>Actual AUM:</strong> ₹${(cdata.actual_by_bucket.Large||0).toFixed(0)} (Large), ₹${(cdata.actual_by_bucket.Mid||0).toFixed(0)} (Mid), ₹${(cdata.actual_by_bucket.Small||0).toFixed(0)} (Small)`);
+                lines.push(`<strong>Hypothetical Index Value:</strong> ₹${(cdata.hypothetical_by_bucket.Large||0).toFixed(0)} (Large), ₹${(cdata.hypothetical_by_bucket.Mid||0).toFixed(0)} (Mid), ₹${(cdata.hypothetical_by_bucket.Small||0).toFixed(0)} (Small)`);
+                lines.push(`<strong>Hypothetical Total:</strong> ₹${(cdata.hypothetical_total||0).toFixed(0)} vs Actual ₹${( (cdata.actual_by_bucket.Large||0)+(cdata.actual_by_bucket.Mid||0)+(cdata.actual_by_bucket.Small||0) ).toFixed(0)}`);
+                el.innerHTML = lines.join('<br>');
+
+            } catch (e) {
+                toast.error('Failed: ' + e.message);
+            }
+        }
     </script>
 </body>
 </html>

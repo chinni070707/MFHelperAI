@@ -180,3 +180,93 @@ async def get_insights(holdings: List[Dict]):
             "fund_count": len(holdings)
         }
     }
+
+
+@router.get('/compare_index/{portfolio_id}')
+async def compare_index(portfolio_id: int, large_rate: float = 0.12, mid_rate: float = 0.14, small_rate: float = 0.16, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+    """Compare portfolio to index returns for large/mid/small cap.
+
+    Returns allocation percentages and hypothetical returns if the same transactions were invested into index funds with given annual rates.
+    Rates are expected as decimals (e.g., 0.12 for 12%).
+    """
+    # Verify portfolio ownership
+    portfolio = db.query(Portfolio).filter(Portfolio.id == portfolio_id, Portfolio.user_id == current_user.id).first()
+    if not portfolio:
+        raise HTTPException(status_code=404, detail="Portfolio not found")
+
+    # Fetch holdings and transactions
+    holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio_id).all()
+    holding_ids = [h.id for h in holdings]
+    transactions = db.query(Transaction).filter(Transaction.holding_id.in_(holding_ids)).order_by(Transaction.transaction_date).all()
+
+    # Map categories to index bucket
+    def map_bucket(cat: str):
+        if not cat:
+            return 'Large'
+        c = cat.lower()
+        if 'mid' in c:
+            return 'Mid'
+        if 'small' in c:
+            return 'Small'
+        return 'Large'
+
+    # Sum actual current values per bucket
+    bucket_actual = {'Large': 0.0, 'Mid': 0.0, 'Small': 0.0}
+    total_current = 0.0
+    for h in holdings:
+        b = map_bucket(h.category)
+        cur = float(h.current_value or 0)
+        bucket_actual[b] += cur
+        total_current += cur
+
+    allocation_pct = {k: (v / total_current * 100) if total_current > 0 else 0 for k, v in bucket_actual.items()}
+
+    # Compute hypothetical current value if each transaction was invested into corresponding index
+    eval_date = portfolio.snapshot_date or func.now()
+    from datetime import datetime
+    if isinstance(eval_date, datetime):
+        ref_date = eval_date
+    else:
+        ref_date = datetime.utcnow()
+
+    # rates map
+    rates = {'Large': float(large_rate), 'Mid': float(mid_rate), 'Small': float(small_rate)}
+
+    bucket_hypo = {'Large': 0.0, 'Mid': 0.0, 'Small': 0.0}
+
+    for txn in transactions:
+        b = None
+        # find holding category
+        h = next((x for x in holdings if x.id == txn.holding_id), None)
+        if h:
+            b = map_bucket(h.category)
+        else:
+            b = 'Large'
+
+        # Determine sign similar to XIRR
+        ttype = (txn.transaction_type or '').lower()
+        sign = 1.0
+        if any(x in ttype for x in ['purchase', 'sip', 'purchase-bse', 'new purchase']):
+            sign = -1.0
+        elif any(x in ttype for x in ['redemption', 'sell', 'switch']):
+            sign = 1.0
+        else:
+            sign = -1.0 if txn.amount > 0 else 1.0
+
+        amt = sign * float(txn.amount)
+        days = (ref_date - txn.transaction_date).days
+        years = days / 365.0 if days >= 0 else 0
+        r = rates.get(b, 0.12)
+        # Future value contribution at eval date: -amt * (1+r)^years (so investments become positive)
+        fv = -amt * ((1 + r) ** years)
+        bucket_hypo[b] += fv
+
+    total_hypo = sum(bucket_hypo.values())
+
+    return {
+        'portfolio_id': portfolio_id,
+        'allocation_pct': allocation_pct,
+        'actual_by_bucket': bucket_actual,
+        'hypothetical_by_bucket': bucket_hypo,
+        'hypothetical_total': total_hypo
+    }
