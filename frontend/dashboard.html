@@ -1019,22 +1019,43 @@
         }
         
         // Overlap Analysis
-        function analyzeCurrentPortfolio() {
-            if (!portfolioData || !portfolioData.holdings) {
-                toast.error('No portfolio data available');
-                return;
+        async function analyzeCurrentPortfolio() {
+            try {
+                if (!portfolioData || !portfolioData.holdings) {
+                    toast && toast.error && toast.error('No portfolio data available');
+                    return;
+                }
+
+                // Extract unique fund names from holdings and sanitize
+                const fundNames = [...new Set(portfolioData.holdings.map(h => (h.fund_name || '').trim()).filter(Boolean))];
+
+                if (fundNames.length < 2) {
+                    toast && toast.warning && toast.warning('Need at least 2 funds for overlap analysis');
+                    return;
+                }
+
+                // Lazy-check for overlap analyzer (in case script not loaded)
+                if (!window.overlapAnalyzer) {
+                    // Try to dynamically load script
+                    await new Promise((resolve, reject) => {
+                        const s = document.createElement('script');
+                        s.src = '/js/overlap.js';
+                        s.onload = resolve;
+                        s.onerror = () => reject(new Error('Failed to load overlap module'));
+                        document.head.appendChild(s);
+                    });
+                }
+
+                // Call analyzer and await completion (it shows its own loading/toast)
+                await window.overlapAnalyzer.analyzePortfolio(fundNames);
+            } catch (err) {
+                console.error('Overlap analysis failed', err);
+                if (typeof errorHandler !== 'undefined') {
+                    errorHandler.handleAPIError(err, { feature: 'overlap_analysis' });
+                } else if (toast && toast.error) {
+                    toast.error('Overlap analysis failed: ' + (err.message || err));
+                }
             }
-            
-            // Extract unique fund names from holdings
-            const fundNames = [...new Set(portfolioData.holdings.map(h => h.fund_name))];
-            
-            if (fundNames.length < 2) {
-                toast.warning('Need at least 2 funds for overlap analysis');
-                return;
-            }
-            
-            // Use the overlap analyzer
-            window.overlapAnalyzer.analyzePortfolio(fundNames);
         }
         
         function exportData() {
