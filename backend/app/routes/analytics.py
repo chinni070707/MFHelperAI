@@ -1,9 +1,16 @@
 """
 Analytics Routes - Portfolio analytics and insights
 """
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from sqlalchemy import func
 from typing import List, Dict
 import logging
+
+from app.database import get_db
+from app.utils.auth import get_current_user
+from app.models.models import Portfolio, Holding, Transaction
+from datetime import datetime
 
 # Setup logger
 logger = logging.getLogger(__name__)

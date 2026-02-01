@@ -69,7 +69,7 @@ class AISettings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
-
+        extra = "ignore"  # Allow extra env vars
 
 # Global settings instance
 ai_settings = AISettings()

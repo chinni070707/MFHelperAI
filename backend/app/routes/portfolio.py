@@ -247,3 +247,25 @@ async def get_portfolio_history(
         for p in portfolios
     ]
 
+
+@router.get("/latest-id")
+async def get_latest_portfolio_id(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get user's most recent portfolio ID"""
+    portfolio = db.query(Portfolio).filter(
+        Portfolio.user_id == current_user.id
+    ).order_by(Portfolio.created_at.desc()).first()
+    
+    if not portfolio:
+        raise HTTPException(status_code=404, detail="No portfolios found")
+    
+    return {
+        "id": portfolio.id,
+        "name": portfolio.name,
+        "source": portfolio.source,
+        "total_invested": portfolio.total_invested,
+        "total_current": portfolio.total_current,
+        "created_at": str(portfolio.created_at)
+    }

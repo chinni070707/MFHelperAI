@@ -42,19 +42,19 @@ function Get-PidByPort {
 
 function Kill-ProcessIfExists {
     param([int]$Port, [string]$Name)
-    $pid = Get-PidByPort -Port $Port
-    if ($pid) {
-        Write-Host "Found process listening on port $Port (PID: $pid)"
+    $procPid = Get-PidByPort -Port $Port
+    if ($procPid) {
+        Write-Host "Found process listening on port $Port (PID: $procPid)"
         if ($ForceKill) {
-            Write-Host "Force killing PID $pid..."
-            try { Stop-Process -Id $pid -Force -ErrorAction Stop; Write-Host "Killed PID $pid" } catch { Write-Warning "Failed to kill PID $pid: $_" }
+            Write-Host "Force killing PID $procPid..."
+            try { Stop-Process -Id $procPid -Force -ErrorAction Stop; Write-Host "Killed PID $procPid" } catch { Write-Warning "Failed to kill PID $procPid - $_" }
             return $true
         } else {
-            $proc = Get-Process -Id $pid -ErrorAction SilentlyContinue
+            $proc = Get-Process -Id $procPid -ErrorAction SilentlyContinue
             $procName = if ($proc) { $proc.ProcessName } else { $Name }
-            $answer = Read-Host "Process $procName (PID $pid) is using port $Port. Kill it? (y/N)"
+            $answer = Read-Host "Process $procName (PID $procPid) is using port $Port. Kill it? (y/N)"
             if ($answer -match '^[Yy]') {
-                try { Stop-Process -Id $pid -Force -ErrorAction Stop; Write-Host "Killed PID $pid" } catch { Write-Warning "Failed to kill PID $pid: $_" }
+                try { Stop-Process -Id $procPid -Force -ErrorAction Stop; Write-Host "Killed PID $procPid" } catch { Write-Warning "Failed to kill PID $procPid - $_" }
                 return $true
             } else {
                 Write-Warning "Leaving existing process running. This may conflict."

@@ -1175,10 +1175,32 @@
             if (sendBtn) sendBtn.addEventListener('click', () => sendDashboardChat());
             if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendDashboardChat(); });
 
+            // Auto-populate latest portfolio ID
+            autoPopulatePortfolioId();
+
             // XIRR & Compare handlers
             const fetchBtn = document.getElementById('fetch-xirr-btn');
             if (fetchBtn) fetchBtn.addEventListener('click', () => fetchXirrAndCompare());
         });
+
+        async function autoPopulatePortfolioId() {
+            const pidInput = document.getElementById('portfolio-id-input');
+            if (!pidInput) return;
+
+            const headers = { 'Content-Type': 'application/json' };
+            const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+            if (token) headers['Authorization'] = `Bearer ${token}`;
+
+            try {
+                const resp = await fetch('/api/portfolio/latest-id', { headers });
+                if (resp.ok) {
+                    const data = await resp.json();
+                    pidInput.value = data.id;
+                }
+            } catch (e) {
+                // Silent fail — user can enter manually
+            }
+        }
 
         async function fetchXirrAndCompare() {
             const pid = document.getElementById('portfolio-id-input').value;

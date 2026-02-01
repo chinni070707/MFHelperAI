@@ -179,14 +179,27 @@ async def upload_cas(
 async def save_cas_to_database(cas_data, user_id: int, db: Session) -> int:
     """
     Save parsed CAS data to database
-    Creates Portfolio and Holding records
+    Creates Portfolio and Holding records, then imports transactions
     """
-    from app.services.cas_import import import_cas_to_database
+    from app.services.cas_import import import_cas_to_database, import_cas_transactions
     
     portfolio_id = import_cas_to_database(
         cas_data=cas_data,
         user_id=user_id,
         db=db
     )
+    
+    # Import transactions for XIRR and analytics
+    try:
+        import_cas_transactions(
+            cas_data=cas_data,
+            portfolio_id=portfolio_id,
+            db=db
+        )
+    except Exception as e:
+        # Log but don't fail — transactions are optional for XIRR
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(f"Failed to import CAS transactions: {str(e)}")
     
     return portfolio_id
