@@ -7,7 +7,7 @@ import json
 # API endpoint
 BASE_URL = "http://localhost:8000"
 CAS_FILE = r"C:\Users\mahchi01\Downloads\KFINTECH_97924150102202603102380252686267905.pdf"
-PASSWORD = "Mahesh@1234"
+PASSWORD = "YOUR_CAS_PDF_PASSWORD"  # Replace with your actual CAS password
 
 # First, login to get token
 def login():

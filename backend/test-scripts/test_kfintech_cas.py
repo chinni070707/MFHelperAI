@@ -7,7 +7,7 @@ from pathlib import Path
 
 # KFintech CAS file
 cas_file = r"C:\Users\mahchi01\Downloads\KFINTECH_97924150102202603102380252686267905.pdf"
-password = "Mahesh@1234"
+password = "YOUR_CAS_PDF_PASSWORD"  # Replace with your actual CAS password
 
 print("=" * 80)
 print("Testing casparser with KFintech CAS file")
