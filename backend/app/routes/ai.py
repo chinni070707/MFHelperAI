@@ -300,3 +300,35 @@ async def ai_status():
             "recommendations": ai_service.is_available(),
         }
     }
+
+
+@router.get("/health")
+async def ai_health():
+    """AI health endpoint for frontend checks
+
+    Returns JSON with availability, provider (ollama/openai), model (if available), and message.
+    """
+    from app.services.ai_service import ai_service
+
+    available = ai_service.is_available()
+    provider = getattr(ai_service, "ai_type", "unknown")
+    model = None
+    message = "AI available"
+
+    if provider == "ollama":
+        model = getattr(ai_service, "ollama_model", None)
+        if not available:
+            message = "Ollama/TinyLlama not available - AI offline"
+    elif provider == "openai":
+        model = getattr(ai_settings, "OPENAI_MODEL", None)
+        if not available:
+            message = "OpenAI not available or API key missing"
+    else:
+        message = "AI provider not configured"
+
+    return {
+        "available": available,
+        "provider": provider,
+        "model": model,
+        "message": message
+    }
