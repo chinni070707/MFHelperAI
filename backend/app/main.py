@@ -10,7 +10,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr
 from app.database import engine, Base
 
 # Setup centralized logging
@@ -81,6 +81,7 @@ app.include_router(upload.router, prefix="/api/upload", tags=["Upload"])
 app.include_router(cas.router, tags=["CAS Import"])
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["Portfolio"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+app.include_router(xirr.router)
 app.include_router(rebalance.router, prefix="/api/rebalance", tags=["Rebalancing"])
 app.include_router(holdings.router, tags=["Holdings & Overlap"])
 
