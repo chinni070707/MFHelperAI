@@ -1037,7 +1037,12 @@
         
         // Overlap Analysis
         async function analyzeCurrentPortfolio() {
+            const btn = document.getElementById('analyze-overlap-btn');
+            const spinner = document.getElementById('analyze-overlap-spinner');
             try {
+                if (btn) { btn.disabled = true; }
+                if (spinner) { spinner.style.display = 'inline-block'; }
+
                 if (!portfolioData || !portfolioData.holdings) {
                     toast && toast.error && toast.error('No portfolio data available');
                     return;
@@ -1072,6 +1077,9 @@
                 } else if (toast && toast.error) {
                     toast.error('Overlap analysis failed: ' + (err.message || err));
                 }
+            } finally {
+                if (btn) { btn.disabled = false; }
+                if (spinner) { spinner.style.display = 'none'; }
             }
         }
         
