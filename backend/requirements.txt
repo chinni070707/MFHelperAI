@@ -70,3 +70,7 @@ loguru==0.7.2
 sentry-sdk>=1.40.0  # Error tracking and performance monitoring
 prometheus-client>=0.19.0  # Metrics collection
 psutil>=5.9.0  # System and process utilities
+
+# AI/ML - Ollama Integration (Local TinyLlama)
+requests>=2.31.0  # HTTP client for Ollama API
+

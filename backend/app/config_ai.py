@@ -1,5 +1,6 @@
 """
 AI Service Configuration
+Supports both OpenAI (paid) and Ollama (local, free)
 """
 from pydantic_settings import BaseSettings
 from typing import Optional
@@ -9,10 +10,17 @@ import os
 class AISettings(BaseSettings):
     """AI/ML Configuration"""
     
-    # OpenAI Configuration
+    # AI Type: 'openai' or 'ollama'
+    AI_TYPE: str = os.getenv("AI_TYPE", "ollama").lower()
+    
+    # OpenAI Configuration (if using GPT-4)
     OPENAI_API_KEY: Optional[str] = os.getenv("OPENAI_API_KEY", "")
     OPENAI_MODEL: str = "gpt-4-turbo-preview"
     OPENAI_EMBEDDING_MODEL: str = "text-embedding-3-small"
+    
+    # Ollama Configuration (if using local TinyLlama)
+    OLLAMA_BASE_URL: str = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+    OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "tinyllama")
     
     # Claude Configuration (alternative)
     ANTHROPIC_API_KEY: Optional[str] = os.getenv("ANTHROPIC_API_KEY", "")
