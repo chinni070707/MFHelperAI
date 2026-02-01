@@ -4,10 +4,15 @@ Test KFintech CAS parsing with casparser library
 import casparser
 import json
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv('../.env')
 
 # KFintech CAS file
-cas_file = r"C:\Users\mahchi01\Downloads\KFINTECH_97924150102202603102380252686267905.pdf"
-password = "YOUR_CAS_PDF_PASSWORD"  # Replace with your actual CAS password
+cas_file = os.getenv('CAS_TEST_FILE', r"C:\Users\mahchi01\Downloads\KFINTECH_97924150102202603102380252686267905.pdf")
+password = os.getenv('CAS_TEST_PASSWORD', 'YOUR_CAS_PDF_PASSWORD')  # Replace with your actual CAS password
 
 print("=" * 80)
 print("Testing casparser with KFintech CAS file")

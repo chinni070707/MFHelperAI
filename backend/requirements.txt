@@ -16,6 +16,7 @@ PyMuPDF>=1.23.0  # Better PDF parsing (fitz)
 # Database
 sqlalchemy>=2.0.0
 pydantic-settings>=2.0.0
+python-dotenv>=1.0.0  # Environment variables
 
 # For production, use PostgreSQL:
 # asyncpg==0.29.0
