@@ -301,15 +301,19 @@
                 const response = await fetch(`${API_BASE}/ai/status`);
                 const data = await response.json();
                 
+                // Expose availability to other scripts
+                window.AI_AVAILABLE = !!data.ai_available;
+
                 const statusEl = document.getElementById('aiStatus');
                 if (data.ai_available) {
                     statusEl.className = 'status available';
                     statusEl.innerHTML = '✅ AI Features Available';
                 } else {
                     statusEl.className = 'status unavailable';
-                    statusEl.innerHTML = '⚠️ AI Features Unavailable - Configure OPENAI_API_KEY';
+                    statusEl.innerHTML = '⚠️ AI Features Unavailable - Using dashboard search instead';
                 }
             } catch (error) {
+                window.AI_AVAILABLE = false;
                 document.getElementById('aiStatus').innerHTML = '❌ Cannot connect to API';
             }
         }
@@ -396,6 +400,15 @@
             input.value = '';
 
             try {
+                if (!window.AI_AVAILABLE) {
+                    // Fallback: inform user and suggest using dashboard search
+                    chatMessages.innerHTML += `
+                        <div class="chat-message ai">⚠️ AI is currently unavailable. Try the dashboard search (My Portfolio) for fund lookups or refresh to retry AI.</div>
+                    `;
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    return;
+                }
+
                 const response = await fetch(`${API_BASE}/ai/chat`, {
                     method: 'POST',
                     headers: {
