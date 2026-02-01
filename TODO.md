@@ -1,3 +1,40 @@
+# MFHelper — Short TODO
+
+Recent changes (implemented):
+
+- [x] Startup scripts
+  - `startup.ps1` (Windows): starts Ollama, pulls `tinyllama`, starts backend, opens UI. Supports `-ForceKill` and `-NoBrowser`.
+  - `startup.sh` (Linux): background `ollama serve`, pull model, start `uvicorn`.
+
+- [x] Graceful restart behavior
+  - `startup.ps1` now detects processes on ports `11434` (Ollama) and `8000` (backend) and can kill them (prompt or `-ForceKill`).
+
+- [x] AI health endpoint
+  - `GET /api/ai/health` implemented in `backend/app/routes/ai.py` — returns `{ available, provider, model, message }`.
+
+- [x] Frontend AI status UI
+  - `frontend/dashboard.html` shows a dismissible AI banner and sets `window.AI_AVAILABLE` based on `/api/ai/health`.
+
+- [x] Chat UI fallback
+  - `frontend/ai-demo.html` respects `window.AI_AVAILABLE` and shows a friendly fallback message suggesting dashboard search when AI is offline.
+
+Next / Nice-to-have (suggested):
+
+- [ ] Polling + auto-reconnect: poll `/api/ai/health` every 30–60s to auto-update UI and restore AI when available.
+- [ ] systemd unit files for Ollama & backend on Linux (production-ready management).
+- [ ] Telemetry: record AI-down and fallback usage (analytics & Sentry breadcrumbs).
+- [ ] Chat fallback to a real dashboard search API (instead of only showing a message).
+- [ ] Add `Makefile` or npm scripts to wrap `startup` commands and common dev tasks.
+
+Files to review:
+
+- `startup.ps1` (repo root)
+- `startup.sh` (repo root)
+- `backend/app/routes/ai.py` (health endpoint)
+- `frontend/dashboard.html` (AI banner + health check)
+- `frontend/ai-demo.html` (chat fallback)
+
+If you want, I can implement polling, telemetry, systemd units, or wire the fallback to the dashboard search API next.
 # MFHelper - TODO List
 
 > **Goal:** 1000 users in 1 month
