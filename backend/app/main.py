@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, RedirectResponse
 from slowapi import _rate_limit_exceeded_handler
@@ -31,6 +32,14 @@ logger.info(f"Starting {settings.APP_NAME} - Debug Mode: {settings.DEBUG}")
 # Initialize Sentry for error tracking and monitoring
 from app.utils.sentry import init_sentry
 init_sentry()
+
+# Initialize cache
+from app.utils.cache import cache
+if cache.is_available():
+    stats = cache.get_stats()
+    logger.info(f"✓ Cache initialized: {stats}")
+else:
+    logger.warning("✗ Cache unavailable - running without Redis")
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -86,6 +95,14 @@ if not settings.DEBUG:
         TrustedHostMiddleware,
         allowed_hosts=["localhost", "127.0.0.1", "testserver", "*.mfhelper.com"]  # Added testserver for tests
     )
+
+# Performance: Response compression (70% size reduction)
+app.add_middleware(
+    GZipMiddleware,
+    minimum_size=1000,  # Only compress responses > 1KB
+    compresslevel=6     # Balance between speed and compression (1-9)
+)
+logger.info("✓ GZip compression enabled (min_size: 1KB)")
 
 # CORS middleware - Configured for security
 ALLOWED_ORIGINS = [

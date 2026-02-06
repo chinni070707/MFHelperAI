@@ -21,8 +21,10 @@ class Settings(BaseSettings):
     # For PostgreSQL in production:
     # DATABASE_URL: str = "postgresql://user:password@localhost/mfhelper"
     
-    # Redis (for caching)
-    REDIS_URL: Optional[str] = None
+    # Redis (for caching and rate limiting)
+    # Set to redis://localhost:6379/0 for local development
+    # Set to redis://redis:6379/0 in Docker Compose
+    REDIS_URL: Optional[str] = None  # os.getenv("REDIS_URL", "redis://localhost:6379/0")
     
     # JWT Settings
     JWT_SECRET_KEY: str = "change-this-in-production-use-env-file"

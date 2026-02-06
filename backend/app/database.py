@@ -1,16 +1,57 @@
 """
-Database configuration
+Database configuration with connection pooling for scalability
 """
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import QueuePool
 from app.config import settings
+import logging
 
-# Create database engine
-engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
-)
+logger = logging.getLogger(__name__)
+
+# Connection pool settings for production scalability
+POOL_SETTINGS = {
+    "poolclass": QueuePool,
+    "pool_size": 20,           # Base connections always open
+    "max_overflow": 40,        # Additional connections under load (total: 60)
+    "pool_pre_ping": True,     # Verify connection health before use
+    "pool_recycle": 3600,      # Recycle connections every hour
+    "pool_timeout": 30,        # Wait up to 30s for available connection
+}
+
+# SQLite-specific settings
+if "sqlite" in settings.DATABASE_URL:
+    engine = create_engine(
+        settings.DATABASE_URL,
+        connect_args={"check_same_thread": False},
+        # SQLite doesn't support connection pooling well, use NullPool
+        poolclass=None,
+        echo=settings.DEBUG  # Log SQL queries in debug mode
+    )
+    logger.info("Database: SQLite (development mode, no pooling)")
+else:
+    # PostgreSQL/MySQL production settings with connection pooling
+    engine = create_engine(
+        settings.DATABASE_URL,
+        **POOL_SETTINGS,
+        echo=settings.DEBUG  # Log SQL queries in debug mode
+    )
+    logger.info(f"Database: Production mode with connection pool (size: {POOL_SETTINGS['pool_size']}, max: {POOL_SETTINGS['pool_size'] + POOL_SETTINGS['max_overflow']})")
+
+# Log connection pool events in debug mode
+if settings.DEBUG:
+    @event.listens_for(engine, "connect")
+    def receive_connect(dbapi_conn, connection_record):
+        logger.debug(f"Database connection established: {id(dbapi_conn)}")
+    
+    @event.listens_for(engine, "checkout")
+    def receive_checkout(dbapi_conn, connection_record, connection_proxy):
+        logger.debug(f"Connection checked out from pool: {id(dbapi_conn)}")
+    
+    @event.listens_for(engine, "checkin")
+    def receive_checkin(dbapi_conn, connection_record):
+        logger.debug(f"Connection returned to pool: {id(dbapi_conn)}")
 
 # Create session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

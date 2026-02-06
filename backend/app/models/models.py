@@ -1,7 +1,7 @@
 """
 MFHelper - Database Models
 """
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, JSON, Boolean
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, JSON, Boolean, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
@@ -85,6 +85,12 @@ class Portfolio(Base):
     # Relationships
     user = relationship("User", back_populates="portfolios")
     holdings = relationship("Holding", back_populates="portfolio")
+    
+    # Composite Indexes for fast queries
+    __table_args__ = (
+        Index('idx_portfolio_user_created', 'user_id', 'created_at'),
+        Index('idx_portfolio_user_snapshot', 'user_id', 'snapshot_date'),
+    )
 
 
 class Holding(Base):
@@ -132,6 +138,14 @@ class Holding(Base):
     # Relationships
     user = relationship("User", back_populates="holdings")
     portfolio = relationship("Portfolio", back_populates="holdings")
+    
+    # Composite Indexes for fast queries
+    __table_args__ = (
+        Index('idx_holding_portfolio_user', 'portfolio_id', 'user_id'),
+        Index('idx_holding_user_created', 'user_id', 'created_at'),
+        Index('idx_holding_scheme_isin', 'scheme_code', 'isin'),
+        Index('idx_holding_amc', 'amc', 'category'),
+    )
 
 
 class Transaction(Base):
@@ -151,6 +165,13 @@ class Transaction(Base):
     nav = Column(Float)
     
     created_at = Column(DateTime, default=func.now())
+    
+    # Composite Indexes for XIRR and transaction lookups
+    __table_args__ = (
+        Index('idx_transaction_user_date', 'user_id', 'transaction_date'),
+        Index('idx_transaction_holding_date', 'holding_id', 'transaction_date'),
+        Index('idx_transaction_folio_date', 'folio_number', 'transaction_date'),
+    )
 
 
 class FundMaster(Base):
@@ -183,6 +204,13 @@ class FundMaster(Base):
     
     # Updated timestamp
     updated_at = Column(DateTime, default=func.now())
+    
+    # Composite Indexes for fund search and lookups
+    __table_args__ = (
+        Index('idx_fund_amc_category', 'amc', 'category'),
+        Index('idx_fund_scheme_isin', 'scheme_code', 'isin'),
+        Index('idx_fund_active', 'is_active', 'amc'),
+    )
     
     def to_dict(self):
         """Convert to dictionary for API response"""
