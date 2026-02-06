@@ -1493,6 +1493,22 @@
                 <div id="selectedFileName" style="margin-top: 15px; color: #00d4ff; font-weight: 600;"></div>
             </div>
             
+            <!-- Password Field for PDF -->
+            <div id="pdfPasswordSection" style="display: none; margin-top: 20px;">
+                <label style="display: block; margin-bottom: 8px; color: rgba(255,255,255,0.9); font-weight: 500;">
+                    🔒 PDF Password (if protected)
+                </label>
+                <input 
+                    type="password" 
+                    id="pdfPassword" 
+                    placeholder="Enter PDF password"
+                    style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.95rem;"
+                >
+                <p style="margin-top: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+                    ℹ️ Most CAS PDFs are password protected. Leave blank if not protected.
+                </p>
+            </div>
+            
             <div id="uploadProgress" style="display: none; margin-top: 20px;">
                 <div style="background: rgba(255,255,255,0.1); border-radius: 10px; height: 10px; overflow: hidden;">
                     <div id="progressBar" style="background: linear-gradient(90deg, #00d4ff, #7b2cbf); height: 100%; width: 0%; transition: width 0.3s;"></div>
@@ -1719,6 +1735,13 @@
                 selectedFile = file;
                 document.getElementById('selectedFileName').textContent = `Selected: ${file.name}`;
                 document.getElementById('uploadButton').disabled = false;
+                
+                // Show password field for PDF files
+                if (file.name.toLowerCase().endsWith('.pdf')) {
+                    document.getElementById('pdfPasswordSection').style.display = 'block';
+                } else {
+                    document.getElementById('pdfPasswordSection').style.display = 'none';
+                }
             }
         }
 
@@ -1741,6 +1764,14 @@
 
                 const formData = new FormData();
                 formData.append('file', selectedFile);
+                
+                // Add password if provided for PDF files
+                if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
+                    const password = document.getElementById('pdfPassword').value;
+                    if (password) {
+                        formData.append('password', password);
+                    }
+                }
 
                 const token = localStorage.getItem('authToken');
                 const response = await fetch('/api/upload/cas', {
@@ -1756,7 +1787,12 @@
 
                 if (!response.ok) {
                     const error = await response.json();
-                    throw new Error(error.detail || 'Upload failed');
+                    // Improve error message for password-protected PDFs
+                    let errorMsg = error.detail || 'Upload failed';
+                    if (errorMsg.includes('PAN as password') || errorMsg.includes('password protected')) {
+                        errorMsg = 'PDF is password protected. Please enter the PDF password above.';
+                    }
+                    throw new Error(errorMsg);
                 }
 
                 progressBar.style.width = '100%';

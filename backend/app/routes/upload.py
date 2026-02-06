@@ -348,11 +348,11 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
                 logger.warning("CAS PDF is encrypted but no password provided")
                 raise HTTPException(
                     status_code=400, 
-                    detail="CAS PDF is password protected. Please provide your PAN as password."
+                    detail="CAS PDF is password protected. Please provide the PDF password."
                 )
             if not doc.authenticate(password):
                 logger.error(f"Failed to authenticate PDF with provided password")
-                raise HTTPException(status_code=400, detail="Invalid password. CAS password is usually your PAN.")
+                raise HTTPException(status_code=400, detail="Invalid password. Please check your PDF password and try again.")
             logger.info("PDF successfully authenticated")
         
         # Extract text from all pages
@@ -637,9 +637,9 @@ async def upload_cas(
     """
     Upload CAMS/KFintech CAS PDF statement
     
-    - CAS PDFs are password protected with PAN
-    - Provide PAN as password parameter
-    - Or send password in request body
+    - Most CAS PDFs are password protected
+    - Provide PDF password as parameter
+    - Password is typically your PAN or date of birth
     """
     if not file.filename or not file.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Please upload a PDF file")
