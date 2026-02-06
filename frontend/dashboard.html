@@ -1440,31 +1440,22 @@
                 <table class="entry-table" id="manualEntryTable">
                     <thead>
                         <tr>
-                            <th style="width: 60%;">Scheme Name</th>
-                            <th style="width: 30%;">Amount Invested (₹)</th>
+                            <th style="width: 25%;">AMC / Fund House</th>
+                            <th style="width: 45%;">Scheme Name</th>
+                            <th style="width: 20%;">Amount Invested (₹)</th>
                             <th style="width: 10%;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="entryTableBody">
-                        <tr>
-                            <td>
-                                <input type="text" class="fund-search" placeholder="Search fund name..." 
-                                       oninput="searchFunds(this)" 
-                                       onfocus="showFundDropdown(this)"
-                                       data-fund-id="" required>
-                                <div class="fund-dropdown" style="display: none;"></div>
-                            </td>
-                            <td><input type="number" step="0.01" min="0" placeholder="10000" required></td>
-                            <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
-                        </tr>
+                        <!-- Initial 5 rows will be added by JavaScript -->
                     </tbody>
                 </table>
             </div>
             
             <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
-                <button class="add-row-btn" onclick="addManualEntryRow()">+ Add Another Fund</button>
-                <button class="btn btn-primary" onclick="saveManualEntries()">💾 Save Portfolio</button>
-                <button class="btn btn-secondary" onclick="closeManualEntryModal()">Cancel</button>
+                <button class="btn" style="flex: 1; min-width: 150px; background: rgba(0, 212, 255, 0.1); border: 2px solid rgba(0, 212, 255, 0.3); color: #00d4ff;" onclick="addManualEntryRow()">+ Add Another Fund</button>
+                <button class="btn btn-primary" style="flex: 1; min-width: 150px;" onclick="saveManualEntries()">💾 Save Portfolio</button>
+                <button class="btn btn-secondary" style="flex: 1; min-width: 150px;" onclick="closeManualEntryModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -1526,19 +1517,93 @@
     </div>
 
     <script>
+        // AMC list - will be fetched from backend
+        let amcList = [];
+        let fundsByAmc = {};
+        
         function showManualEntryModal() {
             document.getElementById('manualEntryModal').style.display = 'block';
+            
+            // Initialize with 5 empty rows if table is empty
+            const tbody = document.getElementById('entryTableBody');
+            if (tbody.children.length === 0) {
+                for (let i = 0; i < 5; i++) {
+                    addManualEntryRow();
+                }
+            }
+            
+            // Load AMC list if not already loaded
+            if (amcList.length === 0) {
+                loadAmcList();
+            }
         }
 
         function closeManualEntryModal() {
             document.getElementById('manualEntryModal').style.display = 'none';
         }
+        
+        async function loadAmcList() {
+            try {
+                const response = await fetch('/api/funds/amc-list');
+                const data = await response.json();
+                if (data.success) {
+                    amcList = data.amcs || [];
+                }
+            } catch (error) {
+                console.error('Failed to load AMC list:', error);
+                // Fallback to common AMCs
+                amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'Aditya Birla Sun Life', 'Nippon India', 'UTI', 'DSP', 'Franklin Templeton', 'Mirae Asset', 'Parag Parikh', 'Motilal Oswal', 'Edelweiss', 'PGIM', 'Tata', 'Invesco', 'Sundaram', 'Quantum', 'Quant', 'Mahindra Manulife', 'HSBC', 'Baroda BNP Paribas', 'LIC', 'Canara Robeco', 'BOI AXA', 'JM Financial', 'IDFC', 'L&T', 'Principal', 'Shriram'];
+            }
+        }
 
-        // Fund Search and Autocomplete
+        // AMC Selection and Fund Search
         let fundSearchTimeout = null;
         let cachedFunds = [];
 
+        function onAmcChange(select) {
+            const row = select.closest('tr');
+            const fundInput = row.querySelector('.fund-search');
+            const amc = select.value;
+            
+            // Clear fund selection when AMC changes
+            fundInput.value = '';
+            fundInput.setAttribute('data-fund-id', '');
+            fundInput.disabled = !amc;
+            
+            if (amc) {
+                fundInput.placeholder = `Search ${amc} funds...`;
+                // Pre-fetch funds for this AMC
+                prefetchFundsByAmc(amc);
+            } else {
+                fundInput.placeholder = 'Select AMC first';
+            }
+        }
+        
+        async function prefetchFundsByAmc(amc) {
+            if (fundsByAmc[amc]) return; // Already cached
+            
+            try {
+                const response = await fetch(`/api/funds/list?amc=${encodeURIComponent(amc)}&limit=100`);
+                const data = await response.json();
+                if (data.success) {
+                    fundsByAmc[amc] = data.funds || [];
+                }
+            } catch (error) {
+                console.error('Failed to fetch funds for AMC:', error);
+            }
+        }
+
         async function searchFunds(input) {
+            const row = input.closest('tr');
+            const amcSelect = row.querySelector('.amc-select');
+            const selectedAmc = amcSelect.value;
+            
+            if (!selectedAmc) {
+                alert('Please select AMC / Fund House first');
+                input.value = '';
+                return;
+            }
+            
             const searchTerm = input.value.trim();
             const dropdown = input.parentElement.querySelector('.fund-dropdown');
             
@@ -1551,13 +1616,13 @@
             clearTimeout(fundSearchTimeout);
             fundSearchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch(`/api/funds/list?search=${encodeURIComponent(searchTerm)}&dropdown=true&limit=10`);
+                    const response = await fetch(`/api/funds/list?search=${encodeURIComponent(searchTerm)}&amc=${encodeURIComponent(selectedAmc)}&dropdown=true&limit=20`);
                     const data = await response.json();
                     
                     if (data.success && data.funds.length > 0) {
                         displayFundOptions(dropdown, data.funds, input);
                     } else {
-                        dropdown.innerHTML = '<div style="padding: 12px; color: rgba(255,255,255,0.6);">No funds found</div>';
+                        dropdown.innerHTML = `<div style="padding: 12px; color: rgba(255,255,255,0.6);">No ${selectedAmc} funds found</div>`;
                         dropdown.style.display = 'block';
                     }
                 } catch (error) {
@@ -1567,9 +1632,19 @@
         }
 
         function showFundDropdown(input) {
+            const row = input.closest('tr');
+            const amcSelect = row.querySelector('.amc-select');
+            const selectedAmc = amcSelect.value;
+            
+            if (!selectedAmc) {
+                return;
+            }
+            
             const dropdown = input.parentElement.querySelector('.fund-dropdown');
-            if (cachedFunds.length > 0) {
-                displayFundOptions(dropdown, cachedFunds, input);
+            
+            // Show cached funds for this AMC
+            if (fundsByAmc[selectedAmc] && fundsByAmc[selectedAmc].length > 0) {
+                displayFundOptions(dropdown, fundsByAmc[selectedAmc], input);
             }
         }
 
@@ -1607,15 +1682,28 @@
         function addManualEntryRow() {
             const tbody = document.getElementById('entryTableBody');
             const row = document.createElement('tr');
+            
+            // Generate AMC dropdown options
+            const amcOptions = amcList.map(amc => `<option value="${amc}">${amc}</option>`).join('');
+            
             row.innerHTML = `
                 <td>
-                    <input type="text" class="fund-search" placeholder="Search fund name..." 
+                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff;" required>
+                        <option value="">Select AMC...</option>
+                        ${amcOptions}
+                    </select>
+                </td>
+                <td style="position: relative;">
+                    <input type="text" class="fund-search" placeholder="Select AMC first" 
                            oninput="searchFunds(this)" 
                            onfocus="showFundDropdown(this)"
-                           data-fund-id="" required>
-                    <div class="fund-dropdown" style="display: none;"></div>
+                           data-fund-id="" 
+                           disabled
+                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff;"
+                           required>
+                    <div class="fund-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20, 20, 40, 0.98); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 1000; margin-top: 4px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);"></div>
                 </td>
-                <td><input type="number" step="0.01" min="0" placeholder="10000" required></td>
+                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff;" required></td>
                 <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
             `;
             tbody.appendChild(row);
@@ -1637,23 +1725,36 @@
             const holdings = [];
             
             for (const row of rows) {
+                const amcSelect = row.querySelector('.amc-select');
                 const fundInput = row.querySelector('.fund-search');
-                const amountInput = row.querySelectorAll('input')[1];
+                const amountInput = row.querySelector('input[type="number"]');
                 
+                const amc = amcSelect ? amcSelect.value.trim() : '';
                 const schemeName = fundInput.value.trim();
                 const fundId = fundInput.getAttribute('data-fund-id');
                 const amount = parseFloat(amountInput.value);
                 
-                if (!schemeName || !amount || amount <= 0) {
-                    alert('Please fill all fields with valid values');
+                // Skip empty rows
+                if (!amc && !schemeName && !amount) {
+                    continue;
+                }
+                
+                if (!amc || !schemeName || !amount || amount <= 0) {
+                    alert('Please fill all fields with valid values (AMC, Scheme Name, and Amount)');
                     return;
                 }
                 
                 holdings.push({
+                    amc: amc,
                     scheme_name: schemeName,
                     fund_id: fundId || null,
                     invested_amount: amount
                 });
+            }
+            
+            if (holdings.length === 0) {
+                alert('Please add at least one fund');
+                return;
             }
             
             try {
@@ -1698,6 +1799,7 @@
             } catch (error) {
                 alert('Error saving portfolio: ' + error.message);
             }
+        }
         }
 
         // Close modal when clicking outside
