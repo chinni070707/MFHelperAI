@@ -3,529 +3,901 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goal Planning - MFHelper</title>
+    <title>Life Financial Planner - MFHelper</title>
     
     <!-- Google Analytics -->
     <script src="/js/analytics.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: #fff;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            background: rgba(0,0,0,0.3);
-            padding: 20px 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .back-btn {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
         }
         
-        .back-btn:hover {
-            background: rgba(255,255,255,0.2);
+        .goal-marker { 
+            cursor: grab; 
+            transition: all 0.3s ease; 
         }
-        
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
+        .goal-marker:hover { 
+            transform: scale(1.1); 
+            filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.6)); 
         }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #f72585);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            opacity: 0.8;
-        }
-        
-        .main-grid {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        /* Goal Templates */
-        .goal-templates {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 20px;
-        }
-        
-        .goal-templates h2 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #00d4ff;
-        }
-        
-        .goal-item {
-            background: linear-gradient(135deg, rgba(123,44,191,0.3), rgba(0,212,255,0.3));
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            cursor: grab;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .goal-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,212,255,0.3);
-        }
-        
-        .goal-item.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
-        }
+        .goal-marker:active { cursor: grabbing; }
         
         .goal-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-        
-        .goal-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .goal-example {
-            font-size: 0.85rem;
-            opacity: 0.7;
-        }
-        
-        /* Timeline Area */
-        .timeline-area {
-            background: rgba(255,255,255,0.05);
-            border: 2px dashed rgba(255,255,255,0.2);
-            border-radius: 16px;
-            padding: 30px;
-            min-height: 400px;
-            position: relative;
-        }
-        
-        .timeline-area.drag-over {
-            background: rgba(0,212,255,0.1);
-            border-color: #00d4ff;
-        }
-        
-        .timeline-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .timeline-header h2 {
-            font-size: 1.2rem;
-            color: #00d4ff;
-        }
-        
-        .age-input-group {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        
-        .age-input-group label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        .age-input-group input {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            width: 80px;
-            font-size: 1rem;
-        }
-        
-        .timeline-ruler {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 0 10px;
-        }
-        
-        .age-marker {
-            text-align: center;
-            font-size: 0.85rem;
-            opacity: 0.6;
-        }
-        
-        .timeline-track {
-            position: relative;
-            height: 80px;
-            background: linear-gradient(90deg, rgba(0,212,255,0.1), rgba(123,44,191,0.1));
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        
-        .placed-goal {
-            position: absolute;
-            background: linear-gradient(135deg, #7b2cbf, #00d4ff);
+            width: 48px;
+            height: 48px;
             border-radius: 12px;
-            padding: 10px 15px;
-            cursor: move;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 12px rgba(0,212,255,0.3);
-            transition: all 0.3s;
-        }
-        
-        .placed-goal:hover {
-            transform: scale(1.05);
-        }
-        
-        .placed-goal-icon {
-            font-size: 2rem;
-        }
-        
-        .placed-goal-info {
-            flex: 1;
-        }
-        
-        .placed-goal-name {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .placed-goal-age {
-            font-size: 0.75rem;
-            opacity: 0.8;
-        }
-        
-        .remove-goal {
-            background: rgba(255,0,0,0.3);
-            border: none;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 3px solid white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        .remove-goal:hover {
-            background: rgba(255,0,0,0.6);
-        }
-        
-        /* Chart Area */
-        .chart-container {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .chart-header h2 {
-            font-size: 1.2rem;
-            color: #00d4ff;
-        }
-        
-        .projection-controls {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        .control-group label {
-            font-size: 0.85rem;
-            opacity: 0.8;
-        }
-        
-        .control-group input {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-        
-        .calculate-btn {
-            background: linear-gradient(135deg, #7b2cbf, #00d4ff);
-            border: none;
-            color: white;
-            padding: 12px 30px;
+        .tooltip {
+            position: absolute;
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            pointer-events: none;
+            z-index: 1000;
+            font-size: 14px;
+            border: 2px solid rgba(59, 130, 246, 0.5);
+            color: white;
+        }
+        
+        .grid-line { stroke: rgba(255,255,255,0.1); stroke-width: 1; stroke-dasharray: 4,4; }
+        .axis-line { stroke: rgba(255,255,255,0.3); stroke-width: 2; }
+        .wealth-curve { fill: none; stroke: #10b981; stroke-width: 3; }
+        .wealth-area { fill: url(#wealthGradient); opacity: 0.3; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        
+        .goal-card {
+            background: linear-gradient(135deg, rgba(123,44,191,0.3), rgba(0,212,255,0.3));
+            padding: 16px;
+            border-radius: 12px;
+            cursor: grab;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .goal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
+            border-color: #00d4ff;
+        }
+        
+        .goal-card:active { cursor: grabbing; }
+        
+        input, select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            width: 100%;
             transition: all 0.3s;
         }
         
-        .calculate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,212,255,0.4);
+        input:focus, select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
         }
         
-        #goalChart {
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #7b2cbf, #00d4ff);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
             width: 100%;
-            height: 500px;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            opacity: 0.5;
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
         }
         
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
         }
         
-        .goals-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
-        .summary-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 20px;
+            padding:20px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .summary-card h3 {
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
             font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-        
-        .summary-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #00d4ff;
-        }
-        
-        @media (max-width: 968px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
+            color: #a8dadc;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">🎯 MFHelper</div>
-            <a href="/dashboard.html" class="back-btn">← Back to Dashboard</a>
-        </div>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
         
-        <!-- Hero Section -->
-        <div class="hero">
-            <h1>🎮 Goal Planning with Gamification</h1>
-            <p>Drag and drop your life goals onto the timeline and watch your money grow!</p>
-        </div>
-        
-        <!-- Main Content -->
-        <div class="main-grid">
-            <!-- Goal Templates Sidebar -->
-            <div class="goal-templates">
-                <h2>🎁 Life Goals</h2>
-                <p style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px;">
-                    Drag these goals to your timeline →
-                </p>
-                
-                <div class="goal-item" draggable="true" data-goal-type="baby">
-                    <div class="goal-icon">👶</div>
-                    <div class="goal-name">New Baby</div>
-                    <div class="goal-example">₹5-10 lakhs</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="education">
-                    <div class="goal-icon">🎓</div>
-                    <div class="goal-name">Child Education</div>
-                    <div class="goal-example">₹15-30 lakhs</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="wedding">
-                    <div class="goal-icon">💍</div>
-                    <div class="goal-name">Wedding</div>
-                    <div class="goal-example">₹20-50 lakhs</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="bike">
-                    <div class="goal-icon">🏍️</div>
-                    <div class="goal-name">Bike/Scooty</div>
-                    <div class="goal-example">₹1-3 lakhs</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="car">
-                    <div class="goal-icon">🚗</div>
-                    <div class="goal-name">Car</div>
-                    <div class="goal-example">₹10-30 lakhs</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="house">
-                    <div class="goal-icon">🏠</div>
-                    <div class="goal-name">House/Flat</div>
-                    <div class="goal-example">₹50L-2Cr</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="vacation">
-                    <div class="goal-icon">✈️</div>
-                    <div class="goal-name">Dream Vacation</div>
-                    <div class="goal-example">₹2-5 lakhs</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="retirement">
-                    <div class="goal-icon">🏖️</div>
-                    <div class="goal-name">Retirement</div>
-                    <div class="goal-example">₹1-5 crores</div>
-                </div>
-                
-                <div class="goal-item" draggable="true" data-goal-type="custom">
-                    <div class="goal-icon">🎯</div>
-                    <div class="goal-name">Custom Goal</div>
-                    <div class="goal-example">Your choice</div>
-                </div>
-            </div>
+        function FinancialPlanner() {
+            // State
+            const [currentAge, setCurrentAge] = useState(30);
+            const [currentNetworth, setCurrentNetworth] = useState(3000000);
+            const [growthRate, setGrowthRate] = useState(8);
+            const [inflationRate, setInflationRate] = useState(6);
+            const [retirementAge, setRetirementAge] = useState(60);
+            const [retirementExpense, setRetirementExpense] = useState(100000);
+            const [lifeEndAge, setLifeEndAge] = useState(100);
+            const [goals, setGoals] = useState([]);
+            const [sips, setSips] = useState([]);
+            const [lumpsums, setLumpsums] = useState([]);
+            const [showGoalPopup, setShowGoalPopup] = useState(false);
+            const [clickedAge, setClickedAge] = useState(null);
+            const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
             
-            <!-- Timeline Area -->
-            <div>
-                <div class="timeline-area" id="timelineArea">
-                    <div class="timeline-header">
-                        <h2>📅 Your Life Timeline</h2>
-                        <div class="age-input-group">
-                            <label>Current Age:</label>
-                            <input type="number" id="currentAge" value="30" min="18" max="100">
-                            <label>Target Age:</label>
-                            <input type="number" id="targetAge" value="60" min="18" max="100">
+            const svgRef = useRef(null);
+            const containerRef = useRef(null);
+            
+            // Chart dimensions
+            const width = 900;
+            const height = 500;
+            const margin = { top: 40, right: 40, bottom: 60, left: 80 };
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+            
+            // Calculate wealth projection
+            const calculateProjection = () => {
+                const projection = [];
+                let wealth = currentNetworth;
+                
+                for (let age = currentAge; age <= lifeEndAge; age++) {
+                    // Apply growth
+                    wealth = wealth * (1 + growthRate / 100);
+                    
+                    // Add SIPs
+                    sips.forEach(sip => {
+                        if (age >= sip.startAge && age <= sip.endAge) {
+                            wealth += sip.amount * 12;
+                        }
+                    });
+                    
+                    // Add lumpsums
+                    lumpsums.forEach(lump => {
+                        if (age === lump.age) {
+                            wealth += lump.amount;
+                        }
+                    });
+                    
+                    // Subtract goals
+                    goals.forEach(goal => {
+                        if (age === goal.age) {
+                            wealth -= goal.amount;
+                        }
+                    });
+                    
+                    // Post-retirement withdrawals
+                    if (age >= retirementAge) {
+                        const yearlyExpense = retirementExpense * 12;
+                        wealth -= yearlyExpense * Math.pow(1 + inflationRate / 100, age - retirementAge);
+                    }
+                    
+                    projection.push({ age, wealth: Math.max(0, wealth) });
+                    
+                    if (wealth <= 0) break;
+                }
+                
+                return projection;
+            };
+            
+            const projection = calculateProjection();
+            const peakWealth = Math.max(...projection.map(p => p.wealth));
+            const wealthAtRetirement = projection.find(p => p.age === retirementAge)?.wealth || 0;
+            const moneyRunsOutAge = projection.find(p => p.wealth <= 0)?.age || (projection.length > 0 ? projection[projection.length - 1].age : lifeEndAge);
+            
+            // Format currency
+            const formatCurrency = (amount) => {
+                if (amount >= 10000000) return `₹${(amount / 10000000).toFixed(2)} Cr`;
+                if (amount >= 100000) return `₹${(amount / 100000).toFixed(2)} L`;
+                if (amount >= 1000) return `₹${(amount / 1000).toFixed(2)} K`;
+                return `₹${amount.toLocaleString('en-IN')}`;
+            };
+            
+            // D3 Visualization
+            useEffect(() => {
+                if (!svgRef.current || projection.length === 0) return;
+                
+                const svg = d3.select(svgRef.current);
+                svg.selectAll('*').remove();
+                
+                // Scales
+                const xScale = d3.scaleLinear()
+                    .domain([currentAge, lifeEndAge])
+                    .range([0, innerWidth]);
+                
+                const maxWealth = Math.max(peakWealth, currentNetworth * 2);
+                const yScale = d3.scaleLinear()
+                    .domain([0, maxWealth])
+                    .range([innerHeight, 0]);
+                
+                const g = svg.append('g')
+                    .attr('transform', `translate(${margin.left},${margin.top})`);
+                
+                // Add invisible rectangle for click detection
+                g.append('rect')
+                    .attr('width', innerWidth)
+                    .attr('height', innerHeight)
+                    .attr('fill', 'transparent')
+                    .style('cursor', 'crosshair')
+                    .on('mousemove', function(event) {
+                        const [mouseX] = d3.pointer(event);
+                        const age = Math.round(xScale.invert(mouseX));
+                        
+                        if (age >= currentAge && age <= lifeEndAge) {
+                            // Remove old hover line
+                            g.selectAll('.hover-line').remove();
+                            
+                            // Add hover line
+                            g.append('line')
+                                .attr('class', 'hover-line')
+                                .attr('x1', xScale(age))
+                                .attr('x2', xScale(age))
+                                .attr('y1', 0)
+                                .attr('y2', innerHeight)
+                                .attr('stroke', '#3b82f6')
+                                .attr('stroke-width', 1)
+                                .attr('stroke-dasharray', '4,4')
+                                .attr('opacity', 0.5);
+                            
+                            // Add age label
+                            g.append('text')
+                                .attr('class', 'hover-line')
+                                .attr('x', xScale(age))
+                                .attr('y', -5)
+                                .attr('text-anchor', 'middle')
+                                .attr('fill', '#3b82f6')
+                                .attr('font-size', '14px')
+                                .attr('font-weight', 'bold')
+                                .text(`Age ${age}`);
+                        }
+                    })
+                    .on('mouseout', function() {
+                        g.selectAll('.hover-line').remove();
+                    })
+                    .on('click', function(event) {
+                        const [mouseX, mouseY] = d3.pointer(event);
+                        const age = Math.round(xScale.invert(mouseX));
+                        const wealth = yScale.invert(mouseY);
+                        
+                        if (age >= currentAge && age <= lifeEndAge) {
+                            // Get position relative to container
+                            const svgRect = svgRef.current.getBoundingClientRect();
+                            const containerRect = containerRef.current.getBoundingClientRect();
+                            const clickX = event.clientX - containerRect.left;
+                            const clickY = event.clientY - containerRect.top;
+                            
+                            setClickedAge(age);
+                            setPopupPosition({ x: clickX, y: clickY });
+                            setShowGoalPopup(true);
+                        }
+                    });
+                
+                // Gradient
+                const gradient = svg.append('defs')
+                    .append('linearGradient')
+                    .attr('id', 'wealthGradient')
+                    .attr('x1', '0%')
+                    .attr('y1', '0%')
+                    .attr('x2', '0%')
+                    .attr('y2', '100%');
+                
+                gradient.append('stop')
+                    .attr('offset', '0%')
+                    .attr('stop-color', '#10b981')
+                    .attr('stop-opacity', 0.6);
+                
+                gradient.append('stop')
+                    .attr('offset', '100%')
+                    .attr('stop-color', '#10b981')
+                    .attr('stop-opacity', 0.1);
+                
+                // Grid lines
+                const yTicks = yScale.ticks(8);
+                g.selectAll('.grid-line')
+                    .data(yTicks)
+                    .enter()
+                    .append('line')
+                    .attr('class', 'grid-line')
+                    .attr('x1', 0)
+                    .attr('x2', innerWidth)
+                    .attr('y1', d => yScale(d))
+                    .attr('y2', d => yScale(d));
+                
+                // Retirement line
+                g.append('line')
+                    .attr('x1', xScale(retirementAge))
+                    .attr('x2', xScale(retirementAge))
+                    .attr('y1', 0)
+                    .attr('y2', innerHeight)
+                    .attr('stroke', '#f59e0b')
+                    .attr('stroke-width', 2)
+                    .attr('stroke-dasharray', '8,4');
+                
+                g.append('text')
+                    .attr('x', xScale(retirementAge))
+                    .attr('y', -10)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#f59e0b')
+                    .attr('font-weight', 'bold')
+                    .attr('font-size', '12px')
+                    .text(`🏖️ Retirement ${retirementAge}`);
+                
+                // Area under curve
+                const area = d3.area()
+                    .x(d => xScale(d.age))
+                    .y0(innerHeight)
+                    .y1(d => yScale(d.wealth))
+                    .curve(d3.curveMonotoneX);
+                
+                g.append('path')
+                    .datum(projection)
+                    .attr('class', 'wealth-area')
+                    .attr('d', area);
+                
+                // Wealth curve
+                const line = d3.line()
+                    .x(d => xScale(d.age))
+                    .y(d => yScale(d.wealth))
+                    .curve(d3.curveMonotoneX);
+                
+                g.append('path')
+                    .datum(projection)
+                    .attr('class', 'wealth-curve')
+                    .attr('d', line);
+                
+                // X Axis
+                const xAxis = d3.axisBottom(xScale)
+                    .ticks(10)
+                    .tickFormat(d => d);
+                
+                g.append('g')
+                    .attr('transform', `translate(0,${innerHeight})`)
+                    .call(xAxis)
+                    .attr('color', 'rgba(255,255,255,0.6)');
+                
+                g.append('text')
+                    .attr('x', innerWidth / 2)
+                    .attr('y', innerHeight + 45)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#a8dadc')
+                    .attr('font-weight', 'bold')
+                    .text('Age (Years)');
+                
+                // Y Axis
+                const yAxis = d3.axisLeft(yScale)
+                    .ticks(8)
+                    .tickFormat(d => formatCurrency(d));
+                
+                g.append('g')
+                    .call(yAxis)
+                    .attr('color', 'rgba(255,255,255,0.6)');
+                
+                g.append('text')
+                    .attr('transform', 'rotate(-90)')
+                    .attr('x', -innerHeight / 2)
+                    .attr('y', -60)
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', '#a8dadc')
+                    .attr('font-weight', 'bold')
+                    .text('Net Worth');
+                
+                // Goal markers
+                goals.forEach((goal) => {
+                    const goalData = projection.find(p => p.age === goal.age);
+                    if (!goalData) return;
+                    
+                    const goalG = g.append('g')
+                        .attr('class', 'goal-marker')
+                        .attr('transform', `translate(${xScale(goal.age)},${yScale(goalData.wealth)})`)
+                        .style('cursor', 'grab');
+                    
+                    goalG.append('circle')
+                        .attr('r', 24)
+                        .attr('fill', 'rgba(247, 37, 133, 0.9)')
+                        .attr('stroke', 'white')
+                        .attr('stroke-width', 3);
+                    
+                    goalG.append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr('dy', '0.35em')
+                        .attr('font-size', '20px')
+                        .text(goal.icon);
+                    
+                    goalG.append('title')
+                        .text(`${goal.name}\n${formatCurrency(goal.amount)}\nAge ${goal.age}`);
+                });
+                
+            }, [projection, goals, retirementAge, currentAge, lifeEndAge]);
+            
+            // Keyboard shortcuts
+            useEffect(() => {
+                const handleKeyPress = (e) => {
+                    if (e.key === 'Escape' && showGoalPopup) {
+                        setShowGoalPopup(false);
+                    }
+                };
+                
+                window.addEventListener('keydown', handleKeyPress);
+                return () => window.removeEventListener('keydown', handleKeyPress);
+            }, [showGoalPopup]);
+            
+            const goalTemplates = [
+                { icon: '🏠', name: 'House Purchase', defaultAmount: 5000000 },
+                { icon: '🚗', name: 'Vehicle', defaultAmount: 1000000 },
+                { icon: '🎓', name: 'Education', defaultAmount: 2500000 },
+                { icon: '💍', name: 'Marriage', defaultAmount: 1500000 },
+                { icon: '🌴', name: 'Vacation', defaultAmount: 500000 },
+                { icon: '💼', name: 'Business', defaultAmount: 5000000 },
+                { icon: '🏥', name: 'Emergency', defaultAmount: 1000000 },
+                { icon: '✨', name: 'Custom', defaultAmount: 1000000 }
+            ];
+            
+            const addGoalFromPopup = (template, amount) => {
+                if (!amount || amount <= 0 || !clickedAge) return;
+                
+                setGoals([...goals, {
+                    icon: template.icon,
+                    name: template.name,
+                    amount: parseFloat(amount),
+                    age: clickedAge
+                }]);
+                
+                setShowGoalPopup(false);
+                setClickedAge(null);
+            };
+            
+            const addIncome = (amount) => {
+                if (!amount || amount <= 0 || !clickedAge) return;
+                
+                setLumpsums([...lumpsums, { amount: parseFloat(amount), age: clickedAge }]);
+                setShowGoalPopup(false);
+                setClickedAge(null);
+            };
+            
+            const addExpense = (amount, name = 'Expense') => {
+                if (!amount || amount <= 0 || !clickedAge) return;
+                
+                setGoals([...goals, {
+                    icon: '💸',
+                    name: name,
+                    amount: parseFloat(amount),
+                    age: clickedAge
+                }]);
+                
+                setShowGoalPopup(false);
+                setClickedAge(null);
+            };
+            
+            const deleteGoal = (index) => {
+                if (confirm('Delete this goal?')) {
+                    setGoals(goals.filter((_, i) => i !== index));
+                }
+            };
+            
+            const addSIP = () => {
+                const amount = parseFloat(prompt('Monthly SIP amount (₹):', '10000'));
+                if (!amount) return;
+                
+                const startAge = parseInt(prompt('Start age:', currentAge));
+                const endAge = parseInt(prompt('End age:', retirementAge));
+                
+                if (startAge && endAge && endAge > startAge) {
+                    setSips([...sips, { amount, startAge, endAge }]);
+                }
+            };
+            
+            const addLumpsum = () => {
+                const amount = parseFloat(prompt('Lumpsum amount (₹):', '500000'));
+                if (!amount) return;
+                
+                const age = parseInt(prompt('Investment age:', currentAge + 5));
+                if (age && age > currentAge) {
+                    setLumpsums([...lumpsums, { amount, age }]);
+                }
+            };
+            
+            return (
+                <div className="min-h-screen p-6">
+                    <div className="max-w-7xl mx-auto">
+                        {/* Header */}
+                        <div className="glass-card mb-6 flex justify-between items-center">
+                            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
+                                💰 Your Financial Life Journey
+                            </h1>
+                            <a href="/" className="btn-secondary" style={{width: 'auto', padding: '10px 20px'}}>
+                                ← Back
+                            </a>
+                        </div>
+                        
+                        <p className="text-center text-lg text-gray-300 mb-8">
+                            Click anywhere on the timeline to add goals, income, or expenses!
+                        </p>
+                        
+                        {/* Goal Popup */}
+                        {showGoalPopup && (
+                            <div 
+                                style={{
+                                    position: 'fixed',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    background: 'rgba(0,0,0,0.7)',
+                                    backdropFilter: 'blur(5px)',
+                                    zIndex: 9999,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                                onClick={() => setShowGoalPopup(false)}
+                            >
+                                <div 
+                                    className="glass-card"
+                                    style={{
+                                        maxWidth: '600px',
+                                        width: '90%',
+                                        maxHeight: '80vh',
+                                        overflowY: 'auto'
+                                    }}
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <div className="flex justify-between items-center mb-4">
+                                        <h3 className="text-2xl font-bold text-blue-400">
+                                            Add Event at Age {clickedAge}
+                                        </h3>
+                                        <button 
+                                            onClick={() => setShowGoalPopup(false)}
+                                            className="text-white text-3xl hover:text-red-400 transition-colors"
+                                            style={{background: 'none', border: 'none', cursor: 'pointer'}}
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                    
+                                    {/* Goal Templates */}
+                                    <div className="mb-6">
+                                        <h4 className="text-lg font-semibold mb-3 text-gray-300">🎯 Life Goals</h4>
+                                        <div className="grid grid-cols-4 gap-3 mb-4">
+                                            {goalTemplates.map((template, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="goal-card"
+                                                    onClick={() => {
+                                                        const amount = prompt(`Enter amount for ${template.name} (₹):`, template.defaultAmount);
+                                                        if (amount) addGoalFromPopup(template, amount);
+                                                    }}
+                                                >
+                                                    <div className="text-2xl mb-1">{template.icon}</div>
+                                                    <div className="text-xs font-semibold">{template.name}</div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Quick Income/Expense */}
+                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                        <div>
+                                            <h4 className="text-lg font-semibold mb-3 text-green-400">💰 Add Income</h4>
+                                            <button
+                                                className="btn-primary"
+                                                style={{background: 'linear-gradient(135deg, #10b981, #059669)'}}
+                                                onClick={() => {
+                                                    const amount = prompt('Enter income/lumpsum amount (₹):', '500000');
+                                                    if (amount) addIncome(amount);
+                                                }}
+                                            >
+                                                Add Lumpsum Income
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <h4 className="text-lg font-semibold mb-3 text-red-400">💸 Add Expense</h4>
+                                            <button
+                                                className="btn-primary"
+                                                style={{background: 'linear-gradient(135deg, #ef4444, #dc2626)'}}
+                                                onClick={() => {
+                                                    const name = prompt('Enter expense name:', 'Other Expense');
+                                                    if (!name) return;
+                                                    const amount = prompt(`Enter amount for ${name} (₹):`, '100000');
+                                                    if (amount) addExpense(amount, name);
+                                                }}
+                                            >
+                                                Add One-time Expense
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="text-center text-sm text-gray-400 mt-4">
+                                        Click outside to close or press Escape
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        
+                        {/* Main Chart Area */}
+                        <div className="glass-card mb-6">
+                            <div className="flex justify-between items-center mb-4">
+                                <div>
+                                    <h3 className="text-2xl font-bold text-blue-400">📈 Your Wealth Growth Timeline</h3>
+                                    <p className="text-sm text-gray-400 mt-1">👆 Click on the chart at any age to add events</p>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="flex items-center gap-2">
+                                        <label className="text-sm whitespace-nowrap">Life End Age:</label>
+                                        <input 
+                                            type="number" 
+                                            value={lifeEndAge} 
+                                            onChange={e => setLifeEndAge(parseInt(e.target.value))} 
+                                            min={retirementAge + 10}
+                                            max="120"
+                                            className="w-20 px-2 py-1"
+                                            style={{fontSize: '14px', padding: '6px 10px'}}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div ref={containerRef} className="overflow-x-auto" style={{position: 'relative'}}>
+                                <svg ref={svgRef} width={width} height={height} className="mx-auto" />
+                            </div>
+                        </div>
+                        
+                        {/* Goal Templates - Right below chart for easy access */}
+                        <div className="glass-card mb-6">
+                            <h3 className="text-xl font-bold mb-2 text-blue-400">💡 Pro Tip</h3>
+                            <p className="text-gray-300 mb-4">
+                                <strong>Click directly on the chart</strong> at any age to add goals, income, or expenses at that specific time! 
+                                Or use the quick action buttons below:
+                            </p>
+                            <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+                                {goalTemplates.map((template, index) => (
+                                    <div
+                                        key={index}
+                                        className="goal-card"
+                                        onClick={() => {
+                                            const age = prompt(`Enter target age for ${template.name}:`, currentAge + 5);
+                                            if (!age || age <= currentAge) return;
+                                            const amount = prompt(`Enter amount for ${template.name} (₹):`, template.defaultAmount);
+                                            if (amount) {
+                                                setGoals([...goals, {
+                                                    icon: template.icon,
+                                                    name: template.name,
+                                                    amount: parseFloat(amount),
+                                                    age: parseInt(age)
+                                                }]);
+                                            }
+                                        }}
+                                    >
+                                        <div className="text-3xl mb-2">{template.icon}</div>
+                                        <div className="text-xs font-semibold">{template.name}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        
+                        {/* Summary Cards */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            <div className="stat-card">
+                                <div className="text-sm text-gray-400 mb-2">Retirement Corpus (Age {retirementAge})</div>
+                                <div className="text-2xl font-bold text-green-400">{formatCurrency(wealthAtRetirement)}</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="text-sm text-gray-400 mb-2">Funds Available Till</div>
+                                <div className="text-2xl font-bold text-blue-400">
+                                    {moneyRunsOutAge >= lifeEndAge ? `Age ${lifeEndAge}+` : `Age ${moneyRunsOutAge}`}
+                                </div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="text-sm text-gray-400 mb-2">Peak Wealth</div>
+                                <div className="text-2xl font-bold text-purple-400">{formatCurrency(peakWealth)}</div>
+                            </div>
+                            <div className="stat-card">
+                                <div className="text-sm text-gray-400 mb-2">Total Goals</div>
+                                <div className="text-2xl font-bold text-pink-400">{goals.length}</div>
+                                <div className="text-xs text-gray-500 mt-1">
+                                    {formatCurrency(goals.reduce((sum, g) => sum + g.amount, 0))}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Detailed Controls and Goals List */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Controls */}
+                            <div className="space-y-6">
+                                {/* Basic Info */}
+                                <div className="glass-card">
+                                    <h3 className="text-xl font-bold mb-4 text-blue-400">📊 Basic Information</h3>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label>Current Age</label>
+                                            <input type="number" value={currentAge} onChange={e => setCurrentAge(parseInt(e.target.value))} min="18" max="80" />
+                                        </div>
+                                        <div>
+                                            <label>Current Net Worth (₹)</label>
+                                            <input type="number" value={currentNetworth} onChange={e => setCurrentNetworth(parseFloat(e.target.value))} step="100000" />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label>Growth (%)</label>
+                                                <input type="number" value={growthRate} onChange={e => setGrowthRate(parseFloat(e.target.value))} step="0.5" />
+                                            </div>
+                                            <div>
+                                                <label>Inflation (%)</label>
+                                                <input type="number" value={inflationRate} onChange={e => setInflationRate(parseFloat(e.target.value))} step="0.5" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label>Retirement Age</label>
+                                            <input type="number" value={retirementAge} onChange={e => setRetirementAge(parseInt(e.target.value))} min="40" max="80" />
+                                        </div>
+                                        <div>
+                                            <label>Monthly Expense Post-Retirement (₹)</label>
+                                            <input type="number" value={retirementExpense} onChange={e => setRetirementExpense(parseFloat(e.target.value))} step="10000" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {/* Add Investment */}
+                                <div className="glass-card">
+                                    <h3 className="text-xl font-bold mb-4 text-blue-400">💼 Add Investment</h3>
+                                    <div className="space-y-3">
+                                        <button onClick={addSIP} className="btn-primary">
+                                            📈 Add SIP
+                                        </button>
+                                        <button onClick={addLumpsum} className="btn-secondary">
+                                            ➕ Add Lumpsum
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Goals List and Investments */}
+                            <div className="lg:col-span-2 space-y-6">
+                                {/* Goals List */}
+                                {goals.length > 0 && (
+                                    <div className="glass-card">
+                                        <h3 className="text-xl font-bold mb-4 text-blue-400">📋 Planned Goals</h3>
+                                        <div className="space-y-3">
+                                            {goals.map((goal, index) => (
+                                                <div key={index} className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-lg">
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="text-2xl">{goal.icon}</span>
+                                                        <div>
+                                                            <div className="font-semibold">{goal.name}</div>
+                                                            <div className="text-sm text-gray-400">Age {goal.age} • {formatCurrency(goal.amount)}</div>
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => deleteGoal(index)}
+                                                        className="text-red-400 hover:text-red-300 px-3 py-1 rounded"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* SIP List */}
+                                {sips.length > 0 && (
+                                    <div className="glass-card">
+                                        <h3 className="text-xl font-bold mb-4 text-blue-400">📈 Active SIPs</h3>
+                                        <div className="space-y-3">
+                                            {sips.map((sip, index) => (
+                                                <div key={index} className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-lg">
+                                                    <div>
+                                                        <div className="font-semibold">{formatCurrency(sip.amount)}/month</div>
+                                                        <div className="text-sm text-gray-400">Age {sip.startAge} to {sip.endAge}</div>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => setSips(sips.filter((_, i) => i !== index))}
+                                                        className="text-red-400 hover:text-red-300 px-3 py-1 rounded"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* Lumpsum List */}
+                                {lumpsums.length > 0 && (
+                                    <div className="glass-card">
+                                        <h3 className="text-xl font-bold mb-4 text-blue-400">➕ Lumpsum Investments</h3>
+                                        <div className="space-y-3">
+                                            {lumpsums.map((lump, index) => (
+                                                <div key={index} className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-lg">
+                                                    <div>
+                                                        <div className="font-semibold">{formatCurrency(lump.amount)}</div>
+                                                        <div className="text-sm text-gray-400">At Age {lump.age}</div>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => setLumpsums(lumpsums.filter((_, i) => i !== index))}
+                                                        className="text-red-400 hover:text-red-300 px-3 py-1 rounded"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="timeline-ruler" id="timelineRuler">
-                        <!-- Age markers will be generated here -->
-                    </div>
-                    
-                    <div class="timeline-track" id="timelineTrack">
-                        <!-- Placed goals will appear here -->
-                    </div>
-                    
-                    <div class="empty-state" id="emptyState">
-                        <div class="empty-state-icon">👆</div>
-                        <p>Drag and drop goals from the left to start planning!</p>
-                    </div>
                 </div>
-            </div>
-        </div>
+            );
+        }
         
-        <!-- Chart Container -->
-        <div class="chart-container">
-            <div class="chart-header">
-                <h2>📈 Financial Projection</h2>
-                <button class="calculate-btn" onclick="calculateProjection()">🔮 Calculate Projection</button>
-            </div>
-            
-            <div class="projection-controls">
-                <div class="control-group">
-                    <label>💰 Current Savings (₹)</label>
-                    <input type="number" id="currentSavings" value="500000" step="10000" placeholder="e.g., 5,00,000">
-                </div>
-                <div class="control-group">
-                    <label>💵 Monthly Investment (₹)</label>
-                    <input type="number" id="monthlyInvestment" value="25000" step="1000" placeholder="e.g., 25,000">
-                </div>
-                <div class="control-group">
-                    <label>📊 Expected Return (%)</label>
-                    <input type="number" id="expectedReturn" value="12" step="0.5" min="1" max="30" placeholder="e.g., 12">
-                </div>
-            </div>
-            
-            <div id="goalChart"></div>
-            
-            <div class="goals-summary" id="goalsSummary">
-                <!-- Summary cards will be generated here -->
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
-    
-    <script src="/js/footer.js"></script>
-    <script src="/js/goal-planning.js"></script>
-    
-    <script>
-        // Track page view
-        trackPageView('/goal-planning', 'Goal Planning');
-        
-        // Track feature usage
-        trackFeatureUsage('goal_planning_opened');
+        ReactDOM.render(<FinancialPlanner />, document.getElementById('root'));
     </script>
 </body>
 </html>
