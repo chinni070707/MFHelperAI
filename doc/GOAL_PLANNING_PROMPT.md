@@ -76,69 +76,22 @@ Icons Available:
 ```
 
 **Drag & Drop Implementation:**
-```javascript
-// State Management
-const [draggedTemplate, setDraggedTemplate] = useState(null);
-const [dropAge, setDropAge] = useState(null);
-const [isDraggingOver, setIsDraggingOver] = useState(false);
-
-// Card is draggable
-<div 
-  draggable="true"
-  onDragStart={() => handleDragStart(template)}
-  onDragEnd={handleDragEnd}
->
-
-// Chart is drop zone
-<div 
-  onDragOver={(e) => handleDragOver(e, calculatedAge)}
-  onDragLeave={handleDragLeave}
-  onDrop={(e) => handleDrop(e, dropAge)}
->
-
-// Visual Feedback
-- Source card: opacity 0.5, scale 0.9 while dragging
-- Drop zone: pulsing blue border animation
-- Drop indicator: Blue dashed line at drop position with floating icon
-- Age label: "Drop at Age X" appears above drop line
-```
+- State management for dragged template, drop age, and dragging state
+- Cards are draggable with HTML5 drag API
+- Chart is a drop zone that calculates age from cursor position
+- Visual Feedback:
+  - Source card: opacity 0.5, scale 0.9 while dragging
+  - Drop zone: pulsing blue border animation
+  - Drop indicator: Blue dashed line at drop position with floating icon
+  - Age label: "Drop at Age X" appears above drop line
 
 **Animation Specifications:**
-```css
-/* Drag Effects */
-.goal-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: grab;
-}
-
-.goal-card:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 12px 32px rgba(0, 212, 255, 0.5);
-}
-
-.goal-card.dragging {
-  opacity: 0.5;
-  transform: scale(0.9);
-}
-
-/* Drop Zone Pulse */
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-/* Floating Icon */
-@keyframes float {
-  from { transform: translateY(0px); }
-  to { transform: translateY(-10px); }
-}
-
-.goal-ghost {
-  font-size: 48px;
-  opacity: 0.8;
-  animation: float 0.6s ease-in-out infinite alternate;
-}
-```
+- Drag effects with cubic-bezier easing (0.4, 0, 0.2, 1)
+- Hover transforms: translateY(-4px) and scale(1.05)
+- Box shadow with cyan glow on hover
+- Dragging state: opacity 0.5, scale 0.9
+- Pulse keyframe animation for drop zone
+- Float keyframe animation for ghost icon (0.6s infinite alternate)
 
 ### 3. Scenario Planning System
 
@@ -148,18 +101,9 @@ const [isDraggingOver, setIsDraggingOver] = useState(false);
 - **Pessimistic** (8% growth) - Red button, conservative
 
 **Implementation:**
-```javascript
-const [scenario, setScenario] = useState('medium');
-
-const getScenarioGrowthRate = () => {
-  if (scenario === 'optimistic') return 14;
-  if (scenario === 'pessimistic') return 8;
-  return 12; // medium
-};
-
-// Use in wealth calculation
-wealth = wealth * (1 + getScenarioGrowthRate() / 100);
-```
+- State management for selected scenario (default: 'medium')
+- Growth rate function returns 14% for optimistic, 8% for pessimistic, 12% for medium
+- Applied in wealth calculation loop
 
 **Button Styling:**
 - Active: Bright color (green/blue/red) with white text
@@ -179,45 +123,14 @@ wealth = wealth * (1 + getScenarioGrowthRate() / 100);
 - Life End Age (customizable, default 100, max 120)
 
 **Calculation Logic:**
-```javascript
-for (let age = currentAge; age <= lifeEndAge; age++) {
-  // 1. Apply growth
-  wealth = wealth * (1 + effectiveGrowthRate / 100);
-  
-  // 2. Add SIP contributions (monthly * 12)
-  sips.forEach(sip => {
-    if (age >= sip.startAge && age <= sip.endAge) {
-      wealth += sip.amount * 12;
-    }
-  });
-  
-  // 3. Add lumpsum investments
-  lumpsums.forEach(lump => {
-    if (age === lump.age) {
-      wealth += lump.amount;
-    }
-  });
-  
-  // 4. Subtract goals
-  goals.forEach(goal => {
-    if (age === goal.age) {
-      wealth -= goal.amount;
-    }
-  });
-  
-  // 5. Post-retirement withdrawals (inflation adjusted)
-  if (age >= retirementAge) {
-    const yearlyExpense = monthlyExpense * 12;
-    wealth -= yearlyExpense * Math.pow(1 + inflationRate / 100, age - retirementAge);
-  }
-  
-  // Store projection
-  projection.push({ age, wealth: Math.max(0, wealth) });
-  
-  // Stop if wealth depleted
-  if (wealth <= 0) break;
-}
-```
+1. Loop from current age to life end age
+2. Apply growth rate to existing wealth
+3. Add SIP contributions (monthly amount × 12) for applicable years
+4. Add lumpsum investments at specific ages
+5. Subtract goals at target ages
+6. Post-retirement: subtract inflation-adjusted annual expenses
+7. Store projection data (age, max(0, wealth))
+8. Stop if wealth depletes to zero
 
 ### 5. Summary Cards
 
@@ -326,43 +239,14 @@ for (let age = currentAge; age <= lifeEndAge; age++) {
 ## 🎨 Animation Timing & Easing
 
 ### Transitions
-```css
-/* Smooth cubic-bezier for natural feel */
-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-/* Faster for hover states */
-transition: transform 0.2s ease;
-
-/* Slower for layout changes */
-transition: all 0.5s ease-out;
-```
+- Smooth cubic-bezier (0.4, 0, 0.2, 1) for natural feel - 0.3s
+- Faster transform transitions for hover states - 0.2s ease
+- Slower transitions for layout changes - 0.5s ease-out
 
 ### Keyframes
-```css
-/* Pulse (2s cycle) */
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-/* Float (1.2s alternate) */
-@keyframes float {
-  from { transform: translateY(0px); }
-  to { transform: translateY(-10px); }
-}
-
-/* Slide in (0.3s) */
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-```
+- **Pulse**: 2s cycle alternating between 0.5 and 1.0 opacity
+- **Float**: 1.2s alternate, translateY 0 to -10px
+- **Slide in**: 0.3s from translateY(-50px) opacity 0 to translateY(0) opacity 1
 
 ## 🔧 Implementation Checklist
 
@@ -469,53 +353,25 @@ transition: all 0.5s ease-out;
 9. **Multi-currency** - Support USD, EUR, etc.
 10. **Family Planning** - Multiple people's timelines
 
-## 📚 Code Structure Template
+## 📚 Component Structure
 
-```javascript
-// State Management
-const [currentAge, setCurrentAge] = useState(30);
-const [currentNetworth, setCurrentNetworth] = useState(3000000);
-const [lifeEndAge, setLifeEndAge] = useState(100);
-const [scenario, setScenario] = useState('medium');
-const [goals, setGoals] = useState([]);
-const [sips, setSips] = useState([]);
-const [lumpsums, setLumpsums] = useState([]);
-const [draggedTemplate, setDraggedTemplate] = useState(null);
-const [dropAge, setDropAge] = useState(null);
+**State Variables:**
+- currentAge, currentNetworth, lifeEndAge
+- scenario (optimistic/medium/pessimistic)
+- goals, sips, lumpsums arrays
+- draggedTemplate, dropAge, isDraggingOver
 
-// Calculations
-const calculateProjection = () => { /* ... */ };
-const getScenarioGrowthRate = () => { /* ... */ };
-const formatCurrency = (amount) => { /* ... */ };
+**Key Functions:**
+- calculateProjection() - Main wealth calculation
+- getScenarioGrowthRate() - Returns rate based on scenario
+- formatCurrency() - Auto-scales to K/L/Cr
+- handleDragStart/End/Over/Drop - Drag & drop handlers
+- addGoalFromPopup(), deleteGoal() - Goal management
 
-// Drag Handlers
-const handleDragStart = (template) => { /* ... */ };
-const handleDragEnd = () => { /* ... */ };
-const handleDragOver = (e, age) => { /* ... */ };
-const handleDrop = (e, age) => { /* ... */ };
-
-// Goal Management
-const addGoalFromPopup = (template, amount) => { /* ... */ };
-const deleteGoal = (index) => { /* ... */ };
-
-// D3 Visualization
-useEffect(() => {
-  // 1. Create scales
-  // 2. Draw grid
-  // 3. Draw axes
-  // 4. Draw retirement line
-  // 5. Draw wealth curve
-  // 6. Draw goal markers
-  // 7. Draw drop indicator
-}, [projection, goals, draggedTemplate, dropAge]);
-
-// Keyboard Shortcuts
-useEffect(() => {
-  const handleKeyPress = (e) => { /* ... */ };
-  window.addEventListener('keydown', handleKeyPress);
-  return () => window.removeEventListener('keydown', handleKeyPress);
-}, [dependencies]);
-```
+**Effects (useEffect):**
+- D3 visualization: Creates scales, draws grid, axes, retirement line, wealth curve, goal markers, drop indicator
+- Keyboard shortcuts: ESC to close modal
+- Cleanup: Remove event listeners on unmount
 
 ## 🎓 Key Learning Resources
 
