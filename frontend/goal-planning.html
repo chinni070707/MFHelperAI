@@ -78,14 +78,71 @@
             border-radius: 12px;
             cursor: grab;
             border: 2px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
+            user-select: none;
         }
         
         .goal-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.5);
             border-color: #00d4ff;
+        }
+        
+        .goal-card:active {
+            cursor: grabbing;
+            transform: scale(0.95);
+        }
+        
+        .goal-card.dragging {
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+        
+        .drop-zone {
+            position: relative;
+        }
+        
+        .drop-zone.drag-over::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(59, 130, 246, 0.1);
+            border: 3px dashed #3b82f6;
+            border-radius: 12px;
+            pointer-events: none;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .drop-indicator {
+            position: absolute;
+            width: 2px;
+            background: #3b82f6;
+            box-shadow: 0 0 10px #3b82f6;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+        
+        .goal-ghost {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            font-size: 48px;
+            opacity: 0.8;
+            animation: float 0.6s ease-in-out infinite alternate;
+        }
+        
+        @keyframes float {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
         }
         
         .goal-card:active { cursor: grabbing; }
@@ -193,6 +250,10 @@
             const [showGoalPopup, setShowGoalPopup] = useState(false);
             const [clickedAge, setClickedAge] = useState(null);
             const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
+            const [scenario, setScenario] = useState('medium');
+            const [draggedTemplate, setDraggedTemplate] = useState(null);
+            const [dropAge, setDropAge] = useState(null);
+            const [isDraggingOver, setIsDraggingOver] = useState(false);
             
             const svgRef = useRef(null);
             const containerRef = useRef(null);
@@ -204,14 +265,22 @@
             const innerWidth = width - margin.left - margin.right;
             const innerHeight = height - margin.top - margin.bottom;
             
+            // Get scenario-based growth rate
+            const getScenarioGrowthRate = () => {
+                if (scenario === 'optimistic') return 14;
+                if (scenario === 'pessimistic') return 8;
+                return 12; // medium
+            };
+            
             // Calculate wealth projection
             const calculateProjection = () => {
                 const projection = [];
                 let wealth = currentNetworth;
+                const effectiveGrowthRate = getScenarioGrowthRate();
                 
                 for (let age = currentAge; age <= lifeEndAge; age++) {
                     // Apply growth
-                    wealth = wealth * (1 + growthRate / 100);
+                    wealth = wealth * (1 + effectiveGrowthRate / 100);
                     
                     // Add SIPs
                     sips.forEach(sip => {
@@ -390,6 +459,39 @@
                     .attr('font-size', '12px')
                     .text(`🏖️ Retirement ${retirementAge}`);
                 
+                // Drop indicator line (when dragging)
+                if (dropAge && draggedTemplate) {
+                    g.append('line')
+                        .attr('class', 'drop-indicator-line')
+                        .attr('x1', xScale(dropAge))
+                        .attr('x2', xScale(dropAge))
+                        .attr('y1', 0)
+                        .attr('y2', innerHeight)
+                        .attr('stroke', '#3b82f6')
+                        .attr('stroke-width', 3)
+                        .attr('stroke-dasharray', '10,5')
+                        .style('filter', 'drop-shadow(0 0 8px #3b82f6)');
+                    
+                    g.append('text')
+                        .attr('class', 'drop-indicator-line')
+                        .attr('x', xScale(dropAge))
+                        .attr('y', -25)
+                        .attr('text-anchor', 'middle')
+                        .attr('fill', '#3b82f6')
+                        .attr('font-weight', 'bold')
+                        .attr('font-size', '14px')
+                        .text(`Drop at Age ${dropAge}`);
+                    
+                    g.append('text')
+                        .attr('class', 'drop-indicator-line')
+                        .attr('x', xScale(dropAge))
+                        .attr('y', innerHeight / 2)
+                        .attr('text-anchor', 'middle')
+                        .attr('font-size', '48px')
+                        .text(draggedTemplate.icon)
+                        .style('opacity', 0.6);
+                }
+                
                 // Area under curve
                 const area = d3.area()
                     .x(d => xScale(d.age))
@@ -475,7 +577,7 @@
                         .text(`${goal.name}\n${formatCurrency(goal.amount)}\nAge ${goal.age}`);
                 });
                 
-            }, [projection, goals, retirementAge, currentAge, lifeEndAge]);
+            }, [projection, goals, retirementAge, currentAge, lifeEndAge, dropAge, draggedTemplate]);
             
             // Keyboard shortcuts
             useEffect(() => {
@@ -539,6 +641,56 @@
             const deleteGoal = (index) => {
                 if (confirm('Delete this goal?')) {
                     setGoals(goals.filter((_, i) => i !== index));
+                }
+            };
+            
+            // Drag and drop handlers
+            const handleDragStart = (template) => {
+                setDraggedTemplate(template);
+            };
+            
+            const handleDragEnd = () => {
+                setDraggedTemplate(null);
+                setDropAge(null);
+                setIsDraggingOver(false);
+            };
+            
+            const handleDragOver = (e, age) => {
+                e.preventDefault();
+                setDropAge(age);
+                setIsDraggingOver(true);
+            };
+            
+            const handleDragLeave = () => {
+                setIsDraggingOver(false);
+            };
+            
+            const handleDrop = (e, age) => {
+                e.preventDefault();
+                setIsDraggingOver(false);
+                
+                if (!draggedTemplate || !age) return;
+                
+                // Prompt for amount
+                const amount = prompt(`Enter amount for ${draggedTemplate.name} at age ${age} (₹):`, draggedTemplate.defaultAmount);
+                if (amount && parseFloat(amount) > 0) {
+                    const newGoal = {
+                        icon: draggedTemplate.icon,
+                        name: draggedTemplate.name,
+                        amount: parseFloat(amount),
+                        age: age
+                    };
+                    
+                    setGoals([...goals, newGoal]);
+                    
+                    // Smooth animation feedback
+                    setTimeout(() => {
+                        setDraggedTemplate(null);
+                        setDropAge(null);
+                    }, 300);
+                } else {
+                    setDraggedTemplate(null);
+                    setDropAge(null);
                 }
             };
             
@@ -689,6 +841,39 @@
                                     <p className="text-sm text-gray-400 mt-1">👆 Click on the chart at any age to add events</p>
                                 </div>
                                 <div className="flex items-center gap-4">
+                                    {/* Scenario Buttons */}
+                                    <div className="flex gap-2">
+                                        <button
+                                            className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
+                                                scenario === 'optimistic' 
+                                                    ? 'bg-green-500 text-white' 
+                                                    : 'bg-white bg-opacity-10 text-gray-300 hover:bg-opacity-20'
+                                            }`}
+                                            onClick={() => setScenario('optimistic')}
+                                        >
+                                            Optimistic (14%)
+                                        </button>
+                                        <button
+                                            className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
+                                                scenario === 'medium' 
+                                                    ? 'bg-blue-500 text-white' 
+                                                    : 'bg-white bg-opacity-10 text-gray-300 hover:bg-opacity-20'
+                                            }`}
+                                            onClick={() => setScenario('medium')}
+                                        >
+                                            Medium (12%)
+                                        </button>
+                                        <button
+                                            className={`px-3 py-1 rounded-lg text-sm font-semibold transition-all ${
+                                                scenario === 'pessimistic' 
+                                                    ? 'bg-red-500 text-white' 
+                                                    : 'bg-white bg-opacity-10 text-gray-300 hover:bg-opacity-20'
+                                            }`}
+                                            onClick={() => setScenario('pessimistic')}
+                                        >
+                                            Pessimistic (8%)
+                                        </button>
+                                    </div>
                                     <div className="flex items-center gap-2">
                                         <label className="text-sm whitespace-nowrap">Life End Age:</label>
                                         <input 
@@ -703,23 +888,61 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ref={containerRef} className="overflow-x-auto" style={{position: 'relative'}}>
+                            <div 
+                                ref={containerRef} 
+                                className={`overflow-x-auto drop-zone ${isDraggingOver ? 'drag-over' : ''}`}
+                                style={{position: 'relative'}}
+                                onDragOver={(e) => {
+                                    e.preventDefault();
+                                    if (!draggedTemplate) return;
+                                    const rect = e.currentTarget.getBoundingClientRect();
+                                    const x = e.clientX - rect.left - margin.left;
+                                    const xScale = d3.scaleLinear()
+                                        .domain([currentAge, lifeEndAge])
+                                        .range([0, innerWidth]);
+                                    const age = Math.round(xScale.invert(x));
+                                    if (age >= currentAge && age <= lifeEndAge) {
+                                        handleDragOver(e, age);
+                                    }
+                                }}
+                                onDragLeave={handleDragLeave}
+                                onDrop={(e) => {
+                                    if (!dropAge) return;
+                                    handleDrop(e, dropAge);
+                                }}
+                            >
                                 <svg ref={svgRef} width={width} height={height} className="mx-auto" />
+                                {draggedTemplate && dropAge && (
+                                    <div 
+                                        className="goal-ghost"
+                                        style={{
+                                            position: 'absolute',
+                                            left: `${margin.left + (dropAge - currentAge) / (lifeEndAge - currentAge) * innerWidth}px`,
+                                            top: '50%',
+                                            transform: 'translate(-50%, -50%)'
+                                        }}
+                                    >
+                                        {draggedTemplate.icon}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         
                         {/* Goal Templates - Right below chart for easy access */}
                         <div className="glass-card mb-6">
-                            <h3 className="text-xl font-bold mb-2 text-blue-400">💡 Pro Tip</h3>
+                            <h3 className="text-xl font-bold mb-2 text-blue-400">🎯 Drag & Drop Goals onto Timeline</h3>
                             <p className="text-gray-300 mb-4">
-                                <strong>Click directly on the chart</strong> at any age to add goals, income, or expenses at that specific time! 
-                                Or use the quick action buttons below:
+                                <strong>Drag any goal icon</strong> and drop it on the chart at your desired age! A smooth animation will guide you. 
+                                Or <strong>click directly on the chart</strong> for the quick menu, or use buttons below:
                             </p>
                             <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
                                 {goalTemplates.map((template, index) => (
                                     <div
                                         key={index}
-                                        className="goal-card"
+                                        className={`goal-card ${draggedTemplate?.name === template.name ? 'dragging' : ''}`}
+                                        draggable="true"
+                                        onDragStart={() => handleDragStart(template)}
+                                        onDragEnd={handleDragEnd}
                                         onClick={() => {
                                             const age = prompt(`Enter target age for ${template.name}:`, currentAge + 5);
                                             if (!age || age <= currentAge) return;
@@ -784,8 +1007,11 @@
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
-                                                <label>Growth (%)</label>
-                                                <input type="number" value={growthRate} onChange={e => setGrowthRate(parseFloat(e.target.value))} step="0.5" />
+                                                <label>Growth Rate (Scenario)</label>
+                                                <div className="px-4 py-3 rounded-lg bg-white bg-opacity-10 text-center">
+                                                    <span className="text-xl font-bold text-blue-400">{getScenarioGrowthRate()}%</span>
+                                                    <div className="text-xs text-gray-400 mt-1 capitalize">{scenario}</div>
+                                                </div>
                                             </div>
                                             <div>
                                                 <label>Inflation (%)</label>
