@@ -258,14 +258,6 @@ async def goal_planning():
         return FileResponse(page_path)
     return {"error": "Goal Planning page not found"}
 
-@app.get("/goal-planning")
-async def goal_planning():
-    """Serve the Goal Planning page"""
-    page_path = os.path.join(frontend_path, "goal-planning.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Goal Planning page not found"}
-
 @app.get("/goal-planning.html")
 async def goal_planning_html():
     """Serve the Goal Planning page with .html extension"""
@@ -273,6 +265,14 @@ async def goal_planning_html():
     if os.path.exists(page_path):
         return FileResponse(page_path)
     return {"error": "Goal Planning page not found"}
+
+@app.get("/icon-styles-demo.html")
+async def icon_styles_demo():
+    """Serve the Icon Styles Demo page"""
+    page_path = os.path.join(frontend_path, "icon-styles-demo.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "Icon Styles Demo page not found"}
 
 @app.get("/overlap-analysis.html")
 async def overlap_analysis_html():
