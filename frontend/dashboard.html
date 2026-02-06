@@ -13,6 +13,7 @@
     <script src="/js/portfolio-storage.js"></script>
     <script src="/js/portfolio-source-modal.js"></script>
     <script src="/js/demo-banner.js"></script>
+    <script src="/js/guest-banner.js"></script>
     
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1577,6 +1578,26 @@
             
             try {
                 const token = localStorage.getItem('authToken');
+                
+                // Check if user is authenticated
+                if (!token) {
+                    // Save as guest mode
+                    const portfolioData = portfolioStorage.createPortfolioStructure(holdings, {
+                        source: 'manual_entry',
+                        entryDate: new Date().toISOString()
+                    });
+                    
+                    if (portfolioStorage.saveGuestData(portfolioData)) {
+                        alert('Portfolio saved locally! Sign up to sync across devices.');
+                        closeManualEntryModal();
+                        window.location.reload();
+                    } else {
+                        alert('Failed to save portfolio locally');
+                    }
+                    return;
+                }
+                
+                // Save to backend for authenticated users
                 const response = await fetch('/api/portfolio/manual', {
                     method: 'POST',
                     headers: {
