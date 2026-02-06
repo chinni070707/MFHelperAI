@@ -392,6 +392,43 @@
             background: rgba(0, 212, 255, 0.3);
         }
         
+        /* Fund Search Dropdown */
+        .fund-search {
+            position: relative;
+        }
+        .fund-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #1a1a2e;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            margin-top: 5px;
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+        .fund-option {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.2s;
+        }
+        .fund-option:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+        .fund-option-name {
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .fund-option-details {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+        }
+        
         @media (max-width: 768px) {
             .charts-grid { grid-template-columns: 1fr; }
             .summary-cards { grid-template-columns: repeat(2, 1fr); }
@@ -1337,20 +1374,22 @@
                 <table class="entry-table" id="manualEntryTable">
                     <thead>
                         <tr>
-                            <th>Scheme Name</th>
-                            <th>Units</th>
-                            <th>Avg. Cost (₹)</th>
-                            <th>Current NAV (₹)</th>
-                            <th>Action</th>
+                            <th style="width: 60%;">Scheme Name</th>
+                            <th style="width: 30%;">Amount Invested (₹)</th>
+                            <th style="width: 10%;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="entryTableBody">
                         <tr>
-                            <td><input type="text" placeholder="e.g., HDFC Equity Fund" required></td>
-                            <td><input type="number" step="0.001" placeholder="0.000" required></td>
-                            <td><input type="number" step="0.01" placeholder="0.00" required></td>
-                            <td><input type="number" step="0.01" placeholder="0.00" required></td>
-                            <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">Remove</button></td>
+                            <td>
+                                <input type="text" class="fund-search" placeholder="Search fund name..." 
+                                       oninput="searchFunds(this)" 
+                                       onfocus="showFundDropdown(this)"
+                                       data-fund-id="" required>
+                                <div class="fund-dropdown" style="display: none;"></div>
+                            </td>
+                            <td><input type="number" step="0.01" min="0" placeholder="10000" required></td>
+                            <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1413,15 +1452,89 @@
             document.getElementById('manualEntryModal').style.display = 'none';
         }
 
+        // Fund Search and Autocomplete
+        let fundSearchTimeout = null;
+        let cachedFunds = [];
+
+        async function searchFunds(input) {
+            const searchTerm = input.value.trim();
+            const dropdown = input.parentElement.querySelector('.fund-dropdown');
+            
+            if (searchTerm.length < 2) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            // Debounce search
+            clearTimeout(fundSearchTimeout);
+            fundSearchTimeout = setTimeout(async () => {
+                try {
+                    const response = await fetch(`/api/funds/list?search=${encodeURIComponent(searchTerm)}&dropdown=true&limit=10`);
+                    const data = await response.json();
+                    
+                    if (data.success && data.funds.length > 0) {
+                        displayFundOptions(dropdown, data.funds, input);
+                    } else {
+                        dropdown.innerHTML = '<div style="padding: 12px; color: rgba(255,255,255,0.6);">No funds found</div>';
+                        dropdown.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Fund search error:', error);
+                }
+            }, 300);
+        }
+
+        function showFundDropdown(input) {
+            const dropdown = input.parentElement.querySelector('.fund-dropdown');
+            if (cachedFunds.length > 0) {
+                displayFundOptions(dropdown, cachedFunds, input);
+            }
+        }
+
+        function displayFundOptions(dropdown, funds, input) {
+            dropdown.innerHTML = '';
+            
+            funds.forEach(fund => {
+                const option = document.createElement('div');
+                option.className = 'fund-option';
+                option.innerHTML = `
+                    <div class="fund-option-name">${fund.scheme_name}</div>
+                    <div class="fund-option-details">${fund.amc || ''} ${fund.category ? '• ' + fund.category : ''}</div>
+                `;
+                option.onclick = () => selectFund(fund, input, dropdown);
+                dropdown.appendChild(option);
+            });
+            
+            dropdown.style.display = 'block';
+            cachedFunds = funds;
+        }
+
+        function selectFund(fund, input, dropdown) {
+            input.value = fund.scheme_name;
+            input.setAttribute('data-fund-id', fund.value);
+            dropdown.style.display = 'none';
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.fund-search') && !e.target.closest('.fund-dropdown')) {
+                document.querySelectorAll('.fund-dropdown').forEach(d => d.style.display = 'none');
+            }
+        });
+
         function addManualEntryRow() {
             const tbody = document.getElementById('entryTableBody');
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td><input type="text" placeholder="e.g., HDFC Equity Fund" required></td>
-                <td><input type="number" step="0.001" placeholder="0.000" required></td>
-                <td><input type="number" step="0.01" placeholder="0.00" required></td>
-                <td><input type="number" step="0.01" placeholder="0.00" required></td>
-                <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">Remove</button></td>
+                <td>
+                    <input type="text" class="fund-search" placeholder="Search fund name..." 
+                           oninput="searchFunds(this)" 
+                           onfocus="showFundDropdown(this)"
+                           data-fund-id="" required>
+                    <div class="fund-dropdown" style="display: none;"></div>
+                </td>
+                <td><input type="number" step="0.01" min="0" placeholder="10000" required></td>
+                <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
             `;
             tbody.appendChild(row);
         }
@@ -1442,24 +1555,22 @@
             const holdings = [];
             
             for (const row of rows) {
-                const inputs = row.querySelectorAll('input');
-                const schemeName = inputs[0].value.trim();
-                const units = parseFloat(inputs[1].value);
-                const avgCost = parseFloat(inputs[2].value);
-                const currentNav = parseFloat(inputs[3].value);
+                const fundInput = row.querySelector('.fund-search');
+                const amountInput = row.querySelectorAll('input')[1];
                 
-                if (!schemeName || isNaN(units) || isNaN(avgCost) || isNaN(currentNav)) {
+                const schemeName = fundInput.value.trim();
+                const fundId = fundInput.getAttribute('data-fund-id');
+                const amount = parseFloat(amountInput.value);
+                
+                if (!schemeName || !amount || amount <= 0) {
                     alert('Please fill all fields with valid values');
                     return;
                 }
                 
                 holdings.push({
                     scheme_name: schemeName,
-                    units: units,
-                    avg_cost: avgCost,
-                    current_nav: currentNav,
-                    invested: units * avgCost,
-                    current_value: units * currentNav
+                    fund_id: fundId || null,
+                    invested_amount: amount
                 });
             }
             
