@@ -1,7 +1,7 @@
 """
 Upload Routes - Handle Excel and CAS PDF uploads
 """
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
 from fastapi.responses import JSONResponse
 import pandas as pd
 import numpy as np
@@ -632,7 +632,7 @@ async def upload_excel(file: UploadFile = File(...)):
 @router.post("/cas")
 async def upload_cas(
     file: UploadFile = File(...),
-    password: Optional[str] = None
+    password: Optional[str] = Form(None)
 ):
     """
     Upload CAMS/KFintech CAS PDF statement
