@@ -1,19 +1,21 @@
-name: Frontend Validation Tests
+name: Frontend Validation & E2E Tests
 
 on:
   push:
     branches: [ main ]
     paths:
       - 'frontend/**'
+      - 'backend/app/routes/**'
       - 'tests/**'
   pull_request:
     branches: [ main ]
     paths:
       - 'frontend/**'
+      - 'backend/app/routes/**'
       - 'tests/**'
 
 jobs:
-  javascript-validation:
+  full-test-suite:
     runs-on: ubuntu-latest
     
     steps:
@@ -27,7 +29,12 @@ jobs:
         cache: 'npm'
         cache-dependency-path: 'tests/package-lock.json'
         
-    - name: Install dependencies
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install test dependencies
       working-directory: tests
       run: npm ci
       
@@ -35,17 +42,26 @@ jobs:
       working-directory: tests
       run: npx playwright install --with-deps chromium
       
-    - name: Start backend server
+    - name: Install backend dependencies
       working-directory: backend
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+      
+    - name: Start backend server
+      working-directory: backend
+      run: |
         nohup python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 &
         sleep 10
+        
+    - name: Verify backend is running
+      run: |
+        curl -f http://localhost:8000/api/health || exit 1
+        echo "✅ Backend server is healthy"
       
-    - name: Run JavaScript validation tests
+    - name: Run ALL E2E tests
       working-directory: tests
-      run: npx playwright test javascript-validation.spec.ts
+      run: npx playwright test --reporter=list,html
       
     - name: Upload test results
       if: always()
