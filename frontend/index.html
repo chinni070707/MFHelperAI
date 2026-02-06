@@ -663,7 +663,7 @@
             <div class="header-buttons">
                 <a href="/dashboard" class="btn btn-secondary">📊 My Portfolio</a>
                 <button class="btn btn-secondary" onclick="loadDemoPortfolio()" style="margin-right: 10px;">🎯 Try Demo</button>
-                <button class="btn btn-primary" onclick="showPortfolioUpload()">📁 Add Your Portfolio</button>
+                <button class="btn btn-primary" onclick="showSignup()">🚀 Sign Up Free</button>
             </div>
         </header>
 
@@ -734,6 +734,15 @@
         // Show Portfolio Upload (navigate to upload page or modal)
         function showPortfolioUpload() {
             window.location.href = '/dashboard?upload=true';
+        }
+        
+        // Show Signup Modal
+        function showSignup() {
+            if (typeof authModals !== 'undefined') {
+                authModals.openSignup();
+            } else {
+                showToast('Auth system not loaded. Please refresh the page.', 'error');
+            }
         }
 
         // Load Demo Portfolio
