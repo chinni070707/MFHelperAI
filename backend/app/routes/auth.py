@@ -8,6 +8,7 @@ import logging
 
 from app.database import get_db
 from app.models.models import User, UserSettings
+from app.models.user_leads import UserLead
 from app.schemas import UserCreate, UserLogin, UserResponse, Token, UserSettingsResponse, UserSettingsUpdate
 from app.utils.auth import (
     get_password_hash,
@@ -62,6 +63,22 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+    
+    # Track user lead for marketing
+    try:
+        user_lead = UserLead(
+            email=new_user.email,
+            phone=new_user.phone,
+            name=new_user.full_name,
+            source=user_data.source if hasattr(user_data, 'source') else 'direct_signup',
+            signup_date=func.now(),
+            is_verified=False,
+            is_active=True
+        )
+        db.add(user_lead)
+        db.commit()
+    except Exception as e:
+        logger.warning(f"Failed to create user lead: {str(e)}")
     
     # Create default settings for user
     default_settings = UserSettings(user_id=new_user.id)
@@ -196,4 +213,75 @@ async def update_user_settings(
     
     logger.info(f"Settings updated successfully: {current_user.email}")
     return settings
+
+@router.post("/leads/capture")
+@auth_limiter.limit("10/hour")
+async def capture_lead(
+    request: Request,
+    email: Optional[str] = None,
+    phone: Optional[str] = None,
+    source: str = "unknown",
+    db: Session = Depends(get_db)
+):
+    """
+    Capture user email/phone for marketing (before full signup)
+    Used for export gates, timed popups, etc.
+    """
+    if not email and not phone:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Either email or phone is required"
+        )
+    
+    try:
+        # Check if lead already exists
+        existing_lead = None
+        if email:
+            existing_lead = db.query(UserLead).filter(UserLead.email == email).first()
+        elif phone:
+            existing_lead = db.query(UserLead).filter(UserLead.phone == phone).first()
+        
+        if existing_lead:
+            # Update interaction count and last active
+            existing_lead.interaction_count += 1
+            existing_lead.last_active = func.now()
+            db.commit()
+            
+            return {
+                "success": True,
+                "message": "Lead updated",
+                "lead_id": existing_lead.id
+            }
+        
+        # Create new lead
+        new_lead = UserLead(
+            email=email,
+            phone=phone,
+            source=source,
+            signup_date=func.now(),
+            last_active=func.now(),
+            interaction_count=1,
+            is_active=True,
+            is_verified=False
+        )
+        
+        db.add(new_lead)
+        db.commit()
+        db.refresh(new_lead)
+        
+        logger.info(f"New lead captured: {email or phone} from {source}")
+        
+        return {
+            "success": True,
+            "message": "Lead captured successfully",
+            "lead_id": new_lead.id
+        }
+        
+    except Exception as e:
+        logger.error(f"Error capturing lead: {str(e)}")
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to capture lead"
+        )
 
