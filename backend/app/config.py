@@ -9,6 +9,8 @@ import os
 class Settings(BaseSettings):
     """Application settings loaded from environment variables"""
     
+    model_config = {"env_file": ".env", "case_sensitive": True, "extra": "ignore"}
+    
     # Application
     APP_NAME: str = "MFHelper"
     DEBUG: bool = True  # Set to True for development, False for production
@@ -50,14 +52,17 @@ class Settings(BaseSettings):
     # Fund Data
     FUND_MASTER_PATH: str = "./data/fund_master.json"
     AMC_MASTER_PATH: str = "./data/amc_master.json"
-    
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
-        extra = "ignore"  # Allow extra env vars (like CAS_TEST_PASSWORD)
 
 
 settings = Settings()
+
+# FORCE DEBUG=True for development (override any env vars)
+settings.DEBUG = True
+
+# Debug: Print actual DEBUG value loaded
+import sys
+print(f"🔍 DEBUG Configuration Loaded: {settings.DEBUG}", file=sys.stderr)
+print(f"🔍 DEBUG Type: {type(settings.DEBUG)}", file=sys.stderr)
 
 # Ensure upload directory exists
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
