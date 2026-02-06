@@ -753,16 +753,77 @@
         let currentMode = 'rebalance';
         let marketCapAllocation = { large: 0, mid: 0, small: 0, other: 0 };
         
-        document.addEventListener('DOMContentLoaded', () => {
-            const stored = localStorage.getItem('portfolioData');
-            if (stored) {
-                portfolioData = JSON.parse(stored);
-                renderDashboard();
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check for demo mode in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const mode = urlParams.get('mode');
+            
+            if (mode === 'demo') {
+                // Load demo portfolio from API
+                await loadDemoPortfolio();
             } else {
-                document.getElementById('dashboardContent').style.display = 'none';
-                document.getElementById('noData').style.display = 'block';
+                // Try to load from portfolio storage
+                const portfolioStorage = new PortfolioStorage();
+                const storedData = portfolioStorage.load();
+                
+                if (storedData && storedData.holdings && storedData.holdings.length > 0) {
+                    portfolioData = storedData;
+                    renderDashboard();
+                } else {
+                    // Fallback to old localStorage
+                    const stored = localStorage.getItem('portfolioData');
+                    if (stored) {
+                        portfolioData = JSON.parse(stored);
+                        renderDashboard();
+                    } else {
+                        document.getElementById('dashboardContent').style.display = 'none';
+                        document.getElementById('noData').style.display = 'block';
+                    }
+                }
             }
         });
+        
+        async function loadDemoPortfolio() {
+            try {
+                const response = await fetch('/api/demo/portfolio');
+                if (!response.ok) {
+                    throw new Error('Failed to load demo portfolio');
+                }
+                
+                const data = await response.json();
+                if (data.success && data.holdings && data.holdings.length > 0) {
+                    // Transform demo data to portfolio format
+                    portfolioData = {
+                        mode: 'demo',
+                        holdings: data.holdings.map(h => ({
+                            scheme_name: h.scheme_name,
+                            scheme_code: h.scheme_code,
+                            category: h.category || 'Others',
+                            amc: h.amc || 'Unknown',
+                            invested: h.invested_amount,
+                            current_value: h.current_value,  // Use current_value to match calculateSummary
+                            gain: h.gain_loss,
+                            return_pct: h.gain_loss_percent,
+                            units: h.units,
+                            avg_cost: h.avg_cost,
+                            current_nav: h.current_nav
+                        })),
+                        summary: data.totals,
+                        uploadedAt: new Date().toISOString(),
+                        uploadedFileName: 'Demo Portfolio'
+                    };
+                    
+                    renderDashboard();
+                } else {
+                    throw new Error('No demo holdings found');
+                }
+            } catch (error) {
+                console.error('Error loading demo portfolio:', error);
+                document.getElementById('dashboardContent').style.display = 'none';
+                document.getElementById('noData').style.display = 'block';
+                window.showToast?.('Failed to load demo portfolio', 'error');
+            }
+        }
         
         function renderDashboard() {
             if (!portfolioData || !portfolioData.holdings || portfolioData.holdings.length === 0) {
