@@ -14,7 +14,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo, funds
 from app.database import engine, Base
 from app.middleware.rate_limiter import limiter
 
@@ -117,6 +117,7 @@ app.include_router(upload.router, prefix="/api/upload", tags=["Upload"])
 app.include_router(cas.router, tags=["CAS Import"])
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["Portfolio"])
 app.include_router(demo.router, prefix="/api", tags=["Demo Portfolio"])
+app.include_router(funds.router, prefix="/api", tags=["Funds Master"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(analysis.router, prefix="/api/analysis", tags=["Analysis Tools"])
 app.include_router(xirr.router)
