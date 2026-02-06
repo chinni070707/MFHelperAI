@@ -317,18 +317,6 @@
             <button class="btn btn-secondary" onclick="exportData()">📤 Export</button>
         </div>
     </nav>
-    <!-- AI Status Banner (hidden by default) -->
-    <div id="aiBanner" class="alert-banner" style="display:none; background: linear-gradient(90deg, rgba(255,193,7,0.12), rgba(255,193,7,0.08)); border-left-color: #ffc107;">
-        <span class="icon">⚠️</span>
-        <div>
-            <strong id="aiBannerTitle">AI Unavailable</strong>
-            <p id="aiBannerText">AI features are currently offline. Using standard dashboard search.</p>
-        </div>
-        <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
-            <button id="aiRetryBtn" class="btn btn-secondary" style="padding:6px 10px;">Retry</button>
-            <button id="aiDismissBtn" class="btn" style="background:transparent; color:#8892b0;">Dismiss</button>
-        </div>
-    </div>
     
     <!-- No Data State -->
     <div id="noData" class="no-data" style="display: none;">
@@ -1116,55 +1104,8 @@
         }
     </script>
     <script>
-        // AI health check and UI banner
-        async function checkAIHealthOnce() {
-            try {
-                const resp = await fetch('/api/ai/health');
-                if (!resp.ok) throw new Error('health check failed');
-                const status = await resp.json();
-                window.AI_AVAILABLE = !!status.available;
-                if (!window.AI_AVAILABLE) {
-                    showAIBanner(status.message || 'AI currently unavailable — using normal search.');
-                } else {
-                    hideAIBanner();
-                }
-            } catch (e) {
-                window.AI_AVAILABLE = false;
-                showAIBanner('AI currently unavailable — using normal search.');
-            }
-        }
-
-        function showAIBanner(msg) {
-            const b = document.getElementById('aiBanner');
-            if (!b) return;
-            document.getElementById('aiBannerText').textContent = msg;
-            b.style.display = 'flex';
-            // set small indicator in navbar
-            if (!document.getElementById('aiStatusDot')) {
-                const dot = document.createElement('span');
-                dot.id = 'aiStatusDot';
-                dot.style.marginLeft = '12px';
-                dot.style.padding = '6px 10px';
-                dot.style.borderRadius = '8px';
-                dot.style.background = 'rgba(255,193,7,0.12)';
-                dot.style.color = '#ffc107';
-                dot.textContent = 'AI: Offline';
-                document.querySelector('.nav-actions').appendChild(dot);
-            } else {
-                document.getElementById('aiStatusDot').textContent = 'AI: Offline';
-            }
-            const chatIndicator = document.getElementById('chatAIStatus');
-            if (chatIndicator) chatIndicator.textContent = 'Offline';
-        }
-
-        function hideAIBanner() {
-            const b = document.getElementById('aiBanner');
-            if (b) b.style.display = 'none';
-            const dot = document.getElementById('aiStatusDot');
-            if (dot) { dot.textContent = 'AI: Online'; dot.style.background = 'linear-gradient(90deg,#00d4ff,#7b2cbf)'; dot.style.color = '#fff'; }
-            const chatIndicator = document.getElementById('chatAIStatus');
-            if (chatIndicator) chatIndicator.textContent = 'Online';
-        }
+        // Set AI as unavailable (not using AI features)
+        window.AI_AVAILABLE = false;
 
         // Dashboard chat functions
         function appendDashboardMessage(role, text) {
@@ -1210,11 +1151,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            checkAIHealthOnce();
-            const retry = document.getElementById('aiRetryBtn');
-            const dismiss = document.getElementById('aiDismissBtn');
-            if (retry) retry.addEventListener('click', () => { checkAIHealthOnce(); });
-            if (dismiss) dismiss.addEventListener('click', () => { document.getElementById('aiBanner').style.display = 'none'; });
             // Chat handlers
             const sendBtn = document.getElementById('dashboardChatSend');
             const input = document.getElementById('dashboardChatInput');
