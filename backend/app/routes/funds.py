@@ -9,7 +9,7 @@ from typing import List, Optional
 import logging
 
 from app.database import get_db
-from app.models.funds_master import FundMaster
+from app.models.models import FundMaster
 
 router = APIRouter(prefix="/funds", tags=["Funds"])
 logger = logging.getLogger(__name__)

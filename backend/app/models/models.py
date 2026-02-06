@@ -177,5 +177,10 @@ class FundMaster(Base):
     three_year_return = Column(Float)
     five_year_return = Column(Float)
     
+    # Additional fields
+    plan_type = Column(String(20), default="Direct")  # Direct or Regular
+    current_nav = Column(Float, nullable=True)
+    is_active = Column(Boolean, default=True)
+    
     # Updated timestamp
     updated_at = Column(DateTime, default=func.now())
