@@ -14,7 +14,7 @@ import logging
 
 from app.database import get_db
 from app.models.models import Portfolio, User
-from app.utils.auth import get_current_user_optional
+from app.utils.auth import get_optional_current_user
 
 # Setup logger
 logger = logging.getLogger(__name__)
@@ -616,7 +616,7 @@ def clean_fund_name(name: str) -> str:
 async def upload_excel(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional)
+    current_user: Optional[User] = Depends(get_optional_current_user)
 ):
     """
     Upload Excel/CSV file containing portfolio data
@@ -683,7 +683,7 @@ async def upload_cas(
     file: UploadFile = File(...),
     password: Optional[str] = Form(None),
     db: Session = Depends(get_db),
-    current_user: Optional[User] = Depends(get_current_user_optional)
+    current_user: Optional[User] = Depends(get_optional_current_user)
 ):
     """
     Upload CAMS/KFintech CAS PDF statement
@@ -693,20 +693,28 @@ async def upload_cas(
     - Password is typically your PAN or date of birth
     - Saves portfolio data to database if user is authenticated
     """
+    logger.debug(f"CAS upload endpoint called - File: {file.filename}, User: {current_user.email if current_user else 'None'}")
+    
     if not file.filename or not file.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Please upload a PDF file")
     
     content = await file.read()
+    logger.debug(f"PDF content read: {len(content)} bytes")
+    
     result = parse_cas_pdf(content, password)
+    logger.debug(f"CAS parsed successfully: {len(result['holdings'])} holdings found")
     
     # Save to database if user is authenticated
     if current_user:
+        logger.info(f"Authenticated user found: {current_user.email} (ID: {current_user.id})")
         try:
             # Clear existing portfolio for this user
-            db.query(Portfolio).filter(Portfolio.user_id == current_user.id).delete()
+            deleted_count = db.query(Portfolio).filter(Portfolio.user_id == current_user.id).delete()
+            logger.debug(f"Deleted {deleted_count} existing portfolio entries")
             
             # Save each holding
-            for holding in result['holdings']:
+            for idx, holding in enumerate(result['holdings']):
+                logger.debug(f"Saving holding {idx+1}/{len(result['holdings'])}: {holding.get('fund_name', 'Unknown')}")
                 portfolio_entry = Portfolio(
                     user_id=current_user.id,
                     scheme_name=holding.get('fund_name', ''),
@@ -725,19 +733,21 @@ async def upload_cas(
                 db.add(portfolio_entry)
             
             db.commit()
-            logger.info(f"Saved {len(result['holdings'])} holdings for user {current_user.id}")
+            logger.info(f"✅ Successfully saved {len(result['holdings'])} holdings for user {current_user.id}")
             result['saved_to_database'] = True
+            result['user_email'] = current_user.email
             
         except Exception as e:
             db.rollback()
-            logger.error(f"Error saving portfolio to database: {str(e)}")
-            # Continue anyway, return parsed data even if save fails
+            logger.error(f"❌ Error saving portfolio to database: {str(e)}", exc_info=True)
             result['saved_to_database'] = False
             result['save_error'] = str(e)
     else:
-        logger.info("No authenticated user, returning parsed data for client-side storage")
+        logger.warning("⚠️  No authenticated user found - data will not be saved to database")
         result['saved_to_database'] = False
+        result['auth_required'] = True
     
+    logger.debug(f"Returning result: saved={result.get('saved_to_database')}")
     return result
 
 

@@ -652,10 +652,26 @@
     <!-- Load Auth Modals -->
     <script src="/js/auth-modals.js"></script>
     <script>
+        // Debug logging utility
+        const DEBUG_MODE = true; // Set to false in production
+        
+        function debugLog(event, data = {}) {
+            if (!DEBUG_MODE) return;
+            const timestamp = new Date().toISOString();
+            console.log(`[${timestamp}] 🔍 ${event}`, data);
+        }
+        
         // Initialize auth modals on page load
         let authModals;
         document.addEventListener('DOMContentLoaded', () => {
-            authModals = new AuthModals();
+            debugLog('Page loaded - DOMContentLoaded fired');
+            try {
+                authModals = new AuthModals();
+                debugLog('AuthModals initialized successfully', { authModals: !!authModals });
+            } catch(e) {
+                debugLog('Error initializing AuthModals', { error: e.message });
+                console.error('AuthModals initialization error:', e);
+            }
         });
     </script>
     
@@ -748,9 +764,23 @@
         
         // Show Signup Modal
         function showSignup() {
-            if (typeof authModals !== 'undefined') {
-                authModals.openSignup();
+            debugLog('Signup button clicked', { 
+                authModalsExists: typeof authModals !== 'undefined',
+                authModalsValue: authModals 
+            });
+            
+            if (typeof authModals !== 'undefined' && authModals) {
+                try {
+                    debugLog('Opening signup modal');
+                    authModals.showSignup();  // Correct method name
+                    debugLog('Signup modal opened successfully');
+                } catch(e) {
+                    debugLog('Error opening signup modal', { error: e.message });
+                    console.error('Signup error:', e);
+                    showToast('Error opening signup. Check console.', 'error');
+                }
             } else {
+                debugLog('Auth system not loaded', { authModals });
                 showToast('Auth system not loaded. Please refresh the page.', 'error');
             }
         }
