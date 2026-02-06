@@ -227,6 +227,55 @@
             color: #a8dadc;
             font-weight: 500;
         }
+        
+        .footer-controls label {
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+        }
+        
+        .footer-controls .glass-card {
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .footer-controls h3 {
+            font-size: 0.9rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .footer-controls input, .footer-controls select {
+            padding: 6px 8px;
+            font-size: 0.75rem;
+        }
+        
+        .footer-controls button {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+        }
+        
+        .footer-controls .text-xl {
+            font-size: 0.9rem !important;
+        }
+        
+        .footer-controls .text-sm {
+            font-size: 0.7rem !important;
+        }
+        
+        .footer-controls .font-semibold {
+            font-size: 0.8rem;
+        }
+        
+        .footer-controls .space-y-3 > * + * {
+            margin-top: 0.5rem !important;
+        }
+        
+        .footer-controls .p-3 {
+            padding: 0.5rem !important;
+        }
+        
+        .footer-controls .gap-4 {
+            gap: 0.5rem !important;
+        }
     </style>
 </head>
 <body>
@@ -990,13 +1039,13 @@
                         </div>
                         
                         {/* Detailed Controls and Goals List */}
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="footer-controls grid grid-cols-1 lg:grid-cols-3 gap-3">
                             {/* Controls */}
-                            <div className="space-y-6">
+                            <div className="space-y-3">
                                 {/* Basic Info */}
                                 <div className="glass-card">
                                     <h3 className="text-xl font-bold mb-4 text-blue-400">📊 Basic Information</h3>
-                                    <div className="space-y-4">
+                                    <div className="space-y-2">
                                         <div>
                                             <label>Current Age</label>
                                             <input type="number" value={currentAge} onChange={e => setCurrentAge(parseInt(e.target.value))} min="18" max="80" />
@@ -1032,7 +1081,7 @@
                                 {/* Add Investment */}
                                 <div className="glass-card">
                                     <h3 className="text-xl font-bold mb-4 text-blue-400">💼 Add Investment</h3>
-                                    <div className="space-y-3">
+                                    <div className="space-y-2">
                                         <button onClick={addSIP} className="btn-primary">
                                             📈 Add SIP
                                         </button>
@@ -1044,7 +1093,7 @@
                             </div>
                             
                             {/* Goals List and Investments */}
-                            <div className="lg:col-span-2 space-y-6">
+                            <div className="lg:col-span-2 space-y-3">
                                 {/* Goals List */}
                                 {goals.length > 0 && (
                                     <div className="glass-card">

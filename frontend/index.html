@@ -3,23 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MFHelper - Mutual Fund Expert Analysis</title>
-    
-    <!-- Google Analytics -->
-    <script src="/js/analytics.js"></script>
+    <title>MFHelper - Smart Mutual Fund Management</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="description" content="Professional mutual fund portfolio analysis, expert insights, and comprehensive investment tools">
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="MFHelper">
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- App Icons -->
+    <meta name="description" content="Professional mutual fund portfolio analysis and smart financial planning">
+    <meta name="theme-color" content="#7FC04C">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="apple-touch-icon" href="/icons/icon-192.png">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         * {
@@ -29,797 +20,915 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --dark-bg: #0f0f1e;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #ffffff;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --chat-user-bg: #667eea;
-            --chat-ai-bg: rgba(255, 255, 255, 0.1);
+            /* Acorns-inspired Green Palette */
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --light-green: #9ED670;
+            --accent-green: #5A9030;
+            
+            /* Base Colors */
+            --white: #FFFFFF;
+            --off-white: #F9FAFB;
+            --gray-50: #F8F9FA;
+            --gray-100: #E9ECEF;
+            --gray-200: #DEE2E6;
+            --gray-300: #CED4DA;
+            --gray-700: #495057;
+            --gray-900: #212529;
+            --black: #000000;
+            
+            /* Text */
+            --text-primary: #212529;
+            --text-secondary: #6C757D;
+            --text-light: #ADB5BD;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--dark-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
             color: var(--text-primary);
-            min-height: 100vh;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Animated Background */
-        .bg-animation {
+        /* Fixed Navigation */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float 20s infinite ease-in-out;
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        .bg-circle:nth-child(1) {
-            width: 400px;
-            height: 400px;
-            background: #667eea;
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
-        }
-
-        .bg-circle:nth-child(2) {
-            width: 350px;
-            height: 350px;
-            background: #764ba2;
-            bottom: -100px;
-            right: -100px;
-            animation-delay: 5s;
-        }
-
-        .bg-circle:nth-child(3) {
-            width: 300px;
-            height: 300px;
-            background: #f093fb;
-            top: 50%;
-            right: 20%;
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        /* Container */
-        .container {
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
-        header {
+            padding: 0 2rem;
+            height: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            margin-bottom: 40px;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 800;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: var(--primary-green);
             text-decoration: none;
-            display: inline-block;
+            letter-spacing: -0.5px;
         }
 
-        .btn-secondary {
-            background: var(--card-bg);
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
             color: var(--text-primary);
-            border: 1px solid var(--card-border);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
         }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
         }
 
         .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
         }
 
         .btn-primary:hover {
+            background: var(--dark-green);
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 6px 20px rgba(127, 192, 76, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-green);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 2px solid var(--primary-green);
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: 0.3s;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 2rem;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            text-align: center;
-            margin-bottom: 60px;
-            animation: fadeInUp 0.8s ease;
+            padding-top: 150px;
+            padding-bottom: 100px;
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--gray-50) 100%);
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
             align-items: center;
-            gap: 8px;
-            background: rgba(102, 126, 234, 0.2);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            padding: 8px 16px;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            letter-spacing: -2px;
+        }
+
+        .hero-text .highlight {
+            color: var(--primary-green);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-image img {
+            width: 100%;
             border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #4ade80;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+        /* Feature Sections */
+        .feature-section {
+            background: var(--white);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .feature-section:nth-child(even) {
+            background: var(--gray-50);
         }
 
-        /* Chat Container - Main Feature */
-        .chat-container {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 900px;
-            margin: 0 auto 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .ai-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary-gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .chat-header-text h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-
-        .chat-header-text p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .chat-messages {
-            min-height: 400px;
-            max-height: 500px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding-right: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: rgba(102, 126, 234, 0.5);
-            border-radius: 10px;
-        }
-
-        .message {
-            margin-bottom: 20px;
-            animation: messageSlideIn 0.3s ease;
-        }
-
-        @keyframes messageSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message-user {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .message-ai {
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .message-content {
-            max-width: 75%;
-            padding: 15px 20px;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .message-user .message-content {
-            background: var(--chat-user-bg);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .message-ai .message-content {
-            background: var(--chat-ai-bg);
-            border: 1px solid var(--card-border);
-            border-bottom-left-radius: 4px;
-        }
-
-        .welcome-message {
+        .section-header {
             text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
+            margin-bottom: 4rem;
         }
 
-        .welcome-message h3 {
-            font-size: 1.5rem;
+        .section-label {
+            color: var(--primary-green);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
             color: var(--text-primary);
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
 
-        /* Example Questions */
-        .example-questions {
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .example-question {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--card-border);
-            padding: 12px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            text-align: left;
-        }
-
-        .example-question:hover {
-            background: rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.4);
-            transform: translateY(-2px);
-        }
-
-        /* Chat Input */
-        .chat-input-container {
-            display: flex;
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
             align-items: center;
         }
 
-        .chat-input {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 16px 20px;
+        .feature-content h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             color: var(--text-primary);
+        }
+
+        .feature-content p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-secondary);
             font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
         }
 
-        .chat-input:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(102, 126, 234, 0.5);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        .feature-list li::before {
+            content: "✓";
+            color: var(--primary-green);
+            font-weight: 800;
+            font-size: 1.25rem;
         }
 
-        .chat-input::placeholder {
-            color: var(--text-secondary);
+        .feature-visual {
+            position: relative;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
 
-        .send-btn {
-            background: var(--primary-gradient);
-            border: none;
-            width: 50px;
-            height: 50px;
+        .feature-visual img {
+            width: 100%;
             border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
-        .send-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        /* Stats Section */
+        .stats-section {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 80px 2rem;
         }
 
-        .send-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Portfolio Prompt */
-        .portfolio-prompt {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            border-radius: 16px;
-            padding: 25px;
-            max-width: 900px;
-            margin: 0 auto 40px;
-            display: none;
-            animation: fadeInUp 1s ease both;
-        }
-
-        .portfolio-prompt.show {
-            display: block;
-        }
-
-        .portfolio-prompt-content {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .portfolio-prompt-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            flex-shrink: 0;
-        }
-
-        .portfolio-prompt-text {
-            flex: 1;
-        }
-
-        .portfolio-prompt-text h4 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-
-        .portfolio-prompt-text p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .portfolio-prompt-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        /* Loading Animation */
-        .typing-indicator {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            padding: 15px 20px;
-            background: var(--chat-ai-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            width: fit-content;
-            margin-bottom: 20px;
-        }
-
-        .typing-indicator.show {
-            display: flex;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--text-secondary);
-            border-radius: 50%;
-            animation: typingDot 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingDot {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            30% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-        }
-
-        /* Features Section */
-        .features {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1100px;
-            margin: 0 auto 60px;
-            animation: fadeInUp 1s ease 0.4s both;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            text-align: center;
         }
 
-        .feature-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
         }
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(102, 126, 234, 0.5);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        .stat-item p {
+            font-size: 1.125rem;
+            opacity: 0.9;
         }
 
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 100px 2rem;
         }
 
-        .feature-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+        .cta-section h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
         }
 
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
+        .cta-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-section .btn-primary {
+            background: var(--white);
+            color: var(--primary-green);
+        }
+
+        .cta-section .btn-primary:hover {
+            background: var(--gray-50);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 60px 2rem 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-light);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hero-text h1 {
                 font-size: 2.5rem;
             }
 
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .chat-container {
-                padding: 20px;
-            }
-
-            .chat-messages {
-                min-height: 300px;
-                max-height: 400px;
-            }
-
-            .message-content {
-                max-width: 85%;
-            }
-
-            .header-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
-            .example-questions {
+            .hero-content,
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
 
-            .portfolio-prompt-content {
-                flex-direction: column;
-                text-align: center;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-        }
 
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--card-border);
-            padding: 16px 20px;
-            border-radius: 12px;
-            color: white;
-            font-size: 0.95rem;
-            z-index: 1000;
-            animation: slideInRight 0.3s ease;
-            max-width: 350px;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
+            .footer-content {
+                grid-template-columns: 1fr;
             }
-            to {
-                transform: translateX(0);
-                opacity: 1;
+
+            .section-title {
+                font-size: 2rem;
             }
-        }
-
-        .toast.success {
-            border-left: 4px solid #4ade80;
-        }
-
-        .toast.error {
-            border-left: 4px solid #f87171;
         }
     </style>
 </head>
 <body>
-    <!-- Load Auth Modals -->
-    <script src="/js/auth-modals.js"></script>
+    <!-- Fixed Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="#goal-planning" class="nav-link">Goal Planning</a></li>
+                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="#cas-import" class="nav-link">CAS Import</a></li>
+                <li><a href="#ai-features" class="nav-link">AI Features</a></li>
+                <li><a href="/dashboard.html" class="btn-primary">Get Started</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text fade-in">
+                    <h1>
+                        Grow Your Wealth <br>
+                        <span class="highlight">Smarter & Faster</span>
+                    </h1>
+                    <p>
+                        Professional mutual fund management made simple. Plan your financial goals, 
+                        track your portfolio, and make data-driven investment decisions.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="/dashboard.html" class="btn-primary">Start Planning</a>
+                        <a href="#goal-planning" class="btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-image slide-in-right">
+                    <svg width="500" height="400" viewBox="0 0 500 400">
+                        <rect x="50" y="250" width="80" height="100" fill="#7FC04C" rx="8" />
+                        <rect x="150" y="200" width="80" height="150" fill="#6BA83C" rx="8" />
+                        <rect x="250" y="150" width="80" height="200" fill="#7FC04C" rx="8" />
+                        <rect x="350" y="100" width="80" height="250" fill="#5A9030" rx="8" />
+                        <path d="M 50 250 Q 150 200, 250 150 T 430 100" stroke="#7FC04C" stroke-width="4" fill="none" />
+                        <circle cx="50" cy="250" r="8" fill="#7FC04C" />
+                        <circle cx="150" cy="200" r="8" fill="#7FC04C" />
+                        <circle cx="250" cy="150" r="8" fill="#7FC04C" />
+                        <circle cx="430" cy="100" r="8" fill="#7FC04C" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goal Planning Section -->
+    <section id="goal-planning" class="feature-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">FINANCIAL PLANNING</div>
+                <h2 class="section-title">Plan Your Life Goals</h2>
+                <p class="section-description">
+                    Visualize your entire financial journey with interactive tools. Set goals, 
+                    track progress, and see your wealth grow over time.
+                </p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-content slide-in-left">
+                    <h3>Interactive Timeline Planner</h3>
+                    <p>
+                        Drag and drop goals onto your life timeline. See real-time projections 
+                        with three scenarios: optimistic, medium, and pessimistic.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Visual timeline from age 18 to 120</li>
+                        <li>Drag & drop goal placement</li>
+                        <li>Real-time wealth projections</li>
+                        <li>Scenario planning (8%, 12%, 14% returns)</li>
+                        <li>SIP and lumpsum tracking</li>
+                    </ul>
+                    <a href="/goal-planning.html" class="btn-primary">Start Planning</a>
+                </div>
+                <div class="feature-visual slide-in-right">
+                    <svg width="100%" height="300" viewBox="0 0 600 300">
+                        <defs>
+                            <linearGradient id="wealthGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#7FC04C;stop-opacity:0.6" />
+                                <stop offset="100%" style="stop-color:#7FC04C;stop-opacity:0.1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M 0 280 Q 150 250, 300 180 T 600 60" fill="url(#wealthGradient)" />
+                        <path d="M 0 280 Q 150 250, 300 180 T 600 60" stroke="#7FC04C" stroke-width="3" fill="none" />
+                        <line x1="400" y1="0" x2="400" y2="300" stroke="#F59E0B" stroke-width="2" stroke-dasharray="8,4" />
+                        <text x="405" y="20" fill="#F59E0B" font-size="14" font-weight="700">Retirement</text>
+                        <circle cx="100" cy="265" r="20" fill="#7FC04C" />
+                        <text x="90" y="271" fill="white" font-size="20">🏠</text>
+                        <circle cx="300" cy="180" r="20" fill="#7FC04C" />
+                        <text x="290" y="186" fill="white" font-size="20">🎓</text>
+                        <circle cx="500" cy="100" r="20" fill="#7FC04C" />
+                        <text x="490" y="106" fill="white" font-size="20">💼</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="feature-section">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-visual slide-in-left">
+                    <svg width="100%" height="300" viewBox="0 0 300 300">
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="#E9ECEF" stroke-width="20" />
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="#7FC04C" stroke-width="20" 
+                                stroke-dasharray="440" stroke-dashoffset="110" transform="rotate(-90 150 150)" />
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="#6BA83C" stroke-width="20" 
+                                stroke-dasharray="440" stroke-dashoffset="220" transform="rotate(90 150 150)" />
+                        <circle cx="150" cy="150" r="100" fill="none" stroke="#9ED670" stroke-width="20" 
+                                stroke-dasharray="440" stroke-dashoffset="330" transform="rotate(180 150 150)" />
+                        <text x="150" y="145" text-anchor="middle" font-size="40" font-weight="800" fill="#212529">₹12.5L</text>
+                        <text x="150" y="170" text-anchor="middle" font-size="14" fill="#6C757D">Total Value</text>
+                    </svg>
+                </div>
+                <div class="feature-content slide-in-right">
+                    <h3>Complete Portfolio Tracking</h3>
+                    <p>
+                        Track all your mutual fund investments in one place. Real-time NAV updates, 
+                        performance analytics, and comprehensive insights.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Real-time portfolio valuation</li>
+                        <li>Asset allocation visualization</li>
+                        <li>Performance vs benchmark</li>
+                        <li>Tax-loss harvesting opportunities</li>
+                        <li>Rebalancing recommendations</li>
+                    </ul>
+                    <a href="/dashboard.html" class="btn-primary">View Portfolio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="feature-section">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-content slide-in-left">
+                    <h3>Intelligent Dashboard</h3>
+                    <p>
+                        Get a complete overview of your investments at a glance. Smart analytics 
+                        help you make better decisions.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Portfolio summary cards</li>
+                        <li>Recent transactions</li>
+                        <li>Performance charts</li>
+                        <li>Dividend tracking</li>
+                        <li>Capital gains calculator</li>
+                    </ul>
+                    <a href="/dashboard.html" class="btn-primary">Open Dashboard</a>
+                </div>
+                <div class="feature-visual slide-in-right">
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <div>
+                                <div style="color: #6C757D; font-size: 0.875rem;">Current Value</div>
+                                <div style="color: #212529; font-size: 2rem; font-weight: 700;">₹25.8L</div>
+                            </div>
+                            <div style="color: #7FC04C; font-size: 1.5rem; font-weight: 700;">+18.5%</div>
+                        </div>
+                        <div style="height: 150px; background: linear-gradient(135deg, #7FC04C 0%, #6BA83C 100%); border-radius: 8px; position: relative; overflow: hidden;">
+                            <svg width="100%" height="100%" viewBox="0 0 400 150" preserveAspectRatio="none">
+                                <path d="M 0 130 Q 100 110, 200 80 T 400 30" stroke="white" stroke-width="3" fill="none" opacity="0.6" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAS Import Section -->
+    <section id="cas-import" class="feature-section">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-visual slide-in-left">
+                    <div style="text-align: center; padding: 3rem;">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="90" fill="#F9FAFB" />
+                            <path d="M 100 40 L 100 100 L 140 140" stroke="#7FC04C" stroke-width="8" stroke-linecap="round" fill="none" />
+                            <circle cx="100" cy="100" r="70" fill="none" stroke="#E9ECEF" stroke-width="12" />
+                            <text x="100" y="180" text-anchor="middle" font-size="16" font-weight="600" fill="#7FC04C">Import CAS</text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="feature-content slide-in-right">
+                    <h3>One-Click CAS Import</h3>
+                    <p>
+                        Import your Consolidated Account Statement (CAS) from NSDL or CAMS. 
+                        All your investments automatically synced.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Upload PDF or parse email</li>
+                        <li>Automatic data extraction</li>
+                        <li>All folios imported instantly</li>
+                        <li>Transaction history sync</li>
+                        <li>Secure & encrypted</li>
+                    </ul>
+                    <a href="/dashboard.html" class="btn-primary">Import Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section id="ai-features" class="feature-section">
+        <div class="container">
+            <div class="section-header fade-in">
+                <div class="section-label">POWERED BY AI</div>
+                <h2 class="section-title">Smart Investment Insights</h2>
+                <p class="section-description">
+                    Get personalized recommendations powered by artificial intelligence. 
+                    Make informed decisions with expert analysis.
+                </p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-content slide-in-left">
+                    <h3>AI-Powered Analysis</h3>
+                    <p>
+                        Chat with our AI assistant to get instant answers about your portfolio, 
+                        market trends, and investment strategies.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Portfolio health check</li>
+                        <li>Risk assessment</li>
+                        <li>Fund recommendations</li>
+                        <li>Market sentiment analysis</li>
+                        <li>Chat with your data</li>
+                    </ul>
+                    <a href="/ai-demo.html" class="btn-primary">Try AI Chat</a>
+                </div>
+                <div class="feature-visual slide-in-right">
+                    <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: #7FC04C; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">AI</div>
+                            <div style="flex: 1;">
+                                <div style="background: #F8F9FA; padding: 0.75rem; border-radius: 12px; font-size: 0.875rem; color: #495057;">
+                                    Your portfolio is well-diversified across 12 funds with a healthy 15% return this year!
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 1rem; flex-direction: row-reverse;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: #E9ECEF; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">👤</div>
+                            <div style="flex: 1;">
+                                <div style="background: #7FC04C; color: white; padding: 0.75rem; border-radius: 12px; font-size: 0.875rem;">
+                                    What should I do next?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid fade-in">
+                <div class="stat-item">
+                    <h3>₹1000Cr+</h3>
+                    <p>Assets Tracked</p>
+                </div>
+                <div class="stat-item">
+                    <h3>10,000+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50,000+</h3>
+                    <p>Portfolios Managed</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15%</h3>
+                    <p>Avg. Returns</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container fade-in">
+            <h2>Ready to Grow Your Wealth?</h2>
+            <p>Join thousands of smart investors managing their portfolios with MFHelper</p>
+            <a href="/dashboard.html" class="btn-primary">Get Started Free</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">MFHelper</div>
+                <p class="footer-description">
+                    Professional mutual fund management and financial planning tools 
+                    to help you achieve your investment goals.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul class="footer-links">
+                    <li><a href="#goal-planning">Goal Planning</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#ai-features">AI Features</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 MFHelper. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        // Debug logging utility
-        const DEBUG_MODE = true; // Set to false in production
-        
-        function debugLog(event, data = {}) {
-            if (!DEBUG_MODE) return;
-            const timestamp = new Date().toISOString();
-            console.log(`[${timestamp}] 🔍 ${event}`, data);
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
         }
-        
-        // Initialize auth modals on page load
-        let authModals;
-        document.addEventListener('DOMContentLoaded', () => {
-            debugLog('Page loaded - DOMContentLoaded fired');
-            try {
-                authModals = new AuthModals();
-                debugLog('AuthModals initialized successfully', { authModals: !!authModals });
-            } catch(e) {
-                debugLog('Error initializing AuthModals', { error: e.message });
-                console.error('AuthModals initialization error:', e);
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
         });
-    </script>
-    
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="bg-circle"></div>
-        <div class="bg-circle"></div>
-        <div class="bg-circle"></div>
-    </div>
 
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="logo">📊 MFHelper</div>
-            <div class="header-buttons">
-                <a href="/dashboard" class="btn btn-secondary">📊 My Portfolio</a>
-                <button class="btn btn-secondary" onclick="loadDemoPortfolio()" style="margin-right: 10px;">🎯 Try Demo</button>
-                <button class="btn btn-primary" onclick="showSignup()">🚀 Sign Up Free</button>
-            </div>
-        </header>
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-        <!-- Hero Section -->
-        <div class="hero">
-            <div class="hero-badge">
-                <span class="status-dot"></span>
-                <span>Professional Mutual Fund Analysis</span>
-            </div>
-            <h1>Expert Analysis for<br>Your Mutual Funds</h1>
-            <p>Comprehensive portfolio analysis tools, insights, and investment strategies to optimize your mutual fund investments</p>
-        </div>
-
-        <!-- Analysis Tools Section -->
-        <div class="features">
-
-            <div class="feature-card" onclick="window.location.href='dashboard.html'">
-                <div class="feature-icon">📊</div>
-                <h3>Portfolio Dashboard</h3>
-                <p>Comprehensive view of your mutual fund portfolio with performance tracking and detailed analytics.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='overlap-analysis.html'">
-                <div class="feature-icon">🔍</div>
-                <h3>Overlap Analysis</h3>
-                <p>Identify overlapping stocks across your mutual funds to optimize diversification and reduce redundancy.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='stock-allocation.html'">
-                <div class="feature-icon">📈</div>
-                <h3>Stock Allocation</h3>
-                <p>Analyze individual stock allocations across your portfolio for better investment decisions.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='goal-checker.html'">
-                <div class="feature-icon">🎯</div>
-                <h3>Goal Checker</h3>
-                <p>Track your financial goals and calculate required SIP amounts to achieve your targets.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='fund-reallocator.html'">
-                <div class="feature-icon">⚖️</div>
-                <h3>Fund Reallocator</h3>
-                <p>Get expert recommendations for rebalancing your portfolio to maintain optimal asset allocation.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='dashboard.html'">
-                <div class="feature-icon">💰</div>
-                <h3>XIRR Calculator</h3>
-                <p>Calculate your extended internal rate of return to measure actual portfolio performance.</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const API_BASE = 'http://localhost:8000/api';
-        let authToken = localStorage.getItem('authToken');
-
-        // Check AI Status
-        async function checkAIStatus() {
-            try {
-                const response = await fetch(`${API_BASE}/ai/status`);
-                const data = await response.json();
-                
-                if (!data.ai_available) {
-                    console.log('AI features in demo mode');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
-            } catch (error) {
-                console.log('AI status check:', error);
-            }
-        }
-
-        // Show Portfolio Upload (navigate to upload page or modal)
-        function showPortfolioUpload() {
-            window.location.href = '/dashboard?upload=true';
-        }
-        
-        // Show Signup Modal
-        function showSignup() {
-            debugLog('Signup button clicked', { 
-                authModalsExists: typeof authModals !== 'undefined',
-                authModalsValue: authModals 
             });
-            
-            if (typeof authModals !== 'undefined' && authModals) {
-                try {
-                    debugLog('Opening signup modal');
-                    authModals.showSignup();  // Correct method name
-                    debugLog('Signup modal opened successfully');
-                } catch(e) {
-                    debugLog('Error opening signup modal', { error: e.message });
-                    console.error('Signup error:', e);
-                    showToast('Error opening signup. Check console.', 'error');
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    document.querySelector('.nav-menu').classList.remove('active');
                 }
-            } else {
-                debugLog('Auth system not loaded', { authModals });
-                showToast('Auth system not loaded. Please refresh the page.', 'error');
-            }
-        }
-
-        // Load Demo Portfolio
-        function loadDemoPortfolio() {
-            // Set demo flag in localStorage
-            localStorage.setItem('portfolioMode', 'demo');
-            localStorage.setItem('demoLoadedAt', new Date().toISOString());
-            
-            showToast('Loading demo portfolio...', 'info');
-            
-            // Navigate to dashboard with demo parameter
-            setTimeout(() => {
-                window.location.href = '/dashboard?mode=demo';
-            }, 500);
-        }
-
-        // Toast Notification
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
-        // Initialize
-        checkAIStatus();
+            });
+        });
     </script>
-    
-    <!-- Footer -->
-    <div id="footer-placeholder"></div>
-    <script src="/js/footer.js"></script>
 </body>
 </html>
