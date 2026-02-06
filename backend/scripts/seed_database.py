@@ -111,7 +111,7 @@ def seed_database():
             )
             db.add(settings)
             
-            print(f"✅ Created user: {user_data['email']} (password: {user_data['password']})")
+            print(f"✅ Created user: {user_data['email']}")
         
         db.commit()
         
@@ -346,7 +346,7 @@ def seed_database():
         print("\n🔑 Test Accounts:")
         for user_data in users_data:
             print(f"   Email: {user_data['email']}")
-            print(f"   Password: {user_data['password']}")
+            print(f"   Password: Use default test password")
             print()
         
         print("📍 Database Location:")

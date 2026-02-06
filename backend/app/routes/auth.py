@@ -1,7 +1,7 @@
 """
 Authentication Routes - User registration, login, and profile management
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from typing import Optional
 import logging
@@ -16,13 +16,15 @@ from app.utils.auth import (
     get_current_user,
     get_current_active_user
 )
+from app.middleware.rate_limiter import auth_limiter
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-async def register(user_data: UserCreate, db: Session = Depends(get_db)):
+@auth_limiter.limit("5/minute")  # Rate limit: 5 registrations per minute
+async def register(request: Request, user_data: UserCreate, db: Session = Depends(get_db)):
     """Register a new user"""
     logger.info(f"Registration attempt for email: {user_data.email}")
     
@@ -79,7 +81,8 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login", response_model=Token)
-async def login(credentials: UserLogin, db: Session = Depends(get_db)):
+@auth_limiter.limit("10/minute")  # Rate limit: 10 login attempts per minute
+async def login(request: Request, credentials: UserLogin, db: Session = Depends(get_db)):
     """Login user and return JWT token"""
     logger.info(f"Login attempt for email: {credentials.email}")
     

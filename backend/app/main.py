@@ -3,8 +3,12 @@ MFHelper - FastAPI Application Entry Point
 """
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, RedirectResponse
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 import os
 import logging
 import time
@@ -12,6 +16,7 @@ import time
 from app.config import settings
 from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr
 from app.database import engine, Base
+from app.middleware.rate_limiter import limiter
 
 # Setup centralized logging
 from app.utils.logger import setup_logging, log_request
@@ -38,6 +43,10 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc"
 )
+
+# Add rate limiter state
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Request logging middleware
 @app.middleware("http")
@@ -66,13 +75,40 @@ async def log_requests(request: Request, call_next):
         logger.error(f"✗ {request.method} {request.url.path} - Failed after {duration_ms:.2f}ms: {str(e)}")
         raise
 
-# CORS middleware for frontend
+# Security: HTTPS redirect in production (disabled for local development)
+# Uncomment for production deployment with HTTPS
+# if not settings.DEBUG:
+#     app.add_middleware(HTTPSRedirectMiddleware)
+
+# Security: Trusted host middleware
+if not settings.DEBUG:
+    app.add_middleware(
+        TrustedHostMiddleware,
+        allowed_hosts=["localhost", "127.0.0.1", "*.mfhelper.com"]  # Update with your domains
+    )
+
+# CORS middleware - Configured for security
+ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
+]
+
+# In production, add your frontend domain
+if not settings.DEBUG:
+    ALLOWED_ORIGINS.extend([
+        "https://mfhelper.com",
+        "https://www.mfhelper.com"
+    ])
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify exact origins
+    allow_origins=ALLOWED_ORIGINS,  # Specific origins only
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allow_headers=["Authorization", "Content-Type"],
+    max_age=600,  # Cache preflight requests for 10 minutes
 )
 
 # Include routers

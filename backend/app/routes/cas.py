@@ -47,12 +47,29 @@ async def upload_cas(
             detail="Only PDF files are supported"
         )
     
+    # Read file content
+    content = await file.read()
+    
+    # Security: Validate file size (10MB max)
+    MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+    if len(content) > MAX_FILE_SIZE:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"File size exceeds maximum allowed size of {MAX_FILE_SIZE / (1024*1024):.0f}MB"
+        )
+    
+    # Security: Validate file is actually a PDF
+    if not content.startswith(b'%PDF'):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="File does not appear to be a valid PDF"
+        )
+    
     # Create temporary file to store upload
     temp_file = None
     try:
         # Save uploaded file to temp location
         with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
-            content = await file.read()
             temp_file.write(content)
             temp_file_path = temp_file.name
         

@@ -11,8 +11,8 @@ class Settings(BaseSettings):
     
     # Application
     APP_NAME: str = "MFHelper"
-    DEBUG: bool = True
-    SECRET_KEY: str = "your-secret-key-change-in-production"
+    DEBUG: bool = False
+    SECRET_KEY: str = "change-this-in-production-use-env-file"
     
     # Database (using sync SQLite for simplicity)
     DATABASE_URL: str = "sqlite:///./mfhelper.db"
@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     REDIS_URL: Optional[str] = None
     
     # JWT Settings
-    JWT_SECRET_KEY: str = "jwt-secret-key-change-in-production"
+    JWT_SECRET_KEY: str = "change-this-in-production-use-env-file"
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
