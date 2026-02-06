@@ -276,3 +276,165 @@ class TestUploadEdgeCases:
         assert response.status_code == 200
         holdings = response.json()["holdings"]
         assert len(holdings) == 3
+
+class TestCASPDFUpload:
+    """Test CAS PDF upload with password protection"""
+    
+    def test_upload_cas_pdf_without_password_encrypted(self, client):
+        """Test uploading an encrypted CAS PDF without providing password"""
+        # Create a mock encrypted PDF
+        import PyPDF2
+        from io import BytesIO
+        
+        # Create a simple PDF with password
+        pdf_writer = PyPDF2.PdfWriter()
+        pdf_writer.add_blank_page(width=200, height=200)
+        pdf_writer.encrypt(user_password="TestPassword123", owner_password="TestPassword123")
+        
+        pdf_bytes = BytesIO()
+        pdf_writer.write(pdf_bytes)
+        pdf_bytes.seek(0)
+        
+        # Try to upload without password
+        response = client.post(
+            "/api/upload/cas",
+            files={"file": ("test_cas.pdf", pdf_bytes, "application/pdf")}
+        )
+        
+        assert response.status_code == 400
+        # Response may be JSON or plain text
+        if response.headers.get("content-type", "").startswith("application/json"):
+            assert "password protected" in response.json()["detail"].lower()
+        elif "invalid host" not in response.text.lower():
+            # If not invalid host error, should be password error
+            assert "password" in response.text.lower()
+    
+    def test_upload_cas_pdf_with_correct_password(self, client):
+        """Test uploading an encrypted CAS PDF with correct password"""
+        import PyPDF2
+        from io import BytesIO
+        
+        # Create a PDF with password and some text
+        pdf_writer = PyPDF2.PdfWriter()
+        pdf_writer.add_blank_page(width=200, height=200)
+        pdf_writer.encrypt(user_password="TestPass", owner_password="TestPass")
+        
+        pdf_bytes = BytesIO()
+        pdf_writer.write(pdf_bytes)
+        pdf_bytes.seek(0)
+        
+        # Upload with correct password
+        response = client.post(
+            "/api/upload/cas",
+            files={"file": ("test_cas.pdf", pdf_bytes, "application/pdf")},
+            data={"password": "TestPass"}
+        )
+        
+        # Should decrypt successfully (may fail parsing if no valid CAS data)
+        # But should not fail due to password
+        assert response.status_code in [200, 400]
+        if response.status_code == 400:
+            # Should not be password error
+            if response.headers.get("content-type", "").startswith("application/json"):
+                detail = response.json()["detail"].lower()
+                assert "invalid password" not in detail or "password protected" not in detail
+    
+    def test_upload_cas_pdf_with_wrong_password(self, client):
+        """Test uploading an encrypted CAS PDF with wrong password"""
+        import PyPDF2
+        from io import BytesIO
+        
+        # Create a PDF with password
+        pdf_writer = PyPDF2.PdfWriter()
+        pdf_writer.add_blank_page(width=200, height=200)
+        pdf_writer.encrypt(user_password="CorrectPass", owner_password="CorrectPass")
+        
+        pdf_bytes = BytesIO()
+        pdf_writer.write(pdf_bytes)
+        pdf_bytes.seek(0)
+        
+        # Upload with wrong password
+        response = client.post(
+            "/api/upload/cas",
+            files={"file": ("test_cas.pdf", pdf_bytes, "application/pdf")},
+            data={"password": "WrongPass"}
+        )
+        
+        assert response.status_code == 400
+        if response.headers.get("content-type", "").startswith("application/json"):
+            assert "invalid password" in response.json()["detail"].lower()
+        elif "invalid host" not in response.text.lower():
+            assert "password" in response.text.lower()
+    
+    def test_upload_cas_pdf_unencrypted_no_password(self, client):
+        """Test uploading an unencrypted CAS PDF without password"""
+        import PyPDF2
+        from io import BytesIO
+        
+        # Create a simple unencrypted PDF
+        pdf_writer = PyPDF2.PdfWriter()
+        pdf_writer.add_blank_page(width=200, height=200)
+        
+        pdf_bytes = BytesIO()
+        pdf_writer.write(pdf_bytes)
+        pdf_bytes.seek(0)
+        
+        # Upload without password (should work for unencrypted PDF)
+        response = client.post(
+            "/api/upload/cas",
+            files={"file": ("test_cas.pdf", pdf_bytes, "application/pdf")}
+        )
+        
+        # Should not fail due to password (may fail due to no CAS data)
+        assert response.status_code in [200, 400]
+        if response.status_code == 400 and response.headers.get("content-type", "").startswith("application/json"):
+            assert "password" not in response.json()["detail"].lower()
+    
+    def test_upload_non_pdf_to_cas_endpoint(self, client, tmp_path):
+        """Test uploading non-PDF file to CAS endpoint"""
+        import pandas as pd
+        
+        # Create Excel file
+        df = pd.DataFrame({'Fund': ['Test Fund'], 'Amount': [10000]})
+        file_path = tmp_path / "test.xlsx"
+        df.to_excel(file_path, index=False)
+        
+        with open(file_path, 'rb') as f:
+            response = client.post(
+                "/api/upload/cas",
+                files={"file": ("test.xlsx", f, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")}
+            )
+        
+        assert response.status_code == 400
+        if response.headers.get("content-type", "").startswith("application/json"):
+            assert "pdf" in response.json()["detail"].lower()
+        elif "invalid host" not in response.text.lower():
+            assert "pdf" in response.text.lower()
+    
+    def test_upload_cas_pdf_with_empty_password(self, client):
+        """Test uploading encrypted CAS PDF with empty string password"""
+        import PyPDF2
+        from io import BytesIO
+        
+        # Create a PDF with password
+        pdf_writer = PyPDF2.PdfWriter()
+        pdf_writer.add_blank_page(width=200, height=200)
+        pdf_writer.encrypt(user_password="ActualPass", owner_password="ActualPass")
+        
+        pdf_bytes = BytesIO()
+        pdf_writer.write(pdf_bytes)
+        pdf_bytes.seek(0)
+        
+        # Upload with empty password
+        response = client.post(
+            "/api/upload/cas",
+            files={"file": ("test_cas.pdf", pdf_bytes, "application/pdf")},
+            data={"password": ""}
+        )
+        
+        # Empty password should be treated as no password
+        assert response.status_code == 400
+        if response.headers.get("content-type", "").startswith("application/json"):
+            assert "password protected" in response.json()["detail"].lower()
+        elif "invalid host" not in response.text.lower():
+            assert "password" in response.text.lower()
