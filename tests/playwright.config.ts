@@ -22,7 +22,7 @@ export default defineConfig({
   
   // Global test settings
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost:5173',
+    baseURL: process.env.BASE_URL || 'http://localhost:8000',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -42,10 +42,10 @@ export default defineConfig({
     timeout: 5000
   },
 
-  // Web server configuration
+  // Web server configuration (backend serves static files)
   webServer: {
-    command: 'cd frontend && npm run dev',
-    url: 'http://localhost:5173',
+    command: 'cd ../backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000',
+    url: 'http://localhost:8000',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
