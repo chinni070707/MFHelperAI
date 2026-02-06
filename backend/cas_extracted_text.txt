@@ -1,1425 +1,681 @@
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS FOR THE PERIOD FROM  01-12-2025
-TO  31-12-2025
-Summary of Investments
-(On the basis of PAN of first holder)
-Name/Joint Name (s)
-Portfolio Valuation (In `)
-View Statement
-Chinni mahesh kumar
-CDSL Demat Accounts
-NSDL Demat Accounts*
-Mutual Fund Folios
-142.00
-N.A
-49,00,322.10
-Click Here
-Total Portfolio Value
-49,00,464.10
-* No Demat Account for this PAN pattern
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-CAS ID: AA01244995
-Chinni mahesh kumar
-Mahesh Kumar Chinni, Flat A 016 SVS Palms1, 11th cross,
-Chinnapanahalli, Next line of Ekya School,,Doddanekkun
-di, Doddanekkundi, Bengaluru, Karnataka, 560037, India
-BENGALURU
-KARNATAKA
-PINCODE: 560037
-Statement for the period from 01-Dec-2025 to 31-Dec-2025
-YOUR CONSOLIDATED
-PORTFOLIO VALUE
-` 49,00,464.10 | Summary
-Your Demat Account and Mutual Fund Folios
-In the single name of
-CHINNI MAHESH KUMAR ( PAN :AOLPC2904E )
-Account Type
-Account Details
-No. of ISINs/ Schemes
-Value in `
-CDSL Demat Account
-INDSTOCKS PRIVATE LIMITED
-DP Id: 12095500   Client Id :18609094
-0
-0.00
-CDSL Demat Account
-GROWW INVEST TECH PRIVATE LIMITED
-DP Id: 12088700   Client Id :73698715
-0
-0.00
-CDSL Demat Account
-UPSTOX SECURITIES PRIVATE LIMITED
-DP Id: 12081800   Client Id :01613608
-1
-12.00
-CDSL Demat Account
-ZERODHA BROKING LIMITED
-DP Id: 12081600   Client Id :01421976
-1
-130.00
-CDSL Demat Account
-HDFC BANK LIMITED
-DP Id: 13012400   Client Id :00186917
-0
-0.00
-Mutual Fund Folios
-20 Folios
-20
-49,00,322.10
-Total
-49,00,464.1
-Grand Total
-49,00,464.10
-Page 1 of 17
-
-
-Consolidated Portfolio Valuation for Year
-Month-Year
-Portfolio Valuation
-(In `)
-Changes in `
-Changes in %
-Jan 2025
-39,01,324.38
-Feb 2025
-36,23,355.35
--2,77,969.03
--7.12
-Mar 2025
-38,64,507.31
-2,41,151.96
-6.66
-Apr 2025
-40,14,693.99
-1,50,186.68
-3.89
-May 2025
-42,91,327.64
-2,76,633.65
-6.89
-Jun 2025
-42,82,709.04
--8,618.60
--0.20
-Jul 2025
-43,74,520.11
-91,811.07
-2.14
-Aug 2025
-43,48,691.01
--25,829.10
--0.59
-Sep 2025
-44,49,851.57
-1,01,160.56
-2.33
-Oct 2025
-46,63,249.58
-2,13,398.01
-4.80
-Nov 2025
-47,81,418.79
-1,18,169.21
-2.53
-Dec 2025
-49,00,464.10
-1,19,045.31
-2.49
-Consolidated Portfolio for Accounts for the Month
-Asset Class
-Value
-Percentage
-Equity
-130.00
-0.00
-Mutual Fund Folios
-49,00,322.10
-100.00
-Mutual Funds Held in Demat Form
-12.00
-0.00
-Total
-49,00,464.1
-100.00
-Page 2 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Account Details
-Chinni mahesh kumar
-PAN: AOLPC2904E
-CDSL Demat Accounts
-DP Name : INDSTOCKS PRIVATE LIMITED
-DP ID : 12095500  CLIENT ID : 18609094
-Email Id : chinni070707@gmail.com
-Mobile No : XXXXXX2170
-BO Sub Status : Individual-Resident
-BSDA : NO
-RGESS : NO
-Account Status : Active
-BO Status : INDIVIDUAL
-Frozen Status : Not Frozen
-Nominee  : chinni Jayasri
-Lakshmi  sasikala
-DP Name : GROWW INVEST TECH PRIVATE LIMITED
-DP ID : 12088700  CLIENT ID : 73698715
-Email Id : chinni070707@gmail.com
-Mobile No : XXXXXX2170
-BO Sub Status : Individual-Resident
-BSDA : NO
-RGESS : NO
-Account Status : Active
-BO Status : INDIVIDUAL
-Frozen Status : Not Frozen
-Nominee  : CHINNI JAYASRI
-LAKSHMI SASIKALA  .
-DP Name : UPSTOX SECURITIES PRIVATE LIMITED
-DP ID : 12081800  CLIENT ID : 01613608
-Email Id : chinni070707@gmail.com
-Mobile No : XXXXXX2170
-BO Sub Status : Individual- Resident Negative
-Nomination
-BSDA : NO
-RGESS : NO
-Account Status : Active
-BO Status : INDIVIDUAL
-Frozen Status : Not Frozen
-Nominee  : Not Registered
-DP Name : ZERODHA BROKING LIMITED
-DP ID : 12081600  CLIENT ID : 01421976
-Email Id : CHINNI070707@GMAIL.COM Mobile No : XXXXXX2170
-BO Sub Status : Individual-Resident
-BSDA : NO
-RGESS : NO
-Account Status : Active
-BO Status : INDIVIDUAL
-Frozen Status : Not Frozen
-Nominee  : CH JAYASRI LAXMI
-SASIKALA
-DP Name : HDFC BANK LIMITED
-DP ID : 13012400  CLIENT ID : 00186917
-Email Id : chinni070707@gmail.com
-Mobile No : XXXXXX2170
-BO Sub Status : Individual- Resident Negative
-Nomination
-BSDA : NO
-RGESS : NO
-Account Status : Active
-BO Status : INDIVIDUAL
-Frozen Status : Not Frozen
-Nominee  : Not Registered
-Page 3 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-MF Folios
-AMC Name : Axis Mutual Fund
-Scheme Name : Axis ELSS Tax Saver Fund - Direct Growth
-Scheme Code : TSDG
-Folio No : 90521186673/0
-Mode of Holding : Single
-Email id : CHINNI070707@GMAIL.COM
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF846K01EW2
-UCC : MFAXIS0006
-RTA : KFIN
-AMC Name : Axis Mutual Fund
-Scheme Name : Axis ELSS Tax Saver Fund - Regular Growth
-Scheme Code : TSGP
-Folio No : 90521186673/0
-Mode of Holding : Single
-Email id : CHINNI070707@GMAIL.COM
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF846K01131
-UCC : MFAXIS0006
-RTA : KFIN
-AMC Name : Axis Mutual Fund
-Scheme Name : Axis ELSS Tax Saver Fund - Direct Growth
-Scheme Code : TSDG
-Folio No : 910107589892/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF846K01EW2
-UCC : MFAXIS0006
-RTA : KFIN
-AMC Name : HDFC Mutual Fund
-Scheme Name : HDFC Flexi Cap Fund - Direct Plan - Growth Option
-Scheme Code : 02T
-Folio No : 15984470/92
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF179K01UT0
-UCC : MFHDFC0019
-RTA : CAMS
-AMC Name : ICICI Prudential Mutual Fund
-Scheme Name : ICICI Prudential Large Cap Fund (erstwhile Bluechip Fund)
-- Direct Plan - Growth
-Scheme Code : 8042
-Folio No : 14748189/43
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF109K016L0
-UCC : MFPRUI0089
-RTA : CAMS
-AMC Name : IDFC Mutual Fund
-Scheme Name : Bandhan Small Cap Fund-Direct Plan-Growth
-Scheme Code : D340
-Folio No : 5442434/29
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF194KB1AL4
-UCC : 
-RTA : CAMS
-Page 4 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-AMC Name : Mirae Asset Mutual Fund
-Scheme Name : Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan
-Scheme Code : FPD1
-Folio No : 77742759196/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF769K01HH0
-UCC : 
-RTA : KFIN
-AMC Name : Mirae Asset Mutual Fund
-Scheme Name : Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan
-Scheme Code : FPD1
-Folio No : 77744727293/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF769K01HH0
-UCC : 
-RTA : KFIN
-AMC Name : Motilal Oswal Mutual Fund
-Scheme Name : Motilal Oswal Large and Midcap Fund - Direct Plan
-Growth
-Scheme Code : LMGD
-Folio No : 9106688844/0
-Mode of Holding : Single
-Email id : CHINNI070707@GMAIL.COM
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF247L01999
-UCC : 
-RTA : KFIN
-AMC Name : Motilal Oswal Mutual Fund
-Scheme Name : Motilal Oswal Midcap Fund - Direct Plan Growth
-Scheme Code : FMGD
-Folio No : 9106688844/0
-Mode of Holding : Single
-Email id : CHINNI070707@GMAIL.COM
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF247L01445
-UCC : 
-RTA : KFIN
-AMC Name : Navi Mutual Fund
-Scheme Name : Navi US Nasdaq 100 Fund of Fund - Direct - Growth
-Scheme Code : NQGDG
-Folio No : 9104703384/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF959L01FZ1
-UCC : 
-RTA : CAMS
-AMC Name : Navi Mutual Fund
-Scheme Name : Navi US Nasdaq 100 Fund of Fund - Direct - Growth
-Scheme Code : NQGDG
-Folio No : 9104790381/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF959L01FZ1
-UCC : 
-RTA : CAMS
-Page 5 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-AMC Name : PPFAS Mutual Fund
-Scheme Name : Parag Parikh Flexi Cap Fund - Direct Plan Growth
-Scheme Code : 001ZG
-Folio No : 10697180
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF879O01027
-UCC : MFPPFA0001
-RTA : CAMS
-AMC Name : Quant Mutual Fund
-Scheme Name : quant Flexi Cap Fund - Direct Plan Growth
-Scheme Code : PEDG
-Folio No : 5105190552/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF966L01911
-UCC : 
-RTA : KFIN
-AMC Name : Quant Mutual Fund
-Scheme Name : quant Focused Fund - Direct Plan
-Scheme Code : LSDG
-Folio No : 5105190552/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF966L01853
-UCC : 
-RTA : KFIN
-AMC Name : Quant Mutual Fund
-Scheme Name : quant Mid Cap Fund - Direct Plan
-Scheme Code : OFDG
-Folio No : 5105190552/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF966L01887
-UCC : 
-RTA : KFIN
-AMC Name : Quant Mutual Fund
-Scheme Name : quant Multi Cap Fund - Direct Plan
-Scheme Code : GFDG
-Folio No : 5105190552/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF966L01614
-UCC : 
-RTA : KFIN
-AMC Name : Quant Mutual Fund
-Scheme Name : quant Small Cap Fund - Direct Plan Growth
-Scheme Code : IBDG
-Folio No : 5105190552/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF966L01689
-UCC : 
-RTA : KFIN
-Page 6 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-AMC Name : Quant Mutual Fund
-Scheme Name : quant Multi Cap Fund - Direct Plan
-Scheme Code : GFDG
-Folio No : 5109645205/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF966L01614
-UCC : 
-RTA : KFIN
-AMC Name : Religare Invesco Mutual Fund
-Scheme Name : Invesco India Midcap Fund - Direct Plan Growth
-Scheme Code : MCD1
-Folio No : 31039073393/0
-Mode of Holding : Single
-Email id : chinni070707@gmail.com
-KYC of Investor/s : KYC OK
-Mobile No : XXXXXX2170
-Nominee : Registered
-ISIN : INF205K01MV6
-UCC : MFLOTS0007
-RTA : KFIN
-Page 7 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-Chinni mahesh kumar
-Mahesh Kumar Chinni, Flat A 016 SVS Palms1, 11th cross,
-Chinnapanahalli, Next line of Ekya School,,Doddanekkun di,
-Doddanekkundi, Bengaluru, Karnataka, 560037, India
-BENGALURU , 560037 KARNATAKA INDIA
-Attention: SEBI vide its circular no. CIR/MRD/
-DP/31/2014 dated November 12, 2014 mandated
-depositories to issue a Consolidated Account
-Statement (CAS) to view all investments held in
-CDSL/NSDL/Mutual Funds. We trust this initiative
-by SEBI would be beneficial to you.
-Total Portfolio Value across investments   ₹ 49,00,464.10 as on  31-12-2025
-Assets Class
-Value in `
-%
-Mutual Fund Folios
-49,00,322.10
-100.00
-Equity
-130.00
-0.00
-Mutual Funds Held in Demat Form
-12.00
-0.00
-Total
-49,00,464.10
-100.00
-DEMAT ACCOUNTS HELD WITH CDSL
-BO ID : 1209550018609094
-DP Name : INDSTOCKS PRIVATE LIMITED
-STATEMENT OF TRANSACTIONS FOR THE PERIOD FROM 01-12-2025 TO 31-12-2025
-No Transaction during the period
-Nil Holding
-BO ID : 1208870073698715
-DP Name : GROWW INVEST TECH PRIVATE LIMITED
-STATEMENT OF TRANSACTIONS FOR THE PERIOD FROM 01-12-2025 TO 31-12-2025
-No Transaction during the period
-Nil Holding
-BO ID : 1208180001613608
-DP Name : UPSTOX SECURITIES PRIVATE LIMITED
-Page 8 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-STATEMENT OF TRANSACTIONS FOR THE PERIOD FROM 01-12-2025 TO 31-12-2025
-No Transaction during the period
-HOLDING STATEMENT AS ON 31-12-2025
-ISIN
-Security
-Current
-Bal
-Frozen
-Bal
-Pledge
-Bal
-Pledge
-Setup
-Bal
-Free Bal
-Market
-Price /
-Face
-Value
-Value (`)
-INF732E01037
-NIPPON LIFE INDIA AM
-LTD#NIPPON INDIA MF-NIPPON
-INDIA ETF NIFTY 1D RATE
-LIQUID BEES
-0.012
---
---
---
-0.012
-1000.010
-12.00
-Portfolio Value ` 12.00 as on 31-12-2025
-BO ID : 1208160001421976
-DP Name : ZERODHA BROKING LIMITED
-STATEMENT OF TRANSACTIONS FOR THE PERIOD FROM 01-12-2025 TO 31-12-2025
-No Transaction during the period
-HOLDING STATEMENT AS ON 31-12-2025
-ISIN
-Security
-Current
-Bal
-Frozen
-Bal
-Pledge
-Bal
-Pledge
-Setup
-Bal
-Free Bal
-Market
-Price /
-Face
-Value
-Value (`)
-INE950G01023!!
-UNIPLY INDUSTRIES
-LIMITED#NEW EQUITY SHARES
-FACE VALUE RS. 2/- AFTER SUB
-DIVISION
-65.000
---
---
---
-65.000
-2.000
-130.00
-Portfolio Value ` 130.00 as on 31-12-2025
-BO ID : 1301240000186917
-DP Name : HDFC BANK LIMITED
-STATEMENT OF TRANSACTIONS FOR THE PERIOD FROM 01-12-2025 TO 31-12-2025
-Page 9 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-No Transaction during the period
-Nil Holding
- Note:
-** Under Liquidation / Winding Up
-$$ Reference BIFR
-@@ Listed ISIN - Defaulted In Redemption
-## Unlisted ISIN - Defaulted In Redemption
-!!Valuation has been derived on the face value
-of the ISIN as the Traded Price or NAV is not
-available or reported by the Stock Exchange /
-AMFI for a period beyond one year.
-For any queries regarding demat account statement, please contact your respective Depository Participant.
-Page 10 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-MUTUAL FUND UNITS HELD WITH MF/RTA
-STATEMENT OF TRANSACTIONS FOR THE PERIOD FROM 01-12-2025 TO 31-12-2025
-Axis Mutual Fund
-TSDG - Axis ELSS Tax Saver Fund - Direct Growth
-ISIN : INF846K01EW2
-UCC : MFAXIS0006
-Date
-Transaction Description
-Amount (`)
-NAV (`)
-Price (`)
-Units
-Stamp
-Duty (`)
-Income
-Distrib­
-ution (`)
-Capital
-Withdr­
-awal (`)
-Opening Balance
-461.9
-29-12-2025 Redemption  112522451
--18889.04
-109.8211
-109.8211
--172
-0
-0
-0
-STT
-.19
-Total Tax
-.19
-Closing Balance
-289.9
-TSGP - Axis ELSS Tax Saver Fund - Regular Growth
-ISIN : INF846K01131
-UCC : MFAXIS0006
-Date
-Transaction Description
-Amount (`)
-NAV (`)
-Price (`)
-Units
-Stamp
-Duty (`)
-Income
-Distrib­
-ution (`)
-Capital
-Withdr­
-awal (`)
-Opening Balance
-694.012
-08-12-2025 Redemption  111254883
--10646.16
-96.7843
-96.7843
--110
-0
-0
-0
-STT
-.11
-Total Tax
-.11
-Closing Balance
-584.012
+Cost Value Mutual Fund Market Value
+(INR) (INR)PORTFOLIO SUMMARY
+MOTILAL OSWAL MUTUAL FUND 1071564.00 1130971.80
+Quant MF 506400.87 482508.22
+AXIS Mutual Fund 77725.72 92925.49
+Mirae Asset Mutual Fund 35000.00 106560.32
+Invesco Mutual Fund 450000.00 429815.04
+Edelweiss Mutual Fund 150000.00 150040.53
+DSP Mutual Fund 0 0
+SBI Mutual Fund 150000 149535.99040320
+Aditya Birla Sun Life Mutual Fund 0 0
+360 ONE Mutual Fund 0 0
+ICICI Prudential Mutual Fund 200000 216896.4602
+PPFAS Mutual Fund 840280 1036514.72496720
+Tata Mutual Fund 150000 149297.37288480
+Franklin Templeton Mutual Fund 0 0
+NAVI MF 130000 308493.00920980
+HSBC Mutual Fund 0 0
+HDFC Mutual Fund 720000 711776.927952
+Bandhan Mutual Fund 360000 339319.031505
+Kotak Mutual Fund 100000 94595.973626
+Total 4940970.59 5399250.890748
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+360 ONE Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaIFIGDG-360 ONE Focused Fund Direct Plan Growth (Formerly IIFL India Growth Fund) (Non-Demat) (Advisor:INA200005166) - ISIN:INF579M01902 PAN: AOLPC2904E Folio No : 111954/ 49 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-174464882 ***
+  
+*Due to merger of IIFL Capital Enhancer Fund with 360 ONE Focused Equity Fund w.e.f.  October 11, 2019 (close of business hours) , the scheme shall be managed as 360 ONE Focused Equity Fund. 
+*An Open-ended Equity Scheme. Current Load Structure : Entry Load: Not Applicable. Exit Load : 1%  will be applicable if redeemed/ switched out within 12 months from the date of allotment for all 
+investments made on or after April 02, 2019. "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP 
+status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 52.6568  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00Consolidated Account Statement
+  CHINNI MAHESHKUMAR
+Mahesh Kumar Chinni, Flat A 016 Svs Palms1, 11Th Cross,
+Chinnapanahalli, Next Line Of Ekya School,
+Doddanekkundi, Doddanekkundi, Bengaluru, Karnataka,
+Bengaluru - 560037
+Karnataka
+india
+Mobile     : 9952282170
+Email Id: chinni070707@gmail.comThis Consolidated  Account  Statement  is brought  to you as an investor
+friendly  initiative  by KFIN  and CAMS  and lists the transactions,balances
+and valuation  of Mutual  Funds  selected  by you.  The consolidation  has
+been  carried  out based  on the email  id entered  by you.  If you have  not
+also entered  a PAN Number  and if the email  id is common  to several
+members  of your  family,  this  statement  will  consolidate  all those
+investments as well.
+If you find  any folios  missing  from  this  consolidation,  you have  not
+registered your email id against those folios.01-Apr-2025 To 01-Feb-2026
+1 15of Page
+KFINCASWS-010226031023 Version 1.0
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-165484689 ***
+  
+WEF 15-May-2017 Entry Load : Nil Exit Load : Nil Note:The exit load rate levied at the time of redemption/switch-out of units will be the rate prevailing at the time of allotment of the corresponding units. 
+Customers may request for a separate Exit Load Applicability Report by calling our toll free numbers 1800-270-7000  or from any of our Investor Service Centers. Important note - The last date to link 
+Aadhaar and Permanent Account Number (PAN) has been extended by the government until 31 March 2023. Kindly link your Aadhar to your PAN  prior to the aforesaid deadline to avoid for higher TDS 
+on your income distribution or capital withdrawals. Future transactions may also be restricted.  For more details, please visit income tax portal. Kindly ignore if your PAN is already linked to Aadhaar. 
+"Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly 
+update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 68.48  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+09-Jul-2025 Redemption (24,759.34) (224.488) 110.2936 321.373
+09-Jul-2025 *** STT Paid *** 0.25
+09-Jul-2025  09-Jul-2025 Switch Over In (From Axis ELSS Tax Saver Fund - Regular Growth 
+F.No:90521186673)15,499.23 140.527 110.2936 461.900
+09-Jul-2025 *** Stamp Duty *** 0.77
+09-Jul-2025  09-Jul-2025 *** Refund Taxsaver non Multiples of 500 Residual Refund ***
+56.70
+  29-Dec-2025 Redemption (18,889.04) (172.000) 109.8211 289.900
+29-Dec-2025 *** STT Paid *** 0.19
+29-Dec-2025  
+Entry Load - NIL, Exit Load - NIL.  Investment in Axis ELSS Tax Saver Fund is eligible for availing tax benefit under section 80C of Income Tax ACT 1961 read with circular no. - 9/2005 dated 30 Nov`05 
+issued by Ministry Of Finance, subject to the limitsconditions specified under section 80C.An Open-Ended Equity Linked Savings Scheme With A Statutory Lock In Of 3 Years And Tax Benefit.The name 
+of Axis Long Term Equity Fund has been changed to Axis ELSS Tax Saver Fund, effective from December 08, 2023.Closing Unit Balance: 289.900  NAV on 31-JAN-2026 : INR 107.1897  Market Value on 31-JAN-2026 : INR 31,074.29 Total Cost Value : INR 26,569.02
+07-Apr-2025 Systematic Investment (112/115) 1,499.93 17.532 85.5533 806.067
+07-Apr-2025 *** Stamp Duty *** 0.07
+07-Apr-2025  05-May-2025 Systematic Investment (113/115) 1,499.93 16.075 93.3059 822.142
+05-May-2025 *** Stamp Duty *** 0.07
+05-May-2025  05-Jun-2025 Systematic Investment (114/115) 1,499.93 15.736 95.3170 837.878
+05-Jun-2025 *** Stamp Duty *** 0.07
+05-Jun-2025  07-Jul-2025 Systematic Investment (115/115) 1,499.93 15.399 97.4038 853.277
+07-Jul-2025 *** Stamp Duty *** 0.07
+07-Jul-2025  09-Jul-2025 Switch Over Out (To Axis ELSS Tax Saver Fund - Direct Growth 
+F.No:90521186673)(15,556.70) (159.265) 97.6791 694.012
+09-Jul-2025 *** STT Paid *** 0.16
+09-Jul-2025  08-Dec-2025 Redemption (10,646.16) (110.000) 96.7843 584.012
+08-Dec-2025 *** STT Paid *** 0.11
+08-Dec-2025  
+Entry Load - NIL, Exit Load - NIL.  Investment in Axis ELSS Tax Saver Fund is eligible for availing tax benefit under section 80C of Income Tax ACT 1961 read with circular no. - 9/2005 dated 30 Nov`05 
+issued by Ministry Of Finance, subject to the limitsconditions specified under section 80C.An Open-Ended Equity Linked Savings Scheme With A Statutory Lock In Of 3 Years And Tax Benefit.The name 
+of Axis Long Term Equity Fund has been changed to Axis ELSS Tax Saver Fund, effective from December 08, 2023.Closing Unit Balance: 584.012  NAV on 31-JAN-2026 : INR 94.5415  Market Value on 31-JAN-2026 : INR 55,213.37 Total Cost Value : INR 46,560.89Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+Aditya Birla Sun Life Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaB02GZ-Aditya Birla Sun Life ELSS Tax Saver Fund- (ELSS U/S 80C of IT ACT) - Growth-Direct Plan  (Non-Demat) (Advisor:DIRECT) - ISIN:INF209K01UN8 PAN: AOLPC2904E Folio No : 1019330824 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Mahesh Kumar
+AXIS Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikala128TSDGG-Axis ELSS Tax Saver Fund - Direct Growth (Advisor:INA200005166) - ISIN:INF846K01EW2 PAN: AOLPC2904E Folio No : 90521186673 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 545.861Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+Nominee 1 : Chinni jayasri lakshmi sasikala128TSGPG-Axis ELSS Tax Saver Fund - Regular Growth (Advisor:ARN-0010) - ISIN:INF846K01131 PAN: AOLPC2904E Folio No : 90521186673 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 788.535Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+2 15of Page
+KFINCASWS-010226031023 Version 1.0
+27-Jun-2025 Redemption (35,993.00) (325.026) 110.7400 61.926
+27-Jun-2025 *** STT Paid *** 0.36
+27-Jun-2025  
+Entry Load - NIL, Exit Load - NIL.  Investment in Axis ELSS Tax Saver Fund is eligible for availing tax benefit under section 80C of Income Tax ACT 1961 read with circular no. - 9/2005 dated 30 Nov`05 
+issued by Ministry Of Finance, subject to the limitsconditions specified under section 80C.An Open-Ended Equity Linked Savings Scheme With A Statutory Lock In Of 3 Years And Tax Benefit.The name 
+of Axis Long Term Equity Fund has been changed to Axis ELSS Tax Saver Fund, effective from December 08, 2023.Closing Unit Balance: 61.926  NAV on 31-JAN-2026 : INR 107.1897  Market Value on 31-JAN-2026 : INR 6,637.83 Total Cost Value : INR 4,595.81
+09-Jul-2025 Redemption - Electronic Payment-BSE - - 1144492326 (1,001.28) (71.4230) 14.0191 0.000
+09-Jul-2025 *** STT Paid *** 0.01
+09-Jul-2025  19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-165834025 ***
+  
+Bandhan Nifty Alpha 50 Index Fund: Entry Load: Nil, Exit Load: Nil "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, 
+occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 12.8179  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+19-Nov-2025 Net Purchase-BSE - via Online 59,997.00 1,149.963 52.173 1,149.963
+19-Nov-2025 *** Stamp Duty *** 3.00
+19-Nov-2025  06-Jan-2026 Net Purchase-BSE - via Online 2,99,985.00 5,795.468 51.762 6,945.431
+06-Jan-2026 *** Stamp Duty *** 15.00
+06-Jan-2026  
+"Bandhan Small Cap Fund: Entry Load: Nil Exit Load: 1% if redeemed/switched out within 1 year from the date of allotment Transaction Charges applicable for this Scheme as disclosed in SID and KIM." 
+"Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly 
+update them immediately."Closing Unit Balance: 6,945.431  NAV on 31-JAN-2026 : INR 48.855  Market Value on 31-JAN-2026 : INR 3,39,319.03 Total Cost Value : INR 3,60,000.00
+*** No transactions during this statement period ***
+Investments in DSP Tax Saver Fund (Open ended ELSS) are eligible for tax deduction as per conditions u/s 80C of the Income Tax Act, 1961. Entry & Exit Load - Nil. "Please ensure that your account 
+information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 158.731  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+Nominee 1 : Chinni jayasri lakshmi sasikala128TSDGG-Axis ELSS Tax Saver Fund - Direct Growth (Advisor:INZ000305337) - ISIN:INF846K01EW2 PAN: AOLPC2904E Folio No : 910107589892 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 386.952Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+Bandhan Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaGD387-Bandhan Nifty Alpha 50 Index Fund-Direct Plan-Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF194KB1HA2 PAN: AOLPC2904E Folio No : 5442434/ 29 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 71.423Nominee 2 : Nominee 3 : Chinni Maheshkumar
+Nominee 1 : Chinni jayasri lakshmi sasikalaGD340-Bandhan Small Cap Fund-Direct Plan-Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF194KB1AL4 PAN: AOLPC2904E Folio No : 5442434/ 29 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+DSP Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaD739-DSP ELSS Tax Saver Fund - Direct Plan - Growth  (Non-Demat) (Advisor:DIRECT) - ISIN:INF740K01OK1 PAN: AOLPC2904E Folio No : 3639214/ 96 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+3 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+Nominee 1 : Chinni jayasri lakshmi sasikalaD788-DSP Small Cap Fund - Direct Plan - Growth (formerly DSP Micro Cap Fund) (Non-Demat) (Advisor:DIRECT) - ISIN:INF740K01QD1 PAN: AOLPC2904E Folio No : 3639214/ 96 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-165624840 ***
+  
+Exit Load: 1% if redeemed/switched within 12 months. NIL after 12 months.   "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact 
+details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 205.240  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Edelweiss Mutual Fund
+Nominee 1 : CHINNI JAYASRI LAKSHMI SASIKALA118ILSGG-Edelweiss Liquid Fund - Regular Plan Growth (Advisor:ARN-306070) - ISIN:INF754K01GZ6 PAN: AOLPC2904E Folio No : 91043571806 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESHKUMAR
+29-Jan-2026 Purchase 1,49,992.50 43.462 3,451.1524 43.462
+29-Jan-2026 *** Stamp Duty *** 7.50
+29-Jan-2026  
+With effect from October 20, 2019 exit load shall be applicable on graded basis as follow: Upto Day 1 @ 0.0070%, Day 2 @ 0.0065%, Day 3 @ 0.0060%, Day 4 @ 0.0055%, Day 5 @ 0.0050%, Day 6 @ 
+0.0045% and Day 7 onwards 0.0000%.Closing Unit Balance: 43.462  NAV on 31-JAN-2026 : INR 3,452.2233  Market Value on 31-JAN-2026 : INR 1,50,040.53 Total Cost Value : INR 1,50,000.00
+Franklin Templeton Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaFTI482-Franklin India Focused Equity Fund - Direct Plan - Growth  (Non-Demat) (Advisor:INZ000305337) - ISIN:INF090I01IW2 PAN: AOLPC2904E Folio No : 19811780 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.001Nominee 2 : Nominee 3 : CHINNI MAHESHKUMAR
+17-Nov-2025 Redemption Of Units - Electronic Payment-BSE - - CITIN25656618009 (0.13) (0.0010) 126.0399 0.000
+17-Nov-2025 *** STT Paid *** 0.00
+17-Nov-2025  19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-173957281 ***
+  
+W.e.f 11/12/2017 Entry Load: Nil, Exit Load: 1% if redeemed/switched-out within 1 year from the date of allotment: For SIP/STP, basis registration date "Please ensure that your account information is up 
+to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 121.2203  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaFTI273-Franklin India Focused Equity Fund - Growth  (Non-Demat) (Advisor:ARN-0010) - ISIN:INF090I01981 PAN: AOLPC2904E Folio No : 19811780 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 159.617Nominee 2 : Nominee 3 : CHINNI MAHESHKUMAR
+11-Apr-2025 Systematic Investment Purchase - 112/997 - via Internet - ARN-0010 1,499.93 15.540 96.5177 175.157
+11-Apr-2025 *** Stamp Duty *** 0.07
+11-Apr-2025  12-May-2025 Systematic Investment Purchase - 113/997 - via Internet - ARN-0010 1,499.93 14.287 104.9892 189.444
+12-May-2025 *** Stamp Duty *** 0.07
+12-May-2025  10-Jun-2025 Systematic Investment Purchase - 114/997 - via Internet - ARN-0010 1,499.93 13.951 107.5126 203.395
+10-Jun-2025 *** Stamp Duty *** 0.07
+10-Jun-2025  09-Jul-2025 *** Change of ContactsEMAIL updated from New CAMSonline 
+for AOLPCXXXXE ***
+  
+10-Jul-2025 Systematic Investment Purchase - 115/997 - via Internet - ARN-0010 1,499.93 13.864 108.1882 217.259
+10-Jul-2025 *** Stamp Duty *** 0.07
+10-Jul-2025  10-Jul-2025 Redemption Of Units - Electronic Payment - via Internet - 
+CITIN25592918591(21,784.66) (203.395) 107.1063 13.864
+10-Jul-2025 *** STT Paid *** 0.22Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+4 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+CITIN2559291859110-Jul-2025 *** STT Paid *** 0.22
+10-Jul-2025  10-Jul-2025 *** Cancellation wef 15-JUL-2025<$> SIP Cancelled based on 
+investor's written request ***
+  
+11-Jul-2025 *** Redemption/SWP11-JUL-2025_Insufficient clear balance. ***
+  18-Jul-2025 Redemption Of Units - Electronic Payment-BSE - - CITIN25596730036 (1,472.89) (13.864) 106.2390 0.000
+18-Jul-2025 *** STT Paid *** 0.01
+18-Jul-2025  
+W.e.f 11/12/2017 Entry Load - Nil; Exit Load: 1% if redeemed/switched-out within 1 year from the date of allotment: For SIP/STP, basis registration date "Please ensure that your account information is up 
+to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 107.1553  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaFTI482-Franklin India Focused Equity Fund - Direct Plan - Growth  (Non-Demat) (Advisor:INZ000305337) - ISIN:INF090I01IW2 PAN: AOLPC2904E Folio No : 22645733 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESHKUMAR
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-173957281 ***
+  
+W.e.f 11/12/2017 Entry Load: Nil, Exit Load: 1% if redeemed/switched-out within 1 year from the date of allotment: For SIP/STP, basis registration date "Please ensure that your account information is up 
+to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 121.2203  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaFTI482-Franklin India Focused Equity Fund - Direct Plan - Growth  (Non-Demat) (Advisor:INZ000305337) - ISIN:INF090I01IW2 PAN: AOLPC2904E Folio No : 33370083 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-173957281 ***
+  
+W.e.f 11/12/2017 Entry Load: Nil, Exit Load: 1% if redeemed/switched-out within 1 year from the date of allotment: For SIP/STP, basis registration date "Please ensure that your account information is up 
+to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 121.2203  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
 HDFC Mutual Fund
-02T - HDFC Flexi Cap Fund - Direct Plan - Growth Option
-ISIN : INF179K01UT0
-UCC : MFHDFC0019
-Date
-Transaction Description
-Amount (`)
-NAV (`)
-Price (`)
-Units
-Stamp
-Duty (`)
-Income
-Distrib­
-ution (`)
-Capital
-Withdr­
-awal (`)
-Opening Balance
-27.112
-01-12-2025
-SIP Purchase-BSE -
-Instalment No - 3/348 Online
-1409905980
-19999
-2282.654
-2282.654
-8.761
-1
-0
-0
-01-12-2025 Purchase-BSE - Online
-1409906232
-99995
-2282.654
-2282.654
-43.806
-5
-0
-0
-31-12-2025 Purchase-BSE - Online
-1434396576
-499975
-2272.565
-2272.565
-220.005
-25
-0
-0
-Closing Balance
-299.684
-Page 11 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-PPFAS Mutual Fund
-001ZG - Parag Parikh Flexi Cap Fund - Direct Plan Growth
-ISIN : INF879O01027
-UCC : MFPPFA0001
-Date
-Transaction Description
-Amount (`)
-NAV (`)
-Price (`)
-Units
-Stamp
-Duty (`)
-Income
-Distrib­
-ution (`)
-Capital
-Withdr­
-awal (`)
-Opening Balance
-10872.557
-01-12-2025
-Purchase Systematic-BSE -
-Instalment No - 7/348
-176511864
-19999
-94.9398
-94.9398
-210.649
-1
-0
-0
-Closing Balance
-11083.206
-Quant Mutual Fund
-PEDG - quant Flexi Cap Fund - Direct Plan Growth
-ISIN : INF966L01911
-UCC : 
-Date
-Transaction Description
-Amount (`)
-NAV (`)
-Price (`)
-Units
-Stamp
-Duty (`)
-Income
-Distrib­
-ution (`)
-Capital
-Withdr­
-awal (`)
-Opening Balance
-3866.254
-29-12-2025 Redemption  94127202
--424838.68
-109.8849
-109.8849
--3866.254
-0
-0
-0
-STT
-4.25
-Total Tax
-4.25
-Closing Balance
-0
-MUTUAL FUND UNITS HELD AS ON 31-12-2025
-Scheme Name
-ISIN
-Folio No.
-Closing
-Bal
-(Units)
-NAV (`)
-Cumulative
-Amount
-Invested (in
-INR)
-Valuation (`)
-Unrealised
-Profit/Loss
-Unreali­
-sed
-Profit/
-Loss(%)
-TSDG - Axis ELSS Tax
-Saver Fund - Direct
-Growth
-INF846K01EW2 90521186673/0
-289.9
-110.2419
-26,569.02
-31,959.13
-5,390.11
-20.29
-TSGP - Axis ELSS Tax
-Saver Fund - Regular
-Growth
-INF846K01131 90521186673/0
-584.012
-97.2938
-46,560.89
-56,820.75
-10,259.86
-22.04
-TSDG - Axis ELSS Tax
-Saver Fund - Direct
-Growth
-INF846K01EW2 910107589892/0
-61.926
-110.5516
-4,595.81
-6,846.02
-2,250.21
-48.96
-02T - HDFC Flexi Cap
-Fund - Direct Plan -
-Growth Option
-INF179K01UT0
-15984470/92
-299.684
-2272.565
-6,80,000.00
-6,81,051.37
-1,051.37
-0.15
-8042 - ICICI
-Prudential Large Cap
-Fund (erstwhile
-Bluechip Fund) -
-Direct Plan - Growth
-INF109K016L0
-14748189/43
-1761.095
-127.17
-2,00,000.00
-2,23,958.45
-23,958.45
-11.98
-Page 12 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-Scheme Name
-ISIN
-Folio No.
-Closing
-Bal
-(Units)
-NAV (`)
-Cumulative
-Amount
-Invested (in
-INR)
-Valuation (`)
-Unrealised
-Profit/Loss
-Unreali­
-sed
-Profit/
-Loss(%)
-D340 - Bandhan
-Small Cap Fund-
-Direct Plan-Growth
-INF194KB1AL4
-5442434/29
-1149.963
-50.881
-60,000.00
-58,511.27
--1,488.73
--2.48
-FPD1 - Mirae Asset
-NYSE FANG+ ETF
-Fund of Fund - Direct
-Plan
-INF769K01HH0 77742759196/0
-429.274
-35.979
-5,000.00
-15,444.85
-10,444.85
-208.90
-FPD1 - Mirae Asset
-NYSE FANG+ ETF
-Fund of Fund - Direct
-Plan
-INF769K01HH0 77744727293/0
-2544.862
-35.979
-30,000.00
-91,561.59
-61,561.59
-205.21
-LMGD - Motilal
-Oswal Large and
-Midcap Fund - Direct
-Plan Growth
-INF247L01999
-9106688844/0 20325.045
-36.5664
-6,48,221.00
-7,43,213.73
-94,992.73
-14.65
-FMGD - Motilal
-Oswal Midcap Fund -
-Direct Plan Growth
-INF247L01445
-9106688844/0
-3978.572
-113.9116
-4,23,343.00
-4,53,205.50
-29,862.50
-7.05
-NQGDG - Navi US
-Nasdaq 100 Fund of
-Fund - Direct -
-Growth
-INF959L01FZ1
-9104703384/0
-7807.802
-20.4073
-70,000.00
-1,59,336.16
-89,336.16
-127.62
-NQGDG - Navi US
-Nasdaq 100 Fund of
-Fund - Direct -
-Growth
-INF959L01FZ1
-9104790381/0
-6906.585
-20.4073
-60,000.00
-1,40,944.75
-80,944.75
-134.91
-001ZG - Parag Parikh
-Flexi Cap Fund -
-Direct Plan Growth
-INF879O01027
-10697180 11083.206
-95.1709
-8,40,280.00
-10,54,798.69
-2,14,518.69
-25.53
-PEDG - quant Flexi
-Cap Fund - Direct
-Plan Growth
-INF966L01911
-5105190552/0
-0
-111.4619
-0.00
-0.00
-0.00
-0.00
-LSDG - quant Focused
-Fund - Direct Plan
-INF966L01853
-5105190552/0
-345.321
-96.7624
-21,000.00
-33,414.09
-12,414.09
-59.11
-OFDG - quant Mid
-Cap Fund - Direct
-Plan
-INF966L01887
-5105190552/0
-1480.784
-235.259
-3,75,000.00
-3,48,367.76
--26,632.24
--7.10
-GFDG - quant Multi
-Cap Fund - Direct
-Plan
-INF966L01614
-5105190552/0
-98.519
-669.8847
-68,927.52
-65,996.37
--2,931.15
--4.25
-IBDG - quant Small
-Cap Fund - Direct
-Plan Growth
-INF966L01689
-5105190552/0
-2442.132
-276.8784
-6,55,000.00
-6,76,173.60
-21,173.60
-3.23
-GFDG - quant Multi
-Cap Fund - Direct
-Plan
-INF966L01614
-5109645205/0
-28.646
-669.8847
-12,464.00
-19,189.52
-6,725.52
-53.96
-MCD1 - Invesco India
-Midcap Fund - Direct
-Plan Growth
-INF205K01MV6 31039073393/0
-177.84
-222.27
-40,000.00
-39,528.50
--471.50
--1.18
-Grand Total
-42,66,961.24
-49,00,322.10
-Page 13 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-Load Structures
-IDCW - Income Distribution and Capital Withdrawal
-1.
-TSDG -  Axis ELSS Tax Saver Fund - Direct Growth : Entry Load - NIL, Exit Load - NIL.  Investment in Axis ELSS Tax Saver Fund is eligible for availing tax benefit
-under section 80C of Income Tax ACT 1961 read with circular no. - 9/2005 dated 30 Nov`05 issued by Ministry Of Finance, subject to the limitsconditions
-specified under section 80C.An Open-Ended Equity Linked Savings Scheme With A Statutory Lock In Of 3 Years And Tax Benefit.The name of Axis Long Term
-Equity Fund has been changed to Axis ELSS Tax Saver Fund, effective from December 08, 2023.
-2.
-TSGP -  Axis ELSS Tax Saver Fund - Regular Growth : Entry Load - NIL, Exit Load - NIL.  Investment in Axis ELSS Tax Saver Fund is eligible for availing tax benefit
-under section 80C of Income Tax ACT 1961 read with circular no. - 9/2005 dated 30 Nov`05 issued by Ministry Of Finance, subject to the limitsconditions
-specified under section 80C.An Open-Ended Equity Linked Savings Scheme With A Statutory Lock In Of 3 Years And Tax Benefit.The name of Axis Long Term
-Equity Fund has been changed to Axis ELSS Tax Saver Fund, effective from December 08, 2023.
-3.
-02T -  HDFC Flexi Cap Fund - Direct Plan - Growth Option : "HDFC Equity Fund has undergone a change in Fundamental Attributes viz. w.e.f. January 29th,
-2021 and the scheme shall be managed as HDFC Flexi Cap Fund. Current Load Structure : Entry Load: Not Applicable. Exit Load: In respect of each purchase/
-switch-in of units, an Exit load of 1% if units are redeemed/switched-out within 12 Months from the date of allotment. No Exit Load if units are redeemed /
-switched-out after 12 Months. The rate of exit load levied on units redeemed will be the rate prevailing at the time of allotment of the units. For further details
-visit www.hdfcfund.com (under Investor Corner) or contact any of our Investor Service Centre.  GST Identification Number : 27AAATH1809A1Z9. "Please
-ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status,
-FATCA/CRS information etc. kindly update them immediately."
-4.
-8042 -  ICICI Prudential Large Cap Fund (erstwhile Bluechip Fund) - Direct Plan - Growth : Current : Entry Load - Nil. Exit Load w.e.f 16-Jul-2010 [including
-SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out upto 1 year - 1.0%, > 1 year - Nil. For lumpsum investment/switch in, the applicable
-load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the
-applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com.
-Scheme Name of ICICI Prudential Bluechip Fund has been changed to ICICI Prudential Large Cap Fund with effect from June 16, 2025. "Please ensure that
-your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS
-information etc. kindly update them immediately."
-5.
-D340 -  Bandhan Small Cap Fund-Direct Plan-Growth : "Bandhan Small Cap Fund: Entry Load: Nil Exit Load: 1% if redeemed/switched out within 1 year from
-the date of allotment Transaction Charges applicable for this Scheme as disclosed in SID and KIM." "Please ensure that your account information is up to date.
-If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them
-immediately."
-6.
-FPD1 -  Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan : If redeemed within 3 months from the date of allotment: 0.50%,If redeemed after 3 months
-from the date of allotment: NIL.
-7.
-LMGD -  Motilal Oswal Large and Midcap Fund - Direct Plan Growth : Entry Load: Nil, Exit Load : 1% - If redeemed on or before 365 days from the date of
-allotment for Subscription received  Wef 10-Jul-2024.Nil - If redeemed after 365 days  from the date of allotment.Entry Load: Nil, Exit Load: 1% -If redeemed
-or switched out on or before 15 days from the date of allotment for  Subscription received  till 09-July-2024.Nil - If redeemed after 15 days from the date of
-allotment.
-8.
-FMGD -  Motilal Oswal Midcap Fund - Direct Plan Growth : Entry Load: Nil, Exit Load : 1% - If redeemed on or before 365 days from the date of allotment for
-Subscription received  Wef 18-Mar-2024Nil - If redeemed after 365 days from the date of allotment.Entry Load: Nil, Exit Load: 1% -If redeemed or switched
-out on or before 15 days from the date of allotment for  Subscription received  till 17-Mar-2024.Nil - If redeemed after 15 days from the date of allotment.
-9.
-NQGDG -  Navi US Nasdaq 100 Fund of Fund - Direct - Growth : Entry Load & Exit Load- Nil. "Please ensure that your account information is up to date. If
-there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them
-immediately."
-10.
-001ZG -  Parag Parikh Flexi Cap Fund - Direct Plan Growth : Exit Load:     Investors are requested to note that with effect from November 15, 2021, all new/
-prospective investments (including SIP/STP and SWP registered) in respect of each purchase / switch-in of units, 10% of the units may be redeemed without
-any exit load from the date of allotment made on or after the aforesaid effective date. Please refer Notice cum addendum dated November 11, 2021 available
-on website https://amc.ppfas.com/downloads/addendum/    Any redemption or switch out in excess of the aforesaid limit shall be subject to the following exit
-load :  Exit Load of 2% is applicable, if Units are redeemed/switched-out on or before 365 days from the date of allotment, 1% if redeemed/Switched-out after
-365 days but on or before 730 days from the date allotment and thereafter there is no exit load. "Effective from July 01, 2020, stamp duty @ 0.005% will be
-deducted from the Net investment amount. Units will be allotted for the balance amount. "Please ensure that your account information is up to date. If there
+Nominee 1 : Chinni jayasri lakshmi sasikalaH02T-HDFC Flexi Cap Fund - Direct Plan - Growth Option  (Non-Demat) (Advisor:INA200005166) - ISIN:INF179K01UT0 PAN: AOLPC2904E Folio No : 15984470/ 92 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+28-Aug-2025 Purchase-BSE - Online 19,999.00 9.266 2,158.208 9.266
+28-Aug-2025 *** Stamp Duty *** 1.00
+28-Aug-2025  01-Oct-2025 SIP Purchase-BSE - Instalment No - 1 Online 19,999.00 9.044 2,211.335 18.310
+01-Oct-2025 *** Stamp Duty *** 1.00
+01-Oct-2025  03-Nov-2025 SIP Purchase-BSE - Instalment No - 2/348 Online 19,999.00 8.802 2,272.057 27.112
+03-Nov-2025 *** Stamp Duty *** 1.00
+03-Nov-2025  19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-165930652 ***
+  
+01-Dec-2025 SIP Purchase-BSE - Instalment No - 3/348 Online 19,999.00 8.761 2,282.654 35.873
+01-Dec-2025 *** Stamp Duty *** 1.00
+01-Dec-2025  01-Dec-2025 Purchase-BSE - Online 99,995.00 43.806 2,282.654 79.679
+01-Dec-2025 *** Stamp Duty *** 5.00
+01-Dec-2025  22-Dec-2025 ***  Cancelled ***
+  Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+5 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+31-Dec-2025 Purchase-BSE - Online 4,99,975.00 220.005 2,272.565 299.684
+31-Dec-2025 *** Stamp Duty *** 25.00
+31-Dec-2025  01-Jan-2026 SIP Purchase-BSE - Instalment No - 1 Online 39,998.00 17.548 2,279.307 317.232
+01-Jan-2026 *** Stamp Duty *** 2.00
+01-Jan-2026  
+"HDFC Equity Fund has undergone a change in Fundamental Attributes viz. w.e.f. January 29th, 2021 and the scheme shall be managed as HDFC Flexi Cap Fund. Current Load Structure : Entry Load: 
+Not Applicable. Exit Load: In respect of each purchase/switch-in of units, an Exit load of 1% if units are redeemed/switched-out within 12 Months from the date of allotment. No Exit Load if units are 
+redeemed /switched-out after 12 Months. The rate of exit load levied on units redeemed will be the rate prevailing at the time of allotment of the units. For further details visit www.hdfcfund.com (under 
+Investor Corner) or contact any of our Investor Service Centre.  GST Identification Number : 27AAATH1809A1Z9. "Please ensure that your account information is up to date. If there are any changes to 
+your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 317.232  NAV on 30-JAN-2026 : INR 2,243.711  Market Value on 30-JAN-2026 : INR 7,11,776.93 Total Cost Value : INR 7,20,000.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaH44T-HDFC Large Cap Fund - Direct Plan - Growth Option (formerly HDFC Top 100 Fund) (Non-Demat) (Advisor:DIRECT) - ISIN:INF179K01YV8 PAN: AOLPC2904E Folio No : 15984470/ 92 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+*** No transactions during this statement period ***
+*Due to change in the Scheme Name  of HDFC Top 100 Fund  w.e.f.  Jan 01, 2024,  the Scheme shall be managed as HDFC Large Cap Fund and type of the scheme has been changed to an 
+Open-ended Equity Scheme predominantly investing in large cap stocks - Current Load Structure : Entry Load - Nil. Exit Load : 1% if units are redeemed/swtiched-out within 1 year; No Exit Load if units 
+are redeemed /switched-out after 1 year from the date of investment with effect from May 08, 2015.  The rate of exit load levied on units redeemed will be the rate prevailing at the time of allotment of the 
+units. For further details visit www.hdfcfund.com (under Investor Corner) or contact any of our Investor Service Centre.  GST Identification Number : 27AAATH1809A1Z9 "Please ensure that your account 
+information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 1,244.189  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaHACG1G-HDFC Small Cap Fund - Direct Growth Plan  (Non-Demat) (Advisor:DIRECT) - ISIN:INF179KA1RW5 PAN: AOLPC2904E Folio No : 15984470/ 92 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+*** No transactions during this statement period ***
+*Due to change in fundamental attributes of the Scheme w.e.f.  May 23, 2018, the type of the Scheme has been changed to an open-ended equity scheme predominantly investing in small cap stocks. 
+Current Load Structure - Entry Load: Not Applicable; Exit Load: 1% if units are redeemed/switched-out within 1 year from the allotment date; No Exit Load if units are redeemed /switched-out after 1 year. 
+The rate of exit load levied on units redeemed/switched-out will be the rate prevailing at the time of allotment of the units. For further details visit www.hdfcfund.com or contact any of our Investor Service 
+Centre.  GST Identification Number : 27AAATH1809A1Z9 "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, 
+income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 152.905  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+HSBC Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaOFIVFG-HSBC Value Fund - Regular Growth (Formerly known as L&T India Value Fund - Growth)  (Non-Demat) (Advisor:ARN-0010) - ISIN:INF677K01023 PAN: AOLPC2904E Folio No : 2680623/ 13 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-171055163 ***
+  
+Exit Load:If the units redeemed or switched out are upto 10% of the units purchased or switched in (the limit) within 1 year from the date of allotment: Nil    If units redeemed or switched out are over and 
+above the limit within 1 year from the date of allotment: 1% of applicable NAVIf units are redeemed or switched out on or after 1 year from the date of allotment: Nil "Please ensure that your account 
+information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 113.0535  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+ICICI Prudential Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaP8042-ICICI Prudential Large Cap Fund (erstwhile Bluechip Fund) - Direct Plan - Growth (formerly ICICI Prudential Focused Bluechip Equity Fund) 
+(Non-Demat) (Advisor:INA200005166) - ISIN:INF109K016L0 PAN: AOLPC2904E Folio No : 14748189/ 43 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 1,761.095Nominee 2 : Nominee 3 : Chinni MaheshkumarConsolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+6 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-171331758 ***
+  
+Current : Entry Load - Nil. Exit Load w.e.f 16-Jul-2010 [including SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out upto 1 year - 1.0%, > 1 year - Nil. For lumpsum 
+investment/switch in, the applicable load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the 
+applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com.                                                                                                                                                                                                                                         
+Scheme Name of ICICI Prudential Bluechip Fund has been changed to ICICI Prudential Large Cap Fund with effect from June 16, 2025. "Please ensure that your account information is up to date. If there 
+are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 1,761.095  NAV on 30-JAN-2026 : INR 123.16  Market Value on 30-JAN-2026 : INR 2,16,896.46 Total Cost Value : INR 2,00,000.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaP8133-ICICI Prudential US Bluechip Equity Fund - Direct Plan -  Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF109K01Z71 PAN: AOLPC2904E Folio No : 14748189/ 43 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+*** No transactions during this statement period ***
+Current : Entry Load - Nil. Exit Load w.e.f 01-Jan-2019 [including SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out within 1 month - 1%, after 1 month - Nil. For lumpsum 
+investment/switch in, the applicable load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the 
+applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com. "Please ensure that your account information is up to date. If there 
+are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 84.01  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaP8133-ICICI Prudential US Bluechip Equity Fund - Direct Plan -  Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF109K01Z71 PAN: AOLPC2904E Folio No : 14748190/ 40 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-171331758 ***
+  
+Current : Entry Load - Nil. Exit Load w.e.f 01-Jan-2019 [including SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out within 1 month - 1%, after 1 month - Nil. For lumpsum 
+investment/switch in, the applicable load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the 
+applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com. "Please ensure that your account information is up to date. If there 
+are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 84.01  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaP8133-ICICI Prudential US Bluechip Equity Fund - Direct Plan -  Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF109K01Z71 PAN: AOLPC2904E Folio No : 14956540/ 58 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-171331758 ***
+  
+Current : Entry Load - Nil. Exit Load w.e.f 01-Jan-2019 [including SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out within 1 month - 1%, after 1 month - Nil. For lumpsum 
+investment/switch in, the applicable load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the 
+applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com. "Please ensure that your account information is up to date. If there 
+are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 84.01  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaP8133-ICICI Prudential US Bluechip Equity Fund - Direct Plan -  Growth  (Non-Demat) (Advisor:DIRECT) - ISIN:INF109K01Z71 PAN: AOLPC2904E Folio No : 16433643/ 97 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-171331758 ***
+  
+Current : Entry Load - Nil. Exit Load w.e.f 01-Jan-2019 [including SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out within 1 month - 1%, after 1 month - Nil. For lumpsum 
+investment/switch in, the applicable load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the 
+applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com. "Please ensure that your account information is up to date. If there 
+are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 84.01  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+7 15of Page
+KFINCASWS-010226031023 Version 1.0
+Current : Entry Load - Nil. Exit Load w.e.f 01-Jan-2019 [including SIP,STP,SWP&Micro(SIP) wherever available] - If redeemed or switched out within 1 month - 1%, after 1 month - Nil. For lumpsum 
+investment/switch in, the applicable load will be based on the load structure as on the date of investment/applicable NAV date. For SIP/STP transactions, load for each transaction is based on the 
+applicable load structure as on the registration date. For details, please refer to SID and Addenda available on www.icicipruamc.com. "Please ensure that your account information is up to date. If there 
 are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."
-11.
-PEDG -  quant Flexi Cap Fund - Direct Plan Growth : Entry Load NIL, Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/
-switchouts including STP
-12.
-LSDG -  quant Focused Fund - Direct Plan : Entry Load NIL, Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/switchouts
-including STP
-13.
-OFDG -  quant Mid Cap Fund - Direct Plan : Entry Load NIL, Exit Load - 0.50% if redeemed with in 3 months from the date of allotment w.e.f 08/08/2021NIL
-if redeemed after 3 months from the date of allotment of units.Please Note that prevailing exit load structure at the time of investment will be applicable for
-redemption/switch-out.
-14.
-GFDG -  quant Multi Cap Fund - Direct Plan : Entry Load - Nil ; Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/switchouts
-including STP
-15.
-IBDG -  quant Small Cap Fund - Direct Plan Growth : Entry Load NIL, Exit Load - 1.00% if redeemed with in 365 days from the date of allotment.NIL if redeemed
-after 365 days from the date of allotment of units.
-16.
-MCD1 -  Invesco India Midcap Fund - Direct Plan Growth : Entry Load - NIL, Exit Load: (a) If upto 10% of units allotted are redeemed (or) switched out within
-1 year from the date of allotment - NIL. (b) Any redemption (or) switch-out of units in excess of 10% of units allotted - 1%.(c) If units are redeemed (or) switched
-out after 1 year from the date of allotment - NIL. The above exit load is not applicable for purchases made through IDCW Transfer Plan (DTP).Please note that
-prevailing exit load structure at the time of investment will be applicatble for redemption/switch out.
-Page 14 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-Chinni mahesh kumar
-Load Structures
-Notes: All unit allotments are subject to realization of payment; The pending MF transactions as on the last date of previous month would be reflected in the next
-monthly statement.
-Page 15 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
-NOTES TO CAS
-1.
-If you approach your DP/MF for your statement, you would receive statement pertaining to only the
-demat account(s) or folio(s) maintained by such DP or MF.
-2.
-The information reflected in CAS about mutual fund investment and investments held in demat
-accounts with NSDL is solely based on the information received respectively from Asset Management
-Companies (AMC)/ RTA and NSDL. In case of any queries related to such information, kindly approach
-the respective AMC/RTA or NSDL, as the case may be. In case of any discrepancies in folio/s /demat
-accounts, KYC Status, data, holding, units, securities etc. in CAS due to error, if any, in consolidation or
-whatsoever reason, the records as per the respective Mutual Fund/RTA/Depository will be treated as
-final and will prevail. In such cases, investors should revert within 10 days to the respective DP/ RTA
-or the Mutual Fund.
-3.
-Queries if any for the NPS PRAN may be indicated to the respective POS for any clarification on the
-same.
-4.
-In case you do not desire to receive this statement going forward or you do not want to receive CAS
-from CDSL you are required to indicate the same to your Depository Participant with CDSL.
-5.
-In case of any queries or clarifications regarding the transactions or holdings in your demat account
-statement, kindly contact your respective Depository Participant and for transactions or holdings or
-any information pertaining to MF units, kindly contact the MF/RTA. For queries / complaints regarding
-receipt of CAS kindly write to us quoting your 16 digit demat account number and PAN of first holder
-at cas@cdslindia.com.
-6.
-We request you to contact your DP at the earliest if you have neither provided nomination details nor
-confirmation for opting out of nomination as yet. Please refer to our communique no. CDSL/OPS/DP/
-POLCY/2022/107 dated February 25, along with SEBI circular nos. SEBI/HO/MIRSD/MIRSD_RTAMB/
-P/CIR/2022/23 dated February 24, 2022.
-7.
-To file a grievance against any market participant in accordance with SEBI Master Circular dated
-December 28, 2023 (as amended from time to time), please visit https://smartodr.in/login and follow
-the steps given therein.
-8.
-The valuation of transaction / holding is calculated based on the Closing Price or NAV of the Securities
-/ Mutual Fund Units, as reported by the Stock Exchanges / AMFI. For Unlisted Securities and where
-Closing Price or NAV is not available, the last Traded Price or NAV is considered while calculating the
-valuation. Further, for Securities or Mutual Fund Units where available Traded Price or NAV reported
-by the Stock Exchange or AMFI is beyond one year, Face Value of an ISIN is considered while calculating
-the valuation.
-9.
-Market price of all listed bonds are computed based on latest trading price available with last one year.
-In case the bond is not traded within last one year then only face value is considered. The value of bond
-is calculated based on no. of bonds and available market price. In case no market price is available, the
-value of the bond is calculated based on no. of bonds and face value
-10. The market valuation of Bond Holdings is derived as : [ISIN Face Value X Stock Exchange Reported
-Rate for the Bond ISIN / 100].
-Page 16 of 17
-
-
-Central Depository Services (India) Limited
-A Wing, 25th Floor, Marathon Futurex, Mafatlal Mills Compounds, N M Joshi Marg,
-Lower Parel (E), Mumbai - 400013.| (CIN : L67120MH1997PLC112443)
-CONSOLIDATED ACCOUNT STATEMENT (CAS) FOR SECURITIES HELD IN DEMAT
-FORM AND INVESTMENTS IN MUTUAL FUNDS
-Summary of
-Investments
-Account Details
-CDSL Demat
-Account Details
-MF Details
-Notes
-About CDSL
+20-Nov-2025 New Purchase 39,998.00 177.840 224.91 177.840
+20-Nov-2025 *** Stamp Duty *** 2.00
+20-Nov-2025  21-Nov-2025 *** ***Address Updated from CVL Data*** ***
+  06-Jan-2026 Additional Purchase 2,59,987.00 1,166.332 222.91 1,344.172
+06-Jan-2026 *** Stamp Duty *** 13.00
+06-Jan-2026  
+Entry Load - NIL, Exit Load: (a) If upto 10% of units allotted are redeemed (or) switched out within 1 year from the date of allotment - NIL. (b) Any redemption (or) switch-out of units in excess of 10% of 
+units allotted - 1%.(c) If units are redeemed (or) switched out after 1 year from the date of allotment - NIL. The above exit load is not applicable for purchases made through IDCW Transfer Plan 
+(DTP).Please note that prevailing exit load structure at the time of investment will be applicatble for redemption/switch out.Closing Unit Balance: 1,344.172  NAV on 30-JAN-2026 : INR 208.14  Market Value on 30-JAN-2026 : INR 2,79,775.96 Total Cost Value : INR 3,00,000.00
+29-Jan-2026 New Purchase(NAV Dt : 29/01/2026) 1,49,992.50 40.440 3,709.0207 40.440
+29-Jan-2026 *** Stamp Duty *** 7.50
+29-Jan-2026  30-Jan-2026 *** ***Address Updated from CVL Data*** ***
+  
+Entry Load - NIL; Exit Load: For each purchase / switch-in of units on or after October 20, 2019, exit load for redemption /switch-out from date of allotment (subscription NAV date) within 1 Day - 0.0070%, 
+2 Days - 0.0065%, 3 Days - 0.0060%, 4 Days - 0.0055%, 5 Days - 0.0050%, 6 Days - 0.0045% and NIL for 7th Day onwards.Closing Unit Balance: 40.440  NAV on 31-JAN-2026 : INR 3,710.1651  Market Value on 31-JAN-2026 : INR 1,50,039.08 Total Cost Value : INR 1,50,000.00
+02-Jan-2026 Purchase-BSE - 99,995.00 4,618.493 21.651 4,618.493
+02-Jan-2026 *** Stamp Duty *** 5.00
+02-Jan-2026  03-Jan-2026 *** Registration of Nominee ***
+  03-Jan-2026 *** Address Updated from KRA Data ***
+  
+Entry Load  - Nil, Exit Load - For redemption/switch out of units upto 10% of the initial investment amount (limit) purchased or switched-in within 1 year from the date of allotment - NIL.  If Units redeemed 
+or switched out are in excess of the limit within 1 year from the date of allotment : 1%.  If units redeemed or switched out on or after 1 year from the date of allotment: NIL. "Please ensure that your account 
+information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 4,618.493  NAV on 30-JAN-2026 : INR 20.482  Market Value on 30-JAN-2026 : INR 94,595.97 Total Cost Value : INR 1,00,000.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+Invesco Mutual Fund
+Nominee 1 : CHINNI JAYASRI LAKSHMI SASIKALA120MCD1G-Invesco India Midcap Fund - Direct Plan Growth (Advisor:INA200005166) - ISIN:INF205K01MV6 PAN: AOLPC2904E Folio No : 31039073393 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESHKUMAR
+Nominee 1 : CHINNI JAYASRI LAKSHMI SASIKALA120LFSGG-Invesco India Liquid Fund - Regular Growth (Advisor:ARN-306070) - ISIN:INF205K01HM5 PAN: AOLPC2904E Folio No : 31041810593 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : CHINNI MAHESHKUMAR
+Kotak Mutual Fund
+Nominee 1 : CHINNI JAYASRI LAKSHMI SASIKALAK1155D-Kotak Multicap Fund Direct Plan - Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF174KA1HV3 PAN: AOLPC2904E Folio No : 18208055 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+Mirae Asset Mutual Fund
+8 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+Nominee 1 : Chinni jayasri lakshmi sasikala117FPD1G-Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan (Advisor:INA200005166) - ISIN:INF769K01HH0 PAN: AOLPC2904E Folio No : 77742759196 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 429.274Nominee 2 : Nominee 3 : Chinni Maheshkumar
+*** No transactions during this statement period ***
+If redeemed within 3 months from the date of allotment: 0.50%,If redeemed after 3 months from the date of allotment: NIL.Closing Unit Balance: 429.274  NAV on 30-JAN-2026 : INR 35.829  Market Value on 30-JAN-2026 : INR 15,380.46 Total Cost Value : INR 5,000.00
  
+Nominee 1 : Chinni jayasri lakshmi sasikala117 FPD1G-Mirae Asset NYSE FANG+ ETF Fund of Fund - Direct Plan (Advisor:INA200005166) - ISIN:INF769K01HH0 PAN: AOLPC2904E Folio No : 77744727293 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 2,544.862Nominee 2 : Nominee 3 : Chinni Maheshkumar
+*** No transactions during this statement period ***
+If redeemed within 3 months from the date of allotment: 0.50%,If redeemed after 3 months from the date of allotment: NIL.Closing Unit Balance: 2,544.862  NAV on 30-JAN-2026 : INR 35.829  Market Value on 30-JAN-2026 : INR 91,179.86 Total Cost Value : INR 30,000.00
+MOTILAL OSWAL MUTUAL FUND
+Nominee 1 : Chinni jayasri lakshmi sasikala127LMGDG-Motilal Oswal Large and Midcap Fund - Direct Plan Growth (Advisor:INA200005166) - ISIN:INF247L01999 PAN: AOLPC2904E Folio No : 9106688844 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 20,325.045Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+*** No transactions during this statement period ***
+Entry Load: Nil, Exit Load : 1% - If redeemed on or before 365 days from the date of allotment for Subscription received  Wef 10-Jul-2024.Nil - If redeemed after 365 days  from the date of allotment.Entry 
+Load: Nil, Exit Load: 1% -If redeemed or switched out on or before 15 days from the date of allotment for  Subscription received  till 09-July-2024.Nil - If redeemed after 15 days from the date of allotment.Closing Unit Balance: 20,325.045  NAV on 30-JAN-2026 : INR 34.9197  Market Value on 30-JAN-2026 : INR 7,09,744.47 Total Cost Value : INR 6,48,221.00
+Nominee 1 : Chinni jayasri lakshmi sasikala127FMGDG-Motilal Oswal Midcap Fund - Direct Plan Growth (Advisor:INA200005166) - ISIN:INF247L01445 PAN: AOLPC2904E Folio No : 9106688844 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 3,978.572Nominee 2 : Nominee 3 : CHINNI MAHESH KUMAR
+*** No transactions during this statement period ***
+Entry Load: Nil, Exit Load : 1% - If redeemed on or before 365 days from the date of allotment for Subscription received  Wef 18-Mar-2024Nil - If redeemed after 365 days from the date of allotment.Entry 
+Load: Nil, Exit Load: 1% -If redeemed or switched out on or before 15 days from the date of allotment for  Subscription received  till 17-Mar-2024.Nil - If redeemed after 15 days from the date of allotment.Closing Unit Balance: 3,978.572  NAV on 30-JAN-2026 : INR 105.8740  Market Value on 30-JAN-2026 : INR 4,21,227.33 Total Cost Value : INR 4,23,343.00
+NAVI MF
+Nominee 1 : Chinni jayasri lakshmi sasikalaPLFNQGDG-Navi Nasdaq100 US Specific Equity Passive Fund of Fund - Direct Plan- Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF959L01FZ1 PAN: AOLPC2904E Folio No : 9104703384 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 7,807.802Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-170175643 ***
+  Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+9 15of Page
+KFINCASWS-010226031023 Version 1.0
+Entry Load & Exit Load- Nil. "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, 
+FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 7,807.802  NAV on 30-JAN-2026 : INR 20.9654  Market Value on 30-JAN-2026 : INR 1,63,693.69 Total Cost Value : INR 70,000.00
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-170175643 ***
+  
+Entry Load & Exit Load- Nil. "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, 
+FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 6,906.585  NAV on 30-JAN-2026 : INR 20.9654  Market Value on 30-JAN-2026 : INR 1,44,799.32 Total Cost Value : INR 60,000.00
+01-Apr-2025 Purchase Systematic-BSE - Instalment No - 3/348 9,999.50 117.691 84.9643 5,472.901
+01-Apr-2025 *** Stamp Duty *** 0.50
+01-Apr-2025  02-May-2025 Purchase Systematic-BSE - Instalment No - 4/348 9,999.50 113.650 87.9847 5,586.551
+02-May-2025 *** Stamp Duty *** 0.50
+02-May-2025  15-May-2025 *** Cancelled ***
+  02-Jun-2025 Purchase Systematic-BSE - Instalment No - 1 19,999.00 222.255 89.9823 5,808.806
+02-Jun-2025 *** Stamp Duty *** 1.00
+02-Jun-2025  01-Jul-2025 Purchase Systematic-BSE - Instalment No - 2/348 19,999.00 215.789 92.6786 6,024.595
+01-Jul-2025 *** Stamp Duty *** 1.00
+01-Jul-2025  03-Jul-2025 Purchase-BSE - 99,995.00 1,081.550 92.4553 7,106.145
+03-Jul-2025 *** Stamp Duty *** 5.00
+03-Jul-2025  11-Jul-2025 Purchase-BSE - 32,998.35 358.280 92.1021 7,464.425
+11-Jul-2025 *** Stamp Duty *** 1.65
+11-Jul-2025  15-Jul-2025 Purchase-BSE - 2,34,988.25 2,542.648 92.4187 10,007.073
+15-Jul-2025 *** Stamp Duty *** 11.75
+15-Jul-2025  01-Aug-2025 Purchase Systematic-BSE - Instalment No - 3/348 19,999.00 218.975 91.3302 10,226.048
+01-Aug-2025 *** Stamp Duty *** 1.00
+01-Aug-2025  01-Sep-2025 Purchase Systematic-BSE - Instalment No - 4/348 19,999.00 218.519 91.5207 10,444.567
+01-Sep-2025 *** Stamp Duty *** 1.00
+01-Sep-2025  01-Oct-2025 Purchase Systematic-BSE - Instalment No - 5/348 19,999.00 216.266 92.4742 10,660.833
+01-Oct-2025 *** Stamp Duty *** 1.00
+01-Oct-2025  03-Nov-2025 Purchase Systematic-BSE - Instalment No - 6/348 19,999.00 211.724 94.4577 10,872.557
+03-Nov-2025 *** Stamp Duty *** 1.00
+03-Nov-2025  19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-165339493 ***
+  
+01-Dec-2025 Purchase Systematic-BSE - Instalment No - 7/348 19,999.00 210.649 94.9398 11,083.206
+01-Dec-2025 *** Stamp Duty *** 1.00
+01-Dec-2025  22-Dec-2025 *** Cancelled ***
+  
+Exit Load:
  
- 
- 
- 
-ABOUT CDSL 
-Your depository, CDSL, was set up with the objective of providing convenient, dependable and secure depository services at 
-affordable costs to all market participants. CDSL is promoted by BSE Limited jointly with leading banks such as State Bank of India, 
-Bank of India, Bank of Baroda, HDFC Bank, Standard Chartered Bank and Union Bank of India. 
- 
-As security and safety of your assets is of paramount importance to us, CDSL has committed itself to the highest level of information 
-security practices. CDSL has been awarded the coveted ISO 27001 certificate. CDSL is one of the few depository institutions in the 
-world to be awarded ISO22301:2012 certification for its Business Continuity Management Systems in June 2013 which is a step to 
-assure all its stakeholders across the world of uninterrupted operations of its depository services. 
- 
-Highlights of some of the facilities provided by your depository: 
- 
-I. Free Internet enabled services 'Easi' and 'Easiest': to manage your securities 'anytime-anywhere' in an efficient and    convenient 
-manner, all in a state-of-the art secure environment: 
-• Easi (Electronic access to securities information): Convenient, easy to operate facility for viewing details of your demat 
-account(s). 
-• Easiest (Electronic access to securities information and execution of secured transactions): Facility to execute 
-transactions from your demat account(s) over the internet, anytime, anywhere.  
-      For the instructions submitted by you through easiest, you are not required to submit instruction slip to the DP.  
- 
-II. Mobile Application: CDSL has launched Myeasi App for Android, Windows and IOS Mobile users. The App has features, listed 
-below which can be used by CDSL's Easi- Easiest users with the same user credentials. CDSL has also provided with the 
-registration facility for those users who have not registered for easi-easiest: 
- 
-• Holding Details: View details of holdings with valuation as of previous day closing price. Download Holdings inPDF format is 
-also made available. 
-• Transaction Inquiry: View transactions for any 30 day window in your demat account. 
-• Corporate Announcement: Monitor corporate announcements for securities held in your account and of 25 
-   additional ISINs of your choice. 
-• Transaction setup: Easiest 'trusted' users can set up their transactions. 
-• Freeze/Unfreeze: Easiest users can view and set up freeze and unfreeze. 
-• Miscellaneous: Registration, Edit profile (e-mail ID and mobile number), Easi users can upgrade to Easiest,  
-   Forgot Password Edit grouping (i.e. view multiple demat accounts through a single log in), Register for CDSLs SMART  (SMS 
-Alert) facility. 
- 
-III. E Locker Facility: CDSL has introduced a e-locker facility to securely store and retrieve all your financial information. You can now 
-record details of all your financial instruments, set alerts and keep track of the same. The financial information which can be 
-recorded are fixed deposit details, Monthly Income schemes, Card related information, Post Office related schemes, Insurance 
-schemes, Capital Market schemes and any other financial information that is to be recorded. This facility is a value added service to 
-the existing users of eLocker which is currently being provided to all easi - easiest users for storing/accessing/sharing their 
-important documents. 
- 
-IV. E-voting System: Enables investors to cast their votes pertaining to company resolutions through the internet till the closure of an 
-e-Voting event. Currently 5300 companies have signed the agreement with CDSL for availing of its e-Voting facility of which 4700 
-companies have used CDSL's e-Voting platform to conduct electronic voting for AGMs and postal ballot resolutions on more than 
-20000 occasions. 
- 
-V.  CDSL Chatbot Facility: CDSL has introduced a CHATBOT facility on CDSL’s website www.cdslindia.com, which aims to help us 
-serve our demat account holders in a better and faster way, through use of technology to understand the query and provide 
-instantaneous response.Currently the facility enables a demat account holder to resolve their queries related to Demat account 
-opening, Dematerialisation, Rematerialisation, Settlement and other queries related to demat account and internet based facility 
-easi/easiest. User also has the facility of selecting his query from the multiple questions made available on the CHATBOT. 
-***** 
-Page 17 of 17
-
-
+Investors are requested to note that with effect from November 15, 2021, all new/prospective investments (including SIP/STP and SWP registered) in respect of each purchase / switch-in of units, 10% of 
+the units may be redeemed without any exit load from the date of allotment made on or after the aforesaid effective date. Please refer Notice cum addendum dated November 11, 2021 available on 
+website https://amc.ppfas.com/downloads/addendum/
+Any redemption or switch out in excess of the aforesaid limit shall be subject to the following exit load :
+Exit Load of 2% is applicable, if Units are redeemed/switched-out on or before 365 days from the date of allotment, 1% if redeemed/Switched-out after 365 days but on or before 730 days from the date 
+allotment and thereafter there is no exit load. "Effective from July 01, 2020, stamp duty @ 0.005% will be deducted from the Net investment amount. Units will be allotted for the balance amount. "Please 
+ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, occupation, income, PEP status, FATCA/CRS information etc. kindly update 
+them immediately."Closing Unit Balance: 11,083.206  NAV on 30-JAN-2026 : INR 93.5212  Market Value on 30-JAN-2026 : INR 10,36,514.72 Total Cost Value : INR 8,40,280.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+Nominee 1 : Chinni jayasri lakshmi sasikalaPLFNQGDG-Navi Nasdaq100 US Specific Equity Passive Fund of Fund - Direct Plan- Growth  (Non-Demat) (Advisor:INA200005166) - ISIN:INF959L01FZ1 PAN: AOLPC2904E Folio No : 9104790381 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 6,906.585Nominee 2 : Nominee 3 : Chinni Maheshkumar
+PPFAS Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaPP001ZG-Parag Parikh Flexi Cap Fund - Direct Plan Growth (formerly Parag Parikh Long Term Value Fund) (Non-Demat) (Advisor:INA200005166) - 
+ISIN:INF879O01027 PAN: AOLPC2904E Folio No : 10697180 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 5,355.210Nominee 2 : Nominee 3 : Chinni Maheshkumar
+10 15of Page
+KFINCASWS-010226031023 Version 1.0
+29-Dec-2025 Redemption (4,24,838.68) (3866.254) 109.8849 0.000
+29-Dec-2025 *** STT Paid *** 4.25
+29-Dec-2025  
+Entry Load NIL, Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/switchouts including STPClosing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 104.7485  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+*** No transactions during this statement period ***
+Entry Load NIL, Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/switchouts including STPClosing Unit Balance: 345.321  NAV on 30-JAN-2026 : INR 91.8925  Market Value on 30-JAN-2026 : INR 31,732.41 Total Cost Value : INR 21,000.00
+01-Apr-2025 Systematic Investment (1) 9,999.50 44.117 226.6597 1,314.310
+01-Apr-2025 *** Stamp Duty *** 0.50
+01-Apr-2025  02-May-2025 Systematic Investment (1) 9,999.50 42.592 234.7715 1,356.902
+02-May-2025 *** Stamp Duty *** 0.50
+02-May-2025  02-Jun-2025 Systematic Investment (1) 9,999.50 41.153 242.9849 1,398.055
+02-Jun-2025 *** Stamp Duty *** 0.50
+02-Jun-2025  01-Jul-2025 Systematic Investment (1) 9,999.50 40.274 248.2882 1,438.329
+01-Jul-2025 *** Stamp Duty *** 0.50
+01-Jul-2025  01-Aug-2025 Systematic Investment (1) 9,999.50 42.455 235.5340 1,480.784
+01-Aug-2025 *** Stamp Duty *** 0.50
+01-Aug-2025  02-Jan-2026 Redemption (2,60,000.00) (1,099.780) 236.4132 381.004
+02-Jan-2026 *** STT Paid *** 2.60
+02-Jan-2026  
+Entry Load NIL, Exit Load - 0.50% if redeemed with in 3 months from the date of allotment w.e.f 08/08/2021NIL if redeemed after 3 months from the date of allotment of units.Please Note that prevailing 
+exit load structure at the time of investment will be applicable for redemption/switch-out.Closing Unit Balance: 381.004  NAV on 30-JAN-2026 : INR 217.3627  Market Value on 30-JAN-2026 : INR 82,816.06 Total Cost Value : INR 88,423.26
+01-Apr-2025 Systematic Investment (1) 3,999.80 6.335 631.4047 322.173
+01-Apr-2025 *** Stamp Duty *** 0.20
+01-Apr-2025  02-May-2025 Systematic Investment (1) 3,999.80 6.194 645.7091 328.367
+02-May-2025 *** Stamp Duty *** 0.20
+02-May-2025  02-Jun-2025 Systematic Investment (1) 3,999.80 5.901 677.7954 334.268
+02-Jun-2025 *** Stamp Duty *** 0.20
+02-Jun-2025  27-Jun-2025 Redemption (1,72,851.00) (247.520) 698.3377 86.748
+27-Jun-2025 *** STT Paid *** 1.73
+27-Jun-2025  01-Jul-2025 Systematic Investment (1) 3,999.80 5.731 697.9503 92.479
+01-Jul-2025 *** Stamp Duty *** 0.20
+01-Jul-2025  01-Aug-2025 Systematic Investment (1) 3,999.80 6.040 662.2505 98.519
+01-Aug-2025 *** Stamp Duty *** 0.20Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+Quant MF
+Nominee 1 : Chinni jayasri lakshmi sasikala166PEDGG-quant Flexi Cap Fund - Direct Plan Growth (Advisor:INA200005166) - ISIN:INF966L01911 PAN: AOLPC2904E Folio No : 5105190552 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 3,866.254Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+Nominee 1 : Chinni jayasri lakshmi sasikala166LSDGG-quant Focused Fund - Direct Plan (Advisor:INA200005166) - ISIN:INF966L01853 PAN: AOLPC2904E Folio No : 5105190552 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 345.321Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+Nominee 1 : Chinni jayasri lakshmi sasikala166OFDGG-quant Mid Cap Fund - Direct Plan (Advisor:INA200005166) - ISIN:INF966L01887 PAN: AOLPC2904E Folio No : 5105190552 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 1,270.193Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+Nominee 1 : Chinni jayasri lakshmi sasikala166GFDGG-quant Multi Cap Fund - Direct Plan (Advisor:INA200005166) - ISIN:INF966L01614 PAN: AOLPC2904E Folio No : 5105190552 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 315.838Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+11 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+01-Aug-2025 *** Stamp Duty *** 0.20
+01-Aug-2025  01-Jan-2026 Redemption (65,995.71) (98.519) 669.8847 0.000
+01-Jan-2026 *** STT Paid *** 0.66
+01-Jan-2026  
+Entry Load - Nil ; Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/switchouts including STPClosing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 631.7570  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikala166IBDGG-quant Small Cap Fund - Direct Plan Growth (Advisor:INA200005166) - ISIN:INF966L01689 PAN: AOLPC2904E Folio No : 5105190552 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 2,254.615Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+01-Apr-2025 Systematic Investment (1) 9,999.50 40.246 248.4608 2,294.861
+01-Apr-2025 *** Stamp Duty *** 0.50
+01-Apr-2025  02-May-2025 Systematic Investment (1) 9,999.50 39.070 255.9363 2,333.931
+02-May-2025 *** Stamp Duty *** 0.50
+02-May-2025  02-Jun-2025 Systematic Investment (1) 9,999.50 36.632 272.9752 2,370.563
+02-Jun-2025 *** Stamp Duty *** 0.50
+02-Jun-2025  01-Jul-2025 Systematic Investment (1) 9,999.50 35.150 284.4809 2,405.713
+01-Jul-2025 *** Stamp Duty *** 0.50
+01-Jul-2025  01-Aug-2025 Systematic Investment (1) 9,999.50 36.419 274.5672 2,442.132
+01-Aug-2025 *** Stamp Duty *** 0.50
+01-Aug-2025  02-Jan-2026 Redemption (3,00,000.00) (1,076.951) 278.5669 1,365.181
+02-Jan-2026 *** STT Paid *** 3.00
+02-Jan-2026  
+Entry Load NIL, Exit Load - 1.00% if redeemed with in 365 days from the date of allotment.NIL if redeemed after 365 days from the date of allotment of units.Closing Unit Balance: 1,365.181  NAV on 30-JAN-2026 : INR 256.2755  Market Value on 30-JAN-2026 : INR 3,49,862.44 Total Cost Value : INR 3,84,513.61
+Nominee 1 : Chinni jayasri lakshmi sasikala166GFDGG-quant Multi Cap Fund - Direct Plan (Advisor:INZ000305337) - ISIN:INF966L01614 PAN: AOLPC2904E Folio No : 5109645205 KYC : OK PAN : OK
+Registrar : KFINTECH
+Opening Unit  Balance 28.646Nominee 2 : Nominee 3 : CHINNI  MAHESHKUMAR
+*** No transactions during this statement period ***
+Entry Load - Nil ; Exit Load - 1% if redeemed within 15 days of allotment of units on all redemptions/switchouts including STPClosing Unit Balance: 28.646  NAV on 30-JAN-2026 : INR 631.7570  Market Value on 30-JAN-2026 : INR 18,097.31 Total Cost Value : INR 12,464.00
+SBI Mutual Fund
+Nominee 1 : Chinni jayasri lakshmi sasikalaL035G-SBI Healthcare Opportunities Fund Regular Growth (formerly SBI Pharma Fund) (Non-Demat) (Advisor:ARN0010) - ISIN:INF200K01446 PAN: AOLPC2904E Folio No : 15083014 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+*** No transactions during this statement period ***
+"Entry Load : N.A.; Exit Load - W.e.f. 15-JUL-2016: 0.50% if redeemed/switched within 15 Days from the date of allotment; NIL if redeemed/switched after 15 Days from the date of allotment. STT @ 
+0.001% is applicable at the time of redemption / switch.  For applicability of exit load structure, please refer to SAI / SID/ KIM/Addendum issued from time to time.**Scheme name of """""""""""""""""SBI 
+Pharma Fund"""""""""""""""""  has been changed to """""""""""""""""SBI Healthcare Opportunities Fund"""""""""""""""""  with effect from 16th May 2018."   W.e.f. 1st July 2020, Stamp Duty @ 0.005% is 
+applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, applicable NAV for allotment of units shall be based on time of receipt of transaction and funds available for utilization 
+upto the cut-off time. TDS shall be deducted (wherever applicable) as per rates under New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax provisions.Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 405.9177  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+12 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+Nominee 1 : Chinni jayasri lakshmi sasikalaLD103G-SBI Large Cap Fund - Direct Plan - Growth  (Non-Demat) (Advisor:DIRECT) - ISIN:INF200K01QX4 PAN: AOLPC2904E Folio No : 15083014 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+09-Jul-2025 *** Change of ContactsEMAIL updated from New CAMSonline 
+for AOLPCXXXXE ***
+  
+19-Nov-2025 *** Change / Regn of NomineeNominee addition through - 
+MFC-1392173109-170531483 ***
+  
+Entry Load: N.A.; Exit Load - W.e.f. 05-Sep-2025: 0.25% if redeemed / switched out within 30 days from the date of allotment; 0.10% if redeemed / switched out after 30 days but within 90 days from the 
+date of allotment; NIL if redeemed / switched out after 90 days from the date of allotment. STT @ 0.001% is applicable at the time of redemption / switched. For applicability of exit load structure, please 
+refer to Addendum issued from time to time. **Scheme name of "SBI BlueChip Fund" has been changed to "SBI Large Cap Fund" with effect from 30th June 2025. W.e.f. 1st July 2020, Stamp Duty @ 
+0.005% is applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, applicable NAV for allotment of units shall be based on time of receipt of transaction and funds available for 
+utilization upto the cut-off time. TDS shall be deducted (wherever applicable) as per rates under New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax provisions.Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 104.8332  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaLD017G-SBI Large & Midcap Fund Direct Growth (formerly SBI Magnum Multiplier Fund) (Non-Demat) (Advisor:INA200005166) - ISIN:INF200K01UJ5 PAN: AOLPC2904E Folio No : 21546816 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Change / Regn of NomineeNominee addition through - 
+MFC-1392173109-170531483 ***
+  
+"Entry Load : N.A.; Exit Load - W.e.f. 15-Jan-2019: 0.10% if redeemed/switched within 30 Calendar days from the date of investment; NIL if redeemed/switched after 30 Calendar days from the date of 
+investment. STT @ 0.001% is applicable at the time of redemption / switch. For applicability of exit load structure for specific transaction, please refer to Addendum issued from time to time.**Scheme 
+name of """""""""""""""""SBI Magnum Multiplier Fund"""""""""""""""""  has been changed to """""""""""""""""SBI Large & Midcap Fund"""""""""""""""""  with effect from 16th May 2018."   W.e.f. 1st July 2020, 
+Stamp Duty @ 0.005% is applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, applicable NAV for allotment of units shall be based on time of receipt of transaction and funds 
+available for utilization upto the cut-off time. TDS shall be deducted (wherever applicable) as per rates under New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax 
+provisions.Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 700.2620  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaLD346G-SBI Small Cap Fund Direct Growth (formerly SBI Small & Midcap Fund) (Non-Demat) (Advisor:INA200005166) - ISIN:INF200K01T51 PAN: AOLPC2904E Folio No : 21546816 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+*** No transactions during this statement period ***
+"Entry Load : N.A.; Exit Load - W.e.f. 08-AUG-2011: 1% - if the units are redeemed/switched-out within 1 Year from the date of allotment; Nil - if the units are redeemed/switched-out after 1 year from the 
+date of allotment. STT @ 0.001% is applicable at the time of redemption / switch. For applicability of exit load structure, please refer to Addendum issued from time to time. **Scheme name of 
+"""""""""""""""""SBI Small & Midcap Fund"""""""""""""""""  has been changed to """""""""""""""""SBI Small Cap Fund"""""""""""""""""  with effect from 16th May 2018."    W.e.f. 1st July 2020, Stamp Duty @ 
+0.005% is applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, applicable NAV for allotment of units shall be based on time of receipt of transaction and funds available for 
+utilization upto the cut-off time. TDS shall be deducted (wherever applicable) as per rates under New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax provisions.Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 183.3010  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+Nominee 1 : Chinni jayasri lakshmi sasikalaLD346G-SBI Small Cap Fund Direct Growth (formerly SBI Small & Midcap Fund) (Non-Demat) (Advisor:INA200005166) - ISIN:INF200K01T51 PAN: AOLPC2904E Folio No : 22826727 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+19-Nov-2025 *** Change / Regn of NomineeNominee addition through - 
+MFC-1392173109-170531483 ***
+  
+"Entry Load : N.A.; Exit Load - W.e.f. 08-AUG-2011: 1% - if the units are redeemed/switched-out within 1 Year from the date of allotment; Nil - if the units are redeemed/switched-out after 1 year from the 
+date of allotment. STT @ 0.001% is applicable at the time of redemption / switch. For applicability of exit load structure, please refer to Addendum issued from time to time. **Scheme name of 
+"""""""""""""""""SBI Small & Midcap Fund"""""""""""""""""  has been changed to """""""""""""""""SBI Small Cap Fund"""""""""""""""""  with effect from 16th May 2018."    W.e.f. 1st July 2020, Stamp Duty @ 
+0.005% is applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, applicable NAV for allotment of units shall be based on time of receipt of transaction and funds available for 
+utilization upto the cut-off time. TDS shall be deducted (wherever applicable) as per rates under New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax provisions.Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 183.3010  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+13 15of Page
+KFINCASWS-010226031023 Version 1.0
+19-Nov-2025 *** Change / Regn of NomineeNominee addition through - 
+MFC-1392173109-170531483 ***
+  
+Entry Load : N.A.; Exit Load - W.e.f. 15-Jan-2019: 0.10% if redeemed/switched within 30 Calendar days from the date of investment; NIL if redeemed/switched after 30 Calendar days from the date of 
+investment. STT @ 0.001% is applicable at the time of redemption / switch. For applicability of exit load structure for specific transaction, please refer to Addendum issued from time to time.   W.e.f. 1st 
+July 2020, Stamp Duty @ 0.005% is applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, applicable NAV for allotment of units shall be based on time of receipt of transaction 
+and funds available for utilization upto the cut-off time. **Scheme name of """""""""""""""""SBI Magnum Multicap Fund"""""""""""""""""  has been changed to """""""""""""""""SBI Flexicap Fund"""""""""""""""""  with 
+effect from 30th Jan 2021. TDS shall be deducted (wherever applicable) as per rates under New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax provisions.Closing Unit Balance: 0.000  NAV on 31-JAN-2026 : INR 122.9457  Market Value on 31-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00
+29-Jan-2026 Purchase-BSE - 1,49,992.50 384.336 390.2641 384.336
+29-Jan-2026 *** Stamp Duty *** 7.50
+29-Jan-2026  30-Jan-2026 *** Address Updated from KRA Data ***
+  30-Jan-2026 *** Change / Regn of Nominee ***
+  
+Entry Load: N.A.; Exit Load - W.e.f. 05-Sep-2025: 0.25% if redeemed / switched out within 30 days from the date of allotment; 0.10% if redeemed / switched out after 30 days but within 90 days from the 
+date of allotment; NIL if redeemed / switched out after 90 days from the date of allotment. STT @ 0.001% is applicable at the time of redemption / switch. For applicability of exit load structure for specific 
+transaction, please refer to Addendum issued from time to time.  W.e.f. 1st July 2020, Stamp Duty @ 0.005% is applicable on allotment of units.  As per SEBI guidelines, w.e.f. February 01, 2021, 
+applicable NAV for allotment of units shall be based on time of receipt of transaction and funds available for utilization upto the cut-off time. TDS shall be deducted (wherever applicable) as per rates under 
+New Tax Regime. Differential tax if any, should be evaluated by investor(s), basis relevant tax provisions.Closing Unit Balance: 384.336  NAV on 31-JAN-2026 : INR 389.0762  Market Value on 31-JAN-2026 : INR 1,49,535.99 Total Cost Value : INR 1,50,000.00
+29-Jan-2026 Purchase-BSE - Online - ARN-306070 1,49,992.50 3,129.714 47.9253 3,129.714
+29-Jan-2026 *** Stamp Duty *** 7.50
+29-Jan-2026  30-Jan-2026 *** Address Updated from KRA Data ***
+  30-Jan-2026 *** Registration of Nominee ***
+  31-Jan-2026 *** Address Updated from KRA Data ***
+  
+Allotment of units would be subject to realization of credit. Current load structure(w.e.f.25/01/2021): Exit Load: 0.25% if  redeemed before expiry of 30 days from the date of allotment. The Entry/Exit load 
+for investment will be as applicable as on the date of allotment / date of  registration in case of SIP and STP.Switch-in will be processed based on the settlement cycle of the switch-out scheme. This 
+scheme is to be considered as Equity oriented for taxation purpose. "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, 
+occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 3,129.714  NAV on 30-JAN-2026 : INR 47.7032  Market Value on 30-JAN-2026 : INR 1,49,297.37 Total Cost Value : INR 1,50,000.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+Nominee 1 : Chinni jayasri lakshmi sasikalaLD099G-SBI Flexicap Fund - Direct Plan - Growth  (Non-Demat) (Advisor:INZ000305337) - ISIN:INF200K01UG1 PAN: AOLPC2904E Folio No : 24809437 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+Nominee 1 : CHINNI JAYASRI LAKSHMI SASIKALAL036G-SBI Contra Fund - Regular Plan - Growth  (Non-Demat) (Advisor:ARN-306070) - ISIN:INF200K01362 PAN: AOLPC2904E Folio No : 48528043 PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+Tata Mutual Fund
+Nominee 1 : CHINNI JAYASRI LAKSHMI SASIKALATDIFG-Tata Digital India Fund Regular Plan Growth  (Non-Demat) (Advisor:ARN-306070) - ISIN:INF277K01Z44 PAN: AOLPC2904E Folio No : 14457294/ 19 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Maheshkumar
+Nominee 1 : Chinni jayasri lakshmi sasikalaTEPEGZ-Tata Value Fund Direct Plan - Growth  (Non-Demat) (Advisor:DIRECT) - ISIN:INF277K01ND1 PAN: AOLPC2904E Folio No : 3868989/ 53 KYC : OK PAN : OK
+Registrar : CAMS
+Opening Unit  Balance 0.000Nominee 2 : Nominee 3 : Chinni Mahesh Kumar
+14 15of Page
+KFINCASWS-010226031023 Version 1.0
+(INR)Transaction DateAmountUnitsPrice Unit
+Balance (INR)
+19-Nov-2025 *** Registration of NomineeNominee addition through - 
+MFC-1392173109-172197596 ***
+  
+Allotment of units would be subject to realization of credit. Current load structure(w.e.f.19/08/2025): Exit Load: 0.50% if  redeemed on or before expiry of 30 days from the date of allotment. The Entry/Exit 
+load for investment will be as applicable as on the date of allotment / date of  registration in case of SIP and STP.Switch-in will be processed based on the settlement cycle of the switch-out scheme. This 
+scheme is to be considered as Equity oriented for taxation purpose. "Please ensure that your account information is up to date. If there are any changes to your KYC details like address, contact details, 
+occupation, income, PEP status, FATCA/CRS information etc. kindly update them immediately."Closing Unit Balance: 0.000  NAV on 30-JAN-2026 : INR 401.0504  Market Value on 30-JAN-2026 : INR 0.00 Total Cost Value : INR 0.00Consolidated Account Statement
+01-Apr-2025 To 01-Feb-2026
+15 15of Page
+KFINCASWS-010226031023 Version 1.0
