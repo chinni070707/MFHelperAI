@@ -14,12 +14,87 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --light-green: #9ED670;
+            --white: #FFFFFF;
+            --gray-50: #F8F9FA;
+            --gray-100: #E9ECEF;
+            --gray-900: #212529;
+            --text-primary: #212529;
+            --text-secondary: #6C757D;
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: var(--gray-50);
+            color: var(--text-primary);
+            padding-top: 70px;
+        }
+        
+        /* Fixed Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover { color: var(--primary-green); }
+        
+        .nav-btn {
+            background: var(--primary-green);
             color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
         }
         
         .goal-marker { 
@@ -28,7 +103,7 @@
         }
         .goal-marker:hover { 
             transform: scale(1.1); 
-            filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.6)); 
+            filter: drop-shadow(0 4px 12px rgba(127, 192, 76, 0.6)); 
         }
         .goal-marker:active { cursor: grabbing; }
         
@@ -40,44 +115,44 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             border: 3px solid white;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
         }
         
         .tooltip {
             position: absolute;
-            background: rgba(15, 12, 41, 0.95);
+            background: var(--white);
             backdrop-filter: blur(10px);
             padding: 12px 16px;
             border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             pointer-events: none;
             z-index: 1000;
             font-size: 14px;
-            border: 2px solid rgba(59, 130, 246, 0.5);
-            color: white;
+            border: 2px solid var(--primary-green);
+            color: var(--text-primary);
         }
         
-        .grid-line { stroke: rgba(255,255,255,0.1); stroke-width: 1; stroke-dasharray: 4,4; }
-        .axis-line { stroke: rgba(255,255,255,0.3); stroke-width: 2; }
-        .wealth-curve { fill: none; stroke: #10b981; stroke-width: 3; }
+        .grid-line { stroke: rgba(0,0,0,0.08); stroke-width: 1; stroke-dasharray: 4,4; }
+        .axis-line { stroke: rgba(0,0,0,0.2); stroke-width: 2; }
+        .wealth-curve { fill: none; stroke: var(--primary-green); stroke-width: 3; }
         .wealth-area { fill: url(#wealthGradient); opacity: 0.3; }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--white);
+            border: 1px solid var(--gray-100);
             border-radius: 16px;
             padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
         .goal-card {
-            background: linear-gradient(135deg, rgba(123,44,191,0.3), rgba(0,212,255,0.3));
+            background: linear-gradient(135deg, rgba(127,192,76,0.15), rgba(158,214,112,0.15));
             padding: 16px;
             border-radius: 12px;
             cursor: grab;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(127,192,76,0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             user-select: none;
@@ -85,8 +160,8 @@
         
         .goal-card:hover {
             transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.5);
-            border-color: #00d4ff;
+            box-shadow: 0 12px 32px rgba(127, 192, 76, 0.5);
+            border-color: var(--primary-green);
         }
         
         .goal-card:active {
@@ -110,8 +185,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(59, 130, 246, 0.1);
-            border: 3px dashed #3b82f6;
+            background: rgba(127, 192, 76, 0.1);
+            border: 3px dashed var(--primary-green);
             border-radius: 12px;
             pointer-events: none;
             animation: pulse 1s infinite;
@@ -125,8 +200,8 @@
         .drop-indicator {
             position: absolute;
             width: 2px;
-            background: #3b82f6;
-            box-shadow: 0 0 10px #3b82f6;
+            background: var(--primary-green);
+            box-shadow: 0 0 10px var(--primary-green);
             pointer-events: none;
             transition: all 0.2s ease;
         }
@@ -148,9 +223,9 @@
         .goal-card:active { cursor: grabbing; }
         
         input, select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            color: var(--text-primary);
             padding: 10px 14px;
             border-radius: 8px;
             width: 100%;
@@ -159,20 +234,20 @@
         
         input:focus, select:focus {
             outline: none;
-            border-color: #00d4ff;
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+            border-color: var(--primary-green);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(127, 192, 76, 0.15);
         }
         
         input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--text-secondary);
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #7b2cbf, #00d4ff);
+            background: var(--primary-green);
             color: white;
             padding: 12px 24px;
-            border-radius: 8px;
+            border-radius: 50px;
             border: none;
             cursor: pointer;
             font-weight: 600;
@@ -182,15 +257,16 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.4);
+            background: var(--dark-green);
+            box-shadow: 0 8px 20px rgba(127, 192, 76, 0.4);
         }
         
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: var(--gray-50);
+            color: var(--text-primary);
             padding: 12px 24px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            border: 2px solid var(--primary-green);
             cursor: pointer;
             font-weight: 600;
             transition: all 0.2s;
@@ -198,16 +274,18 @@
         }
         
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--primary-green);
+            color: white;
         }
         
         .stat-card {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--white);
+            border: 1px solid var(--gray-100);
             border-radius: 12px;
-            padding:20px;
+            padding: 20px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         
         .stat-card::before {
@@ -217,14 +295,14 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
         }
         
         label {
             display: block;
             margin-bottom: 8px;
             font-size: 0.9rem;
-            color: #a8dadc;
+            color: var(--text-secondary);
             font-weight: 500;
         }
         
@@ -279,6 +357,20 @@
     </style>
 </head>
 <body>
+    <!-- Fixed Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="/goal-planning.html" class="nav-link" style="color: var(--primary-green);">Goal Planning</a></li>
+                <li><a href="/ai-demo.html" class="nav-link">AI Chat</a></li>
+                <li><a href="/dashboard.html" class="nav-btn">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <div id="root"></div>
     
     <script type="text/babel">
@@ -469,12 +561,12 @@
                 
                 gradient.append('stop')
                     .attr('offset', '0%')
-                    .attr('stop-color', '#10b981')
+                    .attr('stop-color', '#7FC04C')
                     .attr('stop-opacity', 0.6);
                 
                 gradient.append('stop')
                     .attr('offset', '100%')
-                    .attr('stop-color', '#10b981')
+                    .attr('stop-color', '#7FC04C')
                     .attr('stop-opacity', 0.1);
                 
                 // Grid lines
@@ -572,13 +664,13 @@
                 g.append('g')
                     .attr('transform', `translate(0,${innerHeight})`)
                     .call(xAxis)
-                    .attr('color', 'rgba(255,255,255,0.6)');
+                    .attr('color', 'rgba(0,0,0,0.5)');
                 
                 g.append('text')
                     .attr('x', innerWidth / 2)
                     .attr('y', innerHeight + 45)
                     .attr('text-anchor', 'middle')
-                    .attr('fill', '#a8dadc')
+                    .attr('fill', '#495057')
                     .attr('font-weight', 'bold')
                     .text('Age (Years)');
                 
@@ -589,14 +681,14 @@
                 
                 g.append('g')
                     .call(yAxis)
-                    .attr('color', 'rgba(255,255,255,0.6)');
+                    .attr('color', 'rgba(0,0,0,0.5)');
                 
                 g.append('text')
                     .attr('transform', 'rotate(-90)')
                     .attr('x', -innerHeight / 2)
                     .attr('y', -60)
                     .attr('text-anchor', 'middle')
-                    .attr('fill', '#a8dadc')
+                    .attr('fill', '#495057')
                     .attr('font-weight', 'bold')
                     .text('Net Worth');
                 
@@ -811,7 +903,7 @@
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     <div className="flex justify-between items-center mb-4">
-                                        <h3 className="text-2xl font-bold text-blue-400">
+                                        <h3 className="text-2xl font-bold text-green-600">
                                             Add Event at Age {clickedAge}
                                         </h3>
                                         <button 
@@ -886,7 +978,7 @@
                         <div className="glass-card mb-6">
                             <div className="flex justify-between items-center mb-4">
                                 <div>
-                                    <h3 className="text-2xl font-bold text-blue-400">📈 Your Wealth Growth Timeline</h3>
+                                    <h3 className="text-2xl font-bold text-green-600">📈 Your Wealth Growth Timeline</h3>
                                     <p className="text-sm text-gray-400 mt-1">👆 Click on the chart at any age to add events</p>
                                 </div>
                                 <div className="flex items-center gap-4">
@@ -979,7 +1071,7 @@
                         
                         {/* Goal Templates - Right below chart for easy access */}
                         <div className="glass-card mb-6">
-                            <h3 className="text-xl font-bold mb-2 text-blue-400">🎯 Drag & Drop Goals onto Timeline</h3>
+                            <h3 className="text-xl font-bold mb-2 text-green-600">🎯 Drag & Drop Goals onto Timeline</h3>
                             <p className="text-gray-300 mb-4">
                                 <strong>Drag any goal icon</strong> and drop it on the chart at your desired age! A smooth animation will guide you. 
                                 Or <strong>click directly on the chart</strong> for the quick menu, or use buttons below:
@@ -1021,7 +1113,7 @@
                             </div>
                             <div className="stat-card">
                                 <div className="text-sm text-gray-400 mb-2">Funds Available Till</div>
-                                <div className="text-2xl font-bold text-blue-400">
+                                <div className="text-2xl font-bold text-green-600">
                                     {moneyRunsOutAge >= lifeEndAge ? `Age ${lifeEndAge}+` : `Age ${moneyRunsOutAge}`}
                                 </div>
                             </div>
@@ -1044,7 +1136,7 @@
                             <div className="space-y-3">
                                 {/* Basic Info */}
                                 <div className="glass-card">
-                                    <h3 className="text-xl font-bold mb-4 text-blue-400">📊 Basic Information</h3>
+                                    <h3 className="text-xl font-bold mb-4 text-green-600">📊 Basic Information</h3>
                                     <div className="space-y-2">
                                         <div>
                                             <label>Current Age</label>
@@ -1058,7 +1150,7 @@
                                             <div>
                                                 <label>Growth Rate (Scenario)</label>
                                                 <div className="px-4 py-3 rounded-lg bg-white bg-opacity-10 text-center">
-                                                    <span className="text-xl font-bold text-blue-400">{getScenarioGrowthRate()}%</span>
+                                                    <span className="text-xl font-bold text-green-600">{getScenarioGrowthRate()}%</span>
                                                     <div className="text-xs text-gray-400 mt-1 capitalize">{scenario}</div>
                                                 </div>
                                             </div>
@@ -1080,7 +1172,7 @@
                                 
                                 {/* Add Investment */}
                                 <div className="glass-card">
-                                    <h3 className="text-xl font-bold mb-4 text-blue-400">💼 Add Investment</h3>
+                                    <h3 className="text-xl font-bold mb-4 text-green-600">💼 Add Investment</h3>
                                     <div className="space-y-2">
                                         <button onClick={addSIP} className="btn-primary">
                                             📈 Add SIP
@@ -1097,7 +1189,7 @@
                                 {/* Goals List */}
                                 {goals.length > 0 && (
                                     <div className="glass-card">
-                                        <h3 className="text-xl font-bold mb-4 text-blue-400">📋 Planned Goals</h3>
+                                        <h3 className="text-xl font-bold mb-4 text-green-600">📋 Planned Goals</h3>
                                         <div className="space-y-3">
                                             {goals.map((goal, index) => (
                                                 <div key={index} className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-lg">
@@ -1123,7 +1215,7 @@
                                 {/* SIP List */}
                                 {sips.length > 0 && (
                                     <div className="glass-card">
-                                        <h3 className="text-xl font-bold mb-4 text-blue-400">📈 Active SIPs</h3>
+                                        <h3 className="text-xl font-bold mb-4 text-green-600">📈 Active SIPs</h3>
                                         <div className="space-y-3">
                                             {sips.map((sip, index) => (
                                                 <div key={index} className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-lg">
@@ -1146,7 +1238,7 @@
                                 {/* Lumpsum List */}
                                 {lumpsums.length > 0 && (
                                     <div className="glass-card">
-                                        <h3 className="text-xl font-bold mb-4 text-blue-400">➕ Lumpsum Investments</h3>
+                                        <h3 className="text-xl font-bold mb-4 text-green-600">➕ Lumpsum Investments</h3>
                                         <div className="space-y-3">
                                             {lumpsums.map((lump, index) => (
                                                 <div key={index} className="flex items-center justify-between p-3 bg-white bg-opacity-5 rounded-lg">

@@ -22,62 +22,90 @@
     <script src="/js/guest-banner.js"></script>
     
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --light-green: #9ED670;
+            --white: #FFFFFF;
+            --gray-50: #F8F9FA;
+            --gray-100: #E9ECEF;
+            --gray-200: #DEE2E6;
+            --gray-700: #495057;
+            --gray-900: #212529;
+            --text-primary: #212529;
+            --text-secondary: #6C757D;
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: var(--gray-50);
             min-height: 100vh;
-            color: #fff;
-            padding: 20px;
+            color: var(--text-primary);
+            padding-top: 90px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
         }
         .navbar {
-            background: rgba(0,0,0,0.3);
-            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            padding: 0 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 12px;
-            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
         }
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
             text-decoration: none;
         }
-        .nav-actions { display: flex; gap: 10px; }
+        .nav-actions { display: flex; gap: 10px; align-items: center; }
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--primary-green); }
         .btn {
             padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
-        .btn:hover { transform: scale(1.05); }
-        .btn-primary { background: linear-gradient(90deg, #00d4ff, #7b2cbf); color: #fff; }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background: var(--primary-green); color: var(--white); box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3); }
+        .btn-primary:hover { background: var(--dark-green); }
+        .btn-secondary { background: var(--gray-50); color: var(--text-primary); border: 2px solid var(--primary-green); }
         
         /* Alert Banner */
         .alert-banner {
-            background: linear-gradient(90deg, rgba(0,255,136,0.2), rgba(0,212,255,0.2));
+            background: linear-gradient(90deg, rgba(127,192,76,0.15), rgba(158,214,112,0.15));
             border-radius: 12px;
             padding: 15px 25px;
             margin-bottom: 20px;
-            border-left: 4px solid #00ff88;
+            border-left: 4px solid var(--primary-green);
             display: flex;
             align-items: center;
             gap: 15px;
         }
         .alert-banner .icon { font-size: 1.5rem; }
-        .alert-banner strong { color: #00ff88; }
-        .alert-banner p { color: #8892b0; margin-top: 5px; font-size: 0.9rem; }
+        .alert-banner strong { color: var(--primary-green); }
+        .alert-banner p { color: var(--text-secondary); margin-top: 5px; font-size: 0.9rem; }
         
         /* Summary Cards */
         .summary-cards {
@@ -87,19 +115,20 @@
             margin-bottom: 30px;
         }
         .card {
-            background: rgba(255,255,255,0.05);
+            background: var(--white);
             border-radius: 16px;
             padding: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--gray-100);
             transition: transform 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        .card:hover { transform: translateY(-3px); }
-        .card-label { color: #8892b0; font-size: 0.85rem; margin-bottom: 8px; }
-        .card-value { font-size: 1.6rem; font-weight: 700; color: #fff; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .card-label { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px; }
+        .card-value { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); }
         /* XIRR card */
         .xirr-card { display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
-        .xirr-value { font-size:1.6rem; font-weight:800; color:#ffd166; }
-        .compare-box { margin-top:10px; background: rgba(255,255,255,0.03); padding:12px; border-radius:8px; width:100%; }
+        .xirr-value { font-size:1.6rem; font-weight:800; color:#f59e0b; }
+        .compare-box { margin-top:10px; background: var(--gray-50); padding:12px; border-radius:8px; width:100%; }
         /* Spinner for buttons */
         .btn-spinner {
             display: inline-block;
@@ -117,9 +146,9 @@
             to { transform: rotate(360deg); }
         }
 
-        .card-value.positive { color: #00ff88; }
-        .card-value.negative { color: #ff4757; }
-        .card-sub { color: #8892b0; font-size: 0.8rem; margin-top: 5px; }
+        .card-value.positive { color: var(--primary-green); }
+        .card-value.negative { color: #ef4444; }
+        .card-sub { color: var(--text-secondary); font-size: 0.8rem; margin-top: 5px; }
         
         /* Chart Grid */
         .charts-grid {
@@ -129,10 +158,11 @@
             margin-bottom: 30px;
         }
         .chart-container {
-            background: rgba(255,255,255,0.05);
+            background: var(--white);
             border-radius: 16px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--gray-100);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
         .chart-title {
             font-size: 1.1rem;
@@ -141,10 +171,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            color: var(--text-primary);
         }
         .chart-subtitle {
             font-size: 0.8rem;
-            color: #8892b0;
+            color: var(--text-secondary);
             margin-bottom: 10px;
         }
         
@@ -161,7 +192,7 @@
             border-left: 3px solid;
         }
         .style-item strong { display: block; margin-bottom: 5px; }
-        .style-item p { color: #8892b0; font-size: 0.8rem; }
+        .style-item p { color: var(--text-secondary); font-size: 0.8rem; }
         
         /* Risk Metrics */
         .metrics-grid {
@@ -177,12 +208,12 @@
             text-align: center;
         }
         .metric-value { font-size: 1.4rem; font-weight: 700; }
-        .metric-label { font-size: 0.75rem; color: #8892b0; margin-top: 5px; }
+        .metric-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 5px; }
         
         /* Risk Metrics Table */
         .risk-table { width: 100%; font-size: 0.85rem; margin-top: 20px; }
-        .risk-table th, .risk-table td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .risk-table th { color: #00d4ff; }
+        .risk-table th, .risk-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+        .risk-table th { color: var(--primary-green); }
         
         /* Rebalancing */
         .rebalance-section { margin-bottom: 30px; }
@@ -190,7 +221,7 @@
         .slider-container input[type="range"] { 
             width: 100%; 
             -webkit-appearance: none;
-            background: rgba(255,255,255,0.1);
+            background: var(--gray-100);
             border-radius: 5px;
             height: 8px;
         }
@@ -199,7 +230,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #00d4ff;
+            background: var(--primary-green);
             cursor: pointer;
         }
         .preset-btn {
@@ -229,22 +260,22 @@
             transition: all 0.3s;
         }
         .mode-btn.active { background: rgba(123,44,191,0.5); color: #fff; }
-        .mode-btn:not(.active) { background: transparent; color: #8892b0; }
+        .mode-btn:not(.active) { background: transparent; color: var(--text-secondary); }
         
         /* Holdings Table */
         .table-container {
-            background: rgba(255,255,255,0.05);
+            background: var(--white);
             border-radius: 16px;
             padding: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--gray-100);
             overflow-x: auto;
             margin-bottom: 30px;
         }
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        th { color: #00d4ff; font-weight: 600; font-size: 0.85rem; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--gray-100); }
+        th { color: var(--primary-green); font-weight: 600; font-size: 0.85rem; }
         td { font-size: 0.9rem; }
-        .gain { color: #00ff88; }
+        .gain { color: var(--primary-green); }
         .loss { color: #ff4757; }
         .fund-name { font-weight: 500; max-width: 250px; }
         .category-badge {
@@ -253,7 +284,7 @@
             border-radius: 12px;
             font-size: 0.75rem;
             background: rgba(0,212,255,0.2);
-            color: #00d4ff;
+            color: var(--primary-green);
         }
         .badge {
             padding: 4px 10px;
@@ -261,22 +292,22 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-        .badge-hold { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .badge-hold { background: rgba(0,255,136,0.2); color: var(--primary-green); }
         .badge-review { background: rgba(255,193,7,0.2); color: #ffc107; }
         .badge-exit { background: rgba(255,71,87,0.2); color: #ff4757; }
-        .badge-new { background: rgba(0,212,255,0.2); color: #00d4ff; }
+        .badge-new { background: rgba(0,212,255,0.2); color: var(--primary-green); }
         
         /* Style colors */
-        .style-garp { color: #00ff88; }
+        .style-garp { color: var(--primary-green); }
         .style-momentum { color: #ff4757; }
-        .style-quality { color: #00d4ff; }
+        .style-quality { color: var(--primary-green); }
         .style-value { color: #ffc107; }
         .style-passive { color: #9c27b0; }
-        .style-blend { color: #8892b0; }
+        .style-blend { color: var(--text-secondary); }
         .style-sectoral { color: #e91e63; }
         .style-liquid { color: #4caf50; }
         
-        .click-info { font-size: 0.75rem; color: #8892b0; margin-bottom: 10px; }
+        .click-info { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 10px; }
         .funds-display {
             margin-top: 15px;
             padding: 15px;
@@ -290,7 +321,7 @@
         .no-data {
             text-align: center;
             padding: 60px 20px;
-            color: #8892b0;
+            color: var(--text-secondary);
         }
         .no-data h2 { margin-bottom: 20px; color: #fff; }
         
@@ -301,13 +332,13 @@
             padding: 15px;
             margin-top: 20px;
         }
-        .insights-box h4 { color: #00d4ff; margin-bottom: 10px; }
+        .insights-box h4 { color: var(--primary-green); margin-bottom: 10px; }
         .insights-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             font-size: 0.85rem;
-            color: #8892b0;
+            color: var(--text-secondary);
         }
         
         /* Manual Entry Modal */
@@ -341,7 +372,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         .modal-header h2 {
-            color: #00d4ff;
+            color: var(--primary-green);
             margin: 0;
         }
         .close-modal {
@@ -367,7 +398,7 @@
         }
         .entry-table th {
             background: rgba(0, 212, 255, 0.1);
-            color: #00d4ff;
+            color: var(--primary-green);
             font-weight: 600;
         }
         .entry-table input,
@@ -383,15 +414,15 @@
         .entry-table input:focus,
         .entry-table select:focus {
             outline: none;
-            border-color: #00d4ff;
+            border-color: var(--primary-green);
             background: rgba(255, 255, 255, 0.08);
         }
         .add-row-btn {
             margin-top: 15px;
             padding: 10px 20px;
             background: rgba(0, 212, 255, 0.2);
-            border: 1px solid #00d4ff;
-            color: #00d4ff;
+            border: 1px solid var(--primary-green);
+            color: var(--primary-green);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
@@ -457,14 +488,16 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="/" class="logo">
-            <img src="/assets/logo.svg" alt="MFHelper" width="40" height="40" style="vertical-align: middle; margin-right: 8px;">
-            MFHelper
-        </a>
+        <a href="/" class="logo">MFHelper</a>
+        <div style="display: flex; align-items: center; gap: 2rem;">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/goal-planning.html" class="nav-link">Goal Planning</a>
+            <a href="/ai-demo.html" class="nav-link">AI Chat</a>
+        </div>
         <div class="nav-actions">
-            <button class="btn btn-secondary" onclick="showUploadModal()">📁 Upload New</button>
-            <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual Entry</button>
-            <button class="btn btn-secondary" onclick="exportData()">📤 Export</button>
+            <button class="btn btn-secondary" onclick="showUploadModal()">📁 Upload</button>
+            <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual</button>
+            <button class="btn btn-primary" onclick="exportData()">📤 Export</button>
         </div>
     </nav>
     
@@ -570,16 +603,16 @@
         <div class="chart-container" style="margin-bottom: 30px;">
             <div class="chart-title">📖 Investment Style Guide - Fund Classification</div>
             <div class="style-legend">
-                <div class="style-item" style="background: rgba(0,255,136,0.1); border-color: #00ff88;">
-                    <strong style="color: #00ff88;">GARP (Growth at Reasonable Price)</strong>
+                <div class="style-item" style="background: rgba(0,255,136,0.1); border-color: var(--primary-green);">
+                    <strong style="color: var(--primary-green);">GARP (Growth at Reasonable Price)</strong>
                     <p>Buy growth stocks but at fair valuations. Balanced approach between growth and value.</p>
                 </div>
                 <div class="style-item" style="background: rgba(255,71,87,0.1); border-color: #ff4757;">
                     <strong style="color: #ff4757;">Momentum</strong>
                     <p>Buy stocks with strong price momentum. High turnover, volatile but can outperform in bull markets.</p>
                 </div>
-                <div class="style-item" style="background: rgba(0,212,255,0.1); border-color: #00d4ff;">
-                    <strong style="color: #00d4ff;">Quality Growth</strong>
+                <div class="style-item" style="background: rgba(0,212,255,0.1); border-color: var(--primary-green);">
+                    <strong style="color: var(--primary-green);">Quality Growth</strong>
                     <p>Focus on high ROE, clean balance sheets, consistent earnings growth. Lower risk.</p>
                 </div>
                 <div class="style-item" style="background: rgba(255,193,7,0.1); border-color: #ffc107;">
@@ -590,8 +623,8 @@
                     <strong style="color: #9c27b0;">Passive/Index</strong>
                     <p>Track market indexes. Low cost, no stock picking, broad market exposure.</p>
                 </div>
-                <div class="style-item" style="background: rgba(136,146,176,0.1); border-color: #8892b0;">
-                    <strong style="color: #8892b0;">Blend</strong>
+                <div class="style-item" style="background: rgba(136,146,176,0.1); border-color: var(--text-secondary);">
+                    <strong style="color: var(--text-secondary);">Blend</strong>
                     <p>Mix of growth and value. Flexible mandate, manager discretion.</p>
                 </div>
                 <div class="style-item" style="background: rgba(233,30,99,0.1); border-color: #e91e63;">
@@ -653,7 +686,7 @@
         <!-- Portfolio Overlap Analysis -->
         <div class="chart-container overlap-section" style="margin-bottom: 30px;">
             <div class="chart-title">🔍 Portfolio Overlap Analysis</div>
-            <p style="color: #8892b0; margin-bottom: 20px;">Analyze stock and sector overlap between your funds to identify concentration risks</p>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Analyze stock and sector overlap between your funds to identify concentration risks</p>
             
             <button id="analyze-overlap-btn" class="btn btn-primary" onclick="analyzeCurrentPortfolio()" style="margin-bottom: 20px; display:inline-flex; align-items:center; gap:8px;">
                 <span>📊 Analyze Overlap</span>
@@ -667,25 +700,25 @@
         <!-- Portfolio Rebalancing Calculator -->
         <div class="chart-container rebalance-section" style="margin-bottom: 30px;">
             <div class="chart-title">🎯 Portfolio Rebalancing Calculator</div>
-            <p style="color: #8892b0; margin-bottom: 20px;">Adjust sliders to set your target allocation and see what changes you need to make</p>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Adjust sliders to set your target allocation and see what changes you need to make</p>
             
             <!-- Mode Selection Toggle -->
             <div class="mode-toggle">
                 <button id="modeRebalance" class="mode-btn active" onclick="setMode('rebalance')">🔄 Rebalance Existing</button>
                 <button id="modeFresh" class="mode-btn" onclick="setMode('fresh')">💰 Add Fresh Money</button>
             </div>
-            <div id="modeDescription" style="color: #8892b0; font-size: 0.85rem; margin-bottom: 20px;">
+            <div id="modeDescription" style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 20px;">
                 Sell from overweight categories, buy in underweight (may have tax implications)
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
                 <div class="slider-container">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span style="color: #00d4ff;">Large Cap Target</span>
-                        <span id="largeTarget" style="color: #00d4ff; font-weight: 700;">40%</span>
+                        <span style="color: var(--primary-green);">Large Cap Target</span>
+                        <span id="largeTarget" style="color: var(--primary-green); font-weight: 700;">40%</span>
                     </div>
                     <input type="range" id="largeSlider" min="0" max="100" value="40" oninput="updateRebalance()">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #8892b0; margin-top: 5px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
                         <span id="largeCurrent">Current: -</span>
                         <span id="largeDiff">-</span>
                     </div>
@@ -696,7 +729,7 @@
                         <span id="midTarget" style="color: #ffc107; font-weight: 700;">30%</span>
                     </div>
                     <input type="range" id="midSlider" min="0" max="100" value="30" oninput="updateRebalance()">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #8892b0; margin-top: 5px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
                         <span id="midCurrent">Current: -</span>
                         <span id="midDiff">-</span>
                     </div>
@@ -707,7 +740,7 @@
                         <span id="smallTarget" style="color: #ff4757; font-weight: 700;">30%</span>
                     </div>
                     <input type="range" id="smallSlider" min="0" max="100" value="30" oninput="updateRebalance()">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #8892b0; margin-top: 5px;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
                         <span id="smallCurrent">Current: -</span>
                         <span id="smallDiff">-</span>
                     </div>
@@ -715,8 +748,8 @@
             </div>
             
             <div style="margin-top: 20px;">
-                <button class="preset-btn" onclick="setPreset(33,33,34)" style="border-color: #7b2cbf;">Equal (33/33/34)</button>
-                <button class="preset-btn" onclick="setPreset(50,30,20)" style="border-color: #00d4ff;">Conservative (50/30/20)</button>
+                <button class="preset-btn" onclick="setPreset(33,33,34)" style="border-color: var(--dark-green);">Equal (33/33/34)</button>
+                <button class="preset-btn" onclick="setPreset(50,30,20)" style="border-color: var(--primary-green);">Conservative (50/30/20)</button>
                 <button class="preset-btn" onclick="setPreset(40,35,25)" style="border-color: #ffc107;">Moderate (40/35/25)</button>
                 <button class="preset-btn" onclick="setPreset(30,30,40)" style="border-color: #ff4757;">Aggressive (30/30/40)</button>
             </div>
@@ -919,7 +952,7 @@
             
             const labels = Object.keys(totals).filter(k => totals[k] > 0);
             const values = labels.map(k => totals[k]);
-            const colorMap = { 'Large Cap': '#00d4ff', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'International': '#9c27b0', 'Other': '#8892b0' };
+            const colorMap = { 'Large Cap': 'var(--primary-green)', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'International': '#9c27b0', 'Other': 'var(--text-secondary)' };
             
             Plotly.newPlot('allocationChart', [{
                 values: values, labels: labels, type: 'pie', hole: 0.5,
@@ -948,7 +981,7 @@
                 values: [0, ...values],
                 textinfo: 'label+percent entry',
                 textfont: { size: 11 },
-                marker: { colors: ['', '#00ff88', '#00d4ff', '#7b2cbf', '#c792ea', '#ff4757', '#ff6b81', '#ffc107', '#00bcd4', '#e91e63', '#9c27b0', '#8892b0'] }
+                marker: { colors: ['', 'var(--primary-green)', 'var(--primary-green)', 'var(--dark-green)', 'var(--light-green)', '#ff4757', '#ff6b81', '#ffc107', '#00bcd4', '#e91e63', '#9c27b0', 'var(--text-secondary)'] }
             }], { paper_bgcolor: 'rgba(0,0,0,0)', margin: { t: 10, b: 10, l: 10, r: 10 } }, { responsive: true });
         }
         
@@ -962,7 +995,7 @@
                 amcFunds[amc].push(h);
             });
             
-            const colors = ['#00ff88', '#00d4ff', '#7b2cbf', '#ff4757', '#ff6b81', '#ffc107', '#c792ea', '#00bcd4', '#e91e63', '#9c27b0', '#3f51b5', '#009688', '#ff9800', '#4caf50'];
+            const colors = ['var(--primary-green)', 'var(--primary-green)', 'var(--dark-green)', '#ff4757', '#ff6b81', '#ffc107', 'var(--light-green)', '#00bcd4', '#e91e63', '#9c27b0', '#3f51b5', '#009688', '#ff9800', '#4caf50'];
             
             Plotly.newPlot('amcChart', [{
                 values: Object.values(totals), labels: Object.keys(totals), type: 'pie', hole: 0.4,
@@ -983,8 +1016,8 @@
                     funds.forEach(f => {
                         const val = (parseFloat(f.current_value || 0) / 100000).toFixed(2);
                         const gain = parseFloat(f.current_value || 0) - parseFloat(f.invested || 0);
-                        const gainColor = gain >= 0 ? '#00ff88' : '#ff4757';
-                        html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: rgba(255,255,255,0.05); border-radius: 6px;"><div><span style="color: #fff;">${f.fund_name}</span><br><span style="color: #8892b0; font-size: 0.8rem;">${f.category || '-'}</span></div><div style="text-align: right;"><span style="color: ${color}; font-weight: 600;">₹${val}L</span><br><span style="color: ${gainColor}; font-size: 0.85rem;">${gain >= 0 ? '+' : ''}${((gain/parseFloat(f.invested||1))*100).toFixed(1)}%</span></div></div>`;
+                        const gainColor = gain >= 0 ? 'var(--primary-green)' : '#ff4757';
+                        html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--white); border-radius: 6px;"><div><span style="color: #fff;">${f.fund_name}</span><br><span style="color: var(--text-secondary); font-size: 0.8rem;">${f.category || '-'}</span></div><div style="text-align: right;"><span style="color: ${color}; font-weight: 600;">₹${val}L</span><br><span style="color: ${gainColor}; font-size: 0.85rem;">${gain >= 0 ? '+' : ''}${((gain/parseFloat(f.invested||1))*100).toFixed(1)}%</span></div></div>`;
                     });
                     html += '</div>';
                     display.innerHTML = html;
@@ -1002,11 +1035,11 @@
                 styleFunds[style].push(h);
             });
             
-            const styleColors = { 'GARP': '#00ff88', 'Momentum': '#ff4757', 'Quality': '#00d4ff', 'Value': '#ffc107', 'Passive': '#9c27b0', 'Blend': '#8892b0', 'Sectoral': '#e91e63', 'Liquid': '#4caf50' };
+            const styleColors = { 'GARP': 'var(--primary-green)', 'Momentum': '#ff4757', 'Quality': 'var(--primary-green)', 'Value': '#ffc107', 'Passive': '#9c27b0', 'Blend': 'var(--text-secondary)', 'Sectoral': '#e91e63', 'Liquid': '#4caf50' };
             
             Plotly.newPlot('styleChart', [{
                 values: Object.values(totals), labels: Object.keys(totals), type: 'pie', hole: 0.4,
-                marker: { colors: Object.keys(totals).map(k => styleColors[k] || '#8892b0') },
+                marker: { colors: Object.keys(totals).map(k => styleColors[k] || 'var(--text-secondary)') },
                 textinfo: 'label+percent', textfont: { color: '#fff', size: 10 },
                 hovertemplate: '<b>%{label}</b><br>₹%{value:,.0f}<br>%{percent}<br><i>Click to see funds</i><extra></extra>'
             }], {
@@ -1023,7 +1056,7 @@
                     let html = `<h5 style="color: ${color}; margin-bottom: 10px;">🎨 ${style} Style</h5><div style="display: grid; gap: 8px;">`;
                     funds.forEach(f => {
                         const val = (parseFloat(f.current_value || 0) / 100000).toFixed(2);
-                        html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: rgba(255,255,255,0.05); border-radius: 6px;"><span>${f.fund_name}</span><span style="color: ${color};">₹${val}L</span></div>`;
+                        html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--white); border-radius: 6px;"><span>${f.fund_name}</span><span style="color: ${color};">₹${val}L</span></div>`;
                     });
                     html += '</div>';
                     display.innerHTML = html;
@@ -1041,13 +1074,13 @@
             
             Plotly.newPlot('performanceChart', [{
                 y: perf.map(p => p.name), x: perf.map(p => p.returns), type: 'bar', orientation: 'h',
-                marker: { color: perf.map(p => p.returns >= 0 ? '#00ff88' : '#ff4757') },
+                marker: { color: perf.map(p => p.returns >= 0 ? 'var(--primary-green)' : '#ff4757') },
                 text: perf.map(p => `${p.returns.toFixed(1)}%`), textposition: 'outside', textfont: { color: '#fff', size: 10 },
                 hovertemplate: '<b>%{y}</b><br>Return: %{x:.1f}%<extra></extra>'
             }], {
                 paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: { title: 'Returns %', gridcolor: 'rgba(255,255,255,0.1)', zeroline: true, zerolinecolor: '#ffc107', tickfont: { color: '#8892b0' } },
-                yaxis: { tickfont: { color: '#8892b0', size: 9 } },
+                xaxis: { title: 'Returns %', gridcolor: 'var(--gray-100)', zeroline: true, zerolinecolor: '#ffc107', tickfont: { color: 'var(--text-secondary)' } },
+                yaxis: { tickfont: { color: 'var(--text-secondary)', size: 9 } },
                 margin: { t: 10, b: 50, l: 180, r: 60 }
             }, { responsive: true });
         }
@@ -1060,21 +1093,21 @@
             }));
             
             if (data.length === 0) {
-                document.getElementById('riskChart').innerHTML = '<p style="text-align: center; color: #8892b0; padding: 50px;">No alpha data available</p>';
+                document.getElementById('riskChart').innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 50px;">No alpha data available</p>';
                 return;
             }
             
-            const categoryColors = { 'Large Cap': '#00d4ff', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'Flexi Cap': '#00ff88', 'International': '#9c27b0' };
+            const categoryColors = { 'Large Cap': 'var(--primary-green)', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'Flexi Cap': 'var(--primary-green)', 'International': '#9c27b0' };
             
             Plotly.newPlot('riskChart', [{
                 x: data.map(d => d.category), y: data.map(d => d.alpha), mode: 'markers+text', type: 'scatter',
-                marker: { size: data.map(d => Math.sqrt(d.current / 10000) + 10), color: data.map(d => categoryColors[d.category] || '#8892b0'), opacity: 0.8 },
+                marker: { size: data.map(d => Math.sqrt(d.current / 10000) + 10), color: data.map(d => categoryColors[d.category] || 'var(--text-secondary)'), opacity: 0.8 },
                 text: data.map(d => d.name), textposition: 'top center', textfont: { size: 9, color: '#fff' },
                 hovertemplate: '<b>%{text}</b><br>Category: %{x}<br>Alpha: %{y:.2f}<extra></extra>'
             }], {
                 paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: { title: 'Category', tickfont: { color: '#8892b0' }, gridcolor: 'rgba(255,255,255,0.1)' },
-                yaxis: { title: 'Alpha', tickfont: { color: '#8892b0' }, gridcolor: 'rgba(255,255,255,0.1)', zeroline: true, zerolinecolor: '#ffc107' },
+                xaxis: { title: 'Category', tickfont: { color: 'var(--text-secondary)' }, gridcolor: 'var(--gray-100)' },
+                yaxis: { title: 'Alpha', tickfont: { color: 'var(--text-secondary)' }, gridcolor: 'var(--gray-100)', zeroline: true, zerolinecolor: '#ffc107' },
                 margin: { t: 30, b: 50, l: 60, r: 20 }
             }, { responsive: true });
         }
@@ -1086,11 +1119,11 @@
             const avgAlpha = alphaValues.length > 0 ? alphaValues.reduce((a, b) => a + b, 0) / alphaValues.length : 0;
             
             document.getElementById('metricsGrid').innerHTML = `
-                <div class="metric-box"><div class="metric-value" style="color: #00ff88;">${holdings.length}</div><div class="metric-label">Total Funds</div></div>
-                <div class="metric-box"><div class="metric-value" style="color: #00ff88;">${profitableCount}</div><div class="metric-label">Profitable<br>(${((profitableCount/holdings.length)*100).toFixed(0)}%)</div></div>
-                <div class="metric-box"><div class="metric-value" style="color: ${avgAlpha >= 0 ? '#00ff88' : '#ff4757'};">${avgAlpha.toFixed(2)}</div><div class="metric-label">Avg Alpha</div></div>
-                <div class="metric-box"><div class="metric-value" style="color: #00d4ff;">₹${(summary.total_current/100000).toFixed(1)}L</div><div class="metric-label">Total Value</div></div>
-                <div class="metric-box"><div class="metric-value" style="color: ${summary.return_pct >= 0 ? '#00ff88' : '#ff4757'};">${summary.return_pct.toFixed(1)}%</div><div class="metric-label">Total Return</div></div>
+                <div class="metric-box"><div class="metric-value" style="color: var(--primary-green);">${holdings.length}</div><div class="metric-label">Total Funds</div></div>
+                <div class="metric-box"><div class="metric-value" style="color: var(--primary-green);">${profitableCount}</div><div class="metric-label">Profitable<br>(${((profitableCount/holdings.length)*100).toFixed(0)}%)</div></div>
+                <div class="metric-box"><div class="metric-value" style="color: ${avgAlpha >= 0 ? 'var(--primary-green)' : '#ff4757'};">${avgAlpha.toFixed(2)}</div><div class="metric-label">Avg Alpha</div></div>
+                <div class="metric-box"><div class="metric-value" style="color: var(--primary-green);">₹${(summary.total_current/100000).toFixed(1)}L</div><div class="metric-label">Total Value</div></div>
+                <div class="metric-box"><div class="metric-value" style="color: ${summary.return_pct >= 0 ? 'var(--primary-green)' : '#ff4757'};">${summary.return_pct.toFixed(1)}%</div><div class="metric-label">Total Return</div></div>
             `;
         }
         
@@ -1169,11 +1202,11 @@
             const smallDiff = (targetSmall - currentSmallPct).toFixed(1);
             
             document.getElementById('largeDiff').textContent = (largeDiff >= 0 ? '+' : '') + largeDiff + '%';
-            document.getElementById('largeDiff').style.color = largeDiff >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('largeDiff').style.color = largeDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
             document.getElementById('midDiff').textContent = (midDiff >= 0 ? '+' : '') + midDiff + '%';
-            document.getElementById('midDiff').style.color = midDiff >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('midDiff').style.color = midDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
             document.getElementById('smallDiff').textContent = (smallDiff >= 0 ? '+' : '') + smallDiff + '%';
-            document.getElementById('smallDiff').style.color = smallDiff >= 0 ? '#00ff88' : '#ff4757';
+            document.getElementById('smallDiff').style.color = smallDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
             
             let html = currentMode === 'rebalance' 
                 ? generateRebalanceActions(totalEquity, targetLarge, targetMid, targetSmall, currentLargePct, currentMidPct, currentSmallPct)
@@ -1194,15 +1227,15 @@
             if (sellLarge > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.2); border-radius: 8px; border-left: 3px solid #ff4757;"><strong style="color: #ff4757;">📉 SELL Large Cap:</strong> ₹${(sellLarge/100000).toFixed(2)}L</div>`;
             if (sellMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.2); border-radius: 8px; border-left: 3px solid #ffc107;"><strong style="color: #ffc107;">📉 SELL Mid Cap:</strong> ₹${(sellMid/100000).toFixed(2)}L</div>`;
             if (sellSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.2); border-radius: 8px; border-left: 3px solid #ff4757;"><strong style="color: #ff4757;">📉 SELL Small Cap:</strong> ₹${(sellSmall/100000).toFixed(2)}L</div>`;
-            if (buyLarge > 0) html += `<div style="padding: 15px; background: rgba(0,212,255,0.2); border-radius: 8px; border-left: 3px solid #00d4ff;"><strong style="color: #00d4ff;">📈 BUY Large Cap:</strong> ₹${(buyLarge/100000).toFixed(2)}L</div>`;
+            if (buyLarge > 0) html += `<div style="padding: 15px; background: rgba(0,212,255,0.2); border-radius: 8px; border-left: 3px solid var(--primary-green);"><strong style="color: var(--primary-green);">📈 BUY Large Cap:</strong> ₹${(buyLarge/100000).toFixed(2)}L</div>`;
             if (buyMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.2); border-radius: 8px; border-left: 3px solid #ffc107;"><strong style="color: #ffc107;">📈 BUY Mid Cap:</strong> ₹${(buyMid/100000).toFixed(2)}L</div>`;
-            if (buySmall > 0) html += `<div style="padding: 15px; background: rgba(0,255,136,0.2); border-radius: 8px; border-left: 3px solid #00ff88;"><strong style="color: #00ff88;">📈 BUY Small Cap:</strong> ₹${(buySmall/100000).toFixed(2)}L</div>`;
+            if (buySmall > 0) html += `<div style="padding: 15px; background: rgba(0,255,136,0.2); border-radius: 8px; border-left: 3px solid var(--primary-green);"><strong style="color: var(--primary-green);">📈 BUY Small Cap:</strong> ₹${(buySmall/100000).toFixed(2)}L</div>`;
             if (sellLarge === 0 && sellMid === 0 && sellSmall === 0 && buyLarge === 0 && buyMid === 0 && buySmall === 0) {
-                html += '<div style="padding: 15px; background: rgba(0,255,136,0.2); border-radius: 8px;"><strong style="color: #00ff88;">✅ Portfolio is already balanced!</strong></div>';
+                html += '<div style="padding: 15px; background: rgba(0,255,136,0.2); border-radius: 8px;"><strong style="color: var(--primary-green);">✅ Portfolio is already balanced!</strong></div>';
             }
             html += '</div>';
             if (sellLarge > 0 || sellMid > 0 || sellSmall > 0) {
-                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px;"><strong style="color: #ffc107;">⚠️ Tax Note:</strong><p style="color: #8892b0; margin-top: 5px; font-size: 0.85rem;">Selling may attract LTCG tax (12.5% on gains above ₹1.25L). Consider using "Add Fresh Money" mode to avoid taxes.</p></div>`;
+                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px;"><strong style="color: #ffc107;">⚠️ Tax Note:</strong><p style="color: var(--text-secondary); margin-top: 5px; font-size: 0.85rem;">Selling may attract LTCG tax (12.5% on gains above ₹1.25L). Consider using "Add Fresh Money" mode to avoid taxes.</p></div>`;
             }
             return html;
         }
@@ -1215,13 +1248,13 @@
             const freshSmall = Math.max(0, (targetTotal * tgtS / 100) - marketCapAllocation.small);
             
             let html = '<div style="display: grid; gap: 15px;">';
-            html += `<div style="padding: 15px; background: rgba(123,44,191,0.2); border-radius: 8px; border-left: 3px solid #7b2cbf;"><strong style="color: #c792ea;">💰 Total Fresh Investment Needed:</strong> ₹${(freshTotal/100000).toFixed(2)}L</div>`;
-            if (freshLarge > 0) html += `<div style="padding: 15px; background: rgba(0,212,255,0.1); border-radius: 8px;"><strong style="color: #00d4ff;">Large Cap:</strong> Add ₹${(freshLarge/100000).toFixed(2)}L<br><span style="color: #8892b0; font-size: 0.85rem;">Suggested: Parag Parikh Flexi Cap, HDFC Flexicap</span></div>`;
-            if (freshMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px;"><strong style="color: #ffc107;">Mid Cap:</strong> Add ₹${(freshMid/100000).toFixed(2)}L<br><span style="color: #8892b0; font-size: 0.85rem;">Suggested: Motilal Oswal Midcap, Kotak Emerging Equity</span></div>`;
-            if (freshSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.1); border-radius: 8px;"><strong style="color: #ff4757;">Small Cap:</strong> Add ₹${(freshSmall/100000).toFixed(2)}L<br><span style="color: #8892b0; font-size: 0.85rem;">Suggested: Nippon Small Cap, Axis Small Cap</span></div>`;
+            html += `<div style="padding: 15px; background: rgba(123,44,191,0.2); border-radius: 8px; border-left: 3px solid var(--dark-green);"><strong style="color: var(--light-green);">💰 Total Fresh Investment Needed:</strong> ₹${(freshTotal/100000).toFixed(2)}L</div>`;
+            if (freshLarge > 0) html += `<div style="padding: 15px; background: rgba(0,212,255,0.1); border-radius: 8px;"><strong style="color: var(--primary-green);">Large Cap:</strong> Add ₹${(freshLarge/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Parag Parikh Flexi Cap, HDFC Flexicap</span></div>`;
+            if (freshMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px;"><strong style="color: #ffc107;">Mid Cap:</strong> Add ₹${(freshMid/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Motilal Oswal Midcap, Kotak Emerging Equity</span></div>`;
+            if (freshSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.1); border-radius: 8px;"><strong style="color: #ff4757;">Small Cap:</strong> Add ₹${(freshSmall/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Nippon Small Cap, Axis Small Cap</span></div>`;
             html += '</div>';
             if (freshTotal > 100000) {
-                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(0,212,255,0.1); border-radius: 8px;"><strong style="color: #00d4ff;">💡 SIP Alternative:</strong><p style="color: #8892b0; margin-top: 5px; font-size: 0.9rem;">Instead of lumpsum, start SIP of ₹${((freshTotal/12)/1000).toFixed(0)}K/month for 12 months to average out market volatility.</p></div>`;
+                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(0,212,255,0.1); border-radius: 8px;"><strong style="color: var(--primary-green);">💡 SIP Alternative:</strong><p style="color: var(--text-secondary); margin-top: 5px; font-size: 0.9rem;">Instead of lumpsum, start SIP of ₹${((freshTotal/12)/1000).toFixed(0)}K/month for 12 months to average out market volatility.</p></div>`;
             }
             return html;
         }
@@ -1456,7 +1489,7 @@
             </div>
             
             <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
-                <button class="btn" style="flex: 1; min-width: 150px; background: rgba(0, 212, 255, 0.1); border: 2px solid rgba(0, 212, 255, 0.3); color: #00d4ff;" onclick="addManualEntryRow()">+ Add Another Fund</button>
+                <button class="btn" style="flex: 1; min-width: 150px; background: rgba(0, 212, 255, 0.1); border: 2px solid rgba(0, 212, 255, 0.3); color: var(--primary-green);" onclick="addManualEntryRow()">+ Add Another Fund</button>
                 <button class="btn btn-primary" style="flex: 1; min-width: 150px;" onclick="saveManualEntries()">💾 Save Portfolio</button>
                 <button class="btn btn-secondary" style="flex: 1; min-width: 150px;" onclick="closeManualEntryModal()">Cancel</button>
             </div>
@@ -1484,7 +1517,7 @@
                 <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
                     Supported formats: PDF, Excel (.xlsx, .xls)
                 </p>
-                <div id="selectedFileName" style="margin-top: 15px; color: #00d4ff; font-weight: 600;"></div>
+                <div id="selectedFileName" style="margin-top: 15px; color: var(--primary-green); font-weight: 600;"></div>
             </div>
             
             <!-- Password Field for PDF -->
@@ -1496,7 +1529,7 @@
                     type="password" 
                     id="pdfPassword" 
                     placeholder="Enter PDF password"
-                    style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 0.95rem;"
+                    style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff; font-size: 0.95rem;"
                 >
                 <p style="margin-top: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.5);">
                     ℹ️ Most CAS PDFs are password protected. Leave blank if not protected.
@@ -1504,8 +1537,8 @@
             </div>
             
             <div id="uploadProgress" style="display: none; margin-top: 20px;">
-                <div style="background: rgba(255,255,255,0.1); border-radius: 10px; height: 10px; overflow: hidden;">
-                    <div id="progressBar" style="background: linear-gradient(90deg, #00d4ff, #7b2cbf); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                <div style="background: var(--gray-100); border-radius: 10px; height: 10px; overflow: hidden;">
+                    <div id="progressBar" style="background: linear-gradient(90deg, var(--primary-green), var(--dark-green)); height: 100%; width: 0%; transition: width 0.3s;"></div>
                 </div>
                 <p id="uploadStatus" style="text-align: center; margin-top: 10px; color: rgba(255,255,255,0.8);"></p>
             </div>
@@ -1700,7 +1733,7 @@
             
             row.innerHTML = `
                 <td>
-                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff;" required>
+                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff;" required>
                         <option value="">Select AMC...</option>
                         ${amcOptions}
                     </select>
@@ -1711,11 +1744,11 @@
                            onfocus="showFundDropdown(this)"
                            data-fund-id="" 
                            disabled
-                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff;"
+                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff;"
                            required>
                     <div class="fund-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20, 20, 40, 0.98); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 1000; margin-top: 4px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);"></div>
                 </td>
-                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff;" required></td>
+                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff;" required></td>
                 <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
             `;
             tbody.appendChild(row);
