@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Achieve Checker - MFHelper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --dark-bg: #0f0f1e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .calculator-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-group small {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 15px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .results-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            display: none;
+        }
+
+        .results-card.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .result-highlight {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-top: 10px;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .advice-box {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .advice-box h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .advice-box ul {
+            margin-left: 20px;
+            line-height: 2;
+            color: var(--text-secondary);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--card-border);
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option input {
+            display: none;
+        }
+
+        .radio-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🤖 MFHelper</div>
+            <a href="/" class="back-btn">← Back to Home</a>
+        </header>
+
+        <div class="page-header">
+            <div class="icon">🎯</div>
+            <h1>Goal Achieve Checker</h1>
+            <p style="color: var(--text-secondary);">Calculate the CAGR needed to reach your financial goals</p>
+        </div>
+
+        <div class="calculator-card">
+            <div class="input-group">
+                <label>Goal Name</label>
+                <input type="text" id="goalName" placeholder="e.g., Retirement Fund, Child's Education" value="Retirement Fund">
+                <small>Give your goal a meaningful name</small>
+            </div>
+
+            <div class="input-group">
+                <label>Current Corpus (₹)</label>
+                <input type="number" id="currentCorpus" placeholder="500000" value="500000">
+                <small>Your current investment amount</small>
+            </div>
+
+            <div class="input-group">
+                <label>Target Amount (₹)</label>
+                <input type="number" id="targetAmount" placeholder="5000000" value="5000000">
+                <small>Amount you want to achieve</small>
+            </div>
+
+            <div class="input-group">
+                <label>Investment Period</label>
+                <div class="radio-group" id="periodType">
+                    <label class="radio-option selected" onclick="selectPeriodType('years')">
+                        <input type="radio" name="periodType" value="years" checked>
+                        <div style="font-weight: 600;">By Years</div>
+                        <small style="color: var(--text-secondary);">Number of years</small>
+                    </label>
+                    <label class="radio-option" onclick="selectPeriodType('age')">
+                        <input type="radio" name="periodType" value="age">
+                        <div style="font-weight: 600;">By Age</div>
+                        <small style="color: var(--text-secondary);">Your target age</small>
+                    </label>
+                </div>
+            </div>
+
+            <div class="input-group" id="yearsInput">
+                <label>Number of Years</label>
+                <input type="number" id="years" placeholder="15" value="15">
+                <small>Investment time horizon</small>
+            </div>
+
+            <div class="input-group" id="ageInput" style="display: none;">
+                <label>Current Age</label>
+                <input type="number" id="currentAge" placeholder="30" style="margin-bottom: 15px;">
+                <label>Target Age</label>
+                <input type="number" id="targetAge" placeholder="60">
+                <small>We'll calculate the years between</small>
+            </div>
+
+            <div class="input-group">
+                <label>Monthly SIP (Optional - ₹)</label>
+                <input type="number" id="monthlySIP" placeholder="0" value="0">
+                <small>Additional monthly investment (leave 0 if none)</small>
+            </div>
+
+            <button class="btn" onclick="calculateGoal()">
+                🎯 Calculate Required CAGR
+            </button>
+        </div>
+
+        <div class="results-card" id="resultsCard">
+            <h2 style="margin-bottom: 30px;">📊 Your Goal Analysis</h2>
+            
+            <div class="result-item">
+                <h3 id="goalNameDisplay">Retirement Fund</h3>
+                <div class="result-highlight" id="cagrResult">12.5%</div>
+                <p style="font-size: 1.1rem; color: var(--text-secondary);">
+                    Required Annual Return (CAGR)
+                </p>
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Current Corpus</div>
+                    <div class="metric-value" id="currentDisplay">₹5L</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Target Amount</div>
+                    <div class="metric-value" id="targetDisplay">₹50L</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Time Period</div>
+                    <div class="metric-value" id="periodDisplay">15 years</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Growth Needed</div>
+                    <div class="metric-value" id="growthDisplay">10x</div>
+                </div>
+            </div>
+
+            <div class="advice-box" id="adviceBox">
+                <h3>💡 Recommendations</h3>
+                <div id="adviceContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectPeriodType(type) {
+            const options = document.querySelectorAll('.radio-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            document.getElementById('yearsInput').style.display = type === 'years' ? 'block' : 'none';
+            document.getElementById('ageInput').style.display = type === 'age' ? 'block' : 'none';
+        }
+
+        function formatCurrency(amount) {
+            if (amount >= 10000000) return '₹' + (amount / 10000000).toFixed(2) + ' Cr';
+            if (amount >= 100000) return '₹' + (amount / 100000).toFixed(2) + ' L';
+            return '₹' + amount.toLocaleString('en-IN');
+        }
+
+        function calculateGoal() {
+            const goalName = document.getElementById('goalName').value || 'Your Goal';
+            const current = parseFloat(document.getElementById('currentCorpus').value);
+            const target = parseFloat(document.getElementById('targetAmount').value);
+            const monthlySIP = parseFloat(document.getElementById('monthlySIP').value) || 0;
+            
+            let years;
+            const periodType = document.querySelector('input[name="periodType"]:checked').value;
+            
+            if (periodType === 'age') {
+                const currentAge = parseFloat(document.getElementById('currentAge').value);
+                const targetAge = parseFloat(document.getElementById('targetAge').value);
+                years = targetAge - currentAge;
+            } else {
+                years = parseFloat(document.getElementById('years').value);
+            }
+
+            if (!current || !target || !years || years <= 0) {
+                alert('Please fill all required fields with valid values');
+                return;
+            }
+
+            // Calculate CAGR without SIP
+            const cagr = ((Math.pow(target / current, 1 / years) - 1) * 100).toFixed(2);
+            
+            // If SIP is included, calculate required return
+            let requiredReturn = cagr;
+            if (monthlySIP > 0) {
+                // Simplified calculation for demo
+                const totalSIP = monthlySIP * 12 * years;
+                const adjustedTarget = target - totalSIP;
+                if (adjustedTarget > current) {
+                    requiredReturn = ((Math.pow(adjustedTarget / current, 1 / years) - 1) * 100).toFixed(2);
+                } else {
+                    requiredReturn = (8).toFixed(2); // Minimum expected return
+                }
+            }
+
+            // Display results
+            document.getElementById('goalNameDisplay').textContent = goalName;
+            document.getElementById('cagrResult').textContent = requiredReturn + '%';
+            document.getElementById('currentDisplay').textContent = formatCurrency(current);
+            document.getElementById('targetDisplay').textContent = formatCurrency(target);
+            document.getElementById('periodDisplay').textContent = years + ' years';
+            document.getElementById('growthDisplay').textContent = (target / current).toFixed(1) + 'x';
+
+            // Generate advice
+            generateAdvice(parseFloat(requiredReturn), years, monthlySIP);
+
+            // Show results
+            document.getElementById('resultsCard').classList.add('show');
+            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateAdvice(cagr, years, sip) {
+            const adviceContent = document.getElementById('adviceContent');
+            let advice = '<ul>';
+
+            if (cagr <= 10) {
+                advice += '<li>✅ <strong>Achievable with conservative investments</strong> - Consider balanced funds or debt-heavy hybrid funds</li>';
+                advice += '<li>💼 Large-cap equity funds or index funds should easily meet this target</li>';
+                advice += '<li>📊 Risk Level: Low to Moderate</li>';
+            } else if (cagr <= 15) {
+                advice += '<li>⚡ <strong>Realistic with equity investments</strong> - Focus on diversified equity mutual funds</li>';
+                advice += '<li>🎯 Consider a mix of large-cap, mid-cap, and flexi-cap funds</li>';
+                advice += '<li>📊 Risk Level: Moderate</li>';
+                advice += '<li>⏰ Time horizon of ' + years + ' years is good for equity exposure</li>';
+            } else if (cagr <= 20) {
+                advice += '<li>⚠️ <strong>Aggressive target</strong> - Requires higher risk appetite</li>';
+                advice += '<li>🚀 Consider mid-cap and small-cap funds (higher risk, higher potential returns)</li>';
+                advice += '<li>📊 Risk Level: High</li>';
+                advice += '<li>💡 Diversify across 4-5 funds to manage risk</li>';
+            } else {
+                advice += '<li>🚨 <strong>Very aggressive target</strong> - May not be realistic with mutual funds alone</li>';
+                advice += '<li>💡 Consider:</li>';
+                advice += '<ul style="margin-left: 20px; margin-top: 10px;">';
+                advice += '<li>Increasing your monthly SIP contribution</li>';
+                advice += '<li>Extending your investment timeline</li>';
+                advice += '<li>Exploring direct equity investments (higher risk)</li>';
+                advice += '<li>Reviewing if the target amount is realistic</li>';
+                advice += '</ul>';
+            }
+
+            if (sip > 0) {
+                advice += '<li>💰 Your monthly SIP of ' + formatCurrency(sip) + ' will contribute significantly to reaching your goal</li>';
+            } else {
+                advice += '<li>💡 <strong>Tip:</strong> Adding a monthly SIP can reduce the required CAGR and make your goal more achievable</li>';
+            }
+
+            advice += '</ul>';
+            adviceContent.innerHTML = advice;
+        }
+    </script>
+</body>
+</html>

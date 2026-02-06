@@ -645,6 +645,20 @@
         .toast.error {
             border-left: 4px solid #f87171;
         }
+
+        /* Tool Cards Hover Effect */
+        .tool-card:hover > div {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -675,8 +689,66 @@
             <p>Get instant answers, portfolio insights, and investment advice from our intelligent AI assistant</p>
         </div>
 
+        <!-- Feature Tools Section -->
+        <div class="tools-section" style="margin: 50px 0;">
+            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 15px;">🛠️ Investment Tools</h2>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 40px;">
+                Analyze your portfolio, find overlaps, and plan your financial goals - no CAS upload required!
+            </p>
+            
+            <div class="tools-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto;">
+                <!-- Overlap Analysis -->
+                <a href="/overlap-analysis.html" class="tool-card" style="text-decoration: none; display: block;">
+                    <div style="background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 20px; padding: 30px; transition: all 0.3s ease; cursor: pointer; height: 100%;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🔄</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--text-primary);">Overlap Analysis</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Find common stocks and overlaps across multiple mutual funds. Make smarter diversification decisions.
+                        </p>
+                        <div style="margin-top: 20px; color: #667eea; font-weight: 600;">Analyze Now →</div>
+                    </div>
+                </a>
+
+                <!-- Fund Reallocator -->
+                <a href="/fund-reallocator.html" class="tool-card" style="text-decoration: none; display: block;">
+                    <div style="background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 20px; padding: 30px; transition: all 0.3s ease; cursor: pointer; height: 100%;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">⚖️</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--text-primary);">Fund Reallocator</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Rebalance your portfolio and get AI-powered allocation recommendations for optimal returns.
+                        </p>
+                        <div style="margin-top: 20px; color: #667eea; font-weight: 600;">Rebalance Now →</div>
+                    </div>
+                </a>
+
+                <!-- Goal Achieve Checker -->
+                <a href="/goal-checker.html" class="tool-card" style="text-decoration: none; display: block;">
+                    <div style="background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 20px; padding: 30px; transition: all 0.3s ease; cursor: pointer; height: 100%;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🎯</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--text-primary);">Goal Achieve Checker</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            Calculate the CAGR needed to reach your target amount. Plan your retirement and financial goals.
+                        </p>
+                        <div style="margin-top: 20px; color: #667eea; font-weight: 600;">Calculate Now →</div>
+                    </div>
+                </a>
+
+                <!-- Stock Wise Allocation -->
+                <a href="/stock-allocation.html" class="tool-card" style="text-decoration: none; display: block;">
+                    <div style="background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 20px; padding: 30px; transition: all 0.3s ease; cursor: pointer; height: 100%;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">📊</div>
+                        <h3 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--text-primary);">Stock-wise Allocation</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                            See which stocks are common across your mutual funds. Understand your true portfolio exposure.
+                        </p>
+                        <div style="margin-top: 20px; color: #667eea; font-weight: 600;">View Allocation →</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <!-- Main Chat Interface -->
-        <div class="chat-container">
+        <div class="chat-container" style="margin-top: 60px;">
             <div class="chat-header">
                 <div class="ai-avatar">🤖</div>
                 <div class="chat-header-text">
@@ -753,27 +825,27 @@
 
         <!-- Features -->
         <div class="features">
-            <div class="feature-card">
+            <div class="feature-card" onclick="window.location.href='/dashboard-pro'" style="cursor: pointer;">
                 <div class="feature-icon">🎯</div>
                 <h3>Smart Analysis</h3>
                 <p>Get AI-powered portfolio health scores, insights, and recommendations based on your holdings.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" style="cursor: pointer;">
                 <div class="feature-icon">💬</div>
                 <h3>Natural Chat</h3>
                 <p>Ask questions in plain language and get instant, intelligent answers about mutual funds.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="window.location.href='/goal-checker.html'" style="cursor: pointer;">
                 <div class="feature-icon">📈</div>
                 <h3>Goal Planning</h3>
                 <p>Create financial goals and get AI-calculated SIP recommendations to achieve them.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="window.location.href='/overlap-analysis.html'" style="cursor: pointer;">
                 <div class="feature-icon">🔍</div>
                 <h3>Deep Insights</h3>
                 <p>Understand diversification, risk allocation, and performance with detailed analytics.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card" onclick="window.location.href='/fund-reallocator.html'" style="cursor: pointer;">
                 <div class="feature-icon">⚖️</div>
                 <h3>Smart Portfolio Rebalancer</h3>
                 <p>Get automated rebalancing suggestions and target allocation adjustments to optimize risk-return balance.</p>

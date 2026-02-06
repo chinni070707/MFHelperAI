@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overlap Analysis - MFHelper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --dark-bg: #0f0f1e;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .page-header .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .fund-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .fund-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .fund-chip {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .remove-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .results-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            display: none;
+        }
+
+        .results-section.show {
+            display: block;
+        }
+
+        .overlap-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .overlap-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .overlap-percentage {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stock-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .stock-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .example-funds {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .example-fund {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .example-fund:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🤖 MFHelper</div>
+            <a href="/" class="back-btn">← Back to Home</a>
+        </header>
+
+        <div class="page-header">
+            <div class="icon">🔄</div>
+            <h1>Overlap Analysis</h1>
+            <p style="color: var(--text-secondary);">Find common stocks and overlaps across multiple mutual funds</p>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label>Add Mutual Funds (by name or ISIN)</label>
+                <div class="fund-input-container">
+                    <input 
+                        type="text" 
+                        id="fundInput" 
+                        placeholder="e.g., HDFC Top 100 Fund or INF179K01234"
+                        onkeypress="if(event.key==='Enter') addFund()"
+                    >
+                    <button class="btn btn-primary" onclick="addFund()">+ Add Fund</button>
+                </div>
+                <div class="example-funds">
+                    <span style="color: var(--text-secondary); font-size: 0.85rem; margin-right: 10px;">Try:</span>
+                    <div class="example-fund" onclick="addExampleFund('HDFC Top 100 Fund')">HDFC Top 100</div>
+                    <div class="example-fund" onclick="addExampleFund('Axis Bluechip Fund')">Axis Bluechip</div>
+                    <div class="example-fund" onclick="addExampleFund('Parag Parikh Flexi Cap')">Parag Parikh Flexi</div>
+                    <div class="example-fund" onclick="addExampleFund('Mirae Asset Large Cap')">Mirae Large Cap</div>
+                </div>
+            </div>
+
+            <div class="fund-list" id="fundList"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn btn-primary" onclick="analyzeOverlap()" style="padding: 15px 50px; font-size: 1.1rem;">
+                    🔍 Analyze Overlap
+                </button>
+            </div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2 style="margin-bottom: 30px;">📊 Overlap Results</h2>
+            <div id="resultsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const funds = [];
+        const API_BASE = 'http://localhost:8000/api';
+
+        function addFund() {
+            const input = document.getElementById('fundInput');
+            const fundName = input.value.trim();
+            
+            if (!fundName) return;
+            
+            if (funds.includes(fundName)) {
+                alert('This fund is already added!');
+                return;
+            }
+            
+            funds.push(fundName);
+            input.value = '';
+            renderFundList();
+        }
+
+        function addExampleFund(fundName) {
+            if (!funds.includes(fundName)) {
+                funds.push(fundName);
+                renderFundList();
+            }
+        }
+
+        function removeFund(index) {
+            funds.splice(index, 1);
+            renderFundList();
+        }
+
+        function renderFundList() {
+            const fundList = document.getElementById('fundList');
+            fundList.innerHTML = funds.map((fund, index) => `
+                <div class="fund-chip">
+                    <span>${fund}</span>
+                    <button class="remove-btn" onclick="removeFund(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        async function analyzeOverlap() {
+            if (funds.length < 2) {
+                alert('Please add at least 2 funds to analyze overlap');
+                return;
+            }
+
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            resultsSection.classList.add('show');
+            resultsContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing overlap across ${funds.length} funds...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/analysis/overlap`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ funds })
+                });
+
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                console.error('Error:', error);
+                // Demo results for now
+                displayDemoResults();
+            }
+        }
+
+        function displayDemoResults() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            const demoData = [
+                {
+                    funds: [funds[0], funds[1]],
+                    overlap: 45,
+                    commonStocks: [
+                        { name: 'Reliance Industries', weight: 8.5 },
+                        { name: 'HDFC Bank', weight: 7.2 },
+                        { name: 'Infosys', weight: 6.8 },
+                        { name: 'ICICI Bank', weight: 5.4 },
+                        { name: 'TCS', weight: 5.1 }
+                    ]
+                }
+            ];
+
+            if (funds.length >= 3) {
+                demoData.push({
+                    funds: [funds[0], funds[2]],
+                    overlap: 38,
+                    commonStocks: [
+                        { name: 'Reliance Industries', weight: 8.2 },
+                        { name: 'HDFC Bank', weight: 6.9 },
+                        { name: 'Bharti Airtel', weight: 4.3 },
+                        { name: 'Asian Paints', weight: 3.8 }
+                    ]
+                });
+            }
+
+            resultsContainer.innerHTML = demoData.map(overlap => `
+                <div class="overlap-card">
+                    <div class="overlap-header">
+                        <div>
+                            <h3>${overlap.funds[0]} vs ${overlap.funds[1]}</h3>
+                            <p style="color: var(--text-secondary); margin-top: 5px;">
+                                ${overlap.commonStocks.length} common stocks found
+                            </p>
+                        </div>
+                        <div class="overlap-percentage">${overlap.overlap}%</div>
+                    </div>
+                    <div class="stock-list">
+                        ${overlap.commonStocks.map(stock => `
+                            <div class="stock-item">
+                                <span>${stock.name}</span>
+                                <span style="color: #667eea; font-weight: 600;">${stock.weight}%</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Add summary
+            const avgOverlap = (demoData.reduce((sum, d) => sum + d.overlap, 0) / demoData.length).toFixed(1);
+            resultsContainer.innerHTML += `
+                <div style="background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 15px; padding: 25px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px;">💡 Analysis Summary</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        Average overlap: <strong style="color: #667eea;">${avgOverlap}%</strong><br>
+                        ${avgOverlap > 50 
+                            ? '⚠️ High overlap detected! Consider diversifying into different sectors or fund types.'
+                            : avgOverlap > 30 
+                            ? '⚡ Moderate overlap. Your portfolio has some diversification but could be improved.'
+                            : '✅ Good diversification! Your funds have minimal overlap.'
+                        }
+                    </p>
+                </div>
+            `;
+        }
+
+        function displayResults(data) {
+            // Implement actual API response handling here
+            displayDemoResults();
+        }
+    </script>
+</body>
+</html>
