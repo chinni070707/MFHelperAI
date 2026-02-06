@@ -415,7 +415,7 @@
             MFHelper
         </a>
         <div class="nav-actions">
-            <button class="btn btn-secondary" onclick="window.location.href='/'">📁 Upload New</button>
+            <button class="btn btn-secondary" onclick="showUploadModal()">📁 Upload New</button>
             <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual Entry</button>
             <button class="btn btn-secondary" onclick="exportData()">📤 Export</button>
         </div>
@@ -427,7 +427,7 @@
         <p>Upload your CAS statement or manually enter your portfolio data for privacy.</p>
         <br>
         <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn btn-primary" onclick="window.location.href='/'">📁 Upload CAS</button>
+            <button class="btn btn-primary" onclick="showUploadModal()">📁 Upload CAS</button>
             <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual Entry</button>
         </div>
         <p style="margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
@@ -1362,6 +1362,46 @@
         </div>
     </div>
 
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📁 Upload Portfolio</h2>
+                <span class="close-modal" onclick="closeUploadModal()">&times;</span>
+            </div>
+            
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+                Upload your CAS (Consolidated Account Statement) PDF or Excel file to analyze your portfolio.
+            </p>
+            
+            <div style="border: 2px dashed rgba(0, 212, 255, 0.3); border-radius: 15px; padding: 40px; text-align: center; background: rgba(0, 212, 255, 0.05);">
+                <div style="font-size: 3rem; margin-bottom: 15px;">📄</div>
+                <input type="file" id="fileInput" accept=".pdf,.xlsx,.xls" style="display: none;" onchange="handleFileSelect(event)">
+                <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                    Choose File
+                </button>
+                <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
+                    Supported formats: PDF, Excel (.xlsx, .xls)
+                </p>
+                <div id="selectedFileName" style="margin-top: 15px; color: #00d4ff; font-weight: 600;"></div>
+            </div>
+            
+            <div id="uploadProgress" style="display: none; margin-top: 20px;">
+                <div style="background: rgba(255,255,255,0.1); border-radius: 10px; height: 10px; overflow: hidden;">
+                    <div id="progressBar" style="background: linear-gradient(90deg, #00d4ff, #7b2cbf); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                </div>
+                <p id="uploadStatus" style="text-align: center; margin-top: 10px; color: rgba(255,255,255,0.8);"></p>
+            </div>
+            
+            <div style="display: flex; gap: 15px; margin-top: 25px; justify-content: center;">
+                <button class="btn btn-primary" id="uploadButton" onclick="uploadFile()" disabled>
+                    Upload & Analyze
+                </button>
+                <button class="btn btn-secondary" onclick="closeUploadModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showManualEntryModal() {
             document.getElementById('manualEntryModal').style.display = 'block';
@@ -1447,11 +1487,109 @@
 
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('manualEntryModal');
-            if (event.target === modal) {
+            const manualModal = document.getElementById('manualEntryModal');
+            const uploadModal = document.getElementById('uploadModal');
+            
+            if (event.target === manualModal) {
                 closeManualEntryModal();
             }
+            if (event.target === uploadModal) {
+                closeUploadModal();
+            }
         }
+
+        // Upload Modal Functions
+        let selectedFile = null;
+
+        function showUploadModal() {
+            document.getElementById('uploadModal').style.display = 'block';
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+            selectedFile = null;
+            document.getElementById('selectedFileName').textContent = '';
+            document.getElementById('uploadButton').disabled = true;
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFile = file;
+                document.getElementById('selectedFileName').textContent = `Selected: ${file.name}`;
+                document.getElementById('uploadButton').disabled = false;
+            }
+        }
+
+        async function uploadFile() {
+            if (!selectedFile) {
+                alert('Please select a file first');
+                return;
+            }
+
+            const uploadButton = document.getElementById('uploadButton');
+            const progressDiv = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const statusText = document.getElementById('uploadStatus');
+
+            try {
+                uploadButton.disabled = true;
+                progressDiv.style.display = 'block';
+                statusText.textContent = 'Uploading...';
+                progressBar.style.width = '30%';
+
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                const token = localStorage.getItem('authToken');
+                const response = await fetch('/api/upload/cas', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                progressBar.style.width = '70%';
+                statusText.textContent = 'Processing...';
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Upload failed');
+                }
+
+                progressBar.style.width = '100%';
+                statusText.textContent = 'Success! Reloading dashboard...';
+
+                // Wait a moment to show success, then reload
+                setTimeout(() => {
+                    closeUploadModal();
+                    window.location.reload();
+                }, 1500);
+
+            } catch (error) {
+                statusText.textContent = 'Error: ' + error.message;
+                statusText.style.color = '#ff4444';
+                uploadButton.disabled = false;
+                progressBar.style.width = '0%';
+                
+                setTimeout(() => {
+                    statusText.style.color = 'rgba(255,255,255,0.8)';
+                }, 3000);
+            }
+        }
+
+        // Check URL parameter for upload=true
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('upload') === 'true') {
+                showUploadModal();
+                // Clean up URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
     </script>
 </body>
 </html>
