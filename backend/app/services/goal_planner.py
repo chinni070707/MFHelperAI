@@ -7,7 +7,8 @@ from enum import Enum
 import logging
 import math
 
-from app.services.ai_service import ai_service
+# AI service removed - using non-AI strategy
+# from app.services.ai_service import ai_service
 
 logger = logging.getLogger(__name__)
 

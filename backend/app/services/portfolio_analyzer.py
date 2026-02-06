@@ -6,8 +6,9 @@ from datetime import datetime
 import logging
 from collections import defaultdict
 
-from app.services.ai_service import ai_service
-from app.config_ai import ai_settings
+# AI service removed - using non-AI strategy
+# from app.services.ai_service import ai_service
+# from app.config_ai import ai_settings
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +17,14 @@ class PortfolioHealthAnalyzer:
     """Analyzes portfolio health and generates insights"""
     
     def __init__(self):
-        self.weights = ai_settings.HEALTH_SCORE_WEIGHTS
+        # Default weights for health score calculation (removed AI dependency)
+        self.weights = {
+            'diversification': 0.25,
+            'risk': 0.25,
+            'performance': 0.25,
+            'allocation': 0.15,
+            'expense': 0.10
+        }
     
     async def analyze_portfolio(self, portfolio_data: Dict[str, Any]) -> Dict[str, Any]:
         """

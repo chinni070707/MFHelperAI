@@ -289,10 +289,11 @@ async def create_goal_plan(
 @router.get("/status")
 async def ai_status():
     """Check AI service status"""
-    from app.services.ai_service import ai_service
+    # AI service removed - using non-AI strategy
+    # from app.services.ai_service import ai_service
     
     return {
-        "ai_available": ai_service.is_available(),
+        "ai_available": False,
         "features": {
             "portfolio_analysis": True,
             "chatbot": ai_service.is_available(),
@@ -308,10 +309,11 @@ async def ai_health():
 
     Returns JSON with availability, provider (ollama/openai), model (if available), and message.
     """
-    from app.services.ai_service import ai_service
+    # AI service removed - using non-AI strategy
+    # from app.services.ai_service import ai_service
 
-    available = ai_service.is_available()
-    provider = getattr(ai_service, "ai_type", "unknown")
+    available = False
+    provider = "none"
     model = None
     message = "AI available"
 
