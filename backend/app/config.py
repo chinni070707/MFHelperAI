@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     
     # Application
     APP_NAME: str = "MFHelper"
-    DEBUG: bool = False
+    DEBUG: bool = True  # Set to True for development, False for production
     SECRET_KEY: str = "change-this-in-production-use-env-file"
     
     # Database (using sync SQLite for simplicity)

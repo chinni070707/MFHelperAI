@@ -84,7 +84,7 @@ async def log_requests(request: Request, call_next):
 if not settings.DEBUG:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["localhost", "127.0.0.1", "*.mfhelper.com"]  # Update with your domains
+        allowed_hosts=["localhost", "127.0.0.1", "testserver", "*.mfhelper.com"]  # Added testserver for tests
     )
 
 # CORS middleware - Configured for security
