@@ -649,6 +649,16 @@
     </style>
 </head>
 <body>
+    <!-- Load Auth Modals -->
+    <script src="/js/auth-modals.js"></script>
+    <script>
+        // Initialize auth modals on page load
+        let authModals;
+        document.addEventListener('DOMContentLoaded', () => {
+            authModals = new AuthModals();
+        });
+    </script>
+    
     <!-- Animated Background -->
     <div class="bg-animation">
         <div class="bg-circle"></div>
