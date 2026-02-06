@@ -2,11 +2,10 @@
 MFHelper - Database Models
 """
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, JSON, Boolean
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from datetime import datetime
-
-Base = declarative_base()
+from app.database import Base
 
 
 class User(Base):
@@ -184,3 +183,16 @@ class FundMaster(Base):
     
     # Updated timestamp
     updated_at = Column(DateTime, default=func.now())
+    
+    def to_dict(self):
+        """Convert to dictionary for API response"""
+        return {
+            'id': self.id,
+            'scheme_code': self.scheme_code,
+            'scheme_name': self.scheme_name,
+            'amc': self.amc,
+            'category': self.category,
+            'current_nav': self.current_nav,
+            'plan_type': self.plan_type,
+            'is_active': self.is_active
+        }

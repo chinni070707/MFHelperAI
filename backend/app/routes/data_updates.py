@@ -9,7 +9,7 @@ import logging
 
 from app.database import get_db
 from app.services.data_ingestion import FundDataIngestionService
-from app.models.fund_holdings import DataUpdateLog
+# from app.models.fund_holdings import DataUpdateLog  # Removed
 
 router = APIRouter(prefix="/api/data", tags=["data-updates"])
 logger = logging.getLogger(__name__)

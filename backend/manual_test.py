@@ -54,7 +54,7 @@ def test_lead_capture():
     print("\n=== LEAD CAPTURE ===")
     
     data = {
-        "email": f"test_{datetime.now().timestamp()}@example.com",
+        "email": f"test_{int(datetime.now().timestamp())}@example.com",
         "source": "test-script"
     }
     

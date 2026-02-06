@@ -10,7 +10,8 @@ from sqlalchemy.orm import Session
 from bs4 import BeautifulSoup
 import logging
 
-from app.models.fund_holdings import FundMaster, DataUpdateLog
+from app.models.models import FundMaster
+# from app.models.fund_holdings import DataUpdateLog  # Removed
 from app.models.market_data import Stock, StockMarketCapHistory, FundHoldingSnapshot, FundClassification
 
 logger = logging.getLogger(__name__)

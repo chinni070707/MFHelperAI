@@ -7,7 +7,8 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models.fund_holdings import FundMaster, FundHolding, FundSectorAllocation
+from app.models.models import FundMaster
+# FundHolding and FundSectorAllocation classes removed
 import logging
 
 # Setup logger
