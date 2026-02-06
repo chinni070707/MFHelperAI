@@ -3,6 +3,7 @@ Upload Routes - Handle Excel and CAS PDF uploads
 """
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
 from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 import pandas as pd
 import numpy as np
 import io
@@ -10,6 +11,10 @@ import re
 from typing import Optional
 from datetime import datetime
 import logging
+
+from app.database import get_db
+from app.models.models import Portfolio, User
+from app.utils.auth import get_current_user_optional
 
 # Setup logger
 logger = logging.getLogger(__name__)
@@ -608,7 +613,11 @@ def clean_fund_name(name: str) -> str:
 # ============ API Endpoints ============
 
 @router.post("/excel")
-async def upload_excel(file: UploadFile = File(...)):
+async def upload_excel(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user_optional)
+):
     """
     Upload Excel/CSV file containing portfolio data
     
@@ -620,19 +629,61 @@ async def upload_excel(file: UploadFile = File(...)):
     - Current Value
     - 1Y Return, 3Y Return, Alpha (optional)
     - Style (GARP, Momentum, Quality, etc.)
+    - Saves to database if user is authenticated
     """
     if not file.filename or not file.filename.endswith(('.xlsx', '.xls', '.csv')):
         raise HTTPException(status_code=400, detail="Please upload an Excel (.xlsx, .xls) or CSV file")
     
     content = await file.read()
     result = parse_excel(content, file.filename)
+    
+    # Save to database if user is authenticated
+    if current_user:
+        try:
+            # Clear existing portfolio for this user
+            db.query(Portfolio).filter(Portfolio.user_id == current_user.id).delete()
+            
+            # Save each holding
+            for holding in result['holdings']:
+                portfolio_entry = Portfolio(
+                    user_id=current_user.id,
+                    scheme_name=holding.get('fund_name', ''),
+                    folio_number='',
+                    units=0,  # Excel usually doesn't have units
+                    avg_cost=holding.get('invested', 0),
+                    current_nav=0,
+                    invested_amount=holding.get('invested', 0),
+                    current_value=holding.get('current_value', 0),
+                    gain_loss=holding.get('current_value', 0) - holding.get('invested', 0),
+                    gain_loss_percent=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
+                    amc=holding.get('amc', ''),
+                    category=holding.get('category', ''),
+                    is_active=True
+                )
+                db.add(portfolio_entry)
+            
+            db.commit()
+            logger.info(f"Saved {len(result['holdings'])} holdings from Excel for user {current_user.id}")
+            result['saved_to_database'] = True
+            
+        except Exception as e:
+            db.rollback()
+            logger.error(f"Error saving Excel portfolio to database: {str(e)}")
+            result['saved_to_database'] = False
+            result['save_error'] = str(e)
+    else:
+        logger.info("No authenticated user, returning parsed Excel data for client-side storage")
+        result['saved_to_database'] = False
+    
     return result
 
 
 @router.post("/cas")
 async def upload_cas(
     file: UploadFile = File(...),
-    password: Optional[str] = Form(None)
+    password: Optional[str] = Form(None),
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_current_user_optional)
 ):
     """
     Upload CAMS/KFintech CAS PDF statement
@@ -640,12 +691,53 @@ async def upload_cas(
     - Most CAS PDFs are password protected
     - Provide PDF password as parameter
     - Password is typically your PAN or date of birth
+    - Saves portfolio data to database if user is authenticated
     """
     if not file.filename or not file.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Please upload a PDF file")
     
     content = await file.read()
     result = parse_cas_pdf(content, password)
+    
+    # Save to database if user is authenticated
+    if current_user:
+        try:
+            # Clear existing portfolio for this user
+            db.query(Portfolio).filter(Portfolio.user_id == current_user.id).delete()
+            
+            # Save each holding
+            for holding in result['holdings']:
+                portfolio_entry = Portfolio(
+                    user_id=current_user.id,
+                    scheme_name=holding.get('fund_name', ''),
+                    folio_number=holding.get('folio', ''),
+                    units=holding.get('units', 0),
+                    avg_cost=holding.get('invested', 0) / holding.get('units', 1) if holding.get('units', 0) > 0 else 0,
+                    current_nav=holding.get('nav', 0),
+                    invested_amount=holding.get('invested', 0),
+                    current_value=holding.get('current_value', 0),
+                    gain_loss=holding.get('current_value', 0) - holding.get('invested', 0),
+                    gain_loss_percent=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
+                    amc=holding.get('amc', ''),
+                    category=holding.get('category', ''),
+                    is_active=True
+                )
+                db.add(portfolio_entry)
+            
+            db.commit()
+            logger.info(f"Saved {len(result['holdings'])} holdings for user {current_user.id}")
+            result['saved_to_database'] = True
+            
+        except Exception as e:
+            db.rollback()
+            logger.error(f"Error saving portfolio to database: {str(e)}")
+            # Continue anyway, return parsed data even if save fails
+            result['saved_to_database'] = False
+            result['save_error'] = str(e)
+    else:
+        logger.info("No authenticated user, returning parsed data for client-side storage")
+        result['saved_to_database'] = False
+    
     return result
 
 
