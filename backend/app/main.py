@@ -231,6 +231,38 @@ async def how_it_works_html():
         return FileResponse(page_path)
     return {"error": "How It Works page not found"}
 
+@app.get("/overlap-analysis.html")
+async def overlap_analysis_html():
+    """Serve the Overlap Analysis page"""
+    page_path = os.path.join(frontend_path, "www", "overlap-analysis.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "Overlap Analysis page not found"}
+
+@app.get("/stock-allocation.html")
+async def stock_allocation_html():
+    """Serve the Stock Allocation page"""
+    page_path = os.path.join(frontend_path, "www", "stock-allocation.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "Stock Allocation page not found"}
+
+@app.get("/goal-checker.html")
+async def goal_checker_html():
+    """Serve the Goal Checker page"""
+    page_path = os.path.join(frontend_path, "www", "goal-checker.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "Goal Checker page not found"}
+
+@app.get("/fund-reallocator.html")
+async def fund_reallocator_html():
+    """Serve the Fund Reallocator page"""
+    page_path = os.path.join(frontend_path, "www", "fund-reallocator.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "Fund Reallocator page not found"}
+
 # Serve CSS and JS files
 @app.get("/css/{file_path:path}")
 async def serve_css(file_path: str):
