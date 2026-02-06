@@ -14,7 +14,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis
 from app.database import engine, Base
 from app.middleware.rate_limiter import limiter
 
@@ -117,6 +117,7 @@ app.include_router(upload.router, prefix="/api/upload", tags=["Upload"])
 app.include_router(cas.router, tags=["CAS Import"])
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["Portfolio"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+app.include_router(analysis.router, prefix="/api/analysis", tags=["Analysis Tools"])
 app.include_router(xirr.router)
 app.include_router(rebalance.router, prefix="/api/rebalance", tags=["Rebalancing"])
 app.include_router(holdings.router, tags=["Holdings & Overlap"])
@@ -155,9 +156,27 @@ async def dashboard():
         return FileResponse(dashboard_path)
     return {"error": "Dashboard not found"}
 
+@app.get("/dashboard.html")
+async def dashboard_html():
+    """Serve the original dashboard page with .html extension"""
+    logger.info("Serving dashboard.html")
+    dashboard_path = os.path.join(frontend_path, "dashboard.html")
+    if os.path.exists(dashboard_path):
+        return FileResponse(dashboard_path)
+    return {"error": "Dashboard not found"}
+
 @app.get("/dashboard-pro")
 async def dashboard_pro():
     """Serve the professional dashboard page"""
+    logger.info("Serving dashboard-pro.html")
+    dashboard_path = os.path.join(frontend_path, "dashboard-pro.html")
+    if os.path.exists(dashboard_path):
+        return FileResponse(dashboard_path)
+    return {"error": "Professional dashboard not found"}
+
+@app.get("/dashboard-pro.html")
+async def dashboard_pro_html():
+    """Serve the professional dashboard page with .html extension"""
     logger.info("Serving dashboard-pro.html")
     dashboard_path = os.path.join(frontend_path, "dashboard-pro.html")
     if os.path.exists(dashboard_path):
@@ -172,6 +191,14 @@ async def dashboard_old():
         return FileResponse(dashboard_path)
     return {"error": "Dashboard not found"}
 
+@app.get("/ai-demo.html")
+async def ai_demo():
+    """Serve the AI demo page"""
+    demo_path = os.path.join(frontend_path, "ai-demo.html")
+    if os.path.exists(demo_path):
+        return FileResponse(demo_path)
+    return {"error": "AI demo page not found"}
+
 @app.get("/admin")
 async def admin_panel():
     """Serve the admin dashboard"""
@@ -180,9 +207,25 @@ async def admin_panel():
         return FileResponse(admin_path)
     return {"error": "Admin panel not found"}
 
+@app.get("/admin.html")
+async def admin_panel_html():
+    """Serve the admin dashboard with .html extension"""
+    admin_path = os.path.join(frontend_path, "admin.html")
+    if os.path.exists(admin_path):
+        return FileResponse(admin_path)
+    return {"error": "Admin panel not found"}
+
 @app.get("/how-it-works")
 async def how_it_works():
     """Serve the How It Works page"""
+    page_path = os.path.join(frontend_path, "how-it-works.html")
+    if os.path.exists(page_path):
+        return FileResponse(page_path)
+    return {"error": "How It Works page not found"}
+
+@app.get("/how-it-works.html")
+async def how_it_works_html():
+    """Serve the How It Works page with .html extension"""
     page_path = os.path.join(frontend_path, "how-it-works.html")
     if os.path.exists(page_path):
         return FileResponse(page_path)
