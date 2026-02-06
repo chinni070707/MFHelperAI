@@ -491,6 +491,246 @@
             transform: translateX(0);
         }
 
+        /* Enhanced Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3); }
+            50% { box-shadow: 0 4px 30px rgba(127, 192, 76, 0.6); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes rotateIn {
+            from { opacity: 0; transform: rotate(-10deg) scale(0.9); }
+            to { opacity: 1; transform: rotate(0) scale(1); }
+        }
+
+        @keyframes drawLine {
+            from { stroke-dashoffset: 1000; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Pulsing Button */
+        .btn-primary {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .btn-primary:hover {
+            animation: none;
+        }
+
+        /* Staggered List Animations */
+        .feature-list li {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .feature-list.visible li:nth-child(1) { transition-delay: 0.1s; }
+        .feature-list.visible li:nth-child(2) { transition-delay: 0.2s; }
+        .feature-list.visible li:nth-child(3) { transition-delay: 0.3s; }
+        .feature-list.visible li:nth-child(4) { transition-delay: 0.4s; }
+        .feature-list.visible li:nth-child(5) { transition-delay: 0.5s; }
+
+        .feature-list.visible li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stats Counter Animation */
+        .stat-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .stat-item:nth-child(1) { transition-delay: 0.1s; }
+        .stat-item:nth-child(2) { transition-delay: 0.2s; }
+        .stat-item:nth-child(3) { transition-delay: 0.3s; }
+        .stat-item:nth-child(4) { transition-delay: 0.4s; }
+
+        .stats-grid.visible .stat-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item h3 {
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover h3 {
+            transform: scale(1.1);
+        }
+
+        /* Hero Text Animation */
+        .hero-text h1 {
+            animation: slideUp 1s ease-out;
+        }
+
+        .hero-text .highlight {
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green), var(--primary-green));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .hero-text p {
+            animation: slideUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        /* Feature Visual Hover Effects */
+        .feature-visual {
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .feature-visual:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+
+        /* SVG Animation */
+        .hero-image svg rect {
+            animation: scaleIn 0.8s ease-out both;
+        }
+
+        .hero-image svg rect:nth-child(1) { animation-delay: 0.1s; }
+        .hero-image svg rect:nth-child(2) { animation-delay: 0.2s; }
+        .hero-image svg rect:nth-child(3) { animation-delay: 0.3s; }
+        .hero-image svg rect:nth-child(4) { animation-delay: 0.4s; }
+
+        .hero-image svg path {
+            stroke-dasharray: 1000;
+            animation: drawLine 2s ease-out 0.5s both;
+        }
+
+        .hero-image svg circle {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .hero-image svg circle:nth-child(6) { animation-delay: 0s; }
+        .hero-image svg circle:nth-child(7) { animation-delay: 0.2s; }
+        .hero-image svg circle:nth-child(8) { animation-delay: 0.4s; }
+        .hero-image svg circle:nth-child(9) { animation-delay: 0.6s; }
+
+        /* Section Zoom Effect */
+        .section-title {
+            transition: transform 0.3s ease;
+        }
+
+        .section-header:hover .section-title {
+            transform: scale(1.02);
+        }
+
+        /* Decorative Floating Elements */
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .floating-shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            left: -50px;
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        /* CTA Section Pulse */
+        .cta-section .btn-primary {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .cta-section .btn-primary:hover {
+            animation: none;
+            transform: scale(1.1);
+        }
+
+        /* Parallax-like Background Movement */
+        .hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(127, 192, 76, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 10s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(158, 214, 112, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hamburger {
@@ -560,6 +800,10 @@
 
     <!-- Hero Section -->
     <section class="hero">
+        <!-- Floating Decorative Shapes -->
+        <div class="floating-shape floating-shape-1"></div>
+        <div class="floating-shape floating-shape-2"></div>
+        
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text fade-in">
@@ -808,19 +1052,19 @@
         <div class="container">
             <div class="stats-grid fade-in">
                 <div class="stat-item">
-                    <h3>₹1000Cr+</h3>
+                    <h3 data-target="1000">₹0Cr+</h3>
                     <p>Assets Tracked</p>
                 </div>
                 <div class="stat-item">
-                    <h3>10,000+</h3>
+                    <h3 data-target="10000">0+</h3>
                     <p>Active Users</p>
                 </div>
                 <div class="stat-item">
-                    <h3>50,000+</h3>
+                    <h3 data-target="50000">0+</h3>
                     <p>Portfolios Managed</p>
                 </div>
                 <div class="stat-item">
-                    <h3>15%</h3>
+                    <h3 data-target="15">0%</h3>
                     <p>Avg. Returns</p>
                 </div>
             </div>
@@ -912,6 +1156,90 @@
         // Observe all animated elements
         document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
             observer.observe(el);
+        });
+
+        // Stats Grid Observer
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid) {
+            observer.observe(statsGrid);
+        }
+
+        // Feature List Staggered Animation Observer
+        document.querySelectorAll('.feature-list').forEach(list => {
+            observer.observe(list);
+        });
+
+        // Counter Animation for Stats
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                // Format based on value
+                if (target >= 1000) {
+                    element.textContent = '₹' + Math.floor(current).toLocaleString() + 'Cr+';
+                } else if (target >= 100) {
+                    element.textContent = Math.floor(current).toLocaleString() + '+';
+                } else {
+                    element.textContent = Math.floor(current) + '%';
+                }
+            }, 16);
+        }
+
+        // Stats Counter Observer
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.animated) {
+                    entry.target.dataset.animated = 'true';
+                    
+                    // Animate each stat using data-target attribute
+                    const statItems = entry.target.querySelectorAll('.stat-item h3[data-target]');
+                    
+                    statItems.forEach((item, index) => {
+                        const target = parseInt(item.dataset.target);
+                        if (target) {
+                            animateCounter(item, target, 2000 + (index * 200));
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (statsGrid) {
+            statsObserver.observe(statsGrid);
+        }
+
+        // Parallax Effect on Scroll
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    
+                    // Parallax for hero image
+                    const heroImage = document.querySelector('.hero-image');
+                    if (heroImage && scrolled < 800) {
+                        heroImage.style.transform = `translateY(${scrolled * 0.3}px)`;
+                    }
+                    
+                    // Fade hero text on scroll
+                    const heroText = document.querySelector('.hero-text');
+                    if (heroText && scrolled < 600) {
+                        heroText.style.opacity = 1 - (scrolled / 600);
+                        heroText.style.transform = `translateY(${scrolled * 0.2}px)`;
+                    }
+                    
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
 
         // Smooth scroll for navigation links
