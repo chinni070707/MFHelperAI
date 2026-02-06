@@ -300,9 +300,111 @@
             color: #8892b0;
         }
         
+        /* Manual Entry Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            margin: 50px auto;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modal-header h2 {
+            color: #00d4ff;
+            margin: 0;
+        }
+        .close-modal {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .close-modal:hover {
+            color: #fff;
+        }
+        .entry-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .entry-table th,
+        .entry-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .entry-table th {
+            background: rgba(0, 212, 255, 0.1);
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        .entry-table input,
+        .entry-table select {
+            width: 100%;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .entry-table input:focus,
+        .entry-table select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .add-row-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .add-row-btn:hover {
+            background: rgba(0, 212, 255, 0.3);
+        }
+        
         @media (max-width: 768px) {
             .charts-grid { grid-template-columns: 1fr; }
             .summary-cards { grid-template-columns: repeat(2, 1fr); }
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+                padding: 20px;
+            }
+            .entry-table {
+                font-size: 0.85rem;
+            }
+            .entry-table th,
+            .entry-table td {
+                padding: 8px 4px;
+            }
         }
     </style>
 </head>
@@ -314,6 +416,7 @@
         </a>
         <div class="nav-actions">
             <button class="btn btn-secondary" onclick="window.location.href='/'">📁 Upload New</button>
+            <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual Entry</button>
             <button class="btn btn-secondary" onclick="exportData()">📤 Export</button>
         </div>
     </nav>
@@ -321,9 +424,15 @@
     <!-- No Data State -->
     <div id="noData" class="no-data" style="display: none;">
         <h2>No Portfolio Data</h2>
-        <p>Upload your Excel or CAS statement to view your portfolio analytics.</p>
+        <p>Upload your CAS statement or manually enter your portfolio data for privacy.</p>
         <br>
-        <button class="btn btn-primary" onclick="window.location.href='/'">Upload Portfolio</button>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="window.location.href='/'">📁 Upload CAS</button>
+            <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual Entry</button>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
+            <strong>Privacy Note:</strong> Manual entry keeps your sensitive data in your control
+        </p>
     </div>
     
     <!-- Dashboard Content -->
@@ -337,21 +446,7 @@
             </div>
         </div>
         
-        <!-- Chat Box (AI) -->
-        <div class="card" style="margin:20px 0; display:block !important;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <div style="font-weight:700; font-size:1.1rem;">💬 Ask AI about your portfolio</div>
-                <div id="chatIndicator" style="color:#8892b0; font-size:0.9rem;">AI: <span id="chatAIStatus" style="color:#00ff88;">Checking...</span></div>
-            </div>
-            <div id="dashboardChat" style="background:rgba(255,255,255,0.02); border-radius:10px; padding:12px; border:1px solid rgba(255,255,255,0.05);">
-                <div id="dashboardChatMessages" style="max-height:200px; overflow-y:auto; margin-bottom:12px; min-height:40px; font-size:0.9rem;"></div>
-                <div style="display:flex; gap:8px;">
-                    <input id="dashboardChatInput" placeholder="Ask something like: Which fund gave best returns?" style="flex:1; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.02); color:#fff; font-size:0.9rem;">
-                    <button id="dashboardChatSend" class="btn btn-primary" style="padding:10px 20px;">Send</button>
-                </div>
-            </div>
-        </div>
-
+        
         <!-- Summary Cards -->
         <div class="summary-cards">
             <div class="card">
@@ -1220,6 +1315,141 @@
 
             } catch (e) {
                 toast.error('Failed: ' + e.message);
+            }
+        }
+    </script>
+
+    <!-- Manual Entry Modal -->
+    <div id="manualEntryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Manual Portfolio Entry</h2>
+                <span class="close-modal" onclick="closeManualEntryModal()">&times;</span>
+            </div>
+            
+            <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+                Enter your mutual fund holdings manually. This data stays in your browser and can be exported later.
+            </p>
+            
+            <div style="overflow-x: auto;">
+                <table class="entry-table" id="manualEntryTable">
+                    <thead>
+                        <tr>
+                            <th>Scheme Name</th>
+                            <th>Units</th>
+                            <th>Avg. Cost (₹)</th>
+                            <th>Current NAV (₹)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entryTableBody">
+                        <tr>
+                            <td><input type="text" placeholder="e.g., HDFC Equity Fund" required></td>
+                            <td><input type="number" step="0.001" placeholder="0.000" required></td>
+                            <td><input type="number" step="0.01" placeholder="0.00" required></td>
+                            <td><input type="number" step="0.01" placeholder="0.00" required></td>
+                            <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                <button class="add-row-btn" onclick="addManualEntryRow()">+ Add Another Fund</button>
+                <button class="btn btn-primary" onclick="saveManualEntries()">💾 Save Portfolio</button>
+                <button class="btn btn-secondary" onclick="closeManualEntryModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showManualEntryModal() {
+            document.getElementById('manualEntryModal').style.display = 'block';
+        }
+
+        function closeManualEntryModal() {
+            document.getElementById('manualEntryModal').style.display = 'none';
+        }
+
+        function addManualEntryRow() {
+            const tbody = document.getElementById('entryTableBody');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="text" placeholder="e.g., HDFC Equity Fund" required></td>
+                <td><input type="number" step="0.001" placeholder="0.000" required></td>
+                <td><input type="number" step="0.01" placeholder="0.00" required></td>
+                <td><input type="number" step="0.01" placeholder="0.00" required></td>
+                <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">Remove</button></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function removeRow(button) {
+            const row = button.closest('tr');
+            const tbody = document.getElementById('entryTableBody');
+            if (tbody.children.length > 1) {
+                row.remove();
+            } else {
+                alert('At least one row is required');
+            }
+        }
+
+        async function saveManualEntries() {
+            const tbody = document.getElementById('entryTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            const holdings = [];
+            
+            for (const row of rows) {
+                const inputs = row.querySelectorAll('input');
+                const schemeName = inputs[0].value.trim();
+                const units = parseFloat(inputs[1].value);
+                const avgCost = parseFloat(inputs[2].value);
+                const currentNav = parseFloat(inputs[3].value);
+                
+                if (!schemeName || isNaN(units) || isNaN(avgCost) || isNaN(currentNav)) {
+                    alert('Please fill all fields with valid values');
+                    return;
+                }
+                
+                holdings.push({
+                    scheme_name: schemeName,
+                    units: units,
+                    avg_cost: avgCost,
+                    current_nav: currentNav,
+                    invested: units * avgCost,
+                    current_value: units * currentNav
+                });
+            }
+            
+            try {
+                const token = localStorage.getItem('authToken');
+                const response = await fetch('/api/portfolio/manual', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ holdings })
+                });
+                
+                if (!response.ok) throw new Error('Failed to save portfolio');
+                
+                const data = await response.json();
+                alert('Portfolio saved successfully!');
+                closeManualEntryModal();
+                
+                // Reload the page to show the new data
+                window.location.reload();
+            } catch (error) {
+                alert('Error saving portfolio: ' + error.message);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('manualEntryModal');
+            if (event.target === modal) {
+                closeManualEntryModal();
             }
         }
     </script>
