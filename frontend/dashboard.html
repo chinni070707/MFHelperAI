@@ -1521,20 +1521,20 @@
         let amcList = [];
         let fundsByAmc = {};
         
-        function showManualEntryModal() {
+        async function showManualEntryModal() {
             document.getElementById('manualEntryModal').style.display = 'block';
             
-            // Initialize with 5 empty rows if table is empty
+            // Load AMC list first if not already loaded
+            if (amcList.length === 0) {
+                await loadAmcList();
+            }
+            
+            // Initialize with 5 empty rows after AMC list is loaded
             const tbody = document.getElementById('entryTableBody');
             if (tbody.children.length === 0) {
                 for (let i = 0; i < 5; i++) {
                     addManualEntryRow();
                 }
-            }
-            
-            // Load AMC list if not already loaded
-            if (amcList.length === 0) {
-                loadAmcList();
             }
         }
 
@@ -1548,11 +1548,13 @@
                 const data = await response.json();
                 if (data.success) {
                     amcList = data.amcs || [];
+                    console.log('✅ Loaded', amcList.length, 'AMCs from API');
                 }
             } catch (error) {
-                console.error('Failed to load AMC list:', error);
+                console.error('❌ Failed to load AMC list:', error);
                 // Fallback to common AMCs
                 amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'Aditya Birla Sun Life', 'Nippon India', 'UTI', 'DSP', 'Franklin Templeton', 'Mirae Asset', 'Parag Parikh', 'Motilal Oswal', 'Edelweiss', 'PGIM', 'Tata', 'Invesco', 'Sundaram', 'Quantum', 'Quant', 'Mahindra Manulife', 'HSBC', 'Baroda BNP Paribas', 'LIC', 'Canara Robeco', 'BOI AXA', 'JM Financial', 'IDFC', 'L&T', 'Principal', 'Shriram'];
+                console.log('⚠️ Using fallback AMC list:', amcList.length, 'AMCs');
             }
         }
 
@@ -1684,7 +1686,14 @@
             const row = document.createElement('tr');
             
             // Generate AMC dropdown options
-            const amcOptions = amcList.map(amc => `<option value="${amc}">${amc}</option>`).join('');
+            let amcOptions = '';
+            if (amcList.length === 0) {
+                console.warn('⚠️ AMC list is empty when adding row');
+                // Use fallback
+                amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'DSP', 'Nippon India', 'UTI', 'Mirae Asset', 'Parag Parikh'];
+            }
+            
+            amcOptions = amcList.map(amc => `<option value="${amc}">${amc}</option>`).join('');
             
             row.innerHTML = `
                 <td>
@@ -1707,6 +1716,8 @@
                 <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
             `;
             tbody.appendChild(row);
+            
+            console.log('✅ Added row with', amcList.length, 'AMC options');
         }
 
         function removeRow(button) {

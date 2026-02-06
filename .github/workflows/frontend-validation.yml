@@ -1,0 +1,66 @@
+name: Frontend Validation Tests
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - 'tests/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - 'tests/**'
+
+jobs:
+  javascript-validation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'tests/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: tests
+      run: npm ci
+      
+    - name: Install Playwright browsers
+      working-directory: tests
+      run: npx playwright install --with-deps chromium
+      
+    - name: Start backend server
+      working-directory: backend
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        nohup python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+        sleep 10
+      
+    - name: Run JavaScript validation tests
+      working-directory: tests
+      run: npx playwright test javascript-validation.spec.ts
+      
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: playwright-test-results
+        path: |
+          tests/test-results/
+          tests/playwright-report/
+        retention-days: 7
+        
+    - name: Upload screenshots
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: failure-screenshots
+        path: tests/test-results/screenshots/
+        retention-days: 7
