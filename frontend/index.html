@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MFHelper AI - Your Intelligent Mutual Fund Assistant</title>
+    <title>MFHelper - Mutual Fund Expert Analysis</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="description" content="Chat with AI about mutual funds, get instant insights, and manage your portfolio intelligently">
+    <meta name="description" content="Professional mutual fund portfolio analysis, expert insights, and comprehensive investment tools">
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="MFHelper AI">
+    <meta name="apple-mobile-web-app-title" content="MFHelper">
     <link rel="manifest" href="/manifest.json">
     
     <!-- App Icons -->
@@ -659,7 +659,7 @@
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="logo">🤖 MFHelper AI</div>
+            <div class="logo">📊 MFHelper</div>
             <div class="header-buttons">
                 <a href="/dashboard" class="btn btn-secondary">📊 My Portfolio</a>
                 <button class="btn btn-primary" onclick="showPortfolioUpload()">Upload CAS</button>
@@ -670,134 +670,51 @@
         <div class="hero">
             <div class="hero-badge">
                 <span class="status-dot"></span>
-                <span>AI-Powered Mutual Fund Assistant</span>
+                <span>Professional Mutual Fund Analysis</span>
             </div>
-            <h1>Get Insights into<br>Mutual funds</h1>
-            <p>Get instant answers, portfolio insights, and investment advice from our intelligent AI assistant</p>
+            <h1>Expert Analysis for<br>Your Mutual Funds</h1>
+            <p>Comprehensive portfolio analysis tools, insights, and investment strategies to optimize your mutual fund investments</p>
         </div>
 
-        <!-- Main Chat Interface -->
-        <div class="chat-container">
-            <div class="chat-header">
-                <div class="ai-avatar">🤖</div>
-                <div class="chat-header-text">
-                    <h3>MFHelper AI Assistant</h3>
-                    <p>Ask me anything about mutual funds, investing, or your portfolio</p>
-                </div>
-            </div>
-
-            <div class="chat-messages" id="chatMessages">
-                <div class="welcome-message">
-                    <h3>👋 Welcome! How can I help you today?</h3>
-                    <p>Ask me anything about mutual funds or try one of these:</p>
-                    <div class="example-questions">
-                        <div class="example-question" onclick="askQuestion('What is SIP?')">
-                            💰 What is SIP?
-                        </div>
-                        <div class="example-question" onclick="askQuestion('How to choose mutual funds?')">
-                            🎯 How to choose funds?
-                        </div>
-                        <div class="example-question" onclick="askQuestion('Difference between equity and debt funds')">
-                            📊 Equity vs Debt funds
-                        </div>
-                        <div class="example-question" onclick="askQuestion('What is expense ratio?')">
-                            💸 What is expense ratio?
-                        </div>
-                        <div class="example-question" onclick="askQuestion('Should I invest in index funds?')">
-                            📈 Index funds advice
-                        </div>
-                        <div class="example-question" onclick="askQuestion('How to diversify portfolio?')">
-                            🎨 Portfolio diversification
-                        </div>
-                    </div>
-                </div>
-
-                <div class="typing-indicator" id="typingIndicator">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            </div>
-
-            <div class="chat-input-container">
-                <input 
-                    type="text" 
-                    class="chat-input" 
-                    id="chatInput" 
-                    placeholder="Ask about mutual funds, SIP, portfolio strategy..."
-                    onkeypress="if(event.key==='Enter') sendMessage()"
-                >
-                <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-                    ➤
-                </button>
-            </div>
-        </div>
-
-        <!-- Portfolio Upload Prompt (shows after interaction) -->
-        <div class="portfolio-prompt" id="portfolioPrompt">
-            <div class="portfolio-prompt-content">
-                <div class="portfolio-prompt-icon">📊</div>
-                <div class="portfolio-prompt-text">
-                    <h4>Get Personalized Insights!</h4>
-                    <p>Upload your portfolio to get AI-powered analysis, health scores, and custom recommendations tailored just for you.</p>
-                    <div class="portfolio-prompt-buttons">
-                        <button class="btn btn-primary" onclick="showPortfolioUpload()">
-                            Upload My Portfolio
-                        </button>
-                        <button class="btn btn-secondary" onclick="hidePortfolioPrompt()">
-                            Maybe Later
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Features -->
+        <!-- Analysis Tools Section -->
         <div class="features">
+
             <div class="feature-card" onclick="window.location.href='dashboard.html'">
-                <div class="feature-icon">🎯</div>
-                <h3>Smart Analysis</h3>
-                <p>Get AI-powered portfolio health scores, insights, and recommendations based on your holdings.</p>
+                <div class="feature-icon">📊</div>
+                <h3>Portfolio Dashboard</h3>
+                <p>Comprehensive view of your mutual fund portfolio with performance tracking and detailed analytics.</p>
             </div>
-            <div class="feature-card" onclick="scrollToChat()">
-                <div class="feature-icon">💬</div>
-                <h3>Natural Chat</h3>
-                <p>Ask questions in plain language and get instant, intelligent answers about mutual funds.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='ai-demo.html'">
-                <div class="feature-icon">📈</div>
-                <h3>Goal Planning</h3>
-                <p>Create financial goals and get AI-calculated SIP recommendations to achieve them.</p>
-            </div>
-            <div class="feature-card" onclick="window.location.href='dashboard.html'">
+            <div class="feature-card" onclick="window.location.href='overlap-analysis.html'">
                 <div class="feature-icon">🔍</div>
-                <h3>Deep Insights</h3>
-                <p>Understand diversification, risk allocation, and performance with detailed analytics.</p>
+                <h3>Overlap Analysis</h3>
+                <p>Identify overlapping stocks across your mutual funds to optimize diversification and reduce redundancy.</p>
+            </div>
+            <div class="feature-card" onclick="window.location.href='stock-allocation.html'">
+                <div class="feature-icon">📈</div>
+                <h3>Stock Allocation</h3>
+                <p>Analyze individual stock allocations across your portfolio for better investment decisions.</p>
+            </div>
+            <div class="feature-card" onclick="window.location.href='goal-checker.html'">
+                <div class="feature-icon">🎯</div>
+                <h3>Goal Checker</h3>
+                <p>Track your financial goals and calculate required SIP amounts to achieve your targets.</p>
+            </div>
+            <div class="feature-card" onclick="window.location.href='fund-reallocator.html'">
+                <div class="feature-icon">⚖️</div>
+                <h3>Fund Reallocator</h3>
+                <p>Get expert recommendations for rebalancing your portfolio to maintain optimal asset allocation.</p>
             </div>
             <div class="feature-card" onclick="window.location.href='dashboard.html'">
-                <div class="feature-icon">⚖️</div>
-                <h3>Smart Portfolio Rebalancer</h3>
-                <p>Get automated rebalancing suggestions and target allocation adjustments to optimize risk-return balance.</p>
+                <div class="feature-icon">💰</div>
+                <h3>XIRR Calculator</h3>
+                <p>Calculate your extended internal rate of return to measure actual portfolio performance.</p>
             </div>
         </div>
     </div>
 
     <script>
         const API_BASE = 'http://localhost:8000/api';
-        let messageCount = 0;
         let authToken = localStorage.getItem('authToken');
-
-        // Scroll to chat section
-        function scrollToChat() {
-            const chatSection = document.querySelector('.chat-container');
-            if (chatSection) {
-                chatSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // Focus on input after scrolling
-                setTimeout(() => {
-                    document.getElementById('chatInput')?.focus();
-                }, 500);
-            }
-        }
 
         // Check AI Status
         async function checkAIStatus() {
@@ -806,126 +723,11 @@
                 const data = await response.json();
                 
                 if (!data.ai_available) {
-                    showToast('AI features working in demo mode', 'info');
+                    console.log('AI features in demo mode');
                 }
             } catch (error) {
                 console.log('AI status check:', error);
             }
-        }
-
-        // Send Message
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-
-            // Add user message
-            addMessage(message, 'user');
-            input.value = '';
-            messageCount++;
-
-            // Show typing indicator
-            const typingIndicator = document.getElementById('typingIndicator');
-            typingIndicator.classList.add('show');
-
-            try {
-                // Call AI API
-                const response = await fetch(`${API_BASE}/ai/chat`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken || 'guest'}`
-                    },
-                    body: JSON.stringify({ message })
-                });
-
-                const data = await response.json();
-                
-                // Hide typing indicator
-                typingIndicator.classList.remove('show');
-                
-                // Add AI response
-                addMessage(data.response || "I'm here to help with mutual funds! Could you rephrase your question?", 'ai');
-
-                // Show portfolio prompt after 3 messages
-                if (messageCount >= 3 && !localStorage.getItem('portfolioPromptShown')) {
-                    setTimeout(showPortfolioPrompt, 2000);
-                    localStorage.setItem('portfolioPromptShown', 'true');
-                }
-
-            } catch (error) {
-                typingIndicator.classList.remove('show');
-                
-                // Fallback responses for demo
-                const fallbackResponses = {
-                    'sip': "SIP (Systematic Investment Plan) is a method of investing in mutual funds where you invest a fixed amount regularly (monthly/quarterly). It helps in rupee cost averaging and disciplined investing. SIPs are great for long-term wealth creation!",
-                    'equity': "Equity funds invest primarily in stocks and are suitable for long-term goals (5+ years). They offer higher returns but come with higher risk. Debt funds invest in fixed-income securities, offering stable returns with lower risk. A balanced portfolio typically includes both.",
-                    'expense ratio': "Expense ratio is the annual fee fund houses charge to manage your investments, expressed as a percentage. For example, 1% expense ratio means ₹1 is charged per ₹100 invested annually. Lower expense ratios mean more returns for you!",
-                    'diversification': "Diversification means spreading investments across different fund types, sectors, and asset classes to reduce risk. Ideal diversification: 60-70% equity, 20-30% debt, 5-10% gold/international. Avoid putting all money in one fund or sector!",
-                    'index fund': "Index funds passively track a market index like Nifty 50 or Sensex. They have lower expense ratios (0.1-0.5%) compared to actively managed funds (1-2%). Great for beginners and long-term investors who want market returns with minimal cost!"
-                };
-                
-                const lowerMessage = message.toLowerCase();
-                let aiResponse = "That's a great question! ";
-                
-                // Simple keyword matching
-                for (const [keyword, response] of Object.entries(fallbackResponses)) {
-                    if (lowerMessage.includes(keyword)) {
-                        aiResponse = response;
-                        break;
-                    }
-                }
-                
-                if (aiResponse === "That's a great question! ") {
-                    aiResponse += "I can help you understand mutual funds better. Upload your portfolio for personalized insights, or ask me about SIP, fund selection, diversification, expense ratios, or investment strategies!";
-                }
-                
-                addMessage(aiResponse, 'ai');
-            }
-        }
-
-        // Add Message to Chat
-        function addMessage(text, type) {
-            const chatMessages = document.getElementById('chatMessages');
-            const welcomeMessage = chatMessages.querySelector('.welcome-message');
-            
-            // Remove welcome message on first interaction
-            if (welcomeMessage && messageCount >= 1) {
-                welcomeMessage.remove();
-            }
-
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message message-${type}`;
-            
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.textContent = text;
-            
-            messageDiv.appendChild(contentDiv);
-            
-            // Insert before typing indicator
-            const typingIndicator = document.getElementById('typingIndicator');
-            chatMessages.insertBefore(messageDiv, typingIndicator);
-            
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Ask Predefined Question
-        function askQuestion(question) {
-            document.getElementById('chatInput').value = question;
-            sendMessage();
-        }
-
-        // Show Portfolio Prompt
-        function showPortfolioPrompt() {
-            document.getElementById('portfolioPrompt').classList.add('show');
-        }
-
-        // Hide Portfolio Prompt
-        function hidePortfolioPrompt() {
-            document.getElementById('portfolioPrompt').classList.remove('show');
         }
 
         // Show Portfolio Upload (navigate to upload page or modal)
@@ -947,9 +749,6 @@
 
         // Initialize
         checkAIStatus();
-        
-        // Focus input on load
-        document.getElementById('chatInput').focus();
     </script>
 </body>
 </html>
