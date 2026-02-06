@@ -662,7 +662,8 @@
             <div class="logo">📊 MFHelper</div>
             <div class="header-buttons">
                 <a href="/dashboard" class="btn btn-secondary">📊 My Portfolio</a>
-                <button class="btn btn-primary" onclick="showPortfolioUpload()">Upload CAS</button>
+                <button class="btn btn-secondary" onclick="loadDemoPortfolio()" style="margin-right: 10px;">🎯 Try Demo</button>
+                <button class="btn btn-primary" onclick="showPortfolioUpload()">📁 Add Your Portfolio</button>
             </div>
         </header>
 
@@ -733,6 +734,20 @@
         // Show Portfolio Upload (navigate to upload page or modal)
         function showPortfolioUpload() {
             window.location.href = '/dashboard?upload=true';
+        }
+
+        // Load Demo Portfolio
+        function loadDemoPortfolio() {
+            // Set demo flag in localStorage
+            localStorage.setItem('portfolioMode', 'demo');
+            localStorage.setItem('demoLoadedAt', new Date().toISOString());
+            
+            showToast('Loading demo portfolio...', 'info');
+            
+            // Navigate to dashboard with demo parameter
+            setTimeout(() => {
+                window.location.href = '/dashboard?mode=demo';
+            }, 500);
         }
 
         // Toast Notification
