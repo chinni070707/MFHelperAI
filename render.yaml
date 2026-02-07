@@ -10,7 +10,7 @@ services:
     plan: free  # Options: free (sleeps after 15min), starter ($7/mo always-on)
     branch: main
     rootDir: ./
-    buildCommand: "pip install -r backend/requirements.txt"
+    buildCommand: "./build.sh"
     startCommand: "cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     
     # Health check endpoint
