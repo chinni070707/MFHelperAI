@@ -1,0 +1,147 @@
+#!/usr/bin/env pwsh
+# Pre-Push Validation Script
+# Runs basic code validation before pushing to Git
+
+$ErrorActionPreference = "Stop"
+
+Write-Host ""
+Write-Host "Running pre-push validation checks..." -ForegroundColor Cyan
+
+# Track if any checks fail
+$failed = $false
+
+# Change to project root
+$projectRoot = $PSScriptRoot
+Set-Location $projectRoot
+
+# ============================================
+# 1. Python Syntax Check (Compile)
+# ============================================
+Write-Host ""
+Write-Host "Checking Python syntax..." -ForegroundColor Yellow
+
+$pythonFiles = Get-ChildItem -Path "backend/app" -Filter "*.py" -Recurse -ErrorAction SilentlyContinue
+
+if ($pythonFiles) {
+    $syntaxErrors = 0
+    
+    foreach ($file in $pythonFiles) {
+        # Skip __pycache__ and .pyc files
+        if ($file.FullName -match "__pycache__|\.pyc") {
+            continue
+        }
+        
+        # Compile Python file to check syntax
+        $result = & python -m py_compile "$($file.FullName)" 2>&1
+        
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "  Syntax error in: $($file.Name)" -ForegroundColor Red
+            Write-Host "  $result" -ForegroundColor Red
+            $syntaxErrors++
+            $failed = $true
+        }
+    }
+    
+    if ($syntaxErrors -eq 0) {
+        Write-Host "  All Python files have valid syntax ($($pythonFiles.Count) files checked)" -ForegroundColor Green
+    } else {
+        Write-Host "  Found $syntaxErrors syntax error(s)" -ForegroundColor Red
+    }
+} else {
+    Write-Host "  No Python files found to check" -ForegroundColor Yellow
+}
+
+# ============================================
+# 2. Import Validation
+# ============================================
+Write-Host ""
+Write-Host "Validating Python imports..." -ForegroundColor Yellow
+
+# Test if main app can be imported
+Push-Location backend
+try {
+    $ErrorActionPreference = "SilentlyContinue"
+    $importResult = & ..\.venv\Scripts\python.exe -c "import sys; import app.config; import app.main; sys.exit(0)" 2>&1 | Out-Null
+    $importExitCode = $LASTEXITCODE
+    $ErrorActionPreference = "Stop"
+    
+    if ($importExitCode -eq 0) {
+        Write-Host "  Core imports validated successfully" -ForegroundColor Green
+    } else {
+        Write-Host "  Import validation failed - check config.py and main.py" -ForegroundColor Red
+        $failed = $true
+    }
+} catch {
+    Write-Host "  Import validation failed" -ForegroundColor Red
+    $failed = $true
+}
+Pop-Location
+
+# ============================================
+# 3. Check requirements.txt
+# ============================================
+Write-Host ""
+Write-Host "Checking requirements.txt..." -ForegroundColor Yellow
+
+if (Test-Path "backend/requirements.txt") {
+    $reqContent = Get-Content "backend/requirements.txt" -Raw
+    
+    # Check for critical packages
+    $criticalPackages = @("fastapi", "uvicorn", "sqlalchemy", "psycopg2-binary")
+    $missingPackages = @()
+    
+    foreach ($pkg in $criticalPackages) {
+        if ($reqContent -notmatch $pkg) {
+            $missingPackages += $pkg
+        }
+    }
+    
+    if ($missingPackages.Count -eq 0) {
+        Write-Host "  All critical packages present in requirements.txt" -ForegroundColor Green
+    } else {
+        Write-Host "  Missing critical packages: $($missingPackages -join ', ')" -ForegroundColor Red
+        $failed = $true
+    }
+} else {
+    Write-Host "  requirements.txt not found!" -ForegroundColor Red
+    $failed = $true
+}
+
+# ============================================
+# 4. Check deployment files
+# ============================================
+Write-Host ""
+Write-Host "Checking deployment files..." -ForegroundColor Yellow
+
+$deploymentFiles = @("render.yaml", ".renderignore")
+$missingFiles = @()
+
+foreach ($file in $deploymentFiles) {
+    if (-not (Test-Path $file)) {
+        $missingFiles += $file
+    }
+}
+
+if ($missingFiles.Count -eq 0) {
+    Write-Host "  All deployment files present" -ForegroundColor Green
+} else {
+    Write-Host "  Missing deployment files: $($missingFiles -join ', ')" -ForegroundColor Yellow
+}
+
+# ============================================
+# Summary
+# ============================================
+Write-Host ""
+Write-Host "==================================================" -ForegroundColor Cyan
+
+if ($failed) {
+    Write-Host "PRE-PUSH VALIDATION FAILED!" -ForegroundColor Red
+    Write-Host "Fix the errors above before pushing." -ForegroundColor Yellow
+    Write-Host "==================================================" -ForegroundColor Cyan
+    exit 1
+} else {
+    Write-Host "ALL CHECKS PASSED!" -ForegroundColor Green
+    Write-Host "Safe to push to Git." -ForegroundColor Green
+    Write-Host "==================================================" -ForegroundColor Cyan
+    exit 0
+}
