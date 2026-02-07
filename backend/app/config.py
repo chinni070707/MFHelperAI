@@ -58,12 +58,20 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# FORCE DEBUG=True for development (override any env vars)
-settings.DEBUG = True
+# Auto-detect environment and set DEBUG appropriately
+# Force DEBUG=True only in local development (when using SQLite)
+# In production (Render/PostgreSQL), respect the DEBUG env var
+if settings.DATABASE_URL.startswith("sqlite"):
+    # Local development - force DEBUG=True for convenience
+    settings.DEBUG = True
+    print(f"🔍 Local Development Mode: DEBUG={settings.DEBUG}", file=sys.stderr)
+else:
+    # Production environment - respect DEBUG from environment variable
+    print(f"🔍 Production Mode: DEBUG={settings.DEBUG}", file=sys.stderr)
 
 # Debug: Print actual DEBUG value loaded
 import sys
-print(f"🔍 DEBUG Configuration Loaded: {settings.DEBUG}", file=sys.stderr)
+print(f"🔍 Database: {settings.DATABASE_URL.split('@')[0]}...", file=sys.stderr)
 print(f"🔍 DEBUG Type: {type(settings.DEBUG)}", file=sys.stderr)
 
 # Ensure upload directory exists

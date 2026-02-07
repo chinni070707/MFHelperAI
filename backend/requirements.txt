@@ -17,10 +17,11 @@ PyMuPDF>=1.23.0  # Better PDF parsing (fitz)
 sqlalchemy>=2.0.0
 pydantic-settings>=2.0.0
 python-dotenv>=1.0.0  # Environment variables
+alembic>=1.13.0  # Database migrations
 
-# For production, use PostgreSQL:
-# asyncpg==0.29.0
-# psycopg2-binary==2.9.9
+# PostgreSQL drivers (required for production on Render)
+psycopg2-binary==2.9.9  # PostgreSQL adapter
+# asyncpg==0.29.0  # Optional: Async PostgreSQL driver
 
 # Authentication
 python-jose[cryptography]==3.3.0
