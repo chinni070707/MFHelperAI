@@ -5,6 +5,7 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import StaticPool
 import os
 import tempfile
 
@@ -28,10 +29,14 @@ class TestPasswordHasher:
         return hashed_password == f"test_hash_{plain_password}"
 
 
-# Monkey patch for tests only
+# Monkey patch for tests only — must patch both the source module
+# AND the routes module (which imports by name)
 import app.utils.auth as auth_module
+import app.routes.auth as routes_auth_module
 auth_module.get_password_hash = TestPasswordHasher.hash
 auth_module.verify_password = TestPasswordHasher.verify
+routes_auth_module.get_password_hash = TestPasswordHasher.hash
+routes_auth_module.verify_password = TestPasswordHasher.verify
 
 
 # Test database setup — in-memory SQLite for clean isolation
@@ -39,7 +44,8 @@ SQLALCHEMY_TEST_DATABASE_URL = "sqlite://"
 
 engine = create_engine(
     SQLALCHEMY_TEST_DATABASE_URL,
-    connect_args={"check_same_thread": False}
+    connect_args={"check_same_thread": False},
+    poolclass=StaticPool,
 )
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

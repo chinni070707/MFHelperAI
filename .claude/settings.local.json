@@ -10,7 +10,14 @@
       "Bash(\"..\\\\.venv\\\\Scripts\\\\python.exe\" -m pytest:*)",
       "Bash(\".venv\\\\Scripts\\\\python.exe\" -c \"import bcrypt; print\\(bcrypt.__version__\\)\")",
       "Bash(\".venv\\\\Scripts\\\\pip.exe\" install \"bcrypt<4.1.0\")",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(claude mcp add:*)",
+      "Bash(where:*)",
+      "Bash(export CLAUDE_CODE_GIT_BASH_PATH=\"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\")",
+      "Bash(setx CLAUDE_CODE_GIT_BASH_PATH \"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\")",
+      "Bash(\"..\\\\.venv\\\\Scripts\\\\python.exe\":*)",
+      "Bash(CLAUDE_CODE_GIT_BASH_PATH=\"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\" claude mcp add --transport http render https://mcp.render.com/mcp --header \"Authorization: Bearer rnd_AsV4jDRzKQCVLcZ4v0vWx5oxAnjm\")"
     ]
   }
 }
