@@ -12,6 +12,7 @@ openpyxl>=3.1.0  # Excel support
 
 # PDF Processing
 PyMuPDF>=1.23.0  # Better PDF parsing (fitz)
+casparser[fast]>=0.7.0  # CAS PDF parsing
 
 # Database
 sqlalchemy>=2.0.0
