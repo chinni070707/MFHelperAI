@@ -1,7 +1,7 @@
 # MFHelper Test Setup and Execution Script
 # Following webapp-testing skill guidelines
 
-Write-Host "🧪 MFHelper Playwright Test Setup" -ForegroundColor Cyan
+Write-Host "[TEST] MFHelper Playwright Test Setup" -ForegroundColor Cyan
 Write-Host "=================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -11,39 +11,39 @@ Set-Location $testsDir
 
 # Check if package.json exists
 if (-not (Test-Path "package.json")) {
-    Write-Host "❌ package.json not found!" -ForegroundColor Red
+    Write-Host "[ERROR] package.json not found!" -ForegroundColor Red
     exit 1
 }
 
 # Install dependencies
-Write-Host "📦 Installing dependencies..." -ForegroundColor Yellow
+Write-Host "[INSTALL] Installing dependencies..." -ForegroundColor Yellow
 npm install
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Failed to install dependencies" -ForegroundColor Red
+    Write-Host "[ERROR] Failed to install dependencies" -ForegroundColor Red
     exit 1
 }
 
 # Install Playwright browsers
 Write-Host ""
-Write-Host "🌐 Installing Playwright browsers..." -ForegroundColor Yellow
+Write-Host "[INSTALL] Installing Playwright browsers..." -ForegroundColor Yellow
 npx playwright install
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Failed to install browsers" -ForegroundColor Red
+    Write-Host "[ERROR] Failed to install browsers" -ForegroundColor Red
     exit 1
 }
 
 # Create directories
 Write-Host ""
-Write-Host "📁 Creating test directories..." -ForegroundColor Yellow
+Write-Host "[INFO] Creating test directories..." -ForegroundColor Yellow
 New-Item -ItemType Directory -Force -Path "test-results/screenshots" | Out-Null
 New-Item -ItemType Directory -Force -Path "test-results/html" | Out-Null
 
 Write-Host ""
-Write-Host "✅ Setup complete!" -ForegroundColor Green
+Write-Host "[SUCCESS] Setup complete!" -ForegroundColor Green
 Write-Host ""
-Write-Host "🚀 Available commands:" -ForegroundColor Cyan
+Write-Host "Start: Available commands:" -ForegroundColor Cyan
 Write-Host "  npm test           - Run all tests" -ForegroundColor White
 Write-Host "  npm run test:headed - Run with visible browser" -ForegroundColor White
 Write-Host "  npm run test:ui    - Run with Playwright UI" -ForegroundColor White
@@ -55,6 +55,6 @@ Write-Host ""
 $response = Read-Host "Would you like to run tests now? (y/n)"
 if ($response -eq 'y' -or $response -eq 'Y') {
     Write-Host ""
-    Write-Host "🧪 Running tests..." -ForegroundColor Cyan
+    Write-Host "[TEST] Running tests..." -ForegroundColor Cyan
     npm test
 }

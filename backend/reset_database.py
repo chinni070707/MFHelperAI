@@ -25,9 +25,9 @@ def reset_database():
     if os.path.exists(db_file):
         try:
             os.remove(db_file)
-            print(f"✓ Deleted existing database: {db_file}")
+            print(f"[OK] Deleted existing database: {db_file}")
         except Exception as e:
-            print(f"✗ Could not delete database (might be in use): {e}")
+            print(f"[X] Could not delete database (might be in use): {e}")
             print("  Please stop the server first!")
             return False
     
@@ -35,7 +35,7 @@ def reset_database():
     engine = create_engine(settings.DATABASE_URL)
     Base.metadata.create_all(bind=engine)
     
-    print("\n✓ Database recreated successfully!")
+    print("\n[OK] Database recreated successfully!")
     print("\nTables created:")
     for table in Base.metadata.sorted_tables:
         print(f"  - {table.name}")

@@ -141,7 +141,7 @@ def load_funds_to_database(funds):
         db.commit()
         db.close()
         
-        logger.info(f"✓ Successfully loaded {count} mutual funds into database")
+        logger.info(f"[OK] Successfully loaded {count} mutual funds into database")
         return count
         
     except Exception as e:
@@ -170,30 +170,30 @@ def get_fund_statistics(funds):
 
 def main():
     """Main function to fetch and load mutual fund data"""
-    print("\n🚀 Fetching Real Mutual Fund Data from AMFI India\n")
+    print("\nStart: Fetching Real Mutual Fund Data from AMFI India\n")
     
     # Fetch data
     funds = fetch_amfi_data()
     
     if not funds:
-        print("❌ Failed to fetch mutual fund data")
+        print("[ERROR] Failed to fetch mutual fund data")
         return
     
     # Show statistics
     get_fund_statistics(funds)
     
     # Load to database
-    print("\n📊 Loading data into database...\n")
+    print("\n[INFO] Loading data into database...\n")
     count = load_funds_to_database(funds)
     
     if count > 0:
-        print(f"\n✅ SUCCESS! Loaded {count} mutual funds into database")
+        print(f"\n[SUCCESS] SUCCESS! Loaded {count} mutual funds into database")
         print("\nYou can now:")
         print("  1. Start the server: python -m uvicorn app.main:app --reload")
         print("  2. Test fund search: http://localhost:8000/api/funds/list")
         print("  3. Search by name: http://localhost:8000/api/funds/list?search=HDFC")
     else:
-        print("\n❌ Failed to load funds into database")
+        print("\n[ERROR] Failed to load funds into database")
 
 if __name__ == "__main__":
     main()

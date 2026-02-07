@@ -35,7 +35,7 @@ def extract_cas_data(pdf_path, password):
             # Save extracted text for debugging
             with open('cas_extracted_text.txt', 'w', encoding='utf-8') as f:
                 f.write(full_text)
-            print("✓ Extracted text saved to cas_extracted_text.txt")
+            print("[OK] Extracted text saved to cas_extracted_text.txt")
             
             # Parse holdings
             holdings = parse_holdings(full_text)
@@ -168,7 +168,7 @@ def match_funds_with_database(holdings, db):
     """Match CAS fund names with database funds"""
     matched_holdings = []
     
-    print("\n📊 MATCHING FUNDS WITH DATABASE:")
+    print("\n[INFO] MATCHING FUNDS WITH DATABASE:")
     print("-" * 70)
     
     for holding in holdings:
@@ -201,10 +201,10 @@ def match_funds_with_database(holdings, db):
                 'avg_cost': holding['avg_cost'],
                 'current_nav': fund.current_nav or holding['avg_cost']
             })
-            print(f"✓ Matched: {cas_fund_name[:50]}")
-            print(f"  → {fund.scheme_name[:60]}")
+            print(f"[OK] Matched: {cas_fund_name[:50]}")
+            print(f"  -> {fund.scheme_name[:60]}")
         else:
-            print(f"✗ Not found: {cas_fund_name[:50]}")
+            print(f"[X] Not found: {cas_fund_name[:50]}")
     
     print("-" * 70)
     print(f"Matched: {len(matched_holdings)} / {len(holdings)} funds")
@@ -224,10 +224,10 @@ def load_to_demo_portfolio(holdings):
         matched_holdings = match_funds_with_database(holdings, db)
         
         if not matched_holdings:
-            print("\n❌ No funds matched with database!")
+            print("\n[ERROR] No funds matched with database!")
             return False
         
-        print("\n📝 LOADING TO DEMO PORTFOLIO:")
+        print("\n[INFO] LOADING TO DEMO PORTFOLIO:")
         print("-" * 70)
         
         # Add matched holdings
@@ -253,8 +253,8 @@ def load_to_demo_portfolio(holdings):
             )
             db.add(demo)
             
-            print(f"  • {holding['scheme_name'][:60]}")
-            print(f"    Units: {holding['units']:>10,.0f} | Amount: ₹{invested_amount:>12,.0f}")
+            print(f"  * {holding['scheme_name'][:60]}")
+            print(f"    Units: {holding['units']:>10,.0f} | Amount: Rs.{invested_amount:>12,.0f}")
         
         db.commit()
         
@@ -269,22 +269,22 @@ def load_to_demo_portfolio(holdings):
         print("DEMO PORTFOLIO SUMMARY")
         print("=" * 70)
         print(f"Total Holdings: {len(matched_holdings)}")
-        print(f"Total Invested: ₹{total_invested:>15,.0f}")
-        print(f"Current Value:  ₹{total_current:>15,.0f}")
-        print(f"Total Gain:     ₹{total_gain:>15,.0f} ({gain_pct:+.2f}%)")
+        print(f"Total Invested: Rs.{total_invested:>15,.0f}")
+        print(f"Current Value:  Rs.{total_current:>15,.0f}")
+        print(f"Total Gain:     Rs.{total_gain:>15,.0f} ({gain_pct:+.2f}%)")
         print("=" * 70)
         
         db.close()
         return True
         
     except Exception as e:
-        print(f"\n❌ Error loading demo data: {e}")
+        print(f"\n[ERROR] Error loading demo data: {e}")
         db.rollback()
         db.close()
         return False
 
 def main():
-    print("\n🚀 LOADING REAL CAS DATA AS DEMO PORTFOLIO")
+    print("\nStart: LOADING REAL CAS DATA AS DEMO PORTFOLIO")
     print("=" * 70)
     print(f"PDF File: {PDF_PATH}")
     print(f"Password: {'*' * len(PASSWORD)}")
@@ -294,31 +294,31 @@ def main():
     holdings = extract_cas_data(PDF_PATH, PASSWORD)
     
     if not holdings:
-        print("\n❌ No holdings found in CAS!")
+        print("\n[ERROR] No holdings found in CAS!")
         print("\nTrying alternative parsing...")
         return
     
-    print(f"\n✓ Extracted {len(holdings)} holdings from CAS")
+    print(f"\n[OK] Extracted {len(holdings)} holdings from CAS")
     
     # Round off numbers
     holdings = round_off_data(holdings)
     
-    print("\n📋 EXTRACTED HOLDINGS (ROUNDED):")
+    print("\n[INFO] EXTRACTED HOLDINGS (ROUNDED):")
     print("-" * 70)
     for i, h in enumerate(holdings, 1):
         print(f"{i}. {h['scheme_name'][:50]}")
-        print(f"   Units: {h['units']:>10,.0f} | Amount: ₹{h['amount']:>12,.0f} | Avg: ₹{h['avg_cost']:>8,.0f}")
+        print(f"   Units: {h['units']:>10,.0f} | Amount: Rs.{h['amount']:>12,.0f} | Avg: Rs.{h['avg_cost']:>8,.0f}")
     print("-" * 70)
     
     # Load to database
     if load_to_demo_portfolio(holdings):
-        print("\n✅ SUCCESS! Demo portfolio updated with real CAS data")
+        print("\n[SUCCESS] SUCCESS! Demo portfolio updated with real CAS data")
         print("\nNext steps:")
         print("  1. Restart server (if running)")
         print("  2. Test: http://localhost:8000/api/demo/portfolio")
         print("  3. Visit: http://localhost:8000/dashboard?mode=demo")
     else:
-        print("\n❌ Failed to load demo portfolio")
+        print("\n[ERROR] Failed to load demo portfolio")
 
 if __name__ == "__main__":
     main()

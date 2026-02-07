@@ -38,7 +38,7 @@ def seed_database():
     
     # Create tables
     Base.metadata.create_all(bind=engine)
-    print("✅ Database tables created")
+    print("[SUCCESS] Database tables created")
     
     db = SessionLocal()
     
@@ -46,7 +46,7 @@ def seed_database():
         # Check if users already exist
         existing_users = db.query(User).count()
         if existing_users > 0:
-            print(f"⚠️  Database already has {existing_users} users. Skipping seed.")
+            print(f"[WARNING] Database already has {existing_users} users. Skipping seed.")
             response = input("Do you want to clear and reseed? (yes/no): ")
             if response.lower() != 'yes':
                 return
@@ -57,7 +57,7 @@ def seed_database():
             db.query(UserSettings).delete()
             db.query(User).delete()
             db.commit()
-            print("🗑️  Cleared existing data")
+            print("[CLEAR] Cleared existing data")
         
         # Create test users
         users_data = [
@@ -111,7 +111,7 @@ def seed_database():
             )
             db.add(settings)
             
-            print(f"✅ Created user: {user_data['email']}")
+            print(f"[SUCCESS] Created user: {user_data['email']}")
         
         db.commit()
         
@@ -359,7 +359,7 @@ def seed_database():
         
     except Exception as e:
         db.rollback()
-        print(f"❌ Error seeding database: {e}")
+        print(f"[ERROR] Error seeding database: {e}")
         raise
     finally:
         db.close()

@@ -15,21 +15,21 @@ def hash_password(password):
     return f"$2b$12${hashlib.sha256(password.encode()).hexdigest()[:50]}"
 
 def seed_db():
-    print("🔌 Connecting to database...")
+    print("[CONNECT] Connecting to database...")
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
-    print("✅ Connected to:", db_path)
+    print("[SUCCESS] Connected to:", db_path)
     
     # Check if data exists
     cursor.execute("SELECT COUNT(*) FROM users")
     user_count = cursor.fetchone()[0]
     
     if user_count > 0:
-        print(f"⚠️  Database already has {user_count} users.")
+        print(f"[WARNING] Database already has {user_count} users.")
         response = input("Clear and reseed? (yes/no): ")
         if response.lower() != 'yes':
-            print("❌ Cancelled")
+            print("[ERROR] Cancelled")
             return
         
         # Clear data
@@ -38,7 +38,7 @@ def seed_db():
         cursor.execute("DELETE FROM user_settings")
         cursor.execute("DELETE FROM users")
         conn.commit()
-        print("🗑️  Cleared existing data")
+        print("[CLEAR] Cleared existing data")
     
     # Insert users
     users = [
@@ -52,7 +52,7 @@ def seed_db():
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', users)
     
-    print("✅ Created 3 users")
+    print("[SUCCESS] Created 3 users")
     
     # Insert user settings
     settings = [
@@ -68,7 +68,7 @@ def seed_db():
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', settings)
     
-    print("✅ Created settings for all users")
+    print("[SUCCESS] Created settings for all users")
     
     # Insert portfolios
     now = datetime.now().isoformat()
@@ -87,7 +87,7 @@ def seed_db():
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', portfolios)
     
-    print("✅ Created 3 portfolios (including historical snapshot)")
+    print("[SUCCESS] Created 3 portfolios (including historical snapshot)")
     
     # Insert holdings for portfolio 1 (current)
     holdings1 = [
@@ -131,26 +131,26 @@ def seed_db():
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', all_holdings)
     
-    print(f"✅ Created {len(all_holdings)} holdings")
+    print(f"[SUCCESS] Created {len(all_holdings)} holdings")
     
     conn.commit()
     conn.close()
     
     print("\n" + "="*60)
-    print("🎉 Database seeded successfully!")
+    print("[DONE] Database seeded successfully!")
     print("="*60)
-    print("\n📊 Summary:")
+    print("\n[INFO] Summary:")
     print("   Users: 3")
     print("   Portfolios: 3 (including historical)")
     print("   Holdings: 10")
     
-    print("\n🔑 Test Accounts:")
-    print("   📧 demo@mfhelper.com / Demo@123")
-    print("   📧 test@example.com / Test@123")
-    print("   📧 investor@example.com / Invest@123")
+    print("\n[KEY] Test Accounts:")
+    print("   Email: demo@mfhelper.com / Demo@123")
+    print("   Email: test@example.com / Test@123")
+    print("   Email: investor@example.com / Invest@123")
     
-    print(f"\n📍 Database: {db_path}")
-    print("\n💡 Next steps:")
+    print(f"\n[INFO] Database: {db_path}")
+    print("\n[INFO] Next steps:")
     print("   1. Start server (if not running): uvicorn app.main:app --reload")
     print("   2. Test login: POST /api/auth/login")
     print("   3. View portfolio: GET /api/portfolio/")

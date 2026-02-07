@@ -21,7 +21,7 @@ def load_from_json():
     json_path = os.path.join(os.path.dirname(__file__), "..", "data", "fund_holdings.json")
     
     if not os.path.exists(json_path):
-        print(f"❌ JSON file not found: {json_path}")
+        print(f"[ERROR] JSON file not found: {json_path}")
         return
     
     # Read JSON
@@ -47,7 +47,7 @@ def load_from_json():
         funds_count = 0
         
         for fund_key, fund_data in funds.items():
-            print(f"📊 Loading: {fund_data['name']}")
+            print(f"[INFO] Loading: {fund_data['name']}")
             
             # Check if fund exists
             existing_fund = db.query(FundMaster).filter(FundMaster.fund_key == fund_key).first()
@@ -105,13 +105,13 @@ def load_from_json():
         
         db.commit()
         
-        print(f"\n✅ Successfully loaded {funds_count} funds into database")
-        print(f"📈 Total holdings: {db.query(FundHolding).count()}")
-        print(f"📊 Total sectors: {db.query(FundSectorAllocation).count()}")
+        print(f"\n[SUCCESS] Successfully loaded {funds_count} funds into database")
+        print(f"[INFO] Total holdings: {db.query(FundHolding).count()}")
+        print(f"[INFO] Total sectors: {db.query(FundSectorAllocation).count()}")
         
     except Exception as e:
         db.rollback()
-        print(f"❌ Error loading data: {e}")
+        print(f"[ERROR] Error loading data: {e}")
         
         # Log failure
         if update_log:
@@ -124,6 +124,6 @@ def load_from_json():
         db.close()
 
 if __name__ == "__main__":
-    print("🚀 Starting fund holdings database migration...")
+    print("Start: Starting fund holdings database migration...")
     load_from_json()
-    print("✅ Migration complete!")
+    print("[SUCCESS] Migration complete!")

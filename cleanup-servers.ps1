@@ -1,7 +1,7 @@
 # Cleanup Script - Kill all Python/Uvicorn/Node processes
 # Run this before starting the server or tests to ensure clean slate
 
-Write-Host "🧹 Cleaning up all server processes..." -ForegroundColor Cyan
+Write-Host "[CLEAN] Cleaning up all server processes..." -ForegroundColor Cyan
 
 # Kill Python processes
 $pythonProcesses = Get-Process | Where-Object {$_.ProcessName -match "python"}
@@ -30,7 +30,7 @@ Start-Sleep -Seconds 2
 # Check if port 8000 is still in use
 $port8000 = netstat -ano | findstr ":8000" | findstr "LISTENING"
 if ($port8000) {
-    Write-Host "⚠️  Warning: Port 8000 still in use!" -ForegroundColor Red
+    Write-Host "[WARNING] Warning: Port 8000 still in use!" -ForegroundColor Red
     Write-Host $port8000
     
     # Extract PIDs and force kill
@@ -51,9 +51,9 @@ if ($port8000) {
 # Final check
 $finalCheck = netstat -ano | findstr ":8000" | findstr "LISTENING"
 if ($finalCheck) {
-    Write-Host "❌ Failed to clean port 8000!" -ForegroundColor Red
+    Write-Host "[ERROR] Failed to clean port 8000!" -ForegroundColor Red
     exit 1
 } else {
-    Write-Host "✅ All processes cleaned successfully!" -ForegroundColor Green
+    Write-Host "[SUCCESS] All processes cleaned successfully!" -ForegroundColor Green
     Write-Host "   Port 8000 is now available." -ForegroundColor Green
 }

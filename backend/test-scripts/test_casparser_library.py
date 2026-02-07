@@ -15,25 +15,25 @@ print("=" * 80)
 
 try:
     # Parse the CAS PDF
-    print(f"\n📄 Reading CAS file: {cas_file}")
-    print(f"🔐 Password: {password}")
+    print(f"\n[INFO] Reading CAS file: {cas_file}")
+    print(f"[INFO] Password: {password}")
     
     data = casparser.read_cas_pdf(cas_file, password)
     
-    print(f"\n✅ Successfully parsed CAS file!")
-    print(f"📊 File Type: {data.file_type}")
-    print(f"📅 Statement Period: {data.statement_period.from_} to {data.statement_period.to}")
-    print(f"📋 CAS Type: {data.cas_type}")
+    print(f"\n[SUCCESS] Successfully parsed CAS file!")
+    print(f"[INFO] File Type: {data.file_type}")
+    print(f"[INFO] Statement Period: {data.statement_period.from_} to {data.statement_period.to}")
+    print(f"[INFO] CAS Type: {data.cas_type}")
     
     # Investor info
-    print(f"\n👤 Investor Info:")
+    print(f"\n[INFO] Investor Info:")
     print(f"   Name: {data.investor_info.name}")
     print(f"   Email: {data.investor_info.email}")
     print(f"   Mobile: {data.investor_info.mobile}")
     print(f"   PAN: {data.investor_info.pan if hasattr(data.investor_info, 'pan') else 'N/A'}")
     
     # Portfolio summary
-    print(f"\n📈 Portfolio Summary:")
+    print(f"\n[INFO] Portfolio Summary:")
     print(f"   Total Folios: {len(data.folios)}")
     
     total_value = 0
@@ -49,23 +49,23 @@ try:
         total_schemes += len(folio.schemes)
         
         for scheme in folio.schemes:
-            print(f"\n      📌 {scheme.scheme}")
+            print(f"\n      [SCHEME] {scheme.scheme}")
             print(f"         ISIN: {scheme.isin}")
             print(f"         Type: {scheme.type}")
             
             if scheme.valuation:
                 print(f"         Units: {scheme.close:,.4f}")
-                print(f"         NAV: ₹{scheme.valuation.nav:,.4f}")
-                print(f"         Value: ₹{scheme.valuation.value:,.2f}")
-                print(f"         Cost: ₹{scheme.valuation.cost:,.2f}")
-                print(f"         Gain: ₹{scheme.valuation.value - scheme.valuation.cost:,.2f}")
+                print(f"         NAV: Rs.{scheme.valuation.nav:,.4f}")
+                print(f"         Value: Rs.{scheme.valuation.value:,.2f}")
+                print(f"         Cost: Rs.{scheme.valuation.cost:,.2f}")
+                print(f"         Gain: Rs.{scheme.valuation.value - scheme.valuation.cost:,.2f}")
                 print(f"         Return: {((scheme.valuation.value / scheme.valuation.cost - 1) * 100):,.2f}%")
                 
                 total_value += scheme.valuation.value
                 total_cost += scheme.valuation.cost
             else:
                 print(f"         Units: {scheme.close:,.4f}")
-                print(f"         ⚠️ No valuation data available")
+                print(f"         [WARNING] No valuation data available")
             
             print(f"         Transactions: {len(scheme.transactions)}")
             if scheme.transactions:
@@ -73,11 +73,11 @@ try:
                 print(f"         Last Transaction: {scheme.transactions[-1].date}")
     
     print(f"\n" + "=" * 80)
-    print(f"💰 PORTFOLIO TOTALS")
+    print(f"[INFO] PORTFOLIO TOTALS")
     print(f"=" * 80)
     print(f"Total Schemes: {total_schemes}")
-    print(f"Total Invested: ₹{total_cost:,.2f}")
-    print(f"Current Value: ₹{total_value:,.2f}")
+    print(f"Total Invested: Rs.{total_cost:,.2f}")
+    print(f"Current Value: Rs.{total_value:,.2f}")
     print(f"Total Gain: ₹{total_value - total_cost:,.2f}")
     print(f"Overall Return: {((total_value / total_cost - 1) * 100):,.2f}%")
     

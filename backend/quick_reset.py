@@ -25,7 +25,7 @@ def main():
     db_file = settings.DATABASE_URL.replace("sqlite:///", "")
     if os.path.exists(db_file):
         os.remove(db_file)
-        print(f"✓ Deleted: {db_file}")
+        print(f"[OK] Deleted: {db_file}")
     
     # Create engine and all tables
     engine = create_engine(settings.DATABASE_URL)
@@ -35,13 +35,13 @@ def main():
     inspector = inspect(engine)
     tables = inspector.get_table_names()
     
-    print(f"\n✓ Created {len(tables)} tables:")
+    print(f"\n[OK] Created {len(tables)} tables:")
     for table in tables:
         columns = [col['name'] for col in inspector.get_columns(table)]
         print(f"  - {table} ({len(columns)} columns)")
     
     print("\n" + "=" * 60)
-    print("✅ Database ready!")
+    print("[SUCCESS] Database ready!")
     print("=" * 60)
 
 if __name__ == "__main__":

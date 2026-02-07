@@ -42,18 +42,18 @@ patterns = [
 
 for pattern in patterns:
     if match := re.search(pattern, text, re.I):
-        print(f"✅ Found date pattern: {pattern}")
+        print(f"[SUCCESS] Found date pattern: {pattern}")
         print(f"   Matches: {match.groups()}")
         break
 else:
-    print("❌ No standard date pattern found")
+    print("[ERROR] No standard date pattern found")
 
 # Check for CAS type
 if re.search(r"consolidated\s+account\s+statement", text, re.I):
-    print("✅ Found 'Consolidated Account Statement'")
+    print("[SUCCESS] Found 'Consolidated Account Statement'")
 elif re.search(r"demat\s+account", text, re.I):
-    print("✅ Found 'Demat Account' (NSDL/CDSL)")
+    print("[SUCCESS] Found 'Demat Account' (NSDL/CDSL)")
 else:
-    print("❓ CAS type unknown")
+    print("[UNKNOWN] CAS type unknown")
 
 doc.close()

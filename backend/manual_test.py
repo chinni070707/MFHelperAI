@@ -10,7 +10,7 @@ BASE_URL = "http://localhost:8000"
 
 def print_result(test_name, response):
     """Print test result"""
-    status = "✅ PASS" if response.status_code in [200, 201] else "❌ FAIL"
+    status = "[PASS]" if response.status_code in [200, 201] else "[FAIL]"
     print(f"\n{status} {test_name}")
     print(f"Status: {response.status_code}")
     if response.text:
@@ -70,10 +70,10 @@ def test_auth_endpoints():
     
     # These will fail without valid data, but we can see if routes exist
     response = requests.post(f"{BASE_URL}/api/auth/register", json={})
-    print(f"Register endpoint: {'exists ✓' if response.status_code != 404 else 'missing ✗'}")
+    print(f"Register endpoint: {'exists [OK]' if response.status_code != 404 else 'missing [X]'}")
     
     response = requests.post(f"{BASE_URL}/api/auth/login", json={})
-    print(f"Login endpoint: {'exists ✓' if response.status_code != 404 else 'missing ✗'}")
+    print(f"Login endpoint: {'exists [OK]' if response.status_code != 404 else 'missing [X]'}")
 
 def main():
     """Run all tests"""
@@ -100,11 +100,11 @@ def main():
         print("Run database migrations first: alembic upgrade head")
         
     except requests.exceptions.ConnectionError:
-        print("\n❌ ERROR: Cannot connect to server")
+        print("\n[ERROR] ERROR: Cannot connect to server")
         print(f"Make sure server is running at {BASE_URL}")
         print("Start with: cd backend && python -m uvicorn app.main:app --reload")
     except Exception as e:
-        print(f"\n❌ ERROR: {str(e)}")
+        print(f"\n[ERROR] ERROR: {str(e)}")
 
 if __name__ == "__main__":
     main()
