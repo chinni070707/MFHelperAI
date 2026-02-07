@@ -61,6 +61,16 @@ services:
     # Auto-deploy on push to main branch
     autoDeploy: true
 
+  # Redis Cache (Optional but recommended for production)
+  # Note: Free tier expires after 30 days
+  # Remove this section if you don't want Redis
+  - type: redis
+    name: mfhelper-redis
+    region: singapore  # Should match web service region
+    plan: free  # Free for 30 days
+    maxmemoryPolicy: allkeys-lru  # Evict least recently used keys when memory full
+    ipAllowList: []  # Allow connections from your web service
+
 # PostgreSQL Database
 databases:
   - name: mfhelper-db
@@ -68,13 +78,3 @@ databases:
     user: mfhelper
     plan: free  # Free for 90 days, then $7/mo
     # Render automatically creates database and sets DATABASE_URL
-
-# Redis Cache (Optional but recommended for production)
-# Note: Free tier expires after 30 days
-# Remove this section if you don't want Redis
-- type: redis
-  name: mfhelper-redis
-  region: singapore  # Should match web service region
-  plan: free  # Free for 30 days
-  maxmemoryPolicy: allkeys-lru  # Evict least recently used keys when memory full
-  ipAllowList: []  # Allow connections from your web service

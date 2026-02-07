@@ -1,0 +1,75 @@
+# .renderignore
+# Files to exclude from Render deployment
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+
+# Local development
+.env
+.env.local
+*.db
+*.sqlite
+*.sqlite3
+mfhelper.db
+
+# Logs
+logs/
+*.log
+
+# Uploads
+uploads/
+*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node modules (if any)
+node_modules/
+frontend/node_modules/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Documentation (deploy only code)
+doc/
+docs/*.md
+
+# Test files
+tests/
+backend/tests/
+frontend/tests/
+test-scripts/
+*.test.js
+*.spec.js
+
+# Git
+.git/
+.gitignore
+.gitattributes
