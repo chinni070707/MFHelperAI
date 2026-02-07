@@ -186,8 +186,9 @@ function Trigger-Deploy {
     
     Write-Host "\n[*] Triggering new deployment..." -ForegroundColor Cyan
     
+    $clearCacheValue = if ($ClearCache.IsPresent) { "clear" } else { "do_not_clear" }
     $body = @{
-        clearCache = $ClearCache.IsPresent ? "clear" : "do_not_clear"
+        clearCache = $clearCacheValue
     }
     
     $response = Invoke-RenderAPI -Endpoint "/services/$Id/deploys" -Method "POST" -Body $body

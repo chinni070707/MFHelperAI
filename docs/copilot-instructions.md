@@ -292,6 +292,49 @@ frontend/
 
 ## Code Style Guidelines
 
+### **CRITICAL: No Unicode Characters or Emojis in Code**
+
+**NEVER use unicode characters, emojis, or non-ASCII symbols in actual code files:**
+
+❌ **FORBIDDEN in code:**
+```javascript
+// ❌ DON'T: Emojis in comments
+const portfolioData = fetchData(); // 🚀 Fast API call
+
+// ❌ DON'T: Unicode symbols
+const checkmark = '✓';
+const arrow = '→';
+
+// ❌ DON'T: Special characters in variable names
+const 💰portfolioValue = 1000;
+```
+
+✓ **ALLOWED in code:**
+```javascript
+// ✓ DO: Plain ASCII comments
+const portfolioData = fetchData(); // Fast API call
+
+// ✓ DO: ASCII characters only
+const checkmark = 'v';
+const arrow = '->';
+
+// ✓ DO: Standard variable names
+const portfolioValue = 1000;
+```
+
+**Where unicode/emojis ARE allowed:**
+- Documentation files (.md)
+- User-facing strings (UI text, messages)
+- Test data representing user input
+
+**Rationale:**
+- Ensures cross-platform compatibility
+- Prevents encoding issues in terminals/editors
+- Maintains code readability across all environments
+- Avoids git diff/merge problems
+
+---
+
 ### Backend (Python/FastAPI)
 
 ```python

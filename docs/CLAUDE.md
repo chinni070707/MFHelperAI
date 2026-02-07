@@ -97,6 +97,55 @@ alembic downgrade -1             # Rollback last migration
 
 ## Code Conventions
 
+### **CRITICAL: No Unicode Characters or Emojis in Code**
+
+**NEVER use unicode characters, emojis, or non-ASCII symbols in source code files (.py, .js, .ts, .html, .css):**
+
+❌ **FORBIDDEN:**
+```python
+# ❌ DON'T: Emojis in comments
+def calculate_returns():
+    """Calculate portfolio returns 📈"""
+    pass
+
+# ❌ DON'T: Unicode symbols
+SUCCESS_MARK = '✓'
+ARROW = '→'
+
+# ❌ DON'T: Smart quotes or special dashes
+print("It's working")  # Use straight quotes only
+```
+
+✓ **ALLOWED:**
+```python
+# ✓ DO: Plain ASCII only
+def calculate_returns():
+    """Calculate portfolio returns"""
+    pass
+
+# ✓ DO: ASCII alternatives
+SUCCESS_MARK = 'OK'
+ARROW = '->'
+
+# ✓ DO: Standard ASCII quotes
+print("It's working")
+```
+
+**Exceptions (where unicode IS allowed):**
+- Markdown documentation files (.md)
+- User-facing strings in templates/UI
+- Test data that simulates user input
+- JSON responses sent to frontend
+
+**Why this matters:**
+- Windows PowerShell encoding issues
+- Git diff/merge conflicts
+- Cross-platform compatibility
+- Terminal/console display problems
+- Code editor compatibility
+
+---
+
 ### Backend (Python/FastAPI)
 - Modular routes with FastAPI dependency injection
 - Use `get_current_user()` dependency for authenticated endpoints
