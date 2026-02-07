@@ -19,7 +19,7 @@ services:
     # Environment Variables
     envVars:
       - key: PYTHON_VERSION
-        value: "3.13"
+        value: "3.13.7"
       
       - key: DEBUG
         value: "false"
