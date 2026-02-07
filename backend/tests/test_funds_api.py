@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.main import app
 from app.database import Base, get_db
-from app.models.funds_master import FundMaster
+from app.models.models import FundMaster
 
 # Test database setup
 SQLALCHEMY_TEST_DATABASE_URL = "sqlite:///./test_funds.db"
@@ -32,6 +32,17 @@ def setup_database():
     Base.metadata.create_all(bind=engine)
     yield
     Base.metadata.drop_all(bind=engine)
+
+
+@pytest.fixture(autouse=True)
+def clear_funds():
+    """Clear fund_master table before each test"""
+    db = TestingSessionLocal()
+    try:
+        db.query(FundMaster).delete()
+        db.commit()
+    finally:
+        db.close()
 
 
 @pytest.fixture

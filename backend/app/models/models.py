@@ -224,3 +224,13 @@ class FundMaster(Base):
             'plan_type': self.plan_type,
             'is_active': self.is_active
         }
+    
+    def to_dropdown_option(self):
+        """Convert to dropdown option for UI"""
+        return {
+            'value': self.scheme_code,
+            'label': self.scheme_name,
+            'scheme_name': self.scheme_name,
+            'amc': self.amc,
+            'category': self.category
+        }

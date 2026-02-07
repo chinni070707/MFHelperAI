@@ -37,9 +37,9 @@ init_sentry()
 from app.utils.cache import cache
 if cache.is_available():
     stats = cache.get_stats()
-    logger.info(f"✓ Cache initialized: {stats}")
+    logger.info(f"[OK] Cache initialized: {stats}")
 else:
-    logger.warning("✗ Cache unavailable - running without Redis")
+    logger.warning("[WARN] Cache unavailable - running without Redis")
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -64,7 +64,7 @@ async def log_requests(request: Request, call_next):
     start_time = time.time()
     
     # Log incoming request
-    logger.info(f"→ {request.method} {request.url.path}")
+    logger.info(f"-> {request.method} {request.url.path}")
     
     try:
         response = await call_next(request)
@@ -81,7 +81,7 @@ async def log_requests(request: Request, call_next):
         return response
     except Exception as e:
         duration_ms = (time.time() - start_time) * 1000
-        logger.error(f"✗ {request.method} {request.url.path} - Failed after {duration_ms:.2f}ms: {str(e)}")
+        logger.error(f"[ERROR] {request.method} {request.url.path} - Failed after {duration_ms:.2f}ms: {str(e)}")
         raise
 
 # Security: HTTPS redirect in production (disabled for local development)
@@ -102,7 +102,7 @@ app.add_middleware(
     minimum_size=1000,  # Only compress responses > 1KB
     compresslevel=6     # Balance between speed and compression (1-9)
 )
-logger.info("✓ GZip compression enabled (min_size: 1KB)")
+logger.info("[OK] GZip compression enabled (min_size: 1KB)")
 
 # CORS middleware - Configured for security
 ALLOWED_ORIGINS = [
@@ -209,6 +209,38 @@ async def dashboard_old():
     if os.path.exists(dashboard_path):
         return FileResponse(dashboard_path)
     return {"error": "Dashboard not found"}
+
+@app.get("/signup")
+async def signup():
+    """Serve the signup page"""
+    signup_path = os.path.join(frontend_path, "signup.html")
+    if os.path.exists(signup_path):
+        return FileResponse(signup_path)
+    return {"error": "Signup page not found"}
+
+@app.get("/signup.html")
+async def signup_html():
+    """Serve the signup page with .html extension"""
+    signup_path = os.path.join(frontend_path, "signup.html")
+    if os.path.exists(signup_path):
+        return FileResponse(signup_path)
+    return {"error": "Signup page not found"}
+
+@app.get("/login")
+async def login():
+    """Serve the login page"""
+    login_path = os.path.join(frontend_path, "login.html")
+    if os.path.exists(login_path):
+        return FileResponse(login_path)
+    return {"error": "Login page not found"}
+
+@app.get("/login.html")
+async def login_html():
+    """Serve the login page with .html extension"""
+    login_path = os.path.join(frontend_path, "login.html")
+    if os.path.exists(login_path):
+        return FileResponse(login_path)
+    return {"error": "Login page not found"}
 
 @app.get("/ai-demo.html")
 async def ai_demo():

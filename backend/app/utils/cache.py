@@ -26,9 +26,9 @@ if settings.REDIS_URL:
         )
         # Test connection
         redis_client.ping()
-        logger.info(f"✓ Redis connected: {settings.REDIS_URL}")
+        logger.info(f"[OK] Redis connected: {settings.REDIS_URL}")
     except Exception as e:
-        logger.warning(f"✗ Redis connection failed: {e}. Caching disabled.")
+        logger.warning(f"[WARN] Redis connection failed: {e}. Caching disabled.")
         redis_client = None
 else:
     logger.info("Redis URL not configured. Caching disabled.")

@@ -3,6 +3,7 @@ Authentication Routes - User registration, login, and profile management
 """
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 from typing import Optional
 import logging
 

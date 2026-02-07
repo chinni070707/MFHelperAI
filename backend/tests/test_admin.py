@@ -71,8 +71,7 @@ def test_data():
                 name=f"Portfolio {user.id}",
                 total_current=100000 * user.id,
                 total_invested=90000 * user.id,
-                total_returns=10000 * user.id,
-                percentage_returns=11.11,
+                total_gain=10000 * user.id,
                 created_at=datetime.utcnow() - timedelta(days=user.id)
             )
             portfolios.append(portfolio)
@@ -84,13 +83,14 @@ def test_data():
             holdings = [
                 Holding(
                     portfolio_id=portfolio.id,
+                    user_id=portfolio.user_id,
                     scheme_code=f"SC{i:04d}",
                     fund_name=f"Test Fund {i}",
                     amc="Test AMC" if i < 3 else "Another AMC",
                     category="Equity",
                     current_value=10000 * (i + 1),
-                    invested_value=9000 * (i + 1),
-                    returns=1000 * (i + 1),
+                    invested_amount=9000 * (i + 1),
+                    gain_loss=1000 * (i + 1),
                     return_pct=11.11,
                     units=100.0
                 )

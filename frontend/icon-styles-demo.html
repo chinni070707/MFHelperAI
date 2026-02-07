@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Icon Styles Demo - MFHelper</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================ */
+        /* OPTION 1: CSS-Enhanced Emojis */
+        /* ============================================ */
+        .option1-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(59, 130, 246, 0.15));
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option1-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .option1-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 
+                0 10px 40px rgba(16, 185, 129, 0.3),
+                0 0 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .option1-card:hover::before {
+            opacity: 1;
+        }
+
+        .option1-icon-container {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 8px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            position: relative;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .option1-card:hover .option1-icon-container {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                0 0 20px var(--glow-color, rgba(16, 185, 129, 0.4));
+        }
+
+        .icon-house { background: linear-gradient(135deg, #10b981, #059669); --glow-color: rgba(16, 185, 129, 0.5); }
+        .icon-vehicle { background: linear-gradient(135deg, #3b82f6, #2563eb); --glow-color: rgba(59, 130, 246, 0.5); }
+        .icon-education { background: linear-gradient(135deg, #8b5cf6, #7c3aed); --glow-color: rgba(139, 92, 246, 0.5); }
+        .icon-marriage { background: linear-gradient(135deg, #ec4899, #db2777); --glow-color: rgba(236, 72, 153, 0.5); }
+        .icon-vacation { background: linear-gradient(135deg, #f59e0b, #d97706); --glow-color: rgba(245, 158, 11, 0.5); }
+        .icon-business { background: linear-gradient(135deg, #6366f1, #4f46e5); --glow-color: rgba(99, 102, 241, 0.5); }
+        .icon-emergency { background: linear-gradient(135deg, #ef4444, #dc2626); --glow-color: rgba(239, 68, 68, 0.5); }
+        .icon-custom { background: linear-gradient(135deg, #14b8a6, #0d9488); --glow-color: rgba(20, 184, 166, 0.5); }
+
+        /* ============================================ */
+        /* OPTION 2: SVG Icons */
+        /* ============================================ */
+        .option2-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option2-card:hover {
+            background: rgba(51, 65, 85, 0.9);
+            border-color: rgba(16, 185, 129, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .option2-icon-container {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .option2-card:hover .option2-icon-container {
+            transform: scale(1.15);
+        }
+
+        .option2-card:hover .option2-icon-container svg {
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        .option2-icon-container svg {
+            width: 28px;
+            height: 28px;
+            transition: all 0.3s;
+        }
+
+        /* ============================================ */
+        /* OPTION 3: 3D Icon Images */
+        /* ============================================ */
+        .option3-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .option3-card::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3));
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s;
+        }
+
+        .option3-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(16, 185, 129, 0.15);
+        }
+
+        .option3-card:hover::after {
+            opacity: 1;
+        }
+
+        .option3-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 10px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .option3-card:hover .option3-icon {
+            transform: scale(1.15) translateY(-4px);
+            filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.4));
+        }
+
+        /* ============================================ */
+        /* OPTION 4: Lottie Animations */
+        /* ============================================ */
+        .option4-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option4-card:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .option4-card lottie-player {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+        }
+
+        /* Badge styles */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .badge-easy { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+        .badge-medium { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+        .badge-premium { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+
+        /* Pros/Cons list */
+        .pros-cons {
+            font-size: 13px;
+            text-align: left;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .pros-cons li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .pros-cons .pro::before { content: '✓'; color: #10b981; font-weight: bold; }
+        .pros-cons .con::before { content: '✗'; color: #ef4444; font-weight: bold; }
+    </style>
+</head>
+<body class="p-6">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-2 section-title">Goal Icon Styles Comparison</h1>
+        <p class="text-center text-gray-400 mb-10">Hover over each card to see the interactive effects</p>
+
+        <!-- ============================================ -->
+        <!-- OPTION 1: CSS-Enhanced Emojis -->
+        <!-- ============================================ -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <h2 class="text-2xl font-bold text-white">Option 1: CSS-Enhanced Emojis</h2>
+                <span class="badge badge-easy">Low Effort</span>
+            </div>
+            <p class="text-gray-400 mb-4">Keep existing emojis but wrap them in rich gradient containers with glassmorphism, shadows, and hover animations.</p>
+            
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-house">🏠</div>
+                    <div class="text-xs font-semibold text-white">House</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-vehicle">🚗</div>
+                    <div class="text-xs font-semibold text-white">Vehicle</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-education">🎓</div>
+                    <div class="text-xs font-semibold text-white">Education</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-marriage">💍</div>
+                    <div class="text-xs font-semibold text-white">Marriage</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-vacation">🌴</div>
+                    <div class="text-xs font-semibold text-white">Vacation</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-business">💼</div>
+                    <div class="text-xs font-semibold text-white">Business</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-emergency">🏥</div>
+                    <div class="text-xs font-semibold text-white">Emergency</div>
+                </div>
+                <div class="option1-card">
+                    <div class="option1-icon-container icon-custom">✨</div>
+                    <div class="text-xs font-semibold text-white">Custom</div>
+                </div>
+            </div>
+
+            <ul class="pros-cons text-gray-300 max-w-xl">
+                <li class="pro">No external dependencies, works immediately</li>
+                <li class="pro">Fastest implementation (~30 min)</li>
+                <li class="pro">Consistent across all devices</li>
+                <li class="con">Emojis may render differently across OS</li>
+                <li class="con">Less premium than actual 3D assets</li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- OPTION 2: SVG Icons (Lucide style) -->
+        <!-- ============================================ -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <h2 class="text-2xl font-bold text-white">Option 2: SVG Icons (Lucide/Phosphor)</h2>
+                <span class="badge badge-medium">Medium Effort</span>
+            </div>
+            <p class="text-gray-400 mb-4">Replace emojis with professional SVG icons. Clean, scalable, and customizable colors.</p>
+            
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(16, 185, 129, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+                            <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">House</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(59, 130, 246, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                            <circle cx="7" cy="17" r="2"/>
+                            <circle cx="17" cy="17" r="2"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Vehicle</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(139, 92, 246, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.084a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/>
+                            <path d="M22 10v6"/>
+                            <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Education</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(236, 72, 153, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Marriage</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(245, 158, 11, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Vacation</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(99, 102, 241, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            <rect width="20" height="14" x="2" y="6" rx="2"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Business</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(239, 68, 68, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 6v4"/>
+                            <path d="M14 14h-4"/>
+                            <path d="M14 18h-4"/>
+                            <path d="M14 8h-4"/>
+                            <path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2"/>
+                            <path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Emergency</div>
+                </div>
+                <div class="option2-card">
+                    <div class="option2-icon-container" style="background: rgba(20, 184, 166, 0.2);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <circle cx="12" cy="12" r="6"/>
+                            <circle cx="12" cy="12" r="2"/>
+                        </svg>
+                    </div>
+                    <div class="text-xs font-semibold text-white">Custom</div>
+                </div>
+            </div>
+
+            <ul class="pros-cons text-gray-300 max-w-xl">
+                <li class="pro">Clean, professional look</li>
+                <li class="pro">Fully scalable (vector)</li>
+                <li class="pro">Easy to customize colors</li>
+                <li class="pro">Lightweight (~20KB total)</li>
+                <li class="con">Less visually striking than 3D</li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- OPTION 3: 3D Icon Images -->
+        <!-- ============================================ -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <h2 class="text-2xl font-bold text-white">Option 3: 3D Icon Images</h2>
+                <span class="badge badge-premium">Premium Look ⭐</span>
+            </div>
+            <p class="text-gray-400 mb-4">High-quality 3D rendered icons (like modern banking apps). Using Icons8 3D Fluency style.</p>
+            
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/home.png" alt="House" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">House</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/car.png" alt="Vehicle" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Vehicle</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/graduation-cap.png" alt="Education" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Education</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/wedding-rings.png" alt="Marriage" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Marriage</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/beach.png" alt="Vacation" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Vacation</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/briefcase.png" alt="Business" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Business</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/hospital-3.png" alt="Emergency" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Emergency</div>
+                </div>
+                <div class="option3-card">
+                    <img src="https://img.icons8.com/3d-fluency/94/goal.png" alt="Custom" class="option3-icon">
+                    <div class="text-xs font-semibold text-white">Custom</div>
+                </div>
+            </div>
+
+            <ul class="pros-cons text-gray-300 max-w-xl">
+                <li class="pro">Most visually impressive</li>
+                <li class="pro">Professional, modern bank-app look</li>
+                <li class="pro">Consistent style across all icons</li>
+                <li class="con">Requires hosting images or Icons8 CDN</li>
+                <li class="con">Attribution required for free tier</li>
+            </ul>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- OPTION 4: Lottie Animations -->
+        <!-- ============================================ -->
+        <div class="mb-12">
+            <div class="flex items-center gap-3 mb-4">
+                <h2 class="text-2xl font-bold text-white">Option 4: Lottie Animations</h2>
+                <span class="badge badge-premium">Wow Factor ✨</span>
+            </div>
+            <p class="text-gray-400 mb-4">Animated icons that play on hover/load. Most engaging but requires more setup.</p>
+            
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189571a12a84/Y5S9yMwYM3.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">House</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/e8fc9e97-1cd6-4c63-9ed2-c0d57efd5a38/YyB9IPppWE.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Vehicle</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/7f25e8c6-9f8a-4a75-8a48-d2c1e0e0e1a5/graduation.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Education</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/f2f20d0a-d8ae-4c96-88a7-c9d9bb6f0c5f/heart.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Marriage</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/059bdd39-a326-4e42-8b29-6f28e75c5aae/wOfyH5X3DK.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Vacation</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/embed/30a21368-6df1-4e64-8046-a1c00c6e4a18/qDx3iNSjPy.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Business</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/8c4ee2b0-e1c8-4a07-a8f4-e0f3f8a3b2c1/medical.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Emergency</div>
+                </div>
+                <div class="option4-card">
+                    <lottie-player 
+                        src="https://lottie.host/a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6/star.json"
+                        background="transparent"
+                        speed="1"
+                        autoplay
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Custom</div>
+                </div>
+                        speed="1"
+                        hover
+                        loop>
+                    </lottie-player>
+                    <div class="text-xs font-semibold text-white">Custom</div>
+                </div>
+            </div>
+
+            <ul class="pros-cons text-gray-300 max-w-xl">
+                <li class="pro">Most engaging and delightful</li>
+                <li class="pro">Smooth vector animations</li>
+                <li class="pro">Free animations available</li>
+                <li class="con">Requires lottie-player library (~50KB)</li>
+                <li class="con">Need to find/customize matching animations</li>
+                <li class="con">May affect performance with many icons</li>
+            </ul>
+        </div>
+
+        <!-- Summary Table -->
+        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+            <h2 class="text-xl font-bold text-white mb-4">Quick Comparison</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-300">
+                    <thead class="text-xs uppercase bg-slate-700/50">
+                        <tr>
+                            <th class="px-4 py-3">Option</th>
+                            <th class="px-4 py-3">Effort</th>
+                            <th class="px-4 py-3">Visual Impact</th>
+                            <th class="px-4 py-3">Performance</th>
+                            <th class="px-4 py-3">Dependencies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-700">
+                            <td class="px-4 py-3 font-medium">CSS-Enhanced Emojis</td>
+                            <td class="px-4 py-3 text-green-400">Low (~30 min)</td>
+                            <td class="px-4 py-3 text-yellow-400">Good</td>
+                            <td class="px-4 py-3 text-green-400">Excellent</td>
+                            <td class="px-4 py-3 text-green-400">None</td>
+                        </tr>
+                        <tr class="border-b border-slate-700">
+                            <td class="px-4 py-3 font-medium">SVG Icons</td>
+                            <td class="px-4 py-3 text-yellow-400">Medium (~1-2 hrs)</td>
+                            <td class="px-4 py-3 text-yellow-400">Good</td>
+                            <td class="px-4 py-3 text-green-400">Excellent</td>
+                            <td class="px-4 py-3 text-green-400">~20KB icons</td>
+                        </tr>
+                        <tr class="border-b border-slate-700">
+                            <td class="px-4 py-3 font-medium text-purple-400">3D Icon Images ⭐</td>
+                            <td class="px-4 py-3 text-yellow-400">Medium (~1-2 hrs)</td>
+                            <td class="px-4 py-3 text-green-400">Excellent</td>
+                            <td class="px-4 py-3 text-yellow-400">Good</td>
+                            <td class="px-4 py-3 text-yellow-400">~200KB images</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-3 font-medium">Lottie Animations</td>
+                            <td class="px-4 py-3 text-red-400">High (~3-4 hrs)</td>
+                            <td class="px-4 py-3 text-green-400">Excellent++</td>
+                            <td class="px-4 py-3 text-yellow-400">Good</td>
+                            <td class="px-4 py-3 text-yellow-400">~50KB library + animations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-gray-400 mt-4 text-sm">
+                <strong class="text-purple-400">Recommendation:</strong> Option 3 (3D Icon Images) provides the best balance of visual impact and implementation effort. 
+                It's what modern banking apps like K Bank, HanaBank, and N26 use.
+            </p>
+        </div>
+
+        <div class="text-center mt-8 text-gray-500 text-sm">
+            <p>View this demo at: <code class="bg-slate-700 px-2 py-1 rounded">http://localhost:8000/icon-styles-demo.html</code></p>
+            <p class="mt-2">Icons8 3D Fluency icons used under free tier (attribution required) • <a href="https://icons8.com" class="text-blue-400 hover:underline">Icons8.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
