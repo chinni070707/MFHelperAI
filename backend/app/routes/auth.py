@@ -18,14 +18,14 @@ from app.utils.auth import (
     get_current_user,
     get_current_active_user
 )
-from app.middleware.rate_limiter import auth_limiter
+from app.middleware.rate_limiter import limiter
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
-@auth_limiter.limit("5/minute")  # Rate limit: 5 registrations per minute
+@limiter.limit("5/minute")  # Rate limit: 5 registrations per minute
 async def register(request: Request, user_data: UserCreate, db: Session = Depends(get_db)):
     """Register a new user"""
     logger.info(f"Registration attempt for email: {user_data.email}")
@@ -99,7 +99,7 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
 
 
 @router.post("/login", response_model=Token)
-@auth_limiter.limit("10/minute")  # Rate limit: 10 login attempts per minute
+@limiter.limit("10/minute")  # Rate limit: 10 login attempts per minute
 async def login(request: Request, credentials: UserLogin, db: Session = Depends(get_db)):
     """Login user and return JWT token"""
     logger.info(f"Login attempt for email: {credentials.email}")
@@ -216,7 +216,7 @@ async def update_user_settings(
     return settings
 
 @router.post("/leads/capture")
-@auth_limiter.limit("10/hour")
+@limiter.limit("10/hour")
 async def capture_lead(
     request: Request,
     email: Optional[str] = None,

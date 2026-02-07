@@ -5,7 +5,12 @@
       "Bash(findstr:*)",
       "WebFetch",
       "WebSearch",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(...venvScriptspython.exe -m pytest tests/test_auth.py -v --no-header --tb=short --no-cov)",
+      "Bash(\"..\\\\.venv\\\\Scripts\\\\python.exe\" -m pytest:*)",
+      "Bash(\".venv\\\\Scripts\\\\python.exe\" -c \"import bcrypt; print\\(bcrypt.__version__\\)\")",
+      "Bash(\".venv\\\\Scripts\\\\pip.exe\" install \"bcrypt<4.1.0\")",
+      "Bash(wc:*)"
     ]
   }
 }
