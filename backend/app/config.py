@@ -4,6 +4,7 @@ MFHelper - Configuration Settings
 from pydantic_settings import BaseSettings
 from typing import Optional
 import os
+import sys
 
 
 class Settings(BaseSettings):
@@ -69,9 +70,8 @@ else:
     # Production environment - respect DEBUG from environment variable
     print(f"🔍 Production Mode: DEBUG={settings.DEBUG}", file=sys.stderr)
 
-# Debug: Print actual DEBUG value loaded
-import sys
-print(f"🔍 Database: {settings.DATABASE_URL.split('@')[0]}...", file=sys.stderr)
+# Debug: Print database info
+print(f"🔍 Database: {settings.DATABASE_URL.split('@')[0] if '@' in settings.DATABASE_URL else 'sqlite'}...", file=sys.stderr)
 print(f"🔍 DEBUG Type: {type(settings.DEBUG)}", file=sys.stderr)
 
 # Ensure upload directory exists
