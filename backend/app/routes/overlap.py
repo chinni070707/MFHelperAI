@@ -2,10 +2,14 @@
 Enhanced Overlap Analysis Routes
 Provides comprehensive fund overlap analysis with multiple visualization options
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List, Optional
 import logging
+from sqlalchemy.orm import Session
+from app.database import get_db
+from app.models.models import Holding, User
+from app.utils.auth import get_current_active_user
 from app.utils.overlap_analyzer import OverlapAnalyzer
 
 logger = logging.getLogger(__name__)

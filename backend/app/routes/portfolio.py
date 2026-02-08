@@ -144,6 +144,63 @@ async def save_portfolio(
     }
 
 
+@router.post("/manual")
+async def save_manual_portfolio(
+    data: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Save manually entered portfolio data"""
+    logger.info(f"Saving manual portfolio for user: {current_user.email}")
+    
+    holdings_data = data.get('holdings', [])
+    
+    if not holdings_data:
+        raise HTTPException(status_code=400, detail="No holdings provided")
+    
+    # Calculate totals
+    total_invested = sum(h.get('invested_amount', 0) for h in holdings_data)
+    
+    # Create new portfolio snapshot
+    new_portfolio = Portfolio(
+        user_id=current_user.id,
+        name="Manual Entry",
+        source="manual_entry",
+        total_invested=total_invested,
+        total_current=total_invested,  # For manual entry, current = invested initially
+        total_gain=0,
+        snapshot_date=datetime.now()
+    )
+    
+    db.add(new_portfolio)
+    db.flush()  # Get portfolio ID
+    
+    # Add holdings
+    for holding_data in holdings_data:
+        holding = Holding(
+            user_id=current_user.id,
+            portfolio_id=new_portfolio.id,
+            fund_name=holding_data.get('scheme_name', ''),
+            amc=holding_data.get('amc', ''),
+            invested_amount=holding_data.get('invested_amount', 0),
+            current_value=holding_data.get('invested_amount', 0),  # Initially same as invested
+            gain_loss=0,
+            return_pct=0
+        )
+        db.add(holding)
+    
+    db.commit()
+    
+    logger.info(f"✅ Manual portfolio saved for user {current_user.email}: Portfolio ID {new_portfolio.id}, {len(holdings_data)} holdings")
+    
+    return {
+        "success": True,
+        "message": "Portfolio saved successfully",
+        "portfolio_id": new_portfolio.id,
+        "holdings_count": len(holdings_data)
+    }
+
+
 @router.delete("/")
 async def delete_portfolio(
     portfolio_id: Optional[int] = None,

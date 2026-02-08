@@ -11,7 +11,7 @@ from datetime import datetime
 import logging
 
 from app.database import get_db
-from app.models.models import Portfolio, User
+from app.models.models import Portfolio, Holding, User
 from app.utils.auth import get_optional_current_user
 
 # Setup logger
@@ -636,31 +636,48 @@ async def upload_excel(
     # Save to database if user is authenticated
     if current_user:
         try:
-            # Clear existing portfolio for this user
-            db.query(Portfolio).filter(Portfolio.user_id == current_user.id).delete()
+            # Calculate totals
+            total_invested = sum(h.get('invested', 0) for h in result['holdings'])
+            total_current = sum(h.get('current_value', 0) for h in result['holdings'])
+            total_gain = total_current - total_invested
+            
+            # Create a new portfolio snapshot
+            portfolio = Portfolio(
+                user_id=current_user.id,
+                name="Excel Upload",
+                source="excel",
+                total_invested=total_invested,
+                total_current=total_current,
+                total_gain=total_gain
+            )
+            db.add(portfolio)
+            db.flush()  # Get portfolio.id
             
             # Save each holding
             for holding in result['holdings']:
-                portfolio_entry = Portfolio(
+                holding_entry = Holding(
                     user_id=current_user.id,
-                    scheme_name=holding.get('fund_name', ''),
-                    folio_number='',
+                    portfolio_id=portfolio.id,
+                    fund_name=holding.get('fund_name', ''),
                     units=0,  # Excel usually doesn't have units
-                    avg_cost=holding.get('invested', 0),
-                    current_nav=0,
+                    nav=0,
                     invested_amount=holding.get('invested', 0),
                     current_value=holding.get('current_value', 0),
                     gain_loss=holding.get('current_value', 0) - holding.get('invested', 0),
-                    gain_loss_percent=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
+                    return_pct=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
                     amc=holding.get('amc', ''),
                     category=holding.get('category', ''),
-                    is_active=True
+                    one_year_return=holding.get('return_1y'),
+                    three_year_return=holding.get('return_3y'),
+                    alpha=holding.get('alpha'),
+                    investment_style=holding.get('style')
                 )
-                db.add(portfolio_entry)
+                db.add(holding_entry)
             
             db.commit()
-            logger.info(f"Saved {len(result['holdings'])} holdings from Excel for user {current_user.id}")
+            logger.info(f"✅ Saved portfolio {portfolio.id} with {len(result['holdings'])} holdings from Excel for user {current_user.id}")
             result['saved_to_database'] = True
+            result['portfolio_id'] = portfolio.id
             
         except Exception as e:
             db.rollback()
@@ -704,34 +721,49 @@ async def upload_cas(
     if current_user:
         logger.info(f"Authenticated user found: {current_user.email} (ID: {current_user.id})")
         try:
-            # Clear existing portfolio for this user
-            deleted_count = db.query(Portfolio).filter(Portfolio.user_id == current_user.id).delete()
-            logger.debug(f"Deleted {deleted_count} existing portfolio entries")
+            # Calculate totals
+            total_invested = sum(h.get('invested', 0) for h in result['holdings'])
+            total_current = sum(h.get('current_value', 0) for h in result['holdings'])
+            total_gain = total_current - total_invested
+            
+            # Create a new portfolio snapshot
+            portfolio = Portfolio(
+                user_id=current_user.id,
+                name="CAS Upload",
+                source="cas_pdf",
+                total_invested=total_invested,
+                total_current=total_current,
+                total_gain=total_gain
+            )
+            db.add(portfolio)
+            db.flush()  # Get portfolio.id
+            
+            logger.debug(f"Created portfolio snapshot ID: {portfolio.id}")
             
             # Save each holding
             for idx, holding in enumerate(result['holdings']):
                 logger.debug(f"Saving holding {idx+1}/{len(result['holdings'])}: {holding.get('fund_name', 'Unknown')}")
-                portfolio_entry = Portfolio(
+                holding_entry = Holding(
                     user_id=current_user.id,
-                    scheme_name=holding.get('fund_name', ''),
+                    portfolio_id=portfolio.id,
+                    fund_name=holding.get('fund_name', ''),
                     folio_number=holding.get('folio', ''),
                     units=holding.get('units', 0),
-                    avg_cost=holding.get('invested', 0) / holding.get('units', 1) if holding.get('units', 0) > 0 else 0,
-                    current_nav=holding.get('nav', 0),
+                    nav=holding.get('nav', 0),
                     invested_amount=holding.get('invested', 0),
                     current_value=holding.get('current_value', 0),
                     gain_loss=holding.get('current_value', 0) - holding.get('invested', 0),
-                    gain_loss_percent=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
+                    return_pct=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
                     amc=holding.get('amc', ''),
-                    category=holding.get('category', ''),
-                    is_active=True
+                    category=holding.get('category', '')
                 )
-                db.add(portfolio_entry)
+                db.add(holding_entry)
             
             db.commit()
-            logger.info(f"✅ Successfully saved {len(result['holdings'])} holdings for user {current_user.id}")
+            logger.info(f"✅ Successfully saved portfolio {portfolio.id} with {len(result['holdings'])} holdings for user {current_user.id}")
             result['saved_to_database'] = True
             result['user_email'] = current_user.email
+            result['portfolio_id'] = portfolio.id
             
         except Exception as e:
             db.rollback()

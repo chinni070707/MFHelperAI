@@ -688,13 +688,21 @@
             <div class="chart-title">🔍 Portfolio Overlap Analysis</div>
             <p style="color: var(--text-secondary); margin-bottom: 20px;">Analyze stock and sector overlap between your funds to identify concentration risks</p>
             
-            <button id="analyze-overlap-btn" class="btn btn-primary" onclick="analyzeCurrentPortfolio()" style="margin-bottom: 20px; display:inline-flex; align-items:center; gap:8px;">
-                <span>📊 Analyze Overlap</span>
-                <span id="analyze-overlap-spinner" class="btn-spinner" style="display:none;"></span>
-            </button>
+            <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                <button id="analyze-overlap-btn" class="btn btn-primary" onclick="analyzeCurrentPortfolio()" style="display:inline-flex; align-items:center; gap:8px;">
+                    <span>📊 Quick Analysis</span>
+                    <span id="analyze-overlap-spinner" class="btn-spinner" style="display:none;"></span>
+                </button>
+                
+                <a href="/overlap-analysis.html" class="btn" style="display:inline-flex; align-items:center; gap:8px; background: linear-gradient(135deg, #7FC04C 0%, #6BA83C 100%); color: white; text-decoration: none; border: none;">
+                    <span>🔬 Advanced Overlap Analysis</span>
+                    <span style="font-size: 18px;">→</span>
+                </a>
+            </div>
             
             <!-- Overlap Results Container -->
             <div id="overlap-container"></div>
+
         </div>
         
         <!-- Portfolio Rebalancing Calculator -->
@@ -798,7 +806,18 @@
                 // Load demo portfolio from API
                 await loadDemoPortfolio();
             } else {
-                // Try to load from portfolio storage
+                // Check if user is authenticated
+                const token = localStorage.getItem('authToken');
+                
+                if (token) {
+                    // Try to load from database first for authenticated users
+                    const loadedFromDB = await loadPortfolioFromDatabase();
+                    if (loadedFromDB) {
+                        return; // Successfully loaded from database
+                    }
+                }
+                
+                // Fallback: Try to load from portfolio storage
                 const portfolioStorage = new PortfolioStorage();
                 const storedData = portfolioStorage.load();
                 
@@ -858,6 +877,75 @@
                 document.getElementById('dashboardContent').style.display = 'none';
                 document.getElementById('noData').style.display = 'block';
                 window.showToast?.('Failed to load demo portfolio', 'error');
+            }
+        }
+        
+        async function loadPortfolioFromDatabase() {
+            try {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    return false;
+                }
+                
+                const response = await fetch('/api/portfolio/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        // Token expired or invalid
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('userInfo');
+                        return false;
+                    }
+                    throw new Error('Failed to load portfolio from database');
+                }
+                
+                const data = await response.json();
+                
+                // Check if portfolio exists
+                if (!data.holdings || data.holdings.length === 0) {
+                    console.log('No portfolio data in database');
+                    return false;
+                }
+                
+                // Transform API data to portfolio format
+                portfolioData = {
+                    mode: 'database',
+                    portfolio_id: data.portfolio_id,
+                    portfolio_name: data.portfolio_name || 'My Portfolio',
+                    source: data.source || 'upload',
+                    holdings: data.holdings.map(h => ({
+                        scheme_name: h.fund_name,
+                        category: h.category || 'Others',
+                        amc: h.amc || 'Unknown',
+                        invested: h.invested,
+                        current_value: h.current_value,
+                        gain: h.gain,
+                        return_pct: h.return_pct,
+                        units: h.units,
+                        avg_cost: h.invested / h.units || 0,
+                        current_nav: h.nav
+                    })),
+                    summary: {
+                        total_invested: data.summary.total_invested,
+                        total_current: data.summary.total_current,
+                        total_gain: data.summary.total_gain,
+                        return_pct: data.summary.return_pct
+                    },
+                    uploadedAt: data.summary.last_updated,
+                    uploadedFileName: data.source || 'CAS Upload'
+                };
+                
+                console.log('✅ Successfully loaded portfolio from database:', data.holdings.length, 'holdings');
+                renderDashboard();
+                return true;
+                
+            } catch (error) {
+                console.error('Error loading portfolio from database:', error);
+                return false;
             }
         }
         

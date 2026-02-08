@@ -13,8 +13,24 @@ logger = logging.getLogger(__name__)
 class OverlapAnalyzer:
     """Analyzes overlapping holdings between mutual funds"""
     
-    def __init__(self, holdings_file: str = "backend/data/fund_holdings.json"):
+    def __init__(self, holdings_file: str = None):
         """Initialize with fund holdings data"""
+        if holdings_file is None:
+            # Try multiple paths to find the data file
+            from pathlib import Path
+            possible_paths = [
+                Path("backend/data/fund_holdings.json"),
+                Path("data/fund_holdings.json"),
+                Path("app/data/fund_holdings.json"),
+                Path(__file__).parent.parent.parent / "data" / "fund_holdings.json"
+            ]
+            for  path in possible_paths:
+                if path.exists():
+                    holdings_file = str(path)
+                    break
+            if holdings_file is None:
+                holdings_file = "data/fund_holdings.json"  # Fallback
+        
         self.fund_data = self._load_holdings(holdings_file)
     
     def _load_holdings(self, file_path: str) -> Dict:
