@@ -7,9 +7,10 @@ $ErrorActionPreference = "Stop"
 Write-Host ""
 Write-Host "Installing Git pre-push hook..." -ForegroundColor Cyan
 
-$projectRoot = $PSScriptRoot
+# Project root is parent of scripts directory
+$projectRoot = Split-Path $PSScriptRoot -Parent
 $hookPath = Join-Path $projectRoot ".git\hooks\pre-push"
-$hookScript = Join-Path $projectRoot "pre-push-check.ps1"
+$hookScript = Join-Path $PSScriptRoot "pre-push-check.ps1"
 
 # Check if pre-push-check.ps1 exists
 if (-not (Test-Path $hookScript)) {
@@ -24,12 +25,13 @@ $hookContent = @"
 
 echo "Running pre-push validation..."
 
-# Run PowerShell validation script
-powershell.exe -ExecutionPolicy Bypass -File "./pre-push-check.ps1"
+# Run PowerShell validation script (in scripts folder)
+powershell.exe -ExecutionPolicy Bypass -File "./scripts/pre-push-check.ps1"
 
 # If validation fails, prevent push
 if [ `$? -ne 0 ]; then
     echo "Pre-push validation failed. Push aborted."
+    echo "To skip validation, use: git push --no-verify"
     exit 1
 fi
 

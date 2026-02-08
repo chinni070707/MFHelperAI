@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fund Overlap Analysis - MFHelper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --accent-green: #5A9030;
+            --bg-dark: #0f1419;
+            --bg-card: #1a2028;
+            --bg-card-hover: #22293a;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-card);
+            padding: 24px 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            border: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--bg-card-hover);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-top: 16px;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Fund Selector */
+        .fund-selector {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .selector-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .selector-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .selected-count {
+            padding: 6px 12px;
+            background: var(--primary-green);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .fund-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .fund-card {
+            padding: 14px;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fund-card:hover {
+            border-color: var(--primary-green);
+            background: var(--bg-card-hover);
+        }
+
+        .fund-card.selected {
+            border-color: var(--primary-green);
+            background: var(--bg-card-hover);
+        }
+
+        .fund-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .fund-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .analyze-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            border: none;
+            border-radius: 10px;
+            color:white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.2s;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(127, 192, 76, 0.3);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results {
+            display: none;
+        }
+
+        .results.shown {
+            display: block;
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .summary-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .summary-value.good {
+            color: var(--success);
+        }
+
+        .summary-value.warning {
+            color: var(--warning);
+        }
+
+        .summary-value.danger {
+            color: var(--danger);
+        }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* Insights */
+        .insights-section {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+           border: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+
+        .insight-card {
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            margin-bottom: 12px;
+        }
+
+        .insight-card.high {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+        }
+
+        .insight-card.medium {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+        }
+
+        .insight-card.low {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+        }
+
+        .insight-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .insight-message {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .insight-recommendation {
+            font-size: 14px;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        /* Overlapping Stocks Table */
+        .overlap-table {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-dark);
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--bg-dark);
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 6px;
+        }
+
+        .concentration-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .concentration-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .concentration-medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading.shown {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fund-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Diversification Score Circle */
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">📊</div>
+                    <span>MFHelper</span>
+                </div>
+                <a href="/dashboard.html" class="back-btn">← Back to Dashboard</a>
+            </div>
+            <h1>Fund Overlap Analysis</h1>
+            <p class="subtitle">Identify overlapping stocks across your mutual funds and optimize portfolio diversification</p>
+        </header>
+
+        <!-- Fund Selector -->
+        <div class="fund-selector">
+            <div class="selector-header">
+                <div class="selector-title">Select Funds (2-10 funds)</div>
+                <div class="selected-count">
+                    <span id="selectedCount">0</span> Selected
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchFunds" placeholder="Search funds by name, AMC, or category...">
+            </div>
+
+            <div class="fund-grid" id="fundGrid">
+                <!-- Funds will be loaded here -->
+            </div>
+
+            <button class="analyze-btn" id="analyzeBtn" disabled>
+                Analyze Overlap
+            </button>
+        </div>
+
+        <!-- Loading State -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Analyzing portfolio overlap...</div>
+        </div>
+
+        <!-- Results -->
+        <div class="results" id="results">
+            <!-- Summary Cards -->
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="summary-label">Overlapping Stocks</div>
+                    <div class="summary-value" id="overlapCount">0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Overlap Ratio</div>
+                    <div class="summary-value" id="overlapRatio">0%</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Unique Stocks</div>
+                    <div class="summary-value good" id="uniqueStocks">0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Diversification Score</div>
+                    <div class="summary-value" id="divScore">0</div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-title">Stock Concentration</div>
+                    <div id="pieChart"></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">Overlap Heatmap</div>
+                    <div id="heatmapChart"></div>
+                </div>
+            </div>
+
+            <!-- Insights -->
+            <div class="insights-section">
+                <div class="chart-title">Key Insights & Recommendations</div>
+                <div id="insightsContainer">
+                    <!-- Insights will be added here -->
+                </div>
+            </div>
+
+            <!-- Overlapping Stocks Table -->
+            <div class="overlap-table">
+                <div class="chart-title">Top Overlapping Stocks</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stock</th>
+                            <th>Sector</th>
+                            <th>Appears In</th>
+                            <th>Concentration</th>
+                            <th>Avg Weight</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stocksTableBody">
+                        <!-- Stocks will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        let allFunds = [];
+        let selectedFunds = new Set();
+
+        // Load available funds
+        async function loadFunds() {
+            try {
+                const response = await fetch(`${API_BASE}/api/overlap/funds`);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    allFunds = data.funds;
+                    renderFunds(allFunds);
+                }
+            } catch (error) {
+                console.error('Error loading funds:', error);
+                alert('Failed to load funds. Please refresh the page.');
+            }
+        }
+
+        // Render fund cards
+        function renderFunds(funds) {
+            const fundGrid = document.getElementById('fundGrid');
+            fundGrid.innerHTML = funds.map(fund => `
+                <div class="fund-card" data-key="${fund.key}" onclick="toggleFund('${fund.key}')">
+                    <div class="fund-name">${fund.name}</div>
+                    <div class="fund-meta">
+                        ${fund.amc} • ${fund.category} • ${fund.holdings_count} holdings
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search funds
+        document.getElementById('searchFunds').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allFunds.filter(fund =>
+                fund.name.toLowerCase().includes(query) ||
+                fund.amc.toLowerCase().includes(query) ||
+                fund.category.toLowerCase().includes(query)
+            );
+            renderFunds(filtered);
+            
+            // Re-apply selected state
+            selectedFunds.forEach(key => {
+                const card = document.querySelector(`[data-key="${key}"]`);
+                if (card) card.classList.add('selected');
+            });
+        });
+
+        // Toggle fund selection
+        function toggleFund(key) {
+            const card = document.querySelector(`[data-key="${key}"]`);
+            
+            if (selectedFunds.has(key)) {
+                selectedFunds.delete(key);
+                card.classList.remove('selected');
+            } else {
+                if (selectedFunds.size >= 10) {
+                    alert('Maximum 10 funds allowed');
+                    return;
+                }
+                selectedFunds.add(key);
+                card.classList.add('selected');
+            }
+            
+            updateSelectedCount();
+        }
+
+        // Update selected count
+        function updateSelectedCount() {
+            const count = selectedFunds.size;
+            document.getElementById('selectedCount').textContent = count;
+            document.getElementById('analyzeBtn').disabled = count < 2;
+        }
+
+        // Analyze overlap
+        document.getElementById('analyzeBtn').addEventListener('click', analyzeOverlap);
+
+        async function analyzeOverlap() {
+            if (selectedFunds.size < 2) return;
+
+            document.getElementById('loading').classList.add('shown');
+            document.getElementById('results').classList.remove('shown');
+
+            try {
+                const response = await fetch(`${API_BASE}/api/overlap/analyze`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fund_keys: Array.from(selectedFunds),
+                        analysis_type: 'portfolio'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    displayResults(result.data);
+                } else {
+                    alert('Analysis failed: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error analyzing overlap:', error);
+                alert('Failed to analyze overlap. Please try again.');
+            } finally {
+                document.getElementById('loading').classList.remove('shown');
+            }
+        }
+
+        // Display results
+        function displayResults(data) {
+            // Update summary cards
+            document.getElementById('overlapCount').textContent = data.overlapping_stocks;
+            document.getElementById('overlapRatio').textContent = data.overlap_ratio + '%';
+            document.getElementById('uniqueStocks').textContent = data.unique_stocks;
+            document.getElementById('divScore').textContent = data.diversification_score;
+
+            // Color-code diversification score
+            const scoreEl = document.getElementById('divScore');
+            if (data.diversification_score >= 70) {
+                scoreEl.className = 'summary-value good';
+            } else if (data.diversification_score >= 40) {
+                scoreEl.className = 'summary-value warning';
+            } else {
+                scoreEl.className = 'summary-value danger';
+            }
+
+            // Render charts
+            renderPieChart(data.top_overlapping_stocks);
+            renderHeatmap(data);
+
+            // Render insights
+            renderInsights(data.insights);
+
+            // Render stocks table
+            renderStocksTable(data.top_overlapping_stocks);
+
+            // Show results
+            document.getElementById('results').classList.add('shown');
+        }
+
+        // Render pie chart
+        function renderPieChart(stocks) {
+            const topStocks = stocks.slice(0, 10);
+            const otherWeight = stocks.slice(10).reduce((sum, s) => sum + s.total_weight, 0);
+
+            const labels = topStocks.map(s => s.stock);
+            const values = topStocks.map(s => s.total_weight);
+
+            if (otherWeight > 0) {
+                labels.push('Others');
+                values.push(otherWeight);
+            }
+
+            const data = [{
+                labels: labels,
+                values: values,
+                type: 'pie',
+                hole: 0.4,
+                marker: {
+                    colors: ['#7FC04C', '#6BA83C', '#5A9030', '#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899', '#f97316', '#6366f1']
+                },
+                textinfo: 'label+percent',
+                textposition: 'outside'
+            }];
+
+            const layout = {
+                showlegend: false,
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: {
+                    color: '#ffffff'
+                },
+                margin: { t: 0, b: 0, l: 0, r: 0 }
+            };
+
+            Plotly.newPlot('pieChart', data, layout, {responsive: true});
+        }
+
+        // Render heatmap (simplified - shows overlap intensity)
+        function renderHeatmap(data) {
+            // Create a simple bar chart showing stocks by fund count
+            const stocks = data.top_overlapping_stocks.slice(0, 15);
+            
+            const data_bar = [{
+                x: stocks.map(s => s.appears_in),
+                y: stocks.map(s => s.stock),
+                type: 'bar',
+                orientation: 'h',
+                marker: {
+                    color: stocks.map(s => s.appears_in),
+                    colorscale: [[0, '#10b981'], [0.5, '#f59e0b'], [1, '#ef4444']],
+                    showscale: false
+                }
+            }];
+
+            const layout = {
+                xaxis: { title: 'Number of Funds', color: '#9ca3af' },
+                yaxis: { automargin: true, color: '#9ca3af' },
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#ffffff' },
+                margin: { l: 150, r: 20, t: 20, b: 40 }
+            };
+
+            Plotly.newPlot('heatmapChart', data_bar, layout, {responsive: true});
+        }
+
+        // Render insights
+        function renderInsights(insights) {
+            const container = document.getElementById('insightsContainer');
+            
+            if (!insights || insights.length === 0) {
+                container.innerHTML = '<div class="insight-card low"><div class="insight-title">No Major Issues</div><div class="insight-message">Your portfolio shows reasonable diversification.</div></div>';
+                return;
+            }
+
+            container.innerHTML = insights.map(insight => `
+                <div class="insight-card ${insight.severity}">
+                    <div class="insight-title">${insight.title}</div>
+                    <div class="insight-message">${insight.message}</div>
+                    <div class="insight-recommendation">💡 ${insight.recommendation}</div>
+                </div>
+            `).join('');
+        }
+
+        // Render stocks table
+        function renderStocksTable(stocks) {
+            const tbody = document.getElementById('stocksTableBody');
+            
+            tbody.innerHTML = stocks.slice(0, 20).map(stock => `
+                <tr>
+                    <td><strong>${stock.stock}</strong></td>
+                    <td>${stock.sector}</td>
+                    <td>${stock.appears_in} / ${selectedFunds.size} funds</td>
+                    <td>
+                        <span class="concentration-badge concentration-${stock.concentration_risk.toLowerCase()}">
+                            ${stock.concentration_risk}
+                        </span>
+                    </td>
+                    <td>${stock.avg_weight}%</td>
+                </tr>
+            `).join('');
+        }
+
+        // Initialize
+        loadFunds();
+    </script>
+</body>
+</html>

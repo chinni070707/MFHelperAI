@@ -5,7 +5,7 @@ Dashboard statistics and analytics for administrators
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
-from typing import Dict, List
+from typing import Dict
 from datetime import datetime, timedelta
 import logging
 

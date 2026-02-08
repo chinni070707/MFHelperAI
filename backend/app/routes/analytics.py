@@ -230,7 +230,6 @@ async def compare_index(portfolio_id: int, large_rate: float = 0.12, mid_rate: f
 
     # Compute hypothetical current value if each transaction was invested into corresponding index
     eval_date = portfolio.snapshot_date or func.now()
-    from datetime import datetime
     if isinstance(eval_date, datetime):
         ref_date = eval_date
     else:

@@ -3,13 +3,13 @@ Portfolio Routes - Get and manage portfolio data with database persistence
 """
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from typing import Optional, List
+from typing import Optional
 from datetime import datetime
 import logging
 
 from app.database import get_db
 from app.models.models import User, Portfolio, Holding
-from app.utils.auth import get_current_user, get_optional_current_user
+from app.utils.auth import get_current_user
 
 # Setup logger
 logger = logging.getLogger(__name__)

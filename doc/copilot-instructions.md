@@ -676,11 +676,18 @@ def get_fund_with_holdings(db: Session, fund_key: str):
 
 ## Important URLs & Resources
 
+### External Resources
 - **MFApi:** https://mfapi.in/ (Free NAV data)
 - **AMFI:** https://www.amfiindia.com/ (Official holdings data)
 - **Capacitor Docs:** https://capacitorjs.com/ (For mobile apps)
 - **PWA Guide:** https://web.dev/progressive-web-apps/
 - **Plotly Examples:** https://plotly.com/javascript/
+
+### Project Documentation
+- **[Render MCP Usage Guide](../docs/RENDER_MCP_USAGE.md)** - Quick reference for managing Render deployments via API
+- **[Render MCP Setup](RENDER_MCP_SETUP.md)** - Initial Render MCP configuration
+- **[Render Deployment Guide](RENDER_DEPLOYMENT.md)** - Full deployment setup instructions
+- **[Testing Guide](TESTING_GUIDE.md)** - How to run tests
 
 ---
 

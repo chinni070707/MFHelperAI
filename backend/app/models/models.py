@@ -1,10 +1,9 @@
 """
 MFHelper - Database Models
 """
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, JSON, Boolean, Index
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, Index
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from datetime import datetime
 from app.database import Base
 
 
@@ -14,12 +13,18 @@ class User(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), unique=True, index=True, nullable=False)
-    hashed_password = Column(String(255), nullable=False)
+    hashed_password = Column(String(255), nullable=True)  # Nullable for OAuth users
     full_name = Column(String(255))
     pan = Column(String(10), unique=True, index=True)  # PAN for MF lookup
     phone = Column(String(15))
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
+    
+    # OAuth fields
+    oauth_provider = Column(String(50))  # 'google', 'github', etc.
+    oauth_id = Column(String(255))  # Unique ID from OAuth provider
+    profile_picture_url = Column(String(500))  # Profile image URL
+    
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     

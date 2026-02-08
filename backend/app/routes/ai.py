@@ -296,9 +296,9 @@ async def ai_status():
         "ai_available": False,
         "features": {
             "portfolio_analysis": True,
-            "chatbot": ai_service.is_available(),
+            "chatbot": False,
             "goal_planning": True,
-            "recommendations": ai_service.is_available(),
+            "recommendations": False,
         }
     }
 
@@ -318,11 +318,11 @@ async def ai_health():
     message = "AI available"
 
     if provider == "ollama":
-        model = getattr(ai_service, "ollama_model", None)
+        model = None  # AI service removed
         if not available:
             message = "Ollama/TinyLlama not available - AI offline"
     elif provider == "openai":
-        model = getattr(ai_settings, "OPENAI_MODEL", None)
+        model = None  # AI service removed
         if not available:
             message = "OpenAI not available or API key missing"
     else:

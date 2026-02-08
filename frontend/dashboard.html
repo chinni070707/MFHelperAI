@@ -405,17 +405,17 @@
         .entry-table select {
             width: 100%;
             padding: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(0, 212, 255, 0.3);
             border-radius: 5px;
-            color: #fff;
+            color: #ffffff;
             font-size: 0.9rem;
         }
         .entry-table input:focus,
         .entry-table select:focus {
             outline: none;
             border-color: var(--primary-green);
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.25);
         }
         .add-row-btn {
             margin-top: 15px;
@@ -554,11 +554,11 @@
                 <div class="xirr-value" id="portfolio-xirr">-- %</div>
                 <div class="card-sub">Internal Rate of Return (annualized)</div>
                 <div class="compare-box">
-                    <label style="font-size:0.9rem;">Portfolio ID: <input type="number" id="portfolio-id-input" style="width:120px; margin-left:6px;"></label>
+                    <label style="font-size:0.9rem;">Portfolio ID: <input type="number" id="portfolio-id-input" style="width:120px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);"></label>
                     <div style="margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                        <label style="font-size:0.85rem;">Large %: <input id="large-rate" type="number" step="0.01" value="12" style="width:70px; margin-left:6px;">%</label>
-                        <label style="font-size:0.85rem;">Mid %: <input id="mid-rate" type="number" step="0.01" value="14" style="width:70px; margin-left:6px;">%</label>
-                        <label style="font-size:0.85rem;">Small %: <input id="small-rate" type="number" step="0.01" value="16" style="width:70px; margin-left:6px;">%</label>
+                        <label style="font-size:0.85rem;">Large %: <input id="large-rate" type="number" step="0.01" value="12" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
+                        <label style="font-size:0.85rem;">Mid %: <input id="mid-rate" type="number" step="0.01" value="14" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
+                        <label style="font-size:0.85rem;">Small %: <input id="small-rate" type="number" step="0.01" value="16" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
                         <button class="btn btn-secondary" id="fetch-xirr-btn">Fetch XIRR & Compare</button>
                     </div>
                     <div id="compare-results" style="margin-top:10px; font-size:0.9rem; color:#cbd5e1;"></div>
@@ -1529,7 +1529,7 @@
                     type="password" 
                     id="pdfPassword" 
                     placeholder="Enter PDF password"
-                    style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff; font-size: 0.95rem;"
+                    style="width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff; font-size: 0.95rem;"
                 >
                 <p style="margin-top: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.5);">
                     ℹ️ Most CAS PDFs are password protected. Leave blank if not protected.
@@ -1733,7 +1733,7 @@
             
             row.innerHTML = `
                 <td>
-                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); color: var(--text-primary);" required>
+                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff;" required>
                         <option value="">Select AMC...</option>
                         ${amcOptions}
                     </select>
@@ -1744,11 +1744,11 @@
                            onfocus="showFundDropdown(this)"
                            data-fund-id="" 
                            disabled
-                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); color: var(--text-primary);"
+                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff;"
                            required>
                     <div class="fund-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20, 20, 40, 0.98); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 1000; margin-top: 4px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);"></div>
                 </td>
-                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); color: var(--text-primary);" required></td>
+                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff;" required></td>
                 <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
             `;
             tbody.appendChild(row);

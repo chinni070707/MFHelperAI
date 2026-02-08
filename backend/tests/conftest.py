@@ -86,7 +86,7 @@ def test_user(db_session):
 @pytest.fixture
 def auth_token(test_user):
     """Create a valid JWT token for the test user"""
-    return create_access_token(data={"sub": test_user.id})
+    return create_access_token(data={"sub": str(test_user.id)})
 
 
 @pytest.fixture

@@ -3,7 +3,6 @@ Fund data ingestion service
 Fetches and updates fund holdings data from various sources
 """
 import requests
-import pandas as pd
 from datetime import datetime, date
 from typing import List, Dict, Optional
 from sqlalchemy.orm import Session
@@ -382,22 +381,23 @@ class FundDataIngestionService:
         
         # Log the update
         end_time = datetime.utcnow()
-        
-        log = DataUpdateLog(
-            update_type='weekly',
-            source='automated',
-            funds_updated=funds_updated,
-            status='success' if funds_failed == 0 else 'partial',
-            started_at=start_time,
-            completed_at=end_time,
-            update_metadata={
-                'stocks_updated': stocks_updated,
-                'funds_attempted': len(funds),
-                'funds_succeeded': funds_updated,
-                'funds_failed': funds_failed
-            }
-        )
-        self.db.add(log)
+
+        # DataUpdateLog model not implemented yet
+        # log = DataUpdateLog(
+        #     update_type='weekly',
+        #     source='automated',
+        #     funds_updated=funds_updated,
+        #     status='success' if funds_failed == 0 else 'partial',
+        #     started_at=start_time,
+        #     completed_at=end_time,
+        #     update_metadata={
+        #         'stocks_updated': stocks_updated,
+        #         'funds_attempted': len(funds),
+        #         'funds_succeeded': funds_updated,
+        #         'funds_failed': funds_failed
+        #     }
+        # )
+        # self.db.add(log)
         self.db.commit()
         
         logger.info(f"Weekly update completed. Stocks: {stocks_updated}, Funds: {funds_updated}/{len(funds)}")

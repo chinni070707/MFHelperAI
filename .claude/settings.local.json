@@ -17,7 +17,14 @@
       "Bash(export CLAUDE_CODE_GIT_BASH_PATH=\"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\")",
       "Bash(setx CLAUDE_CODE_GIT_BASH_PATH \"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\")",
       "Bash(\"..\\\\.venv\\\\Scripts\\\\python.exe\":*)",
-      "Bash(CLAUDE_CODE_GIT_BASH_PATH=\"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\" claude mcp add --transport http render https://mcp.render.com/mcp --header \"Authorization: Bearer rnd_AsV4jDRzKQCVLcZ4v0vWx5oxAnjm\")"
+      "Bash(CLAUDE_CODE_GIT_BASH_PATH=\"C:\\\\Users\\\\mahchi01\\\\AppData\\\\Local\\\\Programs\\\\Git\\\\bin\\\\bash.exe\" claude mcp add --transport http render https://mcp.render.com/mcp --header \"Authorization: Bearer rnd_AsV4jDRzKQCVLcZ4v0vWx5oxAnjm\")",
+      "Bash(\"../.venv/Scripts/python.exe\" -m pytest tests/test_auth.py -v --no-header --tb=short --no-cov)",
+      "Bash(powershell.exe -Command \"cd ''C:\\\\Users\\\\mahchi01\\\\OneDrive - Cadence Design Systems Inc\\\\Documents\\\\Sourcecode\\\\MFHelper\\\\backend''; & ''../.venv/Scripts/python.exe'' -m pytest tests/test_auth.py -v --no-header --tb=short --no-cov 2>&1\")",
+      "Bash(powershell.exe -Command \"cd ''C:\\\\Users\\\\mahchi01\\\\OneDrive - Cadence Design Systems Inc\\\\Documents\\\\Sourcecode\\\\MFHelper\\\\backend''; & ''..\\\\.venv\\\\Scripts\\\\python.exe'' -m pytest tests/test_auth.py -v --no-header --tb=short --no-cov 2>&1\")",
+      "Bash(powershell.exe:*)",
+      "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check backend/app --select F821,F401,F811,F841 --no-fix)",
+      "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check backend/app --select F821,F401,F811,F841 --fix)",
+      "Bash(find:*)"
     ]
   }
 }

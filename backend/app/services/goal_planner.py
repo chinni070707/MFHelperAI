@@ -264,41 +264,16 @@ class GoalPlanner:
         allocation: Dict[str, float]
     ) -> Dict[str, Any]:
         """Get AI-powered insights for goal"""
-        if not ai_service.is_available():
+        # AI service removed - use rule-based insights
+        if True:  # not ai_service.is_available():
             return self._get_rule_based_goal_insights(gap, required_sip, current_sip)
         
-        try:
-            prompt = f"""Analyze this financial goal and provide insights and recommendations.
-
-Goal: {goal_name} ({goal_type})
-Target: ₹{target_amount:,.0f} (₹{inflation_adjusted:,.0f} after inflation)
-Time Horizon: {years} years
-Current Monthly Investment: ₹{current_sip:,.0f}
-Required Monthly Investment: ₹{required_sip:,.0f}
-Gap: ₹{gap:,.0f} ({gap/inflation_adjusted*100:.1f}% of target)
-Recommended Allocation: {allocation}
-
-Provide:
-1. 2-3 key insights about achievability
-2. 3-4 specific, actionable recommendations
-3. Consider risk, time horizon, and current progress
-
-Format as JSON: {{"insights": ["insight1", "insight2"], "recommendations": ["rec1", "rec2", "rec3"]}}
-"""
-            
-            response = await ai_service.generate_completion(
-                prompt=prompt,
-                system_message="You are a financial advisor helping with goal-based planning.",
-                max_tokens=600,
-                json_mode=True
-            )
-            
-            if response:
-                import json
-                return json.loads(response)
-                
-        except Exception as e:
-            logger.error(f"Error getting AI goal insights: {e}")
+        # Dead code below - AI service removed, prompt no longer used
+        # try:
+        #     prompt = f"""Analyze this financial goal..."""
+        #     response = await ai_service.generate_completion(...)
+        # except Exception as e:
+        #     logger.error(f\"Error getting AI goal insights: {e}\")
         
         return self._get_rule_based_goal_insights(gap, required_sip, current_sip)
     

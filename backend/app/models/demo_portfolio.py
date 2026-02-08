@@ -2,7 +2,7 @@
 Demo Portfolio Model
 Stores template portfolio data for demo mode
 """
-from sqlalchemy import Column, Integer, String, Float, DateTime, Text, Boolean
+from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean
 from sqlalchemy.sql import func
 from app.database import Base
 

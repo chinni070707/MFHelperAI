@@ -3,10 +3,8 @@ Hybrid AI Service - Combines Rule-Based + TinyLlama AI
 Optimal for portfolio analysis (80% rule-based) + general chat (20% AI)
 """
 from typing import Dict, List, Any, Optional
-from datetime import datetime
 from collections import defaultdict
 import logging
-import json
 import re
 
 try:

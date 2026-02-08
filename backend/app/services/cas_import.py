@@ -3,11 +3,8 @@ CAS Import Service - Convert casparser output to database records
 """
 from sqlalchemy.orm import Session
 from datetime import datetime
-from typing import Optional
-import re
 
-from app.models.models import Portfolio, Holding, Transaction, User
-from app.schemas import HoldingCreate
+from app.models.models import Portfolio, Holding, Transaction
 
 
 def detect_category(scheme_name: str) -> str:

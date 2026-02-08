@@ -99,9 +99,11 @@ async def get_update_logs(
 ) -> Dict:
     """Get recent update logs"""
     try:
-        logs = db.query(DataUpdateLog).order_by(
-            DataUpdateLog.started_at.desc()
-        ).limit(limit).all()
+        # DataUpdateLog model not implemented yet
+        logs = []
+        # logs = db.query(DataUpdateLog).order_by(
+        #     DataUpdateLog.started_at.desc()
+        # ).limit(limit).all()
         
         return {
             "logs": [

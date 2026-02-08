@@ -3,7 +3,7 @@ Analysis Routes - New standalone analysis features for overlap, goal checker, an
 """
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List, Dict, Optional
+from typing import List, Optional
 import logging
 
 # Setup logger

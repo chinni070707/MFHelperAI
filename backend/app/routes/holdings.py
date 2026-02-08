@@ -4,11 +4,11 @@ Uses Database instead of JSON for better performance and scalability
 """
 from fastapi import APIRouter, HTTPException, Body, Depends
 from pydantic import BaseModel
-from typing import List, Dict, Optional
+from typing import List, Dict
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.models import FundMaster
-# FundHolding and FundSectorAllocation classes removed
+# FundHolding and FundSectorAllocation classes removed - using FundMaster only
 import logging
 
 # Setup logger
@@ -40,7 +40,8 @@ async def list_funds(db: Session = Depends(get_db)):
     
     fund_list = []
     for fund in funds:
-        holdings_count = db.query(FundHolding).filter(FundHolding.fund_id == fund.id).count()
+        # FundHolding model not implemented yet
+        holdings_count = 0  # db.query(FundHolding).filter(FundHolding.fund_id == fund.id).count()
         fund_list.append({
             "key": fund.fund_key,
             "name": fund.fund_name,
@@ -65,11 +66,11 @@ async def get_fund_holdings(fund_key: str, db: Session = Depends(get_db)):
     if not fund:
         raise HTTPException(status_code=404, detail=f"Fund '{fund_key}' not found")
     
-    # Get holdings
-    holdings = db.query(FundHolding).filter(FundHolding.fund_id == fund.id).all()
-    
-    # Get sector allocations
-    sectors = db.query(FundSectorAllocation).filter(FundSectorAllocation.fund_id == fund.id).all()
+# Get holdings - FundHolding model not implemented yet
+    holdings = []  # db.query(FundHolding).filter(FundHolding.fund_id == fund.id).all()
+
+    # Get sector allocations - FundSectorAllocation model not implemented yet
+    sectors = []  # db.query(FundSectorAllocation).filter(FundSectorAllocation.fund_id == fund.id).all()
     
     return {
         "name": fund.fund_name,
@@ -117,14 +118,13 @@ async def calculate_overlap(request: OverlapRequest, db: Session = Depends(get_d
             ).first()
         
         if fund:
-            # Get holdings
-            holdings = db.query(FundHolding).filter(FundHolding.fund_id == fund.id).all()
-            
-            # Get sector allocations
-            sectors = db.query(FundSectorAllocation).filter(
-                FundSectorAllocation.fund_id == fund.id
-            ).all()
-            
+            # Get holdings - FundHolding model not implemented yet
+            holdings = []  # db.query(FundHolding).filter(FundHolding.fund_id == fund.id).all()
+
+            # Get sector allocations - FundSectorAllocation model not implemented yet
+            sectors = []  # db.query(FundSectorAllocation).filter(
+            #     FundSectorAllocation.fund_id == fund.id
+            # ).all()
             funds_data.append({
                 "name": fund.fund_name,
                 "holdings": [
@@ -267,11 +267,12 @@ async def analyze_user_portfolio(
 async def get_database_stats(db: Session = Depends(get_db)):
     """Get statistics about holdings database"""
     total_funds = db.query(FundMaster).count()
-    total_holdings = db.query(FundHolding).count()
-    total_sectors = db.query(FundSectorAllocation).count()
+    # FundHolding and FundSectorAllocation models not implemented yet
+    total_holdings = 0  # db.query(FundHolding).count()
+    total_sectors = 0  # db.query(FundSectorAllocation).count()
     
     # Get unique stocks
-    unique_stocks = db.query(FundHolding.stock_name).distinct().count()
+    unique_stocks = 0  # db.query(FundHolding.stock_name).distinct().count()
     
     # Get latest update
     latest_fund = db.query(FundMaster).order_by(FundMaster.updated_at.desc()).first()

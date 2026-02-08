@@ -32,6 +32,11 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
+    # Google OAuth Settings
+    GOOGLE_CLIENT_ID: Optional[str] = None
+    GOOGLE_CLIENT_SECRET: Optional[str] = None
+    GOOGLE_REDIRECT_URI: Optional[str] = None  # e.g., http://localhost:8000/api/auth/google/callback
+    
     # CAMS API (Get from CAMS after registration)
     CAMS_API_URL: str = "https://api.camsonline.com/v1"
     CAMS_API_KEY: Optional[str] = None

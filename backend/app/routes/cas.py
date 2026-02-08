@@ -6,15 +6,12 @@ from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, s
 from sqlalchemy.orm import Session
 from typing import Optional
 import casparser
-from datetime import datetime
 import tempfile
 import os
-from pathlib import Path
 
 from app.database import get_db
-from app.models.models import User, Portfolio, Holding
+from app.models.models import User
 from app.utils.auth import get_current_user
-from app.schemas import PortfolioResponse
 
 router = APIRouter(prefix="/api/upload", tags=["upload"])
 

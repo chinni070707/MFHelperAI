@@ -1,7 +1,7 @@
 """
 Portfolio Health Analyzer - AI-powered portfolio analysis
 """
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any
 from datetime import datetime
 import logging
 from collections import defaultdict
@@ -141,11 +141,11 @@ class PortfolioHealthAnalyzer:
             value = holding.get('current_value', 0)
             category_allocation[category] += value
         
-        # Check for balanced allocation
-        equity_allocation = sum(
-            v for k, v in category_allocation.items()
-            if 'equity' in k.lower() or 'stock' in k.lower()
-        ) / total_value * 100 if total_value > 0 else 0
+        # Check for balanced allocation (equity_allocation calculated but not used currently)
+        # equity_allocation = sum(
+        #     v for k, v in category_allocation.items()
+        #     if 'equity' in k.lower() or 'stock' in k.lower()
+        # ) / total_value * 100 if total_value > 0 else 0
         
         debt_allocation = sum(
             v for k, v in category_allocation.items()
@@ -325,50 +325,17 @@ class PortfolioHealthAnalyzer:
         insights: List[Dict]
     ) -> List[str]:
         """Get AI-powered recommendations"""
-        if not ai_service.is_available():
+        # AI service removed - use rule-based recommendations
+        if True:  # not ai_service.is_available():
             return self._get_rule_based_recommendations(health_score, insights)
         
-        try:
-            holdings = portfolio_data.get('holdings', [])
-            total_value = sum(h.get('current_value', 0) for h in holdings)
-            total_returns = sum(h.get('returns', 0) for h in holdings)
-            
-            prompt = f"""Analyze this mutual fund portfolio and provide 3-4 specific, actionable recommendations.
-
-Portfolio Summary:
-- Holdings: {len(holdings)} funds
-- Total Value: ₹{total_value:,.0f}
-- Total Returns: ₹{total_returns:,.0f}
-- Health Score: {health_score}/100
-
-Key Insights:
-{chr(10).join([f"- {i['message']}" for i in insights[:3]])}
-
-Provide recommendations as a JSON array of strings. Each recommendation should be:
-1. Specific and actionable
-2. Explain WHY it's needed
-3. Include expected impact
-
-Format: {{"recommendations": ["recommendation1", "recommendation2", ...]}}
-"""
-            
-            system_message = "You are a financial advisor specializing in Indian mutual funds. Provide practical, actionable advice."
-            
-            response = await ai_service.generate_completion(
-                prompt=prompt,
-                system_message=system_message,
-                max_tokens=500,
-                temperature=0.7,
-                json_mode=True
-            )
-            
-            if response:
-                import json
-                data = json.loads(response)
-                return data.get('recommendations', [])[:4]
-            
-        except Exception as e:
-            logger.error(f"Error getting AI recommendations: {e}")
+        # Dead code below - AI service removed, prompt and system_message no longer used
+        # try:
+        #     holdings = portfolio_data.get('holdings', [])
+        #     prompt = f"""Analyze this portfolio..."""
+        #     response = await ai_service.generate_completion(...)
+        # except Exception as e:
+        #     logger.error(f\"Error getting AI recommendations: {e}\")
         
         return self._get_rule_based_recommendations(health_score, insights)
     

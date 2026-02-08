@@ -2,7 +2,7 @@
 Health Check and Monitoring Endpoints
 Provides system health status, readiness checks, and metrics
 """
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from datetime import datetime

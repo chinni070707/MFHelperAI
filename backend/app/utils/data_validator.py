@@ -4,7 +4,7 @@ Sanity checks for mutual fund master data integrity
 """
 from sqlalchemy.orm import Session
 from sqlalchemy import func, distinct
-from typing import Dict, List, Any
+from typing import Dict, Any
 import logging
 
 from app.models.models import FundMaster
@@ -312,7 +312,7 @@ class FundDataValidator:
     def check_data_freshness(self):
         """Check if data has been updated recently"""
         try:
-            from datetime import datetime, timedelta
+            from datetime import datetime
             
             # Get most recent update timestamp
             latest_update = self.db.query(func.max(FundMaster.updated_at)).scalar()

@@ -10,8 +10,8 @@ Write-Host "Running pre-push validation checks..." -ForegroundColor Cyan
 # Track if any checks fail
 $failed = $false
 
-# Change to project root
-$projectRoot = $PSScriptRoot
+# Change to project root (parent of scripts directory)
+$projectRoot = Split-Path $PSScriptRoot -Parent
 Set-Location $projectRoot
 
 # ============================================
@@ -52,19 +52,56 @@ if ($pythonFiles) {
 }
 
 # ============================================
-# 2. Import Validation
+# 2. Ruff Linting (catches undefined names, missing imports, etc.)
+# ============================================
+Write-Host ""
+Write-Host "Running ruff lint checks..." -ForegroundColor Yellow
+
+$ruffPath = Join-Path $projectRoot "venv\Scripts\ruff.exe"
+if (-not (Test-Path $ruffPath)) {
+    # Fallback: try system ruff
+    $ruffPath = "ruff"
+}
+
+try {
+    $ruffOutput = & $ruffPath check backend/app --select F821,F401,F811,F841 --no-fix 2>&1
+    $ruffExitCode = $LASTEXITCODE
+
+    if ($ruffExitCode -eq 0) {
+        Write-Host "  Ruff lint passed (no undefined names, unused imports, or syntax errors)" -ForegroundColor Green
+    } else {
+        Write-Host "  Ruff found issues:" -ForegroundColor Red
+        $ruffOutput | ForEach-Object { Write-Host "    $_" -ForegroundColor Red }
+        $failed = $true
+    }
+} catch {
+    Write-Host "  Ruff not installed - skipping lint check" -ForegroundColor Yellow
+    Write-Host "  Install with: pip install ruff" -ForegroundColor Yellow
+}
+
+# ============================================
+# 2b. Import Validation
 # ============================================
 Write-Host ""
 Write-Host "Validating Python imports..." -ForegroundColor Yellow
 
-# Test if main app can be imported
+# Find python in venv or .venv
+$pythonPath = $null
+if (Test-Path (Join-Path $projectRoot "venv\Scripts\python.exe")) {
+    $pythonPath = Join-Path $projectRoot "venv\Scripts\python.exe"
+} elseif (Test-Path (Join-Path $projectRoot ".venv\Scripts\python.exe")) {
+    $pythonPath = Join-Path $projectRoot ".venv\Scripts\python.exe"
+} else {
+    $pythonPath = "python"
+}
+
 Push-Location backend
 try {
     $ErrorActionPreference = "SilentlyContinue"
-    $importResult = & ..\.venv\Scripts\python.exe -c "import sys; import app.config; import app.main; sys.exit(0)" 2>&1 | Out-Null
+    $importResult = & $pythonPath -c "import sys; import app.config; import app.main; sys.exit(0)" 2>&1 | Out-Null
     $importExitCode = $LASTEXITCODE
     $ErrorActionPreference = "Stop"
-    
+
     if ($importExitCode -eq 0) {
         Write-Host "  Core imports validated successfully" -ForegroundColor Green
     } else {

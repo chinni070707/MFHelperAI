@@ -2,9 +2,8 @@
 Rate Limiting Middleware for MFHelper
 Protects against brute force attacks and API abuse
 """
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import Limiter
 from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
 
 # Initialize rate limiter
 limiter = Limiter(

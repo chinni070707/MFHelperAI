@@ -59,3 +59,22 @@ skip_covered = false
 
 [tool.coverage.html]
 directory = "htmlcov"
+
+# Ruff linter configuration
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+
+[tool.ruff.lint]
+# F821: undefined name (catches missing imports like the func.now() bug)
+# F401: unused imports
+# F811: redefined unused name
+# F841: unused variables
+select = ["F821", "F401", "F811", "F841"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Allow unused imports in __init__.py files
+"__init__.py" = ["F401"]
+# Allow unused imports in conftest (fixtures)
+"tests/conftest.py" = ["F401"]

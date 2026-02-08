@@ -4,7 +4,6 @@ MFHelper - FastAPI Application Entry Point
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, RedirectResponse
@@ -15,7 +14,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo, funds
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo, funds, overlap
 from app.database import engine, Base
 from app.middleware.rate_limiter import limiter
 
@@ -140,6 +139,7 @@ app.include_router(analysis.router, prefix="/api/analysis", tags=["Analysis Tool
 app.include_router(xirr.router)
 app.include_router(rebalance.router, prefix="/api/rebalance", tags=["Rebalancing"])
 app.include_router(holdings.router, tags=["Holdings & Overlap"])
+app.include_router(overlap.router, tags=["Enhanced Overlap Analysis"])
 
 # Import and register admin routes
 from app.routes import admin

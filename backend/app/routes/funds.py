@@ -4,7 +4,7 @@ Provides searchable mutual fund master list for manual entry
 """
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, and_
+from sqlalchemy import or_
 from typing import List, Optional
 import logging
 

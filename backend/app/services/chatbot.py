@@ -1,7 +1,7 @@
 """
 AI Chatbot - Natural language portfolio queries
 """
-from typing import Dict, List, Any, Optional
+from typing import Dict, Any, Optional
 import logging
 from datetime import datetime
 
@@ -27,7 +27,8 @@ class PortfolioChatbot:
         Process user message and return AI response
         """
         try:
-            if not ai_service.is_available():
+            # AI service removed - return placeholder response
+            if True:  # not ai_service.is_available():
                 return {
                     "response": "AI chatbot is currently unavailable. Please try again later.",
                     "type": "error"
@@ -37,30 +38,17 @@ class PortfolioChatbot:
             if user_id not in self.conversation_history:
                 self.conversation_history[user_id] = []
             
-            # Build context from portfolio data
-            context = self._build_portfolio_context(portfolio_data) if portfolio_data else ""
+            # AI service removed - context, system_message and prompt no longer used
+            # context = self._build_portfolio_context(portfolio_data) if portfolio_data else ""
+            # system_message = f"""You are an AI financial assistant for MFHelper..."""
             
-            # Prepare system message
-            system_message = f"""You are an AI financial assistant for MFHelper, helping users understand their mutual fund portfolio.
-
-{context}
-
-Guidelines:
-- Be conversational and friendly
-- Provide specific numbers from the portfolio when relevant
-- Explain financial terms simply
-- Give actionable advice
-- Keep responses concise (2-3 paragraphs max)
-- Use emojis sparingly for engagement
-"""
-            
-            # Generate response
-            response_text = await ai_service.generate_completion(
-                prompt=message,
-                system_message=system_message,
-                max_tokens=500,
-                temperature=0.8
-            )
+            # Generate response - AI service removed
+            response_text = "AI service not available"  # await ai_service.generate_completion(
+            #     prompt=message,
+            #     system_message=system_message,
+            #     max_tokens=500,
+            #     temperature=0.8
+            # )
             
             if not response_text:
                 return {

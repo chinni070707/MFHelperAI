@@ -1,11 +1,14 @@
 """
 Authentication Routes - User registration, login, and profile management
 """
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
+from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from typing import Optional
 import logging
+from authlib.integrations.starlette_client import OAuth
+import httpx
 
 from app.database import get_db
 from app.models.models import User, UserSettings
@@ -15,13 +18,26 @@ from app.utils.auth import (
     get_password_hash,
     verify_password,
     create_access_token,
-    get_current_user,
     get_current_active_user
 )
 from app.middleware.rate_limiter import limiter
+from app.config import settings
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+# OAuth Configuration
+oauth = OAuth()
+
+# Register Google OAuth
+if settings.GOOGLE_CLIENT_ID and settings.GOOGLE_CLIENT_SECRET:
+    oauth.register(
+        name='google',
+        client_id=settings.GOOGLE_CLIENT_ID,
+        client_secret=settings.GOOGLE_CLIENT_SECRET,
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={'scope': 'openid email profile'}
+    )
 
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
@@ -89,7 +105,7 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
     logger.info(f"User registered successfully: {new_user.email} (ID: {new_user.id})")
     
     # Create access token
-    access_token = create_access_token(data={"sub": new_user.id})
+    access_token = create_access_token(data={"sub": str(new_user.id)})
     
     return {
         "access_token": access_token,
@@ -132,7 +148,7 @@ async def login(request: Request, credentials: UserLogin, db: Session = Depends(
         )
     
     # Create access token
-    access_token = create_access_token(data={"sub": user.id})
+    access_token = create_access_token(data={"sub": str(user.id)})
     
     logger.info(f"User logged in successfully: {user.email} (ID: {user.id})")
     
@@ -219,6 +235,7 @@ async def update_user_settings(
 @limiter.limit("10/hour")
 async def capture_lead(
     request: Request,
+    response: Response,
     email: Optional[str] = None,
     phone: Optional[str] = None,
     source: str = "unknown",
@@ -285,4 +302,224 @@ async def capture_lead(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to capture lead"
         )
+
+
+# ============================================================================
+# Google OAuth Routes
+# ============================================================================
+
+@router.get("/google/login")
+async def google_login(request: Request):
+    """Initiate Google OAuth login"""
+    if not settings.GOOGLE_CLIENT_ID:
+        raise HTTPException(
+            status_code=status.HTTP_501_NOT_IMPLEMENTED,
+            detail="Google OAuth is not configured"
+        )
+    
+    redirect_uri = settings.GOOGLE_REDIRECT_URI or f"{request.base_url}api/auth/google/callback"
+    return await oauth.google.authorize_redirect(request, redirect_uri)
+
+
+@router.get("/google/callback")
+async def google_callback(request: Request, db: Session = Depends(get_db)):
+    """Handle Google OAuth callback"""
+    try:
+        # Get access token from Google
+        token = await oauth.google.authorize_access_token(request)
+        
+        # Get user info from Google
+        user_info = token.get('userinfo')
+        if not user_info:
+            # Fetch user info manually if not in token
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    'https://www.googleapis.com/oauth2/v2/userinfo',
+                    headers={'Authorization': f'Bearer {token["access_token"]}'}
+                )
+                user_info = response.json()
+        
+        email = user_info.get('email')
+        google_id = user_info.get('sub') or user_info.get('id')
+        full_name = user_info.get('name')
+        picture = user_info.get('picture')
+        email_verified = user_info.get('email_verified', False)
+        
+        if not email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email not provided by Google"
+            )
+        
+        # Check if user exists
+        user = db.query(User).filter(User.email == email).first()
+        
+        if user:
+            # Update existing user with Google info if not already set
+            if not user.oauth_provider:
+                user.oauth_provider = 'google'
+                user.oauth_id = google_id
+                user.profile_picture_url = picture
+                user.is_verified = email_verified
+            
+            # Update profile picture if changed
+            if picture and user.profile_picture_url != picture:
+                user.profile_picture_url = picture
+            
+            db.commit()
+            logger.info(f"Existing user logged in via Google: {email}")
+        else:
+            # Create new user
+            user = User(
+                email=email,
+                full_name=full_name,
+                oauth_provider='google',
+                oauth_id=google_id,
+                profile_picture_url=picture,
+                is_active=True,
+                is_verified=email_verified,
+                hashed_password=None  # No password for OAuth users
+            )
+            
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            
+            # Create default settings
+            default_settings = UserSettings(user_id=user.id)
+            db.add(default_settings)
+            db.commit()
+            
+            # Track user lead
+            try:
+                user_lead = UserLead(
+                    email=user.email,
+                    name=user.full_name,
+                    source='google_oauth',
+                    signup_date=func.now(),
+                    is_verified=email_verified,
+                    is_active=True
+                )
+                db.add(user_lead)
+                db.commit()
+            except Exception as e:
+                logger.warning(f"Failed to create user lead: {str(e)}")
+            
+            logger.info(f"New user registered via Google: {email}")
+        
+        # Create JWT token
+        access_token = create_access_token(data={"sub": str(user.id)})
+        
+        # Redirect to frontend with token
+        frontend_url = request.base_url.replace('/api/auth/google/callback', '')
+        redirect_url = f"{frontend_url}dashboard.html?token={access_token}"
+        
+        return RedirectResponse(url=redirect_url)
+        
+    except Exception as e:
+        logger.error(f"Google OAuth error: {str(e)}")
+        # Redirect to login page with error
+        error_url = f"{request.base_url}login.html?error=oauth_failed"
+        return RedirectResponse(url=error_url)
+
+
+@router.post("/google/verify")
+async def google_verify_token(token: str, db: Session = Depends(get_db)):
+    """Verify Google ID token (for Google Sign-In JavaScript SDK)"""
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f'https://oauth2.googleapis.com/tokeninfo?id_token={token}'
+            )
+            
+            if response.status_code != 200:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid Google token"
+                )
+            
+            user_info = response.json()
+            
+            # Verify audience (client ID)
+            if user_info.get('aud') != settings.GOOGLE_CLIENT_ID:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid token audience"
+                )
+            
+            email = user_info.get('email')
+            google_id = user_info.get('sub')
+            full_name = user_info.get('name')
+            picture = user_info.get('picture')
+            email_verified = user_info.get('email_verified') == 'true'
+            
+            if not email:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Email not provided by Google"
+                )
+            
+            # Check if user exists
+            user = db.query(User).filter(User.email == email).first()
+            
+            if user:
+                # Update existing user
+                if not user.oauth_provider:
+                    user.oauth_provider = 'google'
+                    user.oauth_id = google_id
+                    user.profile_picture_url = picture
+                    user.is_verified = email_verified
+                
+                if picture and user.profile_picture_url != picture:
+                    user.profile_picture_url = picture
+                
+                db.commit()
+                logger.info(f"Existing user logged in via Google token: {email}")
+            else:
+                # Create new user
+                user = User(
+                    email=email,
+                    full_name=full_name,
+                    oauth_provider='google',
+                    oauth_id=google_id,
+                    profile_picture_url=picture,
+                    is_active=True,
+                    is_verified=email_verified,
+                    hashed_password=None
+                )
+                
+                db.add(user)
+                db.commit()
+                db.refresh(user)
+                
+                # Create default settings
+                default_settings = UserSettings(user_id=user.id)
+                db.add(default_settings)
+                db.commit()
+                
+                logger.info(f"New user registered via Google token: {email}")
+            
+            # Create JWT token
+            access_token = create_access_token(data={"sub": str(user.id)})
+            
+            return {
+                "access_token": access_token,
+                "token_type": "bearer",
+                "user": {
+                    "id": user.id,
+                    "email": user.email,
+                    "full_name": user.full_name,
+                    "profile_picture_url": user.profile_picture_url
+                }
+            }
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Google token verification error: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to verify Google token"
+        )
+
 

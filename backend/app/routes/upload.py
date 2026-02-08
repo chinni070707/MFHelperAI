@@ -2,10 +2,8 @@
 Upload Routes - Handle Excel and CAS PDF uploads
 """
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
-from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 import pandas as pd
-import numpy as np
 import io
 import re
 from typing import Optional
@@ -415,8 +413,6 @@ def extract_holdings_from_cas_text(text: str) -> list:
     
     # Split text by common fund separators
     sections = re.split(r'(?=Registrar\s*:)|(?=ISIN\s*:)|(?=Folio\s*No)', text, flags=re.IGNORECASE)
-    
-    current_fund = None
     
     for section in sections:
         # Try to find fund name
