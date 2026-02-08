@@ -104,3 +104,15 @@ backend/*_parsed*.json
 # Reference files from other sites
 acorns_*.css
 acorns_*.html
+
+# Backup/old HTML files
+*-old.html
+*-old-backup.html
+*-backup.html
+*_reference.html
+*-demo.html
+
+# Frontend build/development folders
+frontend/www/
+frontend/dist/
+frontend/build/

@@ -11,6 +11,10 @@ services:
     branch: main
     rootDir: ./backend
     buildCommand: |
+      echo "Running production cleanup..."
+      chmod +x ../scripts/cleanup-production.sh
+      bash ../scripts/cleanup-production.sh || echo "⚠️ Cleanup script not found (non-blocking)"
+      echo "Installing Python dependencies..."
       pip install -r requirements.txt
       echo "Running database tests..."
       python test_db_connection.py || echo "⚠️ Warning: Database test failed (non-blocking)"
