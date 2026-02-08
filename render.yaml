@@ -10,7 +10,10 @@ services:
     plan: starter  # $7/mo always-on, no cold starts
     branch: main
     rootDir: ./backend
-    buildCommand: "pip install -r requirements.txt"
+    buildCommand: |
+      pip install -r requirements.txt
+      echo "Running database tests..."
+      python test_db_connection.py || echo "⚠️ Warning: Database test failed (non-blocking)"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     
     # Health check endpoint

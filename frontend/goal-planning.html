@@ -48,6 +48,11 @@
             background: var(--white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         
         .nav-container {
@@ -65,6 +70,7 @@
             font-weight: 800;
             color: var(--primary-green);
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
         
         .nav-menu {
@@ -78,10 +84,29 @@
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
         }
         
-        .nav-link:hover { color: var(--primary-green); }
+        .nav-link:hover { 
+            color: var(--primary-green); 
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
         
         .nav-btn {
             background: var(--primary-green);
@@ -91,11 +116,47 @@
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
         }
         
         .nav-btn:hover {
             background: var(--dark-green);
             transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 192, 76, 0.4);
+        }
+        
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: 0.3s;
         }
         
         .goal-marker { 
@@ -369,6 +430,30 @@
         .footer-controls .gap-4 {
             gap: 0.5rem !important;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -377,16 +462,46 @@
         <div class="nav-container">
             <a href="/" class="logo">MFHelper</a>
             <ul class="nav-menu">
-                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/#goal-planning" class="nav-link" style="color: var(--primary-green);">Goal Planning</a></li>
+                <li><a href="/#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
-                <li><a href="/goal-planning.html" class="nav-link" style="color: var(--primary-green);">Goal Planning</a></li>
-                <li><a href="/ai-demo.html" class="nav-link">AI Chat</a></li>
-                <li><a href="/dashboard.html" class="nav-btn">Get Started</a></li>
+                <li><a href="/#cas-import" class="nav-link">CAS Import</a></li>
+                <li><a href="/#ai-features" class="nav-link">AI Features</a></li>
+                <li><a href="/login.html" class="nav-link">Sign In</a></li>
+                <li><a href="/signup.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
             </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
     <div id="root"></div>
+    
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
     
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
@@ -1693,6 +1808,23 @@
         }
         
         ReactDOM.render(<FinancialPlanner />, document.getElementById('root'));
+    </script>
+    
+    <script>
+        // Navbar toggle and scroll functions
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>

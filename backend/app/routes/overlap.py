@@ -175,6 +175,74 @@ async def compare_two_funds(fund1_key: str, fund2_key: str):
         logger.error(f"Error comparing funds: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/portfolio/top-funds")
+async def get_user_top_funds(
+    limit: int = 5,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Get user's top funds by invested amount for overlap analysis
+    Returns fund details with investment amounts
+    """
+    try:
+        # Get user's holdings sorted by invested amount
+        holdings = db.query(Holding).filter(
+            Holding.user_id == current_user.id
+        ).order_by(
+            Holding.invested_amount.desc()
+        ).limit(limit).all()
+        
+        if not holdings:
+            return {
+                "status": "success",
+                "message": "No holdings found",
+                "funds": []
+            }
+        
+        # Get all available funds to match keys
+        available_funds = analyzer.get_fund_list()
+        fund_name_to_key = {f["name"].lower(): f["key"] for f in available_funds}
+        
+        # Build response with fund details and amounts
+        top_funds = []
+        for holding in holdings:
+            # Try to match fund name to available fund key
+            fund_key = None
+            holding_name_lower = holding.fund_name.lower()
+            
+            # Exact match
+            if holding_name_lower in fund_name_to_key:
+                fund_key = fund_name_to_key[holding_name_lower]
+            else:
+                # Partial match
+                for name, key in fund_name_to_key.items():
+                    if holding_name_lower in name or name in holding_name_lower:
+                        fund_key = key
+                        break
+            
+            fund_info = {
+                "fund_name": holding.fund_name,
+                "invested_amount": float(holding.invested_amount) if holding.invested_amount else 0,
+                "current_value": float(holding.current_value) if holding.current_value else 0,
+                "amc": holding.amc,
+                "category": holding.category,
+                "fund_key": fund_key,  # May be None if not found in holdings data
+                "has_holdings_data": fund_key is not None
+            }
+            top_funds.append(fund_info)
+        
+        return {
+            "status": "success",
+            "total_funds": len(top_funds),
+            "funds": top_funds,
+            "total_invested": sum(f["invested_amount"] for f in top_funds)
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting top funds: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/recommendations/{fund_key}")
 async def get_diversification_recommendations(fund_key: str, exclude_funds: Optional[List[str]] = None):
     """

@@ -35,12 +35,141 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
+            padding: 90px 20px 20px 20px;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        /* Fixed Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #7FC04C;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: block;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #212529;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #7FC04C;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #7FC04C;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: #7FC04C;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #6BA83C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 192, 76, 0.4);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #212529;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
         }
 
         /* Header */
@@ -450,6 +579,26 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/#goal-planning" class="nav-link">Goal Planning</a></li>
+                <li><a href="/#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="/#cas-import" class="nav-link">CAS Import</a></li>
+                <li><a href="/#ai-features" class="nav-link">AI Features</a></li>
+                <li><a href="/login.html" class="nav-link">Sign In</a></li>
+                <li><a href="/signup.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
     <div class="container">
         <header>
             <div class="header-content">
@@ -469,6 +618,19 @@
                 <div class="selector-title">Select Funds (2-10 funds)</div>
                 <div class="selected-count">
                     <span id="selectedCount">0</span> Selected
+                </div>
+            </div>
+
+            <!-- Top Portfolio Funds -->
+            <div id="topFundsSection" style="display: none; margin-bottom: 20px; padding: 16px; background: rgba(127, 192, 76, 0.1); border: 1px solid var(--primary-green); border-radius: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="font-weight: 600; font-size: 16px;">💼 Your Top 5 Invested Funds</div>
+                    <button id="autoSelectBtn" style="padding: 6px 14px; background: var(--primary-green); border: none; border-radius: 6px; color: white; cursor: pointer; font-weight: 600; font-size: 13px;">
+                        Auto-Select All
+                    </button>
+                </div>
+                <div id="topFundsList" style="display: grid; gap: 10px;">
+                    <!-- Top funds will be loaded here -->
                 </div>
             </div>
 
@@ -493,6 +655,14 @@
 
         <!-- Results -->
         <div class="results" id="results">
+            <!-- Selected Funds Summary with Amounts -->
+            <div class="selected-funds-summary" id="selectedFundsSummary" style="background: var(--bg-card); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 24px;">
+                <div class="chart-title" style="margin-bottom: 16px;">📊 Analyzed Funds</div>
+                <div id="analyzedFundsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+                    <!-- Selected funds with amounts will appear here -->
+                </div>
+            </div>
+
             <!-- Summary Cards -->
             <div class="summary-grid">
                 <div class="summary-card">
@@ -558,6 +728,131 @@
         const API_BASE = window.location.origin;
         let allFunds = [];
         let selectedFunds = new Set();
+        let userTopFunds = [];
+
+        // Load user's top funds and available funds
+        async function init() {
+            await Promise.all([
+                loadUserTopFunds(),
+                loadFunds()
+            ]);
+        }
+
+        // Load user's top invested funds
+        async function loadUserTopFunds() {
+            try {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    // User not logged in, skip
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE}/api/overlap/portfolio/top-funds?limit=5`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    console.log('Could not load top funds (user may not be logged in)');
+                    return;
+                }
+
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.funds.length > 0) {
+                    userTopFunds = data.funds;
+                    displayTopFunds(data.funds, data.total_invested);
+                }
+            } catch (error) {
+                console.log('Error loading top funds:', error);
+                // Not critical, continue without top funds
+            }
+        }
+
+        // Display user's top funds
+        function displayTopFunds(funds, totalInvested) {
+            const section = document.getElementById('topFundsSection');
+            const list = document.getElementById('topFundsList');
+            
+            list.innerHTML = funds.map((fund, index) => {
+                const amount = fund.invested_amount.toLocaleString('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                });
+                
+                const currentValue = fund.current_value.toLocaleString('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                });
+                
+                const returns = fund.current_value - fund.invested_amount;
+                const returnsPct = fund.invested_amount > 0 ? ((returns / fund.invested_amount) * 100).toFixed(2) : 0;
+                const returnsColor = returns >= 0 ? 'var(--success)' : 'var(--danger)';
+                
+                const dataAvailable = fund.has_holdings_data ? '✅' : '⚠️';
+                const dataText = fund.has_holdings_data ? 'Holdings data available' : 'No holdings data';
+                
+                return `
+                    <div style="padding: 12px; background: var(--bg-dark); border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 6px;">
+                            <div>
+                                <div style="font-weight: 600; font-size: 14px;">${index + 1}. ${fund.fund_name}</div>
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">
+                                    ${fund.amc} • ${fund.category}
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-weight: 700; font-size: 15px;">${amount}</div>
+                                <div style="font-size: 11px; color: ${returnsColor};">
+                                    ${returns >= 0 ? '+' : ''}${returnsPct}%
+                                </div>
+                            </div>
+                        </div>
+                        <div style="font-size: 11px; color: ${fund.has_holdings_data ? 'var(--success)' : 'var(--warning)'};">
+                            ${dataAvailable} ${dataText}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            section.style.display = 'block';
+        }
+
+        // Auto-select all top funds
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('autoSelectBtn')?.addEventListener('click', () => {
+                selectedFunds.clear();
+                
+                // Select only funds that have holdings data
+                userTopFunds.forEach(fund => {
+                    if (fund.has_holdings_data && fund.fund_key) {
+                        selectedFunds.add(fund.fund_key);
+                    }
+                });
+                
+                // Update UI
+                document.querySelectorAll('.fund-card').forEach(card => {
+                    const key = card.getAttribute('data-key');
+                    if (selectedFunds.has(key)) {
+                        card.classList.add('selected');
+                    } else {
+                        card.classList.remove('selected');
+                    }
+                });
+                
+                updateSelectedCount();
+                
+                if (selectedFunds.size < 2) {
+                    alert('Not enough funds with holdings data. Please select additional funds manually.');
+                } else {
+                    // Optionally auto-analyze
+                    // analyzeOverlap();
+                }
+            });
+        });
 
         // Load available funds
         async function loadFunds() {
@@ -669,6 +964,9 @@
 
         // Display results
         function displayResults(data) {
+            // Display selected funds with amounts
+            displaySelectedFundsWithAmounts();
+
             // Update summary cards
             document.getElementById('overlapCount').textContent = data.overlapping_stocks;
             document.getElementById('overlapRatio').textContent = data.overlap_ratio + '%';
@@ -697,6 +995,89 @@
 
             // Show results
             document.getElementById('results').classList.add('shown');
+        }
+
+        // Display selected funds with investment amounts
+        function displaySelectedFundsWithAmounts() {
+            const container = document.getElementById('analyzedFundsList');
+            const fundsWithAmounts = [];
+            
+            // Match selected funds with top funds (which have amounts)
+            selectedFunds.forEach(fundKey => {
+                const topFund = userTopFunds.find(f => f.fund_key === fundKey);
+                const fundFromList = allFunds.find(f => f.key === fundKey);
+                
+                if (fundFromList) {
+                    fundsWithAmounts.push({
+                        name: fundFromList.name,
+                        amc: fundFromList.amc,
+                        category: fundFromList.category,
+                        invested_amount: topFund?.invested_amount || 0,
+                        current_value: topFund?.current_value || 0,
+                        has_amount: !!topFund
+                    });
+                }
+            });
+            
+            container.innerHTML = fundsWithAmounts.map(fund => {
+                const amount = fund.has_amount ? fund.invested_amount.toLocaleString('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    maximumFractionDigits: 0
+                }) : 'N/A';
+                
+                const returns = fund.current_value - fund.invested_amount;
+                const returnsPct = fund.invested_amount > 0 ? ((returns / fund.invested_amount) * 100).toFixed(1) : 0;
+                const returnsColor = returns >= 0 ? 'var(--success)' : 'var(--danger)';
+                
+                return `
+                    <div style="padding: 12px; background: var(--bg-dark); border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">${fund.name}</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">
+                            ${fund.amc}
+                        </div>
+                        ${fund.has_amount ? `
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <div style="font-size: 15px; font-weight: 700; color: var(--primary-green);">${amount}</div>
+                                <div style="font-size: 11px; color: ${returnsColor}; font-weight: 600;">
+                                    ${returns >= 0 ? '+' : ''}${returnsPct}%
+                                </div>
+                            </div>
+                        ` : `
+                            <div style="font-size: 12px; color: var(--text-secondary);">No investment data</div>
+                        `}
+                    </div>
+                `;
+            }).join('');
+            
+            if (fundsWithAmounts.some(f => f.has_amount)) {
+                const totalInvested = fundsWithAmounts.reduce((sum, f) => sum + f.invested_amount, 0);
+                const totalCurrent = fundsWithAmounts.reduce((sum, f) => sum + f.current_value, 0);
+                const totalReturns = totalCurrent - totalInvested;
+                const totalReturnsPct = totalInvested > 0 ? ((totalReturns / totalInvested) * 100).toFixed(2) : 0;
+                
+                container.innerHTML += `
+                    <div style="padding: 12px; background: linear-gradient(135deg, rgba(127, 192, 76, 0.1), rgba(107, 168, 60, 0.1)); border-radius: 8px; border: 1px solid var(--primary-green); grid-column: 1 / -1;">
+                        <div style="font-weight: 700; font-size: 13px; margin-bottom: 8px;">💰 Total Portfolio Value</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-secondary);">Invested</div>
+                                <div style="font-size: 18px; font-weight: 800;">${totalInvested.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-secondary);">Current Value</div>
+                                <div style="font-size: 18px; font-weight: 800;">${totalCurrent.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 })}</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 11px; color: var(--text-secondary);">Returns</div>
+                                <div style="font-size: 18px; font-weight: 800; color: ${totalReturns >= 0 ? 'var(--success)' : 'var(--danger)'};">
+                                    ${totalReturns >= 0 ? '+' : ''}${totalReturnsPct}%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
         }
 
         // Render pie chart
@@ -804,7 +1185,24 @@
         }
 
         // Initialize
-        loadFunds();
+        init();
+    </script>
+    
+    <script>
+        // Navbar toggle and scroll functions
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
     </script>
 </body>
 </html>

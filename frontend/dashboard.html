@@ -49,6 +49,7 @@
             padding-right: 20px;
             padding-bottom: 20px;
         }
+        /* Fixed Navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -56,28 +57,101 @@
             right: 0;
             height: 70px;
             background: var(--white);
-            padding: 0 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            z-index: 1000;
         }
+
         .logo {
             font-size: 1.75rem;
             font-weight: 800;
             color: var(--primary-green);
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
-        .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
         .nav-link {
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
         }
-        .nav-link:hover { color: var(--primary-green); }
+
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: var(--primary-green);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            transition: 0.3s;
+        }
+        
+        .nav-actions { display: flex; gap: 10px; align-items: center; }
         .btn {
             padding: 10px 20px;
             border-radius: 50px;
@@ -469,6 +543,36 @@
         }
         
         @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-actions button {
+                width: 100%;
+            }
+
             .charts-grid { grid-template-columns: 1fr; }
             .summary-cards { grid-template-columns: repeat(2, 1fr); }
             .modal-content {
@@ -488,16 +592,22 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="/" class="logo">MFHelper</a>
-        <div style="display: flex; align-items: center; gap: 2rem;">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/goal-planning.html" class="nav-link">Goal Planning</a>
-            <a href="/ai-demo.html" class="nav-link">AI Chat</a>
-        </div>
-        <div class="nav-actions">
-            <button class="btn btn-secondary" onclick="showUploadModal()">📁 Upload</button>
-            <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual</button>
-            <button class="btn btn-primary" onclick="exportData()">📤 Export</button>
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/#goal-planning" class="nav-link">Goal Planning</a></li>
+                <li><a href="/#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="/dashboard.html" class="nav-link" style="color: var(--primary-green);">Dashboard</a></li>
+                <li><a href="/#cas-import" class="nav-link">CAS Import</a></li>
+                <li><a href="/#ai-features" class="nav-link">AI Features</a></li>
+                <li><a href="/login.html" class="nav-link">Sign In</a></li>
+                <li><a href="/signup.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
     
@@ -793,6 +903,22 @@
     </div>
     
     <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
         let portfolioData = null;
         let currentMode = 'rebalance';
         let marketCapAllocation = { large: 0, mid: 0, small: 0, other: 0 };
@@ -2059,6 +2185,21 @@
                 showUploadModal();
                 // Clean up URL
                 window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
+
+        // Navbar toggle and scroll effect
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
         });
     </script>

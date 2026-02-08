@@ -106,46 +106,125 @@
             border-color: white;
         }
         
-        /* Navigation */
-        .nav {
-            background: var(--bg-primary);
-            padding: var(--space-4);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
+        /* Fixed Navigation */
+        .navbar {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
         
-        .nav-content {
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .nav-logo {
-            font-size: 1.5rem;
+        .logo {
+            font-size: 1.75rem;
             font-weight: 800;
-            color: var(--primary-blue);
+            color: #7FC04C;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
         
-        .nav-links {
+        .nav-menu {
             display: flex;
-            gap: var(--space-4);
+            gap: 2.5rem;
             align-items: center;
+            list-style: none;
         }
         
         .nav-link {
-            color: var(--text-secondary);
+            color: #212529;
             text-decoration: none;
             font-weight: 500;
-            transition: color var(--transition-fast);
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
         }
         
         .nav-link:hover {
-            color: var(--primary-blue);
+            color: #7FC04C;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #7FC04C;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-btn {
+            background: #7FC04C;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: #6BA83C;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: #7FC04C;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(127, 192, 76, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #6BA83C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(127, 192, 76, 0.4);
+        }
+        
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #212529;
+            transition: 0.3s;
         }
         
         /* Steps Section */
@@ -504,18 +583,50 @@
         .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
         .delay-4 { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-content">
-            <a href="/" class="nav-logo">MFHelper</a>
-            <div class="nav-links">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/how-it-works" class="nav-link" style="color: var(--primary-blue);">How It Works</a>
-                <a href="/dashboard" class="nav-link">Dashboard</a>
-                <a href="/api/docs" class="nav-link">API</a>
+    <!-- Fixed Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/#goal-planning" class="nav-link">Goal Planning</a></li>
+                <li><a href="/#portfolio" class="nav-link">Portfolio</a></li>
+                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="/#cas-import" class="nav-link">CAS Import</a></li>
+                <li><a href="/#ai-features" class="nav-link">AI Features</a></li>
+                <li><a href="/login.html" class="nav-link">Sign In</a></li>
+                <li><a href="/signup.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -773,6 +884,22 @@
     </footer>
 
     <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
         // FAQ Toggle
         function toggleFaq(button) {
             const faqItem = button.parentElement;
