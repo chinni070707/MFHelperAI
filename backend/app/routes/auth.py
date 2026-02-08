@@ -7,13 +7,14 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from typing import Optional
 import logging
+from datetime import datetime, timedelta
 from authlib.integrations.starlette_client import OAuth
 import httpx
 
 from app.database import get_db
 from app.models.models import User, UserSettings
 from app.models.user_leads import UserLead
-from app.schemas import UserCreate, UserLogin, UserResponse, Token, UserSettingsResponse, UserSettingsUpdate
+from app.schemas import UserCreate, UserLogin, UserResponse, Token, UserSettingsResponse, UserSettingsUpdate, PasswordChange, DeleteAccountRequest
 from app.utils.auth import (
     get_password_hash,
     verify_password,
