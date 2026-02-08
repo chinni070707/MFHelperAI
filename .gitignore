@@ -95,3 +95,12 @@ backend/test-scripts/*.pdf
 # Cache
 .cache/
 *.cache
+
+# Test/Demo CAS files (should not be in repo)
+backend/cas_*.json
+backend/cas_*.txt
+backend/*_parsed*.json
+
+# Reference files from other sites
+acorns_*.css
+acorns_*.html
