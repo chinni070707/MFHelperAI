@@ -7,7 +7,7 @@ services:
     name: mfhelper
     env: python
     region: singapore  # Change to: oregon, frankfurt, or singapore based on your location
-    plan: free  # Options: free (sleeps after 15min), starter ($7/mo always-on)
+    plan: starter  # $7/mo always-on, no cold starts
     branch: main
     rootDir: ./backend
     buildCommand: "pip install -r requirements.txt"
@@ -25,7 +25,7 @@ services:
         value: "false"
       
       - key: DATABASE_URL
-        value: "sqlite:///./mfhelper.db"  # Use SQLite for now
+        value: "sqlite:///./mfhelper.db"  # Will be replaced with PostgreSQL after DB creation
       
       - key: SECRET_KEY
         generateValue: true  # Render generates secure random value
