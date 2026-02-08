@@ -3,7 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard - MFHelper</title>
+    <title>Dashboard - MFHelper - Manage Your Mutual Fund Portfolio</title>
+    <meta name="description" content="Track and analyze your mutual fund portfolio. View performance metrics, XIRR returns, asset allocation, and get actionable insights. Import CAS statements instantly.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dashboard - MFHelper">
+    <meta property="og:description" content="Track and analyze your mutual fund portfolio with MFHelper. View performance metrics, XIRR returns, and asset allocation.">
+    <meta property="og:url" content="https://mfhelper.onrender.com/dashboard.html">
+    <meta property="og:image" content="https://mfhelper.onrender.com/images/og-dashboard.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dashboard - MFHelper">
+    <meta name="twitter:description" content="Track and analyze your mutual fund portfolio with comprehensive metrics and insights.">
+    <meta name="twitter:image" content="https://mfhelper.onrender.com/images/og-dashboard.png">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
     
     <!-- Google Analytics -->
     <script src="/js/analytics.js"></script>
@@ -592,18 +608,21 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="/" class="logo">MFHelper</a>
-            <ul class="nav-menu">
+            <a href="/" class="logo" aria-label="MFHelper Home">MFHelper</a>
+            <ul class="nav-menu" role="list">
                 <li><a href="/" class="nav-link">Home</a></li>
                 <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
-                <li><a href="/dashboard.html" class="nav-link" style="color: var(--primary-green);">Dashboard</a></li>
+                <li><a href="/dashboard.html" class="nav-link" style="color: var(--primary-green);" aria-current="page">Dashboard</a></li>
                 <!-- <li><a href="/ai-demo.html" class="nav-link">AI Chat</a></li> -->
                 <li><a href="/auth.html" class="nav-link">Sign In</a></li>
                 <li><a href="/auth.html?tab=signup" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
             </ul>
-            <div class="hamburger" onclick="toggleMenu()">
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle navigation menu" tabindex="0">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -611,6 +630,8 @@
         </div>
     </nav>
     
+    <!-- Main Content -->
+    <main id="main-content" role="main">
     <!-- No Data State -->
     <div id="noData" class="no-data" style="display: none;">
         <h2>No Portfolio Data</h2>
@@ -2291,6 +2312,7 @@
             }
         });
     </script>
+    </main>
     
     <!-- Footer -->
     <div id="footer-placeholder"></div>

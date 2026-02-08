@@ -6,10 +6,24 @@
     <title>MFHelper - Smart Mutual Fund Management</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="description" content="Professional mutual fund portfolio analysis and smart financial planning">
+    <meta name="description" content="Professional mutual fund portfolio analysis and smart financial planning. Track your investments, analyze performance, and achieve your financial goals.">
     <meta name="theme-color" content="#7FC04C">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MFHelper - Smart Mutual Fund Management">
+    <meta property="og:description" content="Professional mutual fund portfolio analysis and smart financial planning. Track your investments, analyze performance, and achieve your financial goals.">
+    <meta property="og:url" content="https://mfhelper.onrender.com">
+    <meta property="og:image" content="https://mfhelper.onrender.com/images/og-home.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MFHelper - Smart Mutual Fund Management">
+    <meta name="twitter:description" content="Professional mutual fund portfolio analysis and smart financial planning.">
+    <meta name="twitter:image" content="https://mfhelper.onrender.com/images/og-home.png">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Navbar Auth Handler -->
@@ -1235,11 +1249,14 @@
     </style>
 </head>
 <body>
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    
     <!-- Fixed Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="logo">MFHelper</a>
-            <ul class="nav-menu">
+            <a href="#" class="logo" aria-label="MFHelper Home">MFHelper</a>
+            <ul class="nav-menu" role="list">
                 <li><a href="#goal-planning" class="nav-link">Goal Planning</a></li>
                 <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
                 <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
@@ -1248,7 +1265,7 @@
                 <li><a href="/auth.html" class="nav-link">Sign In</a></li>
                 <li><a href="/auth.html?tab=signup" class="btn-primary">Get Started</a></li>
             </ul>
-            <div class="hamburger" onclick="toggleMenu()">
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle navigation menu" tabindex="0">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -1256,6 +1273,8 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
+    <main id="main-content" role="main">
     <!-- Hero Section -->
     <section class="hero">
         <!-- Floating Decorative Shapes -->
@@ -1696,9 +1715,10 @@
             <a href="/auth.html?tab=signup" class="btn-primary">Get Started Free</a>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
-    <footer>
+    <footer role="contentinfo">
         <div class="footer-content">
             <div>
                 <div class="footer-brand">MFHelper</div>

@@ -1,22 +1,28 @@
 /* MFHelper - Professional Design System */
-/* Inspired by Dezerv, INDmoney, Kuvera */
+/* Brand Identity: Growth-focused Green */
 
 :root {
-  /* Primary Palette - Professional Blue */
-  --primary-blue: #1E3A8A;
-  --primary-blue-light: #3B82F6;
-  --primary-blue-dark: #1E293B;
-  --primary-blue-soft: #DBEAFE;
+  /* Primary Palette - Brand Green */
+  --primary-green: #7FC04C;
+  --primary-green-dark: #6BA83C;
+  --primary-green-light: #9ED670;
+  --primary-green-soft: #E8F5E0;
+  --accent-green: #5A9030;
   
-  /* Accent Colors - Financial */
-  --accent-green: #10B981;
-  --accent-green-light: #D1FAE5;
-  --accent-green-bg: #ECFDF5;
+  /* Secondary - Professional Blue */
+  --secondary-blue: #3B82F6;
+  --secondary-blue-light: #DBEAFE;
+  
+  /* Status Colors */
   --accent-red: #EF4444;
   --accent-red-light: #FEE2E2;
   --accent-red-bg: #FEF2F2;
   --accent-gold: #F59E0B;
   --accent-amber: #FFA000;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #DC3545;
+  --info: #3B82F6;
   
   /* Neutral Colors */
   --bg-primary: #FFFFFF;
@@ -40,12 +46,13 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   
-  /* Border Radius */
+  /* Border Radius - Consistent across site */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
+  --radius-button: 12px; /* Standard button radius */
   
   /* Spacing Scale */
   --space-1: 4px;
@@ -397,8 +404,30 @@ h6 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacin
   border: 0;
 }
 
+/* Skip Navigation Link for Accessibility */
+.skip-nav {
+  position: absolute;
+  top: -100px;
+  left: 20px;
+  z-index: 9999;
+  padding: 12px 20px;
+  background: var(--primary-green);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  transition: top 0.2s ease;
+}
+
+.skip-nav:focus {
+  top: 20px;
+  outline: 3px solid var(--primary-green-dark);
+  outline-offset: 3px;
+}
+
 *:focus-visible {
-  outline: 2px solid var(--primary-blue);
+  outline: 2px solid var(--primary-green);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }

@@ -3,7 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fund Overlap Analysis - MFHelper</title>
+    <title>Fund Overlap Analysis - MFHelper | Check Portfolio Overlap</title>
+    <meta name="description" content="Analyze mutual fund overlap and diversification. Identify common holdings, sector concentration, and optimize your portfolio for better diversification.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fund Overlap Analysis - MFHelper">
+    <meta property="og:description" content="Analyze mutual fund overlap and identify common holdings for better diversification.">
+    <meta property="og:url" content="https://mfhelper.onrender.com/overlap-analysis.html">
+    <meta property="og:image" content="https://mfhelper.onrender.com/images/og-overlap.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fund Overlap Analysis - MFHelper">
+    <meta name="twitter:description" content="Analyze mutual fund overlap for better portfolio diversification.">
+    <meta name="twitter:image" content="https://mfhelper.onrender.com/images/og-overlap.png">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <script src="/js/navbar-auth.js" defer></script>
@@ -580,10 +596,13 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <!-- Skip Navigation for Accessibility -->
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="/" class="logo">MFHelper</a>
-            <ul class="nav-menu">
+            <a href="/" class="logo" aria-label="MFHelper Home">MFHelper</a>
+            <ul class="nav-menu" role="list">
                 <li><a href="/" class="nav-link">Home</a></li>
                 <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
                 <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
