@@ -39,8 +39,10 @@ echo "Pre-push validation passed. Continuing with push..."
 exit 0
 "@
 
-# Write the hook file
-Set-Content -Path $hookPath -Value $hookContent -Encoding UTF8 -NoNewline
+# Write the hook file with LF line endings (required for Git hooks on Windows)
+$hookContent = $hookContent -replace "`r`n", "`n"  # Convert CRLF to LF
+$utf8NoBom = New-Object System.Text.UTF8Encoding $false
+[System.IO.File]::WriteAllText($hookPath, $hookContent, $utf8NoBom)
 
 # Make the hook executable (on Windows, this is automatic for .git/hooks)
 Write-Host "Pre-push hook installed at: .git\hooks\pre-push" -ForegroundColor Green
