@@ -114,28 +114,87 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
     }
 
 
+@router.post("/check-email")
+@limiter.limit("20/minute")
+async def check_email(request: Request, db: Session = Depends(get_db)):
+    """Check if email exists (for UX purposes)"""
+    try:
+        data = await request.json()
+        email = data.get('email', '').strip().lower()
+        
+        if not email:
+            return {"exists": False, "message": "Email required"}
+        
+        user = db.query(User).filter(User.email == email).first()
+        return {
+            "exists": bool(user),
+            "message": "User found" if user else "No account with this email"
+        }
+    except Exception as e:
+        logger.error(f"Error checking email: {e}")
+        return {"exists": False, "message": "Error checking email"}
+
+
 @router.post("/login", response_model=Token)
 @limiter.limit("10/minute")  # Rate limit: 10 login attempts per minute
 async def login(request: Request, credentials: UserLogin, db: Session = Depends(get_db)):
     """Login user and return JWT token"""
     logger.info(f"Login attempt for email: {credentials.email}")
     
-    # Find user by email
+    # Constants for lockout
+    MAX_FAILED_ATTEMPTS = 5
+    LOCKOUT_DURATION_MINUTES = 15
+    
+    # Find user by email (email is already normalized via schema validator)
     user = db.query(User).filter(User.email == credentials.email).first()
     if not user:
         logger.warning(f"Login failed: User not found - {credentials.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
-            headers={"WWW-Authenticate": "Bearer"},
+            headers={
+                "WWW-Authenticate": "Bearer",
+                "X-Auth-Hint": "signup"  # Hint for frontend to suggest signup
+            },
         )
+    
+    # Check if account is locked
+    if user.locked_until and user.locked_until > datetime.utcnow():
+        remaining_minutes = int((user.locked_until - datetime.utcnow()).total_seconds() / 60) + 1
+        logger.warning(f"Login failed: Account locked - {credentials.email}")
+        raise HTTPException(
+            status_code=status.HTTP_423_LOCKED,
+            detail=f"Account temporarily locked. Try again in {remaining_minutes} minutes.",
+            headers={"X-Auth-Hint": "locked"},
+        )
+    
+    # Clear lockout if expired
+    if user.locked_until and user.locked_until <= datetime.utcnow():
+        user.locked_until = None
+        user.failed_login_attempts = 0
     
     # Verify password
     if not verify_password(credentials.password, user.hashed_password):
-        logger.warning(f"Login failed: Invalid password - {credentials.email}")
+        # Track failed attempt
+        user.failed_login_attempts = (user.failed_login_attempts or 0) + 1
+        
+        # Lock account after too many attempts
+        if user.failed_login_attempts >= MAX_FAILED_ATTEMPTS:
+            user.locked_until = datetime.utcnow() + timedelta(minutes=LOCKOUT_DURATION_MINUTES)
+            db.commit()
+            logger.warning(f"Account locked due to too many failed attempts: {credentials.email}")
+            raise HTTPException(
+                status_code=status.HTTP_423_LOCKED,
+                detail=f"Too many failed attempts. Account locked for {LOCKOUT_DURATION_MINUTES} minutes.",
+                headers={"X-Auth-Hint": "locked"},
+            )
+        
+        db.commit()
+        remaining_attempts = MAX_FAILED_ATTEMPTS - user.failed_login_attempts
+        logger.warning(f"Login failed: Invalid password - {credentials.email} ({remaining_attempts} attempts left)")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect email or password",
+            detail=f"Incorrect email or password. {remaining_attempts} attempts remaining.",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
@@ -146,6 +205,12 @@ async def login(request: Request, credentials: UserLogin, db: Session = Depends(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Inactive user account"
         )
+    
+    # Successful login - reset failed attempts and update last login
+    user.failed_login_attempts = 0
+    user.locked_until = None
+    user.last_login_at = datetime.utcnow()
+    db.commit()
     
     # Create access token
     access_token = create_access_token(data={"sub": str(user.id)})
@@ -185,6 +250,92 @@ async def update_profile(
     
     logger.info(f"Profile updated successfully: {current_user.email}")
     return current_user
+
+
+@router.post("/change-password")
+async def change_password(
+    password_data: PasswordChange,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Change user password (requires current password)"""
+    logger.info(f"Password change attempt for user: {current_user.email}")
+    
+    # OAuth users can't change password this way
+    if current_user.oauth_provider and not current_user.hashed_password:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="OAuth users cannot change password. Please use your OAuth provider."
+        )
+    
+    # Verify current password
+    if not verify_password(password_data.current_password, current_user.hashed_password):
+        logger.warning(f"Password change failed: Invalid current password - {current_user.email}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Current password is incorrect"
+        )
+    
+    # Don't allow same password
+    if verify_password(password_data.new_password, current_user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="New password must be different from current password"
+        )
+    
+    # Update password
+    current_user.hashed_password = get_password_hash(password_data.new_password)
+    db.commit()
+    
+    logger.info(f"Password changed successfully: {current_user.email}")
+    return {"message": "Password changed successfully"}
+
+
+@router.post("/logout")
+async def logout(current_user: User = Depends(get_current_active_user)):
+    """
+    Logout endpoint - primarily for audit/tracking.
+    Frontend should clear stored tokens.
+    For JWT, actual invalidation requires token blacklisting (not implemented).
+    """
+    logger.info(f"User logged out: {current_user.email} (ID: {current_user.id})")
+    return {"message": "Logged out successfully"}
+
+
+@router.delete("/me")
+async def delete_account(
+    delete_request: DeleteAccountRequest,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Delete user account permanently"""
+    logger.info(f"Account deletion request for user: {current_user.email}")
+    
+    # Verify confirmation text
+    if delete_request.confirmation != "DELETE":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Please type 'DELETE' to confirm account deletion"
+        )
+    
+    # OAuth users only need confirmation, password users need password verification
+    if current_user.hashed_password:
+        if not verify_password(delete_request.password, current_user.hashed_password):
+            logger.warning(f"Account deletion failed: Invalid password - {current_user.email}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Password is incorrect"
+            )
+    
+    user_email = current_user.email
+    user_id = current_user.id
+    
+    # Delete user (cascade will delete related records)
+    db.delete(current_user)
+    db.commit()
+    
+    logger.info(f"Account deleted successfully: {user_email} (ID: {user_id})")
+    return {"message": "Account deleted successfully"}
 
 
 @router.get("/settings", response_model=UserSettingsResponse)
