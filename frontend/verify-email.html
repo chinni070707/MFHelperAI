@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Email - MFHelper</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --light-green: #9ED670;
+            --white: #FFFFFF;
+            --gray-100: #E9ECEF;
+            --gray-700: #495057;
+            --gray-900: #212529;
+            --error: #DC3545;
+            --warning: #FFC107;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .verify-container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 60px 50px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+        }
+
+        .status-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .status-icon.loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+        }
+
+        .status-message {
+            font-size: 16px;
+            color: var(--gray-700);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #dde0e3;
+        }
+
+        .email-highlight {
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .error-details {
+            background: #FFF3F3;
+            border: 1px solid #FFCDD2;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--error);
+        }
+
+        .resend-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-100);
+        }
+
+        .resend-text {
+            font-size: 14px;
+            color: var(--gray-700);
+            margin-bottom: 15px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--gray-100);
+            border-top-color: var(--primary-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .verify-container {
+                padding: 40px 30px;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container" id="verifyContainer">
+        <!-- Loading State (default) -->
+        <div id="loadingState">
+            <div class="logo">MFHelper</div>
+            <div class="loading-spinner"></div>
+            <h1 class="status-title">Verifying your email...</h1>
+            <p class="status-message">Please wait while we verify your email address.</p>
+        </div>
+
+        <!-- Success State -->
+        <div id="successState" style="display: none;">
+            <div class="logo">MFHelper</div>
+            <div class="status-icon">✅</div>
+            <h1 class="status-title">Email Verified!</h1>
+            <p class="status-message">
+                Your email <span class="email-highlight" id="verifiedEmail"></span> has been verified successfully.
+                You can now access all features of MFHelper.
+            </p>
+            <a href="/dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+
+        <!-- Already Verified State -->
+        <div id="alreadyVerifiedState" style="display: none;">
+            <div class="logo">MFHelper</div>
+            <div class="status-icon">👍</div>
+            <h1 class="status-title">Already Verified</h1>
+            <p class="status-message">
+                Your email <span class="email-highlight" id="alreadyVerifiedEmail"></span> was already verified.
+                You're all set!
+            </p>
+            <a href="/dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" style="display: none;">
+            <div class="logo">MFHelper</div>
+            <div class="status-icon">❌</div>
+            <h1 class="status-title">Verification Failed</h1>
+            <p class="status-message" id="errorMessage">
+                We couldn't verify your email. The link may be invalid or expired.
+            </p>
+            
+            <div class="resend-section">
+                <p class="resend-text">Need a new verification link?</p>
+                <a href="/login.html" class="btn btn-primary">Login to Resend</a>
+                <a href="/" class="btn btn-secondary">Go Home</a>
+            </div>
+        </div>
+
+        <!-- No Token State -->
+        <div id="noTokenState" style="display: none;">
+            <div class="logo">MFHelper</div>
+            <div class="status-icon">🔗</div>
+            <h1 class="status-title">Invalid Link</h1>
+            <p class="status-message">
+                This verification link is incomplete. Please use the link from your email.
+            </p>
+            <a href="/" class="btn btn-primary">Go Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Get token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        // Hide all states
+        function hideAllStates() {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('successState').style.display = 'none';
+            document.getElementById('alreadyVerifiedState').style.display = 'none';
+            document.getElementById('errorState').style.display = 'none';
+            document.getElementById('noTokenState').style.display = 'none';
+        }
+
+        // Show specific state
+        function showState(stateId) {
+            hideAllStates();
+            document.getElementById(stateId).style.display = 'block';
+        }
+
+        // Verify the email
+        async function verifyEmail() {
+            if (!token) {
+                showState('noTokenState');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/auth/verify-email?token=${encodeURIComponent(token)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.already_verified) {
+                        document.getElementById('alreadyVerifiedEmail').textContent = data.email;
+                        showState('alreadyVerifiedState');
+                    } else {
+                        document.getElementById('verifiedEmail').textContent = data.email;
+                        showState('successState');
+                    }
+                } else {
+                    document.getElementById('errorMessage').textContent = 
+                        data.detail || 'Verification failed. The link may be invalid or expired.';
+                    showState('errorState');
+                }
+            } catch (error) {
+                console.error('Verification error:', error);
+                document.getElementById('errorMessage').textContent = 
+                    'Network error. Please check your connection and try again.';
+                showState('errorState');
+            }
+        }
+
+        // Start verification on page load
+        verifyEmail();
+    </script>
+</body>
+</html>

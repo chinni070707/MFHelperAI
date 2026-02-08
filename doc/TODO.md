@@ -2,6 +2,22 @@
 
 Recent changes (implemented):
 
+- [x] Email Verification System (Gmail SMTP)
+  - Email verification on registration (optional - works without SMTP configured)
+  - Gmail SMTP integration ready to use
+  - Beautiful HTML email templates (verification, welcome, password reset)
+  - Dashboard shows yellow banner for unverified users
+  - **SETUP REQUIRED** (see below)
+
+- [x] Authentication Security Improvements
+  - Failed login attempt tracking (lockout after 5 attempts for 15 mins)
+  - Email normalization (case-insensitive)
+  - Password confirmation on signup
+  - Last login tracking
+  - Password change endpoint: `POST /api/auth/change-password`
+  - Account deletion endpoint: `DELETE /api/auth/me`
+  - Backend logout endpoint: `POST /api/auth/logout`
+
 - [x] Startup scripts
   - `startup.ps1` (Windows): starts Ollama, pulls `tinyllama`, starts backend, opens UI. Supports `-ForceKill` and `-NoBrowser`.
   - `startup.sh` (Linux): background `ollama serve`, pull model, start `uvicorn`.
@@ -35,6 +51,51 @@ Files to review:
 - `frontend/ai-demo.html` (chat fallback)
 
 If you want, I can implement polling, telemetry, systemd units, or wire the fallback to the dashboard search API next.
+
+---
+
+## 📧 Setup: Email Verification (Gmail SMTP)
+
+Email verification is **optional**. Without SMTP configured, registration/login works normally, users just won't receive verification emails.
+
+### To Enable Email Verification:
+
+**Step 1: Create Gmail App Password**
+```
+1. Go to: Google Account → Security → 2-Step Verification (enable if not already)
+2. Go to: Google Account → Security → App Passwords
+3. Select "Mail" and your device → Generate
+4. Copy the 16-character password (e.g., "abcd efgh ijkl mnop")
+```
+
+**Step 2: Set Environment Variables**
+```bash
+# Add to .env or Render environment
+SMTP_USER=your-email@gmail.com
+SMTP_PASSWORD=abcd efgh ijkl mnop   # The 16-char app password (no spaces)
+SMTP_FROM_EMAIL=your-email@gmail.com  # Optional, defaults to SMTP_USER
+FRONTEND_URL=https://mfhelper.onrender.com  # For email links
+```
+
+**Step 3: Run Migration**
+```bash
+cd backend
+alembic upgrade head
+```
+
+### Endpoints Added:
+- `GET /api/auth/verify-email?token=xxx` - Verify email from link
+- `POST /api/auth/resend-verification` - Resend (logged-in users)
+- `POST /api/auth/resend-verification-by-email` - Resend (by email)
+- `GET /api/auth/verification-status` - Check verification status
+
+### Files:
+- `backend/app/utils/email_service.py` - SMTP service & templates
+- `frontend/verify-email.html` - Verification landing page
+- Migration: `alembic/versions/003_add_email_verification.py`
+
+---
+
 # MFHelper - TODO List
 
 > **Goal:** 1000 users in 1 month

@@ -34,8 +34,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
+    - name: Initialize database schema
+      working-directory: backend
+      run: |
+        echo "Initializing database tables..."
+        python -c "from app.database import engine, Base; from app.models import models; Base.metadata.create_all(bind=engine); print('Database tables created successfully')"
+    
     - name: Run database connection test
       working-directory: backend
+      env:
+        CI: "true"
       run: |
         echo "Testing database connectivity and schema..."
         python test_db_connection.py

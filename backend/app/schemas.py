@@ -16,6 +16,15 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     password: str = Field(..., min_length=8)
+    confirm_password: Optional[str] = None  # Optional for backwards compatibility
+    accepted_terms: bool = False  # Track TOS acceptance
+    
+    @validator('email', pre=True)
+    def normalize_email(cls, v):
+        """Normalize email to lowercase"""
+        if v:
+            return v.strip().lower()
+        return v
     
     @validator('password')
     def password_strength(cls, v):
@@ -23,12 +32,57 @@ class UserCreate(UserBase):
             raise ValueError('Password must contain at least one digit')
         if not any(char.isupper() for char in v):
             raise ValueError('Password must contain at least one uppercase letter')
+        if not any(char.islower() for char in v):
+            raise ValueError('Password must contain at least one lowercase letter')
+        return v
+    
+    @validator('confirm_password')
+    def passwords_match(cls, v, values):
+        """Validate password confirmation matches"""
+        if v is not None and 'password' in values and v != values['password']:
+            raise ValueError('Passwords do not match')
         return v
 
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+    
+    @validator('email', pre=True)
+    def normalize_email(cls, v):
+        """Normalize email to lowercase"""
+        if v:
+            return v.strip().lower()
+        return v
+
+
+class PasswordChange(BaseModel):
+    """Schema for password change request"""
+    current_password: str
+    new_password: str = Field(..., min_length=8)
+    confirm_password: str
+    
+    @validator('new_password')
+    def password_strength(cls, v):
+        if not any(char.isdigit() for char in v):
+            raise ValueError('Password must contain at least one digit')
+        if not any(char.isupper() for char in v):
+            raise ValueError('Password must contain at least one uppercase letter')
+        if not any(char.islower() for char in v):
+            raise ValueError('Password must contain at least one lowercase letter')
+        return v
+    
+    @validator('confirm_password')
+    def passwords_match(cls, v, values):
+        if 'new_password' in values and v != values['new_password']:
+            raise ValueError('Passwords do not match')
+        return v
+
+
+class DeleteAccountRequest(BaseModel):
+    """Schema for account deletion confirmation"""
+    password: str
+    confirmation: str = Field(..., description="Must be 'DELETE' to confirm")
 
 
 class UserResponse(UserBase):

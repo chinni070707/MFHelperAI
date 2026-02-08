@@ -57,6 +57,18 @@ class Settings(BaseSettings):
     ALLOWED_EXTENSIONS: list = [".xlsx", ".xls", ".csv", ".pdf"]
     UPLOAD_DIR: str = "./uploads"
     
+    # Email Settings (Gmail SMTP)
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: Optional[str] = None  # Your Gmail address
+    SMTP_PASSWORD: Optional[str] = None  # Gmail App Password (not your regular password)
+    SMTP_FROM_EMAIL: Optional[str] = None  # From address (defaults to SMTP_USER)
+    SMTP_FROM_NAME: str = "MFHelper"
+    EMAIL_VERIFICATION_EXPIRE_HOURS: int = 24  # Token valid for 24 hours
+    
+    # Frontend URL (for email links)
+    FRONTEND_URL: str = "http://localhost:8000"  # Change in production
+    
     # Fund Data
     FUND_MASTER_PATH: str = "./data/fund_master.json"
     AMC_MASTER_PATH: str = "./data/amc_master.json"

@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - MFHelper</title>
+    <title>Sign In / Sign Up - MFHelper</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="/js/navbar-auth.js" defer></script>
     
     <style>
         * {
@@ -48,7 +47,7 @@
             overflow: hidden;
             max-width: 1000px;
             width: 100%;
-            min-height: 600px;
+            min-height: 650px;
         }
 
         /* Left Panel - Branding */
@@ -147,36 +146,102 @@
 
         /* Right Panel - Form */
         .form-panel {
-            padding: 60px 50px;
+            padding: 50px 50px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
         .form-header {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+        }
+
+        .back-link {
+            margin-bottom: 15px;
+        }
+
+        .back-link a {
+            color: var(--gray-700);
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link a:hover {
+            color: var(--primary-green);
+        }
+
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-700);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-green);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-green);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-green);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .form-title {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--gray-900);
             margin-bottom: 10px;
         }
 
         .form-subtitle {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--gray-700);
-        }
-
-        .form-subtitle a {
-            color: var(--primary-green);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .form-subtitle a:hover {
-            text-decoration: underline;
+            margin-bottom: 20px;
         }
 
         /* Social Login Buttons */
@@ -184,53 +249,26 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             position: relative;
             z-index: 10;
         }
 
-        #googleSignInDiv {
+        #googleSignInDiv, #googleSignUpDiv {
             position: relative;
             z-index: 10;
             pointer-events: auto;
         }
 
-        #googleSignInDiv iframe {
+        #googleSignInDiv iframe, #googleSignUpDiv iframe {
             pointer-events: auto;
-        }
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 14px 20px;
-            border: 2px solid var(--gray-100);
-            border-radius: 12px;
-            background: white;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--gray-900);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .social-btn:hover {
-            border-color: var(--gray-700);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .social-btn img {
-            width: 20px;
-            height: 20px;
         }
 
         .divider {
             display: flex;
             align-items: center;
             gap: 16px;
-            margin: 30px 0;
+            margin: 25px 0;
             color: var(--gray-700);
             font-size: 14px;
         }
@@ -247,7 +285,7 @@
         .auth-form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
         .form-group {
@@ -283,16 +321,29 @@
             border-color: var(--error);
         }
 
-        .error-message {
-            font-size: 13px;
-            color: var(--error);
-            margin-top: -12px;
-        }
-
         .password-requirements {
             font-size: 12px;
             color: var(--gray-700);
-            margin-top: -12px;
+            margin-top: -4px;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
         .checkbox-group {
@@ -323,6 +374,16 @@
             text-decoration: underline;
         }
 
+        .forgot-password {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
         .submit-btn {
             padding: 16px;
             background: var(--primary-green);
@@ -333,7 +394,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .submit-btn:hover {
@@ -363,8 +424,7 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             gap: 12px;
             z-index: 1000;
             animation: slideIn 0.3s ease;
@@ -376,6 +436,10 @@
 
         .toast.error {
             border-left: 4px solid var(--error);
+        }
+
+        .toast.info {
+            border-left: 4px solid #3b82f6;
         }
 
         @keyframes slideIn {
@@ -396,7 +460,6 @@
             position: absolute;
         }
         
-        /* Hide browser autofill icons */
         input::-webkit-contacts-auto-fill-button,
         input::-webkit-credentials-auto-fill-button {
             display: none !important;
@@ -438,7 +501,7 @@
             }
 
             .form-title {
-                font-size: 28px;
+                font-size: 24px;
             }
 
             .logo {
@@ -449,6 +512,17 @@
                 width: 42px;
                 height: 42px;
                 font-size: 24px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .tab-btn {
+                font-size: 16px;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -488,53 +562,97 @@
         <!-- Right Panel - Form -->
         <div class="form-panel">
             <div class="form-header">
-                <h1 class="form-title">Create your account</h1>
-                <p class="form-subtitle">Already have an account? <a href="/login.html">Sign in</a></p>
-                <div style="margin-top: 10px;">
-                    <a href="/" style="color: var(--gray-700); font-size: 14px; text-decoration: none;">← Back to Home</a>
+                <div class="back-link">
+                    <a href="/">← Back to Home</a>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+                    <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
                 </div>
             </div>
 
-            <!-- Social Login Buttons -->
-            <div class="social-buttons">
-                <div id="googleSignInDiv"></div>
+            <!-- Login Tab -->
+            <div id="loginTab" class="tab-content active">
+                <div class="form-subtitle">Welcome back! Sign in to access your portfolio</div>
+
+                <!-- Social Login Buttons -->
+                <div class="social-buttons">
+                    <div id="googleSignInDiv"></div>
+                </div>
+
+                <div class="divider">or</div>
+
+                <!-- Email/Password Form -->
+                <form class="auth-form" id="loginForm" autocomplete="off">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" name="email" required placeholder="you@example.com" autocomplete="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="password" required placeholder="••••••••" autocomplete="current-password webauthn">
+                    </div>
+
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Sign In</button>
+                </form>
             </div>
 
-            <div class="divider">or</div>
+            <!-- Signup Tab -->
+            <div id="signupTab" class="tab-content">
+                <div class="form-subtitle">Create your account and start managing your investments</div>
 
-            <!-- Email/Password Form -->
-            <form class="auth-form" id="signupForm" autocomplete="off">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" required placeholder="John Doe" autocomplete="name">
+                <!-- Social Login Buttons -->
+                <div class="social-buttons">
+                    <div id="googleSignUpDiv"></div>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="username">
-                </div>
+                <div class="divider">or</div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required placeholder="••••••••" minlength="8" autocomplete="new-password webauthn">
-                    <p class="password-requirements">At least 8 characters with 1 uppercase, 1 lowercase, and 1 digit</p>
-                </div>
+                <!-- Email/Password Form -->
+                <form class="auth-form" id="signupForm" autocomplete="off">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="John Doe" autocomplete="name">
+                    </div>
 
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="••••••••" autocomplete="new-password">
-                </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" name="email" required placeholder="you@example.com" autocomplete="username">
+                    </div>
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">
-                        I agree to the <a href="/terms.html" target="_blank">Terms of Service</a> 
-                        and <a href="/privacy.html" target="_blank">Privacy Policy</a>
-                    </label>
-                </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" name="password" required placeholder="••••••••" minlength="8" autocomplete="new-password webauthn">
+                        <p class="password-requirements">At least 8 characters with 1 uppercase, 1 lowercase, and 1 digit</p>
+                    </div>
 
-                <button type="submit" class="submit-btn">Create Account</button>
-            </form>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="••••••••" autocomplete="new-password">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            I agree to the <a href="/terms.html" target="_blank">Terms of Service</a> 
+                            and <a href="/privacy.html" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -543,21 +661,84 @@
     <script src="/js/errorHandler.js"></script>
     
     <script>
-        const form = document.getElementById('signupForm');
-        const submitBtn = form.querySelector('.submit-btn');
+        // Tab switching
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                document.getElementById('loginTab').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('signupTab').classList.add('active');
+            }
+        }
+
+        // Check URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+        if (tab === 'signup') {
+            switchTab('signup');
+        }
+
+        // Login Form
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = loginForm.querySelector('.submit-btn');
+        
+        // Signup Form
+        const signupForm = document.getElementById('signupForm');
+        const signupBtn = signupForm.querySelector('.submit-btn');
         
         // Initialize Google Sign-In
         window.onload = function() {
-            // Initialize Google Sign-In button
+            // Check if already logged in
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/dashboard.html';
+                    } else {
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('userInfo');
+                    }
+                })
+                .catch(err => {
+                    console.log('Token validation failed:', err);
+                });
+            }
+            
+            // Initialize Google Sign-In button for login
             if (typeof google !== 'undefined') {
                 google.accounts.id.initialize({
                     client_id: '106393763654-95tm312afpu5blldr7eitmgd5j2khnjv.apps.googleusercontent.com',
-                    callback: handleGoogleSignUp,
+                    callback: handleGoogleSignIn,
                     auto_select: false
                 });
                 
                 google.accounts.id.renderButton(
                     document.getElementById('googleSignInDiv'),
+                    { 
+                        theme: 'outline', 
+                        size: 'large',
+                        width: '100%',
+                        text: 'continue_with',
+                        shape: 'rectangular',
+                        logo_alignment: 'left'
+                    }
+                );
+
+                // Initialize Google Sign-In button for signup
+                google.accounts.id.renderButton(
+                    document.getElementById('googleSignUpDiv'),
                     { 
                         theme: 'outline', 
                         size: 'large',
@@ -570,12 +751,11 @@
             }
         };
         
-        // Handle Google Sign-Up response
-        async function handleGoogleSignUp(response) {
+        // Handle Google Sign-In response
+        async function handleGoogleSignIn(response) {
             try {
-                showToast('Signing up with Google...', 'info');
+                showToast('Signing in with Google...', 'info');
                 
-                // Send the Google ID token to your backend
                 const result = await fetch('/api/auth/google/verify', {
                     method: 'POST',
                     headers: {
@@ -589,43 +769,120 @@
                 const data = await result.json();
                 
                 if (result.ok) {
-                    // Store token
                     localStorage.setItem('authToken', data.access_token);
                     
-                    // Store user info
                     if (data.user) {
                         localStorage.setItem('userInfo', JSON.stringify(data.user));
                     }
                     
                     showToast('Welcome! Redirecting to dashboard...', 'success');
                     
-                    // Redirect to dashboard immediately
                     try {
                         window.location.href = '/dashboard.html';
                     } catch (redirectError) {
                         console.error('Redirect failed:', redirectError);
-                        alert('Signup successful! Please click OK to go to dashboard.');
+                        alert('Login successful! Please click OK to go to dashboard.');
                         window.location.href = '/dashboard.html';
                     }
                 } else {
-                    showToast(data.detail || 'Google sign-up failed', 'error');
+                    showToast(data.detail || 'Google sign-in failed', 'error');
                 }
             } catch (error) {
-                console.error('Google sign-up error:', error);
-                showToast('Failed to sign up with Google', 'error');
+                console.error('Google sign-in error:', error);
+                showToast('Failed to sign in with Google', 'error');
             }
         }
         
-        form.addEventListener('submit', async (e) => {
+        // Login form submit
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const remember = document.getElementById('remember').checked;
+
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<span class="loading"></span> Signing in...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.access_token);
+                    
+                    if (data.user) {
+                        localStorage.setItem('userInfo', JSON.stringify(data.user));
+                    }
+                    
+                    showToast('Welcome back! Redirecting to dashboard...', 'success');
+                    
+                    try {
+                        window.location.href = '/dashboard.html';
+                    } catch (redirectError) {
+                        console.error('Redirect failed:', redirectError);
+                        const linkDiv = document.createElement('div');
+                        linkDiv.innerHTML = '<div style="margin-top: 20px; text-align: center;"><a href="/dashboard.html" style="color: var(--primary-green); font-weight: 600; font-size: 16px;">Click here to go to Dashboard →</a></div>';
+                        loginForm.appendChild(linkDiv);
+                    }
+                } else {
+                    const authHint = response.headers.get('X-Auth-Hint');
+                    let errorMessage = data.detail || 'Login failed. Please check your credentials.';
+                    
+                    if (response.status === 423 || authHint === 'locked') {
+                        showToast(errorMessage, 'error');
+                        alert('🔒 ' + errorMessage);
+                    } else if (authHint === 'signup') {
+                        errorMessage = 'Invalid credentials. Don\'t have an account yet?';
+                        showToast(errorMessage, 'error');
+                        
+                        setTimeout(() => {
+                            if (confirm('It looks like you might not have an account. Would you like to sign up?')) {
+                                switchTab('signup');
+                                document.getElementById('signupEmail').value = email;
+                            }
+                        }, 1500);
+                    } else {
+                        showToast(errorMessage, 'error');
+                    }
+                    
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Sign In';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('Network error. Please check your connection.', 'error');
+                
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        });
+
+        // Signup form submit
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const fullName = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim().toLowerCase();
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+            const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
             const termsAccepted = document.getElementById('terms').checked;
 
-            // Validation
             if (!fullName || !email || !password || !confirmPassword) {
                 showToast('Please fill in all fields', 'error');
                 return;
@@ -636,13 +893,11 @@
                 return;
             }
 
-            // Password confirmation
             if (password !== confirmPassword) {
                 showToast('Passwords do not match', 'error');
                 return;
             }
 
-            // Password validation
             if (password.length < 8) {
                 showToast('Password must be at least 8 characters', 'error');
                 return;
@@ -663,9 +918,8 @@
                 return;
             }
 
-            // Disable button and show loading
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loading"></span> Creating account...';
+            signupBtn.disabled = true;
+            signupBtn.innerHTML = '<span class="loading"></span> Creating account...';
 
             try {
                 const response = await fetch('/api/auth/register', {
@@ -685,14 +939,11 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Store token
                     localStorage.setItem('authToken', data.access_token);
                     
-                    // Check if verification email was sent
                     if (data.email_verification_sent) {
                         showToast('Account created! Redirecting...', 'success');
                         
-                        // Redirect immediately, show email reminder on dashboard
                         try {
                             sessionStorage.setItem('show_email_verification_reminder', 'true');
                             window.location.href = '/dashboard.html';
@@ -704,7 +955,6 @@
                     } else {
                         showToast('Account created! Redirecting...', 'success');
                         
-                        // Redirect to dashboard immediately
                         try {
                             window.location.href = '/dashboard.html';
                         } catch (redirectError) {
@@ -714,41 +964,40 @@
                         }
                     }
                 } else {
-                    // Handle error
                     const errorMessage = data.detail || 'Registration failed. Please try again.';
                     showToast(errorMessage, 'error');
                     
-                    // Reset button
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Create Account';
+                    signupBtn.disabled = false;
+                    signupBtn.textContent = 'Create Account';
                 }
             } catch (error) {
                 console.error('Signup error:', error);
                 showToast('Network error. Please check your connection.', 'error');
                 
-                // Reset button
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Create Account';
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Create Account';
             }
         });
 
         // Real-time password validation
-        const passwordInput = document.getElementById('password');
+        const passwordInput = document.getElementById('signupPassword');
         const passwordReqs = document.querySelector('.password-requirements');
         
-        passwordInput.addEventListener('input', () => {
-            const password = passwordInput.value;
-            let valid = true;
-            
-            if (password.length < 8 || !/[A-Z]/.test(password) || !/\d/.test(password)) {
-                valid = false;
-            }
-            
-            if (password.length > 0) {
-                passwordInput.classList.toggle('error', !valid);
-                passwordReqs.style.color = valid ? 'var(--primary-green)' : 'var(--gray-700)';
-            }
-        });
+        if (passwordInput && passwordReqs) {
+            passwordInput.addEventListener('input', () => {
+                const password = passwordInput.value;
+                let valid = true;
+                
+                if (password.length < 8 || !/[A-Z]/.test(password) || !/\d/.test(password)) {
+                    valid = false;
+                }
+                
+                if (password.length > 0) {
+                    passwordInput.classList.toggle('error', !valid);
+                    passwordReqs.style.color = valid ? 'var(--primary-green)' : 'var(--gray-700)';
+                }
+            });
+        }
     </script>
 </body>
 </html>

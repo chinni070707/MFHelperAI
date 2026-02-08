@@ -26,7 +26,12 @@
       "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check backend/app --select F821,F401,F811,F841 --fix)",
       "Bash(find:*)",
       "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check:*)",
-      "Bash(\"venv\\\\Scripts\\\\python.exe\" -m pytest backend/tests/test_auth.py -v)"
+      "Bash(\"venv\\\\Scripts\\\\python.exe\" -m pytest backend/tests/test_auth.py -v)",
+      "Bash(\"venv\\\\Scripts\\\\python.exe\" -m pytest backend/tests/test_auth.py::TestRegister::test_register_success -v --tb=short)",
+      "Bash(\"venv\\\\Scripts\\\\python.exe\" -m pytest:*)",
+      "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.schemas import PasswordChange, DeleteAccountRequest; print\\(''OK''\\)\")",
+      "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.routes.auth import router; print\\(''OK''\\)\")",
+      "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.main import app; print\\(''OK''\\)\")"
     ]
   }
 }

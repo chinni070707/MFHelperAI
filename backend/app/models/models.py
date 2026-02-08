@@ -25,6 +25,16 @@ class User(Base):
     oauth_id = Column(String(255))  # Unique ID from OAuth provider
     profile_picture_url = Column(String(500))  # Profile image URL
     
+    # Security & tracking fields
+    last_login_at = Column(DateTime, nullable=True)  # Track last successful login
+    failed_login_attempts = Column(Integer, default=0)  # Track failed attempts
+    locked_until = Column(DateTime, nullable=True)  # Account lockout timestamp
+    
+    # Email verification fields
+    verification_token = Column(String(255), nullable=True)  # Token for email verification
+    verification_token_expires = Column(DateTime, nullable=True)  # Token expiration
+    verified_at = Column(DateTime, nullable=True)  # When email was verified
+    
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     

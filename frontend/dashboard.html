@@ -599,9 +599,9 @@
                 <li><a href="/" class="nav-link">Home</a></li>
                 <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
                 <li><a href="/dashboard.html" class="nav-link" style="color: var(--primary-green);">Dashboard</a></li>
-                <li><a href="/ai-demo.html" class="nav-link">AI Chat</a></li>
-                <li><a href="/login.html" class="nav-link">Sign In</a></li>
-                <li><a href="/signup.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
+                <!-- <li><a href="/ai-demo.html" class="nav-link">AI Chat</a></li> -->
+                <li><a href="/auth.html" class="nav-link">Sign In</a></li>
+                <li><a href="/auth.html?tab=signup" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
             </ul>
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
@@ -627,6 +627,20 @@
     
     <!-- Dashboard Content -->
     <div id="dashboardContent">
+        <!-- Email Verification Banner (shown if not verified) -->
+        <div class="verification-banner" id="verificationBanner" style="display: none; background: linear-gradient(90deg, #FFC107 0%, #FFD54F 100%); color: #212529; padding: 15px 25px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 24px;">📧</span>
+                <div>
+                    <strong>Please verify your email</strong>
+                    <p style="margin: 0; font-size: 0.9rem; opacity: 0.8;">Check your inbox for a verification link to unlock all features.</p>
+                </div>
+            </div>
+            <button onclick="resendVerificationEmail()" id="resendVerifyBtn" style="background: #212529; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                Resend Email
+            </button>
+        </div>
+
         <!-- Alert Banner -->
         <div class="alert-banner" id="alertBanner">
             <span class="icon">🎉</span>
@@ -923,7 +937,81 @@
         let currentMode = 'rebalance';
         let marketCapAllocation = { large: 0, mid: 0, small: 0, other: 0 };
         
+        // Check email verification status
+        async function checkVerificationStatus() {
+            const token = localStorage.getItem('authToken');
+            if (!token) return;
+            
+            try {
+                const response = await fetch('/api/auth/verification-status', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const banner = document.getElementById('verificationBanner');
+                    
+                    // Only show banner if:
+                    // 1. User is not verified AND
+                    // 2. Email service is configured (so they can actually verify)
+                    if (!data.is_verified && data.email_service_configured && banner) {
+                        banner.style.display = 'flex';
+                    }
+                }
+            } catch (error) {
+                console.log('Verification status check failed (normal for OAuth users)');
+            }
+        }
+        
+        // Resend verification email
+        async function resendVerificationEmail() {
+            const token = localStorage.getItem('authToken');
+            if (!token) return;
+            
+            const btn = document.getElementById('resendVerifyBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/auth/resend-verification', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    window.showToast?.('Verification email sent! Check your inbox.', 'success');
+                    btn.textContent = 'Email Sent ✓';
+                    // Hide banner after a moment
+                    setTimeout(() => {
+                        document.getElementById('verificationBanner').style.display = 'none';
+                    }, 3000);
+                } else if (data.already_verified) {
+                    window.showToast?.('Your email is already verified!', 'success');
+                    document.getElementById('verificationBanner').style.display = 'none';
+                } else {
+                    window.showToast?.(data.detail || 'Failed to send. Please try again.', 'error');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Resend verification error:', error);
+                window.showToast?.('Network error. Please try again.', 'error');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', async () => {
+            // Check email verification status for authenticated users
+            await checkVerificationStatus();
+            
             // Check for demo mode in URL
             const urlParams = new URLSearchParams(window.location.search);
             const mode = urlParams.get('mode');

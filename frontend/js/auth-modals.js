@@ -225,7 +225,51 @@ class AuthModals {
             const result = await response.json();
             
             if (!response.ok) {
-                throw new Error(result.detail || 'Login failed');
+                // Check the type of error
+                const authHint = response.headers.get('X-Auth-Hint');
+                let errorMsg = result.detail || 'Login failed';
+                
+                // Handle account lockout (423 Locked)
+                if (response.status === 423 || authHint === 'locked') {
+                    if (typeof showToast === 'function') {
+                        showToast(errorMsg, 'error');
+                    }
+                    alert('🔒 ' + errorMsg);
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    return;
+                }
+                
+                if (authHint === 'signup') {
+                    // Suggest signup
+                    errorMsg = 'Invalid credentials. Don\'t have an account yet?';
+                    if (typeof showToast === 'function') {
+                        showToast(errorMsg, 'error');
+                    }
+                    
+                    // Offer to switch to signup
+                    setTimeout(() => {
+                        if (confirm('It looks like you might not have an account. Would you like to sign up?')) {
+                            this.closeLogin();
+                            this.showSignup();
+                            // Pre-fill email if possible
+                            const signupForm = document.getElementById('signupForm');
+                            if (signupForm) {
+                                const emailInput = signupForm.querySelector('input[name="email"]');
+                                if (emailInput) emailInput.value = data.email;
+                            }
+                        }
+                    }, 1500);
+                } else {
+                    // Show remaining attempts info
+                    if (typeof showToast === 'function') {
+                        showToast(errorMsg, 'error');
+                    }
+                }
+                
+                btn.disabled = false;
+                btn.textContent = originalText;
+                return;
             }
             
             // Save token

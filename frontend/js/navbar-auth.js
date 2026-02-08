@@ -15,8 +15,8 @@
         
         navMenus.forEach(navMenu => {
             // Find the Sign In and Get Started items
-            const signInItem = navMenu.querySelector('a[href="/login.html"]')?.parentElement;
-            const getStartedItem = navMenu.querySelector('a[href="/signup.html"]')?.parentElement;
+            const signInItem = navMenu.querySelector('a[href="/login.html"], a[href="/auth.html"]')?.parentElement;
+            const getStartedItem = navMenu.querySelector('a[href="/signup.html"], a[href*="/auth.html?tab=signup"]')?.parentElement;
             
             if (authToken && userInfoStr) {
                 try {

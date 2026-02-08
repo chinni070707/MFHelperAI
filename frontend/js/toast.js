@@ -222,3 +222,12 @@ const toast = new ToastManager();
 
 // Expose to window for easy access
 window.toast = toast;
+
+// Add showToast wrapper function for backward compatibility
+window.showToast = function(message, type = 'info', duration = 4000) {
+    if (!toast || !toast.show) {
+        console.warn('[showToast] Toast manager not ready:', message);
+        return;
+    }
+    return toast.show(message, type, duration);
+};

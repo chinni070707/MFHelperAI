@@ -224,14 +224,25 @@ def run_all_tests():
     print("║       MFHelper Database & API Test Suite                        ║")
     print("╚══════════════════════════════════════════════════════════════════╝")
     
+    # Check if running in CI environment
+    is_ci = os.environ.get('CI', '').lower() == 'true'
+    
     results = {
         "Database Connection": test_database_connection(),
         "Connection Pool": test_pool_info(),
         "Database Schema": test_tables_exist(),
         "Database Operations": test_basic_queries(),
-        "API Server": test_api_health(),
-        "Upload Endpoints": test_upload_endpoint(),
     }
+    
+    # Skip API tests in CI - they are tested separately in the workflow
+    if not is_ci:
+        results["API Server"] = test_api_health()
+        results["Upload Endpoints"] = test_upload_endpoint()
+    else:
+        print_header("5. API SERVER TEST")
+        print("ℹ Skipped in CI environment (tested separately)")
+        print_header("6. UPLOAD ENDPOINTS TEST")
+        print("ℹ Skipped in CI environment (tested separately)")
     
     # Summary
     print_header("📊 TEST SUMMARY")

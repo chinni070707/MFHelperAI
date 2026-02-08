@@ -21,6 +21,7 @@ from app.utils.auth import (
     create_access_token,
     get_current_active_user
 )
+from app.utils.email_service import email_service
 from app.middleware.rate_limiter import limiter
 from app.config import settings
 
@@ -68,6 +69,11 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
     
     # Create new user
     hashed_password = get_password_hash(user_data.password)
+    
+    # Generate email verification token
+    verification_token = email_service.generate_verification_token()
+    verification_expires = email_service.get_verification_expiry()
+    
     new_user = User(
         email=user_data.email,
         hashed_password=hashed_password,
@@ -75,7 +81,9 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
         pan=user_data.pan,
         phone=user_data.phone,
         is_active=True,
-        is_verified=False  # Email verification can be added later
+        is_verified=False,  # Will be verified via email
+        verification_token=verification_token,
+        verification_token_expires=verification_expires
     )
     
     db.add(new_user)
@@ -105,13 +113,219 @@ async def register(request: Request, user_data: UserCreate, db: Session = Depend
     
     logger.info(f"User registered successfully: {new_user.email} (ID: {new_user.id})")
     
+    # Send verification email (non-blocking - don't fail registration if email fails)
+    try:
+        if email_service.is_configured():
+            email_sent = email_service.send_verification_email(
+                to_email=new_user.email,
+                user_name=new_user.full_name,
+                verification_token=verification_token
+            )
+            if email_sent:
+                logger.info(f"Verification email sent to: {new_user.email}")
+            else:
+                logger.warning(f"Failed to send verification email to: {new_user.email}")
+        else:
+            logger.warning("Email service not configured. Skipping verification email.")
+    except Exception as e:
+        logger.error(f"Error sending verification email: {e}")
+    
     # Create access token
     access_token = create_access_token(data={"sub": str(new_user.id)})
     
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "user": new_user
+        "user": new_user,
+        "email_verification_sent": email_service.is_configured()
+    }
+
+
+@router.get("/verify-email")
+async def verify_email(token: str, db: Session = Depends(get_db)):
+    """
+    Verify user's email address using the token from their email.
+    Called when user clicks verification link.
+    """
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Verification token is required"
+        )
+    
+    # Find user by verification token
+    user = db.query(User).filter(User.verification_token == token).first()
+    
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired verification token"
+        )
+    
+    # Check if already verified
+    if user.is_verified:
+        return {
+            "message": "Email already verified",
+            "email": user.email,
+            "already_verified": True
+        }
+    
+    # Check if token has expired
+    if user.verification_token_expires and user.verification_token_expires < datetime.utcnow():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Verification token has expired. Please request a new one."
+        )
+    
+    # Verify the user
+    user.is_verified = True
+    user.verified_at = datetime.utcnow()
+    user.verification_token = None  # Clear the token after use
+    user.verification_token_expires = None
+    db.commit()
+    
+    logger.info(f"Email verified successfully for user: {user.email}")
+    
+    # Send welcome email
+    try:
+        if email_service.is_configured():
+            email_service.send_welcome_email(
+                to_email=user.email,
+                user_name=user.full_name
+            )
+    except Exception as e:
+        logger.warning(f"Failed to send welcome email: {e}")
+    
+    return {
+        "message": "Email verified successfully!",
+        "email": user.email,
+        "already_verified": False
+    }
+
+
+@router.post("/resend-verification")
+@limiter.limit("3/hour")  # Limit resend requests
+async def resend_verification_email(
+    request: Request,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Resend verification email to the currently logged-in user.
+    Rate limited to 3 per hour.
+    """
+    if current_user.is_verified:
+        return {
+            "message": "Email is already verified",
+            "already_verified": True
+        }
+    
+    if not email_service.is_configured():
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Email service is not configured"
+        )
+    
+    # Generate new verification token
+    new_token = email_service.generate_verification_token()
+    new_expiry = email_service.get_verification_expiry()
+    
+    current_user.verification_token = new_token
+    current_user.verification_token_expires = new_expiry
+    db.commit()
+    
+    # Send verification email
+    email_sent = email_service.send_verification_email(
+        to_email=current_user.email,
+        user_name=current_user.full_name,
+        verification_token=new_token
+    )
+    
+    if email_sent:
+        logger.info(f"Verification email resent to: {current_user.email}")
+        return {
+            "message": "Verification email sent successfully",
+            "email": current_user.email
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to send verification email. Please try again later."
+        )
+
+
+@router.post("/resend-verification-by-email")
+@limiter.limit("3/hour")
+async def resend_verification_by_email(request: Request, db: Session = Depends(get_db)):
+    """
+    Resend verification email using email address (for users who aren't logged in).
+    Rate limited to 3 per hour.
+    """
+    try:
+        data = await request.json()
+        email = data.get('email', '').strip().lower()
+    except Exception:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid request body"
+        )
+    
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email is required"
+        )
+    
+    # Find user
+    user = db.query(User).filter(User.email == email).first()
+    
+    # Don't reveal if user exists or not (security)
+    if not user:
+        return {
+            "message": "If an account exists with this email, a verification link will be sent."
+        }
+    
+    if user.is_verified:
+        return {
+            "message": "If an account exists with this email, a verification link will be sent."
+        }
+    
+    if not email_service.is_configured():
+        logger.warning("Email service not configured for resend verification")
+        return {
+            "message": "If an account exists with this email, a verification link will be sent."
+        }
+    
+    # Generate new verification token
+    new_token = email_service.generate_verification_token()
+    new_expiry = email_service.get_verification_expiry()
+    
+    user.verification_token = new_token
+    user.verification_token_expires = new_expiry
+    db.commit()
+    
+    # Send verification email
+    email_service.send_verification_email(
+        to_email=user.email,
+        user_name=user.full_name,
+        verification_token=new_token
+    )
+    
+    logger.info(f"Verification email resent to: {email}")
+    
+    return {
+        "message": "If an account exists with this email, a verification link will be sent."
+    }
+
+
+@router.get("/verification-status")
+async def get_verification_status(current_user: User = Depends(get_current_active_user)):
+    """Get the email verification status of the current user"""
+    return {
+        "email": current_user.email,
+        "is_verified": current_user.is_verified,
+        "verified_at": current_user.verified_at.isoformat() if current_user.verified_at else None,
+        "email_service_configured": email_service.is_configured()  # Frontend uses this to decide whether to show banner
     }
 
 
