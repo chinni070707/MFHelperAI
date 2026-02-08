@@ -319,17 +319,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .social-btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .social-btn.disabled:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: var(--gray-100);
-        }
-
         .social-btn img {
             width: 20px;
             height: 20px;
@@ -641,14 +630,6 @@
             <!-- Social Login Buttons -->
             <div class="social-buttons">
                 <div id="googleSignInDiv"></div>
-                <button class="social-btn disabled" title="Coming soon">
-                    <svg width="20" height="20" viewBox="0 0 20 20"><path fill="#1877F2" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"/></svg>
-                    Continue with Facebook
-                </button>
-                <button class="social-btn disabled" title="Coming soon">
-                    <svg width="20" height="20" viewBox="0 0 20 20"><path d="M16.365 8.385c-.06-2.478 2.023-3.677 2.114-3.738-1.15-1.682-2.94-1.912-3.578-1.937-1.523-.154-2.972.897-3.744.897-.772 0-1.964-.874-3.227-.851-1.66.024-3.19.966-4.043 2.453-1.724 2.988-.441 7.412 1.238 9.833.82 1.186 1.798 2.518 3.083 2.471 1.262-.05 1.738-.817 3.263-.817 1.524 0 1.954.817 3.227.792 1.332-.024 2.178-1.199 2.995-2.388 1.044-1.375 1.475-2.706 1.5-2.774-.033-.014-2.877-1.104-2.91-4.379M13.487 3.264c.682-.827 1.142-1.976 1.017-3.123-.983.04-2.174.654-2.88 1.479-.633.733-1.186 1.903-1.038 3.027 1.098.085 2.22-.558 2.901-1.383"/></svg>
-                    Continue with Apple
-                </button>
             </div>
 
             <div class="divider">or</div>
@@ -775,14 +756,6 @@
             }
         }
         
-        // Social buttons - show coming soon message
-        document.querySelectorAll('.social-btn.disabled').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showToast('Social login coming soon!', 'info');
-            });
-        });
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
