@@ -24,7 +24,9 @@
       "Bash(powershell.exe:*)",
       "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check backend/app --select F821,F401,F811,F841 --no-fix)",
       "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check backend/app --select F821,F401,F811,F841 --fix)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(\"venv\\\\Scripts\\\\ruff.exe\" check:*)",
+      "Bash(\"venv\\\\Scripts\\\\python.exe\" -m pytest backend/tests/test_auth.py -v)"
     ]
   }
 }
