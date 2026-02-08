@@ -230,3 +230,37 @@ async def get_amc_list(
     except Exception as e:
         logger.error(f"Error fetching AMC list: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/validate")
+async def validate_fund_data(
+    db: Session = Depends(get_db)
+):
+    """
+    Validate fund master data integrity
+    
+    Runs comprehensive sanity checks:
+    - Data existence
+    - AMC data validity
+    - Fund completeness
+    - Duplicate detection
+    - Invalid data values
+    - Data freshness
+    
+    Returns validation results with passed/failed checks
+    """
+    try:
+        from app.utils.data_validator import validate_fund_data as run_validation
+        
+        logger.info("Running fund data validation...")
+        results = run_validation(db)
+        
+        return {
+            "success": True,
+            "validation": results
+        }
+        
+    except Exception as e:
+        logger.error(f"Error validating fund data: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
