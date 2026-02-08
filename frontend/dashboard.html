@@ -1733,7 +1733,7 @@
             
             row.innerHTML = `
                 <td>
-                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff;" required>
+                    <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); color: var(--text-primary);" required>
                         <option value="">Select AMC...</option>
                         ${amcOptions}
                     </select>
@@ -1744,11 +1744,11 @@
                            onfocus="showFundDropdown(this)"
                            data-fund-id="" 
                            disabled
-                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff;"
+                           style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); color: var(--text-primary);"
                            required>
                     <div class="fund-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20, 20, 40, 0.98); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 1000; margin-top: 4px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);"></div>
                 </td>
-                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: var(--white); color: #fff;" required></td>
+                <td><input type="number" step="0.01" min="0" placeholder="10000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); color: var(--text-primary);" required></td>
                 <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
             `;
             tbody.appendChild(row);
