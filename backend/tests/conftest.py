@@ -12,31 +12,7 @@ import tempfile
 from app.main import app
 from app.database import Base, get_db
 from app.models.models import User
-from app.utils.auth import create_access_token
-
-
-# Test-only password hasher (bcrypt has issues with Python 3.13)
-class TestPasswordHasher:
-    """Simple password hasher for testing only"""
-    @staticmethod
-    def hash(password: str) -> str:
-        # In tests, just add a prefix to simulate hashing
-        return f"test_hash_{password}"
-    
-    @staticmethod
-    def verify(plain_password: str, hashed_password: str) -> bool:
-        # For testing, check if hash matches the pattern
-        return hashed_password == f"test_hash_{plain_password}"
-
-
-# Monkey patch for tests only — must patch both the source module
-# AND the routes module (which imports by name)
-import app.utils.auth as auth_module
-import app.routes.auth as routes_auth_module
-auth_module.get_password_hash = TestPasswordHasher.hash
-auth_module.verify_password = TestPasswordHasher.verify
-routes_auth_module.get_password_hash = TestPasswordHasher.hash
-routes_auth_module.verify_password = TestPasswordHasher.verify
+from app.utils.auth import get_password_hash, create_access_token
 
 
 # Test database setup — in-memory SQLite for clean isolation
@@ -69,6 +45,12 @@ def db_session(test_db):
 
 
 @pytest.fixture(scope="function")
+def db(db_session):
+    """Alias for db_session to match common test parameter naming"""
+    return db_session
+
+
+@pytest.fixture(scope="function")
 def client(db_session):
     """Create a test client with database override"""
     def override_get_db():
@@ -90,7 +72,7 @@ def test_user(db_session):
     """Create a test user in the database"""
     user = User(
         email="testuser@example.com",
-        hashed_password=TestPasswordHasher.hash("Test1234"),
+        hashed_password=get_password_hash("Test1234"),
         full_name="Test User",
         is_active=True,
         is_verified=False,

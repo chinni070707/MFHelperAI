@@ -9,10 +9,100 @@ from app.utils.data_validator import FundDataValidator, validate_fund_data
 from datetime import datetime, timedelta
 
 
+@pytest.fixture(scope="function")
+def sample_fund_data(db: Session):
+    """Load sample fund data for testing"""
+    # Add sample AMCs with funds
+    sample_funds = [
+        # HDFC Mutual Fund
+        FundMaster(
+            scheme_code="100001", isin="INF179K01AA1", 
+            scheme_name="HDFC Equity Fund - Direct Plan - Growth",
+            amc="HDFC Mutual Fund", category="Equity - Large Cap",
+            plan_type="Direct", current_nav=500.25, is_active=True,
+            expense_ratio=0.75, one_year_return=15.5
+        ),
+        FundMaster(
+            scheme_code="100002", isin="INF179K01AB2",
+            scheme_name="HDFC Equity Fund - Regular Plan - Growth",
+            amc="HDFC Mutual Fund", category="Equity - Large Cap",
+            plan_type="Regular", current_nav=498.50, is_active=True,
+            expense_ratio=1.25, one_year_return=14.8
+        ),
+        FundMaster(
+            scheme_code="100003", isin="INF179K01AC3",
+            scheme_name="HDFC Liquid Fund - Direct - Growth",
+            amc="HDFC Mutual Fund", category="Liquid",
+            plan_type="Direct", current_nav=3500.00, is_active=True,
+            expense_ratio=0.15, one_year_return=7.2
+        ),
+        # ICICI Prudential Mutual Fund
+        FundMaster(
+            scheme_code="200001", isin="INF109K01AA8",
+            scheme_name="ICICI Prudential Bluechip Fund - Direct - Growth",
+            amc="ICICI Prudential Mutual Fund", category="Equity - Large Cap",
+            plan_type="Direct", current_nav=75.80, is_active=True,
+            expense_ratio=0.80, one_year_return=18.5
+        ),
+        FundMaster(
+            scheme_code="200002", isin="INF109K01AB9",
+            scheme_name="ICICI Prudential Bluechip Fund - Regular - Growth",
+            amc="ICICI Prudential Mutual Fund", category="Equity - Large Cap",
+            plan_type="Regular", current_nav=74.50, is_active=True,
+            expense_ratio=1.30, one_year_return=17.8
+        ),
+        # SBI Mutual Fund
+        FundMaster(
+            scheme_code="300001", isin="INF200K01AA1",
+            scheme_name="SBI Bluechip Fund - Direct - Growth",
+            amc="SBI Mutual Fund", category="Equity - Large Cap",
+            plan_type="Direct", current_nav=65.25, is_active=True,
+            expense_ratio=0.70, one_year_return=16.2
+        ),
+        FundMaster(
+            scheme_code="300002", isin="INF200K01AB2",
+            scheme_name="SBI Small Cap Fund - Direct - Growth",
+            amc="SBI Mutual Fund", category="Equity - Small Cap",
+            plan_type="Direct", current_nav=95.50, is_active=True,
+            expense_ratio=0.85, one_year_return=22.5
+        ),
+        # Axis Mutual Fund
+        FundMaster(
+            scheme_code="400001", isin="INF846K01AA5",
+            scheme_name="Axis Bluechip Fund - Direct - Growth",
+            amc="Axis Mutual Fund", category="Equity - Large Cap",
+            plan_type="Direct", current_nav=45.80, is_active=True,
+            expense_ratio=0.65, one_year_return=19.2
+        ),
+        # Edge case: AMC with only 1 fund
+        FundMaster(
+            scheme_code="500001", isin="INF001K01AA1",
+            scheme_name="Test Edge Case Fund",
+            amc="Single Fund AMC", category="Hybrid",
+            plan_type="Direct", current_nav=10.50, is_active=True,
+            expense_ratio=1.50, one_year_return=8.5
+        ),
+        # Inactive fund
+        FundMaster(
+            scheme_code="600001", isin="INF002K01AA2",
+            scheme_name="Closed Fund",
+            amc="HDFC Mutual Fund", category="Debt",
+            plan_type="Direct", current_nav=1050.00, is_active=False,
+            expense_ratio=0.50, one_year_return=6.5
+        ),
+    ]
+    
+    for fund in sample_funds:
+        db.add(fund)
+    db.commit()
+    
+    return sample_funds
+
+
 class TestFundDataSanity:
     """Test suite for fund data validation"""
     
-    def test_data_exists(self, db: Session):
+    def test_data_exists(self, db: Session, sample_fund_data):
         """Test that fund master data exists in database"""
         validator = FundDataValidator(db)
         validator.check_data_exists()
@@ -22,11 +112,11 @@ class TestFundDataSanity:
                    if r["check"] == "data_exists"]) == 0, \
             "Fund data should exist in database"
         
-        # Get total  count
+        # Get total count
         total_funds = db.query(FundMaster).count()
         assert total_funds > 0, "Should have at least some fund data"
     
-    def test_amc_data_exists(self, db: Session):
+    def test_amc_data_exists(self, db: Session, sample_fund_data):
         """Test that AMC data is valid and present"""
         validator = FundDataValidator(db)
         validator.check_amc_data()
@@ -38,9 +128,9 @@ class TestFundDataSanity:
         ).count()
         
         assert amc_count > 0, "Should have at least one AMC"
-        assert amc_count >= 10, f"Expected at least 10 AMCs, found {amc_count}"
+        assert amc_count >= 3, f"Expected at least 3 AMCs in test data, found {amc_count}"
     
-    def test_each_amc_has_funds(self, db: Session):
+    def test_each_amc_has_funds(self, db: Session, sample_fund_data):
         """Test that each AMC has associated funds"""
         from sqlalchemy import func
         
@@ -59,7 +149,7 @@ class TestFundDataSanity:
         for amc, count in amc_fund_counts:
             assert count > 0, f"AMC '{amc}' has no funds"
     
-    def test_fund_has_required_fields(self, db: Session):
+    def test_fund_has_required_fields(self, db: Session, sample_fund_data):
         """Test that funds have all required fields"""
         # Get a sample of active funds
         funds = db.query(FundMaster).filter(
@@ -83,7 +173,7 @@ class TestFundDataSanity:
             assert len(fund.scheme_name) <= 500, \
                 f"Scheme name too long: {fund.scheme_name}"
     
-    def test_no_duplicate_scheme_codes(self, db: Session):
+    def test_no_duplicate_scheme_codes(self, db: Session, sample_fund_data):
         """Test that scheme codes are unique"""
         from sqlalchemy import func
         
@@ -102,7 +192,7 @@ class TestFundDataSanity:
         assert len(duplicates) == 0, \
             f"Found {len(duplicates)} duplicate scheme codes: {duplicates[:5]}"
     
-    def test_nav_values_valid(self, db: Session):
+    def test_nav_values_valid(self, db: Session, sample_fund_data):
         """Test that NAV values are reasonable"""
         # Get funds with NAV data
         funds_with_nav = db.query(FundMaster).filter(
@@ -119,7 +209,7 @@ class TestFundDataSanity:
                 assert 0.1 <= fund.current_nav <= 100000, \
                     f"Fund {fund.scheme_name} has suspicious NAV: {fund.current_nav}"
     
-    def test_expense_ratio_valid(self, db: Session):
+    def test_expense_ratio_valid(self, db: Session, sample_fund_data):
         """Test that expense ratios are reasonable"""
         funds_with_expense = db.query(FundMaster).filter(
             FundMaster.expense_ratio != None
@@ -131,7 +221,7 @@ class TestFundDataSanity:
                 assert 0 <= fund.expense_ratio <= 5.0, \
                     f"Fund {fund.scheme_name} has invalid expense ratio: {fund.expense_ratio}%"
     
-    def test_returns_data_valid(self, db: Session):
+    def test_returns_data_valid(self, db: Session, sample_fund_data):
         """Test that return percentages are reasonable"""
         funds_with_returns = db.query(FundMaster).filter(
             FundMaster.one_year_return != None
@@ -152,7 +242,7 @@ class TestFundDataSanity:
                     assert -100 <= fund.five_year_return <= 500, \
                         f"Fund {fund.scheme_name} has unrealistic 5Y return: {fund.five_year_return}%"
     
-    def test_categories_valid(self, db: Session):
+    def test_categories_valid(self, db: Session, sample_fund_data):
         """Test that fund categories are from expected set"""
         expected_categories = {
             'Equity - Large Cap',
@@ -178,7 +268,7 @@ class TestFundDataSanity:
         assert len(unexpected) == 0 or list(unexpected) == [None], \
             f"Found unexpected categories: {unexpected}"
     
-    def test_plan_type_valid(self, db: Session):
+    def test_plan_type_valid(self, db: Session, sample_fund_data):
         """Test that plan types are either Direct or Regular"""
         valid_plan_types = {'Direct', 'Regular', None}
         
@@ -189,7 +279,7 @@ class TestFundDataSanity:
         assert actual_plan_types.issubset(valid_plan_types), \
             f"Found invalid plan types: {actual_plan_types - valid_plan_types}"
     
-    def test_amc_names_consistent(self, db: Session):
+    def test_amc_names_consistent(self, db: Session, sample_fund_data):
         """Test that AMC names don't have variations/typos"""
         from sqlalchemy import func
         
@@ -207,7 +297,7 @@ class TestFundDataSanity:
             # Should not have excessive whitespace
             assert amc == amc.strip(), f"AMC has leading/trailing whitespace: '{amc}'"
     
-    def test_comprehensive_validation(self, db: Session):
+    def test_comprehensive_validation(self, db: Session, sample_fund_data):
         """Run all validation checks together"""
         results = validate_fund_data(db)
         
@@ -255,7 +345,7 @@ class TestFundDataSanity:
 class TestFundDataQueries:
     """Test fund data queries work correctly"""
     
-    def test_search_funds_by_name(self, db: Session):
+    def test_search_funds_by_name(self, db: Session, sample_fund_data):
         """Test searching funds by name"""
         # Get a fund name
         sample_fund = db.query(FundMaster).filter(
@@ -274,7 +364,7 @@ class TestFundDataQueries:
             assert any(search_term.lower() in r.scheme_name.lower() 
                       for r in results), "Results should match search term"
     
-    def test_filter_by_amc(self, db: Session):
+    def test_filter_by_amc(self, db: Session, sample_fund_data):
         """Test filtering funds by AMC"""
         # Get an AMC
         sample_amc = db.query(FundMaster.amc).filter(
@@ -293,7 +383,7 @@ class TestFundDataQueries:
             assert all(r.amc == amc_name for r in results), \
                 "All results should be from the specified AMC"
     
-    def test_filter_by_category(self, db: Session):
+    def test_filter_by_category(self, db: Session, sample_fund_data):
         """Test filtering funds by category"""
         # Get a category
         sample_category = db.query(FundMaster.category).filter(
