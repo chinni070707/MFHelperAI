@@ -1889,52 +1889,7 @@
             });
         });
 
-        // Counter Animation for Stats
-        function animateCounter(element, target, duration = 2000) {
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                
-                // Format based on value
-                if (target >= 1000) {
-                    element.textContent = '₹' + Math.floor(current).toLocaleString() + 'Cr+';
-                } else if (target >= 100) {
-                    element.textContent = Math.floor(current).toLocaleString() + '+';
-                } else {
-                    element.textContent = Math.floor(current) + '%';
-                }
-            }, 16);
-        }
-
-        // Stats Counter Observer
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.animated) {
-                    entry.target.dataset.animated = 'true';
-                    
-                    // Animate each stat using data-target attribute
-                    const statItems = entry.target.querySelectorAll('.stat-item h3[data-target]');
-                    
-                    statItems.forEach((item, index) => {
-                        const target = parseInt(item.dataset.target);
-                        if (target) {
-                            animateCounter(item, target, 2000 + (index * 200));
-                        }
-                    });
-                }
-            });
-        }, { threshold: 0.5 });
-
-        if (statsGrid) {
-            statsObserver.observe(statsGrid);
-        }
+        // Stats section now uses static text values - no counter animation needed
 
         // Parallax Effect on Scroll
         let ticking = false;
