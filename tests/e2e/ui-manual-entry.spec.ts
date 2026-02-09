@@ -204,8 +204,15 @@ test.describe('Manual Portfolio Entry UI Tests', () => {
   });
 
   test('should remove a row', async ({ page }) => {
+    // First show the noData section which contains the Manual Entry button
+    await page.evaluate(() => {
+      const noData = document.getElementById('noData');
+      if (noData) noData.style.display = 'block';
+    });
+    
     // Open manual entry modal
-    await page.click('button:has-text("Manual Entry")');
+    const manualBtn = page.locator('button:has-text("Manual Entry")').first();
+    await manualBtn.click();
     await page.waitForSelector('#manualEntryModal', { state: 'visible' });
     await page.waitForSelector('#entryTableBody tr');
     
@@ -227,8 +234,15 @@ test.describe('Manual Portfolio Entry UI Tests', () => {
   });
 
   test('should close modal on Cancel button', async ({ page }) => {
+    // First show the noData section which contains the Manual Entry button
+    await page.evaluate(() => {
+      const noData = document.getElementById('noData');
+      if (noData) noData.style.display = 'block';
+    });
+    
     // Open modal
-    await page.click('button:has-text("Manual Entry")');
+    const manualBtn = page.locator('button:has-text("Manual Entry")').first();
+    await manualBtn.click();
     await page.waitForSelector('#manualEntryModal', { state: 'visible' });
     
     // Click Cancel
@@ -246,8 +260,15 @@ test.describe('Manual Portfolio Entry UI Tests', () => {
   });
 
   test('should disable fund search until AMC is selected', async ({ page }) => {
+    // First show the noData section which contains the Manual Entry button
+    await page.evaluate(() => {
+      const noData = document.getElementById('noData');
+      if (noData) noData.style.display = 'block';
+    });
+    
     // Open modal
-    await page.click('button:has-text("Manual Entry")');
+    const manualBtn = page.locator('button:has-text("Manual Entry")').first();
+    await manualBtn.click();
     await page.waitForSelector('#manualEntryModal', { state: 'visible' });
     await page.waitForSelector('#entryTableBody tr');
     

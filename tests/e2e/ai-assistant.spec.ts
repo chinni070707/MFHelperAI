@@ -7,19 +7,11 @@ import { test, expect } from '@playwright/test';
 
 test.describe('AI Assistant Features', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-    
-    // Navigate to AI demo page if it exists
-    const aiLink = page.locator('a[href*="ai"], text=AI Assistant, text=AI Demo').first();
-    if (await aiLink.count() > 0) {
-      await aiLink.click();
-      await page.waitForLoadState('networkidle');
-    } else {
-      // Try direct navigation
-      await page.goto('/ai-demo.html').catch(() => {
-        console.log('AI demo page not accessible');
-      });
-    }
+    // Try direct navigation to AI demo page
+    await page.goto('/ai-demo.html').catch(() => {
+      console.log('AI demo page not accessible');
+    });
+    await page.waitForLoadState('networkidle');
   });
 
   test('should display AI chat interface', async ({ page }) => {
@@ -129,8 +121,8 @@ test.describe('Portfolio Analysis', () => {
   test('should navigate to portfolio page', async ({ page }) => {
     await page.goto('/');
     
-    // Find portfolio link
-    const portfolioLink = page.locator('a[href*="dashboard"], text=Portfolio, text=Dashboard').first();
+    // Find portfolio link using proper locator
+    const portfolioLink = page.getByRole('link', { name: 'Dashboard' }).first();
     
     if (await portfolioLink.count() > 0) {
       await portfolioLink.click();
