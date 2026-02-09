@@ -2,6 +2,7 @@
 Tests for Authentication endpoints - register, login, profile, settings
 """
 import pytest
+from unittest.mock import AsyncMock, patch, MagicMock
 
 
 class TestRegister:
@@ -179,3 +180,145 @@ class TestSettings:
         """Unauthenticated settings access should return 401"""
         response = client.get("/api/auth/settings")
         assert response.status_code == 401
+
+
+class TestGoogleSignIn:
+    """Tests for POST /api/auth/google/verify"""
+
+    @patch('app.routes.auth.httpx.AsyncClient')
+    def test_google_signin_new_user(self, mock_client_class, client, db_session):
+        """Google Sign-In with new user creates account"""
+        # Mock Google's tokeninfo response
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'aud': '106393763654-95tm312afpu5blldr7eitmgd5j2khnjv.apps.googleusercontent.com',
+            'email': 'newgoogle@example.com',
+            'sub': 'google-id-12345',
+            'name': 'Google User',
+            'picture': 'https://example.com/photo.jpg',
+            'email_verified': 'true'
+        }
+        
+        # Setup the async client mock
+        mock_client = AsyncMock()
+        mock_client.get.return_value = mock_response
+        mock_client_class.return_value.__aenter__.return_value = mock_client
+        
+        response = client.post("/api/auth/google/verify", json={
+            "token": "fake-google-token-12345"
+        })
+        
+        assert response.status_code == 200
+        data = response.json()
+        assert "access_token" in data
+        assert data["token_type"] == "bearer"
+        assert data["user"]["email"] == "newgoogle@example.com"
+        assert data["user"]["full_name"] == "Google User"
+        assert data["user"]["profile_picture_url"] == "https://example.com/photo.jpg"
+
+    @patch('app.routes.auth.httpx.AsyncClient')
+    def test_google_signin_existing_user(self, mock_client_class, client, test_user, db_session):
+        """Google Sign-In with existing user updates profile"""
+        # Mock Google's tokeninfo response with test_user's email
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'aud': '106393763654-95tm312afpu5blldr7eitmgd5j2khnjv.apps.googleusercontent.com',
+            'email': test_user.email,
+            'sub': 'google-id-existing',
+            'name': test_user.full_name,
+            'picture': 'https://example.com/updated-photo.jpg',
+            'email_verified': 'true'
+        }
+        
+        # Setup the async client mock
+        mock_client = AsyncMock()
+        mock_client.get.return_value = mock_response
+        mock_client_class.return_value.__aenter__.return_value = mock_client
+        
+        response = client.post("/api/auth/google/verify", json={
+            "token": "fake-google-token-existing"
+        })
+        
+        assert response.status_code == 200
+        data = response.json()
+        assert "access_token" in data
+        assert data["user"]["email"] == test_user.email
+
+    @patch('app.routes.auth.httpx.AsyncClient')
+    def test_google_signin_invalid_token(self, mock_client_class, client):
+        """Google Sign-In with invalid token returns 401"""
+        # Mock Google's tokeninfo response for invalid token
+        mock_response = MagicMock()
+        mock_response.status_code = 400
+        
+        # Setup the async client mock
+        mock_client = AsyncMock()
+        mock_client.get.return_value = mock_response
+        mock_client_class.return_value.__aenter__.return_value = mock_client
+        
+        response = client.post("/api/auth/google/verify", json={
+            "token": "invalid-token"
+        })
+        
+        assert response.status_code == 401
+        assert "Invalid Google token" in response.json()["detail"]
+
+    @patch('app.routes.auth.httpx.AsyncClient')
+    def test_google_signin_wrong_audience(self, mock_client_class, client):
+        """Google Sign-In with wrong client ID returns 401"""
+        # Mock Google's tokeninfo response with wrong audience
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'aud': 'wrong-client-id',
+            'email': 'user@example.com',
+            'sub': 'google-id',
+            'name': 'User',
+            'email_verified': 'true'
+        }
+        
+        # Setup the async client mock
+        mock_client = AsyncMock()
+        mock_client.get.return_value = mock_response
+        mock_client_class.return_value.__aenter__.return_value = mock_client
+        
+        response = client.post("/api/auth/google/verify", json={
+            "token": "fake-token-wrong-audience"
+        })
+        
+        assert response.status_code == 401
+        assert "Invalid token audience" in response.json()["detail"]
+
+    def test_google_signin_missing_token(self, client):
+        """Google Sign-In without token returns 400"""
+        response = client.post("/api/auth/google/verify", json={})
+        
+        assert response.status_code == 400
+        assert "Token is required" in response.json()["detail"]
+
+    @patch('app.routes.auth.httpx.AsyncClient')
+    def test_google_signin_no_email(self, mock_client_class, client):
+        """Google Sign-In without email in response returns 400"""
+        # Mock Google's tokeninfo response without email
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'aud': '106393763654-95tm312afpu5blldr7eitmgd5j2khnjv.apps.googleusercontent.com',
+            'sub': 'google-id-12345',
+            'name': 'User',
+            'email_verified': 'true'
+        }
+        
+        # Setup the async client mock
+        mock_client = AsyncMock()
+        mock_client.get.return_value = mock_response
+        mock_client_class.return_value.__aenter__.return_value = mock_client
+        
+        response = client.post("/api/auth/google/verify", json={
+            "token": "fake-token-no-email"
+        })
+        
+        assert response.status_code == 400
+        assert "Email not provided" in response.json()["detail"]
