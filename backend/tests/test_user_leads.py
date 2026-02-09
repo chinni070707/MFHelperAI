@@ -135,7 +135,7 @@ class TestUserLeadsAPI:
         """Test capturing lead with both email and phone"""
         response = client.post(
             "/api/auth/leads/capture",
-            json={
+            params={
                 "email": "test@example.com",
                 "phone": "+919876543210",
                 "source": "timed-prompt"
@@ -183,7 +183,7 @@ class TestUserLeadsAPI:
         for i in range(12):  # Rate limit is 10/hour
             response = client.post(
                 "/api/auth/leads/capture",
-                json={
+                params={
                     "email": f"{i}{email}",
                     "source": "test"
                 }

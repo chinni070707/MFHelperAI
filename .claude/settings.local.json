@@ -31,7 +31,9 @@
       "Bash(\"venv\\\\Scripts\\\\python.exe\" -m pytest:*)",
       "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.schemas import PasswordChange, DeleteAccountRequest; print\\(''OK''\\)\")",
       "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.routes.auth import router; print\\(''OK''\\)\")",
-      "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.main import app; print\\(''OK''\\)\")"
+      "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.main import app; print\\(''OK''\\)\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
