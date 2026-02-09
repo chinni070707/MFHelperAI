@@ -791,9 +791,16 @@ async def google_callback(request: Request, db: Session = Depends(get_db)):
 
 
 @router.post("/google/verify")
-async def google_verify_token(token: str, db: Session = Depends(get_db)):
+async def google_verify_token(request: dict, db: Session = Depends(get_db)):
     """Verify Google ID token (for Google Sign-In JavaScript SDK)"""
     try:
+        token = request.get('token')
+        if not token:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Token is required"
+            )
+        
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 f'https://oauth2.googleapis.com/tokeninfo?id_token={token}'

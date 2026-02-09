@@ -746,6 +746,7 @@
         // Handle Google Sign-Up response
         async function handleGoogleSignUp(response) {
             try {
+                console.log('Google Sign-Up initiated');
                 showToast('Signing up with Google...', 'info');
                 
                 // Send the Google ID token to your backend
@@ -760,27 +761,26 @@
                 });
                 
                 const data = await result.json();
+                console.log('Google Sign-Up response:', data);
                 
-                if (result.ok) {
+                if (result.ok && data.access_token) {
                     // Store token
                     localStorage.setItem('authToken', data.access_token);
                     
                     // Store user info
                     if (data.user) {
                         localStorage.setItem('userInfo', JSON.stringify(data.user));
+                        console.log('User info stored:', data.user);
                     }
                     
                     showToast('Welcome! Redirecting to dashboard...', 'success');
                     
-                    // Redirect to dashboard immediately
-                    try {
+                    // Small delay to ensure storage completes, then redirect
+                    setTimeout(() => {
                         window.location.href = '/dashboard.html';
-                    } catch (redirectError) {
-                        console.error('Redirect failed:', redirectError);
-                        alert('Signup successful! Please click OK to go to dashboard.');
-                        window.location.href = '/dashboard.html';
-                    }
+                    }, 500);
                 } else {
+                    console.error('Sign-up failed:', data);
                     showToast(data.detail || 'Google sign-up failed', 'error');
                 }
             } catch (error) {

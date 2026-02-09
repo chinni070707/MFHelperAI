@@ -10,6 +10,12 @@
         const authToken = localStorage.getItem('authToken');
         const userInfoStr = localStorage.getItem('userInfo');
         
+        console.log('Updating navbar auth state:', { 
+            hasToken: !!authToken, 
+            hasUserInfo: !!userInfoStr,
+            userInfo: userInfoStr 
+        });
+        
         // Find all nav menus on the page
         const navMenus = document.querySelectorAll('.nav-menu');
         
