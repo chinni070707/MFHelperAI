@@ -242,6 +242,46 @@ async def login_html():
         return FileResponse(login_path)
     return {"error": "Login page not found"}
 
+@app.get("/auth")
+async def auth():
+    """Serve the unified auth page"""
+    auth_path = os.path.join(frontend_path, "auth.html")
+    if os.path.exists(auth_path):
+        return FileResponse(auth_path)
+    return {"error": "Auth page not found"}
+
+@app.get("/auth.html")
+async def auth_html():
+    """Serve the unified auth page with .html extension"""
+    auth_path = os.path.join(frontend_path, "auth.html")
+    if os.path.exists(auth_path):
+        return FileResponse(auth_path)
+    return {"error": "Auth page not found"}
+
+@app.get("/verify-email.html")
+async def verify_email_html():
+    """Serve the email verification page"""
+    verify_path = os.path.join(frontend_path, "verify-email.html")
+    if os.path.exists(verify_path):
+        return FileResponse(verify_path)
+    return {"error": "Email verification page not found"}
+
+@app.get("/privacy-policy.html")
+async def privacy_policy_html():
+    """Serve the privacy policy page"""
+    privacy_path = os.path.join(frontend_path, "privacy-policy.html")
+    if os.path.exists(privacy_path):
+        return FileResponse(privacy_path)
+    return {"error": "Privacy policy page not found"}
+
+@app.get("/terms-of-service.html")
+async def terms_of_service_html():
+    """Serve the terms of service page"""
+    terms_path = os.path.join(frontend_path, "terms-of-service.html")
+    if os.path.exists(terms_path):
+        return FileResponse(terms_path)
+    return {"error": "Terms of service page not found"}
+
 @app.get("/ai-demo.html")
 async def ai_demo():
     """Serve the AI demo page"""
