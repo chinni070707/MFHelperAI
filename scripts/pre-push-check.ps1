@@ -52,14 +52,13 @@ if ($pythonFiles) {
 }
 
 # ============================================
-# 2. Ruff Linting (catches undefined names, missing imports, etc.)
+# 2. Ruff Linting
 # ============================================
 Write-Host ""
 Write-Host "Running ruff lint checks..." -ForegroundColor Yellow
 
 $ruffPath = Join-Path $projectRoot "venv\Scripts\ruff.exe"
 if (-not (Test-Path $ruffPath)) {
-    # Fallback: try system ruff
     $ruffPath = "ruff"
 }
 
@@ -76,16 +75,14 @@ try {
     }
 } catch {
     Write-Host "  Ruff not installed - skipping lint check" -ForegroundColor Yellow
-    Write-Host "  Install with: pip install ruff" -ForegroundColor Yellow
 }
 
 # ============================================
-# 2b. Import Validation
+# 3. Import Validation
 # ============================================
 Write-Host ""
 Write-Host "Validating Python imports..." -ForegroundColor Yellow
 
-# Find python in venv or .venv
 $pythonPath = $null
 if (Test-Path (Join-Path $projectRoot "venv\Scripts\python.exe")) {
     $pythonPath = Join-Path $projectRoot "venv\Scripts\python.exe"
@@ -105,7 +102,7 @@ try {
     if ($importExitCode -eq 0) {
         Write-Host "  Core imports validated successfully" -ForegroundColor Green
     } else {
-        Write-Host "  Import validation failed - check config.py and main.py" -ForegroundColor Red
+        Write-Host "  Import validation failed" -ForegroundColor Red
         $failed = $true
     }
 } catch {
@@ -115,57 +112,54 @@ try {
 Pop-Location
 
 # ============================================
-# 3. Run Critical Tests (pytest)
+# 4. Run Critical Tests (pytest)
 # ============================================
 Write-Host ""
 Write-Host "Running critical tests (pytest)..." -ForegroundColor Yellow
 
 Push-Location backend
 try {
-    # Check if pytest is installed
     $pytestPath = Join-Path $projectRoot "venv\Scripts\pytest.exe"
     if (-not (Test-Path $pytestPath)) {
-        # Try .venv
         $pytestPath = Join-Path $projectRoot ".venv\Scripts\pytest.exe"
         if (-not (Test-Path $pytestPath)) {
-            # Try system pytest
             $pytestPath = "pytest"
         }
     }
 
-    # Run auth tests (critical for Google Sign-In)
+    # Run auth tests
     Write-Host "  Testing authentication..." -ForegroundColor Gray
     $authTestResult = & $pytestPath tests/test_auth.py -q --tb=no 2>&1
     $authExitCode = $LASTEXITCODE
 
     if ($authExitCode -eq 0) {
-        Write-Host "  Auth tests passed ✓" -ForegroundColor Green
+        Write-Host "  Auth tests passed" -ForegroundColor Green
     } else {
         Write-Host "  Auth tests failed!" -ForegroundColor Red
         $authTestResult | Select-Object -Last 10 | ForEach-Object { Write-Host "    $_" -ForegroundColor Red }
         $failed = $true
     }
 
-    # Run portfolio tests (critical for data handling)
+    # Run portfolio tests
     Write-Host "  Testing portfolio operations..." -ForegroundColor Gray
     $portfolioTestResult = & $pytestPath tests/test_portfolio.py -q --tb=no 2>&1
     $portfolioExitCode = $LASTEXITCODE
 
     if ($portfolioExitCode -eq 0) {
-        Write-Host "  Portfolio tests passed ✓" -ForegroundColor Green
+        Write-Host "  Portfolio tests passed" -ForegroundColor Green
     } else {
         Write-Host "  Portfolio tests failed!" -ForegroundColor Red
         $portfolioTestResult | Select-Object -Last 10 | ForEach-Object { Write-Host "    $_" -ForegroundColor Red }
         $failed = $true
     }
 
-    # Run upload tests (critical for CAS parsing)
+    # Run upload tests
     Write-Host "  Testing upload functionality..." -ForegroundColor Gray
     $uploadTestResult = & $pytestPath tests/test_upload.py -q --tb=no 2>&1
     $uploadExitCode = $LASTEXITCODE
 
     if ($uploadExitCode -eq 0) {
-        Write-Host "  Upload tests passed ✓" -ForegroundColor Green
+        Write-Host "  Upload tests passed" -ForegroundColor Green
     } else {
         Write-Host "  Upload tests failed!" -ForegroundColor Red
         $uploadTestResult | Select-Object -Last 10 | ForEach-Object { Write-Host "    $_" -ForegroundColor Red }
@@ -173,13 +167,12 @@ try {
     }
 
 } catch {
-    Write-Host "  Pytest not installed or not found - skipping tests" -ForegroundColor Yellow
-    Write-Host "  Install with: pip install pytest" -ForegroundColor Yellow
+    Write-Host "  Pytest not installed - skipping tests" -ForegroundColor Yellow
 }
 Pop-Location
 
 # ============================================
-# 4. Check requirements.txt
+# 5. Check requirements.txt
 # ============================================
 Write-Host ""
 Write-Host "Checking requirements.txt..." -ForegroundColor Yellow
@@ -187,7 +180,6 @@ Write-Host "Checking requirements.txt..." -ForegroundColor Yellow
 if (Test-Path "backend/requirements.txt") {
     $reqContent = Get-Content "backend/requirements.txt" -Raw
     
-    # Check for critical packages
     $criticalPackages = @("fastapi", "uvicorn", "sqlalchemy", "psycopg2-binary")
     $missingPackages = @()
     
@@ -209,7 +201,7 @@ if (Test-Path "backend/requirements.txt") {
 }
 
 # ============================================
-# 5. Check deployment files
+# 6. Check deployment files
 # ============================================
 Write-Host ""
 Write-Host "Checking deployment files..." -ForegroundColor Yellow
