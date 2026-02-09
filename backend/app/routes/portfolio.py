@@ -93,6 +93,25 @@ async def save_portfolio(
     """Save portfolio data - creates a new snapshot preserving history"""
     logger.info(f"Saving portfolio for user: {current_user.email}")
     
+    # Helper function to safely convert to float
+    def safe_float(value, default=None):
+        """Convert value to float, handling strings with % and special chars"""
+        if value is None:
+            return default
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            value = value.strip()
+            if value in ['-', '', 'N/A', 'NA', 'null', 'None']:
+                return default
+            # Remove % sign if present
+            value = value.rstrip('%')
+            try:
+                return float(value)
+            except (ValueError, TypeError):
+                return default
+        return default
+    
     summary = data.get('summary', {})
     holdings_data = data.get('holdings', [])
     
@@ -120,15 +139,15 @@ async def save_portfolio(
             amc=holding_data.get('amc'),
             category=holding_data.get('category'),
             sub_category=holding_data.get('sub_category'),
-            units=holding_data.get('units', 0),
-            nav=holding_data.get('nav'),
-            invested_amount=holding_data.get('invested', 0),
-            current_value=holding_data.get('current_value', 0),
-            gain_loss=holding_data.get('gain', 0),
-            return_pct=holding_data.get('return_pct', 0),
-            one_year_return=holding_data.get('return_1y'),
-            three_year_return=holding_data.get('return_3y'),
-            alpha=holding_data.get('alpha')
+            units=safe_float(holding_data.get('units'), 0),
+            nav=safe_float(holding_data.get('nav')),
+            invested_amount=safe_float(holding_data.get('invested'), 0),
+            current_value=safe_float(holding_data.get('current_value'), 0),
+            gain_loss=safe_float(holding_data.get('gain'), 0),
+            return_pct=safe_float(holding_data.get('return_pct'), 0),
+            one_year_return=safe_float(holding_data.get('return_1y')),
+            three_year_return=safe_float(holding_data.get('return_3y')),
+            alpha=safe_float(holding_data.get('alpha'))
         )
         db.add(holding)
     

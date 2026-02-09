@@ -44,7 +44,7 @@ if settings.GOOGLE_CLIENT_ID and settings.GOOGLE_CLIENT_SECRET:
 
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
 @limiter.limit("5/minute")  # Rate limit: 5 registrations per minute
-async def register(request: Request, user_data: UserCreate, db: Session = Depends(get_db)):
+async def register(request: Request, response: Response, user_data: UserCreate, db: Session = Depends(get_db)):
     """Register a new user"""
     logger.info(f"Registration attempt for email: {user_data.email}")
     
@@ -207,6 +207,7 @@ async def verify_email(token: str, db: Session = Depends(get_db)):
 @limiter.limit("3/hour")  # Limit resend requests
 async def resend_verification_email(
     request: Request,
+    response: Response,
     current_user: User = Depends(get_current_active_user),
     db: Session = Depends(get_db)
 ):
@@ -256,7 +257,7 @@ async def resend_verification_email(
 
 @router.post("/resend-verification-by-email")
 @limiter.limit("3/hour")
-async def resend_verification_by_email(request: Request, db: Session = Depends(get_db)):
+async def resend_verification_by_email(request: Request, response: Response, db: Session = Depends(get_db)):
     """
     Resend verification email using email address (for users who aren't logged in).
     Rate limited to 3 per hour.
@@ -331,7 +332,7 @@ async def get_verification_status(current_user: User = Depends(get_current_activ
 
 @router.post("/check-email")
 @limiter.limit("20/minute")
-async def check_email(request: Request, db: Session = Depends(get_db)):
+async def check_email(request: Request, response: Response, db: Session = Depends(get_db)):
     """Check if email exists (for UX purposes)"""
     try:
         data = await request.json()
@@ -352,7 +353,7 @@ async def check_email(request: Request, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=Token)
 @limiter.limit("10/minute")  # Rate limit: 10 login attempts per minute
-async def login(request: Request, credentials: UserLogin, db: Session = Depends(get_db)):
+async def login(request: Request, response: Response, credentials: UserLogin, db: Session = Depends(get_db)):
     """Login user and return JWT token"""
     logger.info(f"Login attempt for email: {credentials.email}")
     

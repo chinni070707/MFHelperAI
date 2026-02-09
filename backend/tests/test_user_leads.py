@@ -50,7 +50,7 @@ class TestUserLeadsAPI:
         """Test capturing lead with email"""
         response = client.post(
             "/api/auth/leads/capture",
-            json={
+            params={
                 "email": "test@example.com",
                 "source": "demo-banner"
             }
@@ -73,7 +73,7 @@ class TestUserLeadsAPI:
         """Test capturing lead with phone"""
         response = client.post(
             "/api/auth/leads/capture",
-            json={
+            params={
                 "phone": "+919876543210",
                 "source": "export-gate"
             }
@@ -94,7 +94,7 @@ class TestUserLeadsAPI:
         """Test that either email or phone is required"""
         response = client.post(
             "/api/auth/leads/capture",
-            json={
+            params={
                 "source": "test"
             }
         )
@@ -106,7 +106,7 @@ class TestUserLeadsAPI:
         # Create initial lead
         client.post(
             "/api/auth/leads/capture",
-            json={
+            params={
                 "email": "test@example.com",
                 "source": "demo-banner"
             }
@@ -115,7 +115,7 @@ class TestUserLeadsAPI:
         # Capture again with same email
         response = client.post(
             "/api/auth/leads/capture",
-            json={
+            params={
                 "email": "test@example.com",
                 "source": "export-gate"
             }

@@ -119,9 +119,9 @@ def sample_excel_data():
                 "current_value": 125000,
                 "units": 1234.56,
                 "nav": 101.25,
-                "return_1y": "18.5%",
-                "return_3y": "22.3%",
-                "alpha": "5.2",
+                "return_1y": 18.5,
+                "return_3y": 22.3,
+                "alpha": 5.2,
                 "style": "GARP"
             },
             {
@@ -132,9 +132,9 @@ def sample_excel_data():
                 "current_value": 58000,
                 "units": 567.89,
                 "nav": 102.10,
-                "return_1y": "15.2%",
-                "return_3y": "19.8%",
-                "alpha": "3.5",
+                "return_1y": 15.2,
+                "return_3y": 19.8,
+                "alpha": 3.5,
                 "style": "Quality"
             }
         ],

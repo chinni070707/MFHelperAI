@@ -633,12 +633,31 @@ async def upload_excel(
     content = await file.read()
     result = parse_excel(content, file.filename)
     
+    # Helper function to safely convert to float
+    def safe_float(value, default=None):
+        """Convert value to float, handling strings with % and special chars"""
+        if value is None:
+            return default
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            value = value.strip()
+            if value in ['-', '', 'N/A', 'NA', 'null', 'None']:
+                return default
+            # Remove % sign if present
+            value = value.rstrip('%')
+            try:
+                return float(value)
+            except (ValueError, TypeError):
+                return default
+        return default
+    
     # Save to database if user is authenticated
     if current_user:
         try:
             # Calculate totals
-            total_invested = sum(h.get('invested', 0) for h in result['holdings'])
-            total_current = sum(h.get('current_value', 0) for h in result['holdings'])
+            total_invested = sum(safe_float(h.get('invested'), 0) for h in result['holdings'])
+            total_current = sum(safe_float(h.get('current_value'), 0) for h in result['holdings'])
             total_gain = total_current - total_invested
             
             # Create a new portfolio snapshot
@@ -655,21 +674,26 @@ async def upload_excel(
             
             # Save each holding
             for holding in result['holdings']:
+                invested = safe_float(holding.get('invested'), 0)
+                current_value = safe_float(holding.get('current_value'), 0)
+                gain_loss = current_value - invested
+                return_pct = ((current_value - invested) / invested * 100) if invested > 0 else 0
+                
                 holding_entry = Holding(
                     user_id=current_user.id,
                     portfolio_id=portfolio.id,
                     fund_name=holding.get('fund_name', ''),
-                    units=0,  # Excel usually doesn't have units
-                    nav=0,
-                    invested_amount=holding.get('invested', 0),
-                    current_value=holding.get('current_value', 0),
-                    gain_loss=holding.get('current_value', 0) - holding.get('invested', 0),
-                    return_pct=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
+                    units=safe_float(holding.get('units'), 0),
+                    nav=safe_float(holding.get('nav'), 0),
+                    invested_amount=invested,
+                    current_value=current_value,
+                    gain_loss=gain_loss,
+                    return_pct=return_pct,
                     amc=holding.get('amc', ''),
                     category=holding.get('category', ''),
-                    one_year_return=holding.get('return_1y'),
-                    three_year_return=holding.get('return_3y'),
-                    alpha=holding.get('alpha'),
+                    one_year_return=safe_float(holding.get('return_1y')),
+                    three_year_return=safe_float(holding.get('return_3y')),
+                    alpha=safe_float(holding.get('alpha')),
                     investment_style=holding.get('style')
                 )
                 db.add(holding_entry)
