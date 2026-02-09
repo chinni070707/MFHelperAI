@@ -414,8 +414,21 @@
             text-align: center;
             padding: 60px 20px;
             color: var(--text-secondary);
+            max-width: 900px;
+            margin: 0 auto;
         }
-        .no-data h2 { margin-bottom: 20px; color: #fff; }
+        .no-data h2 { 
+            margin-bottom: 15px; 
+            color: #fff; 
+            font-size: 2rem;
+        }
+        .no-data ul {
+            text-align: left;
+            color: rgba(255,255,255,0.8);
+        }
+        .no-data li {
+            margin-bottom: 10px;
+        }
         
         /* Insights Box */
         .insights-box {
@@ -635,15 +648,32 @@
     <main id="main-content" role="main">
     <!-- No Data State -->
     <div id="noData" class="no-data" style="display: none;">
-        <h2>No Portfolio Data</h2>
-        <p>Upload your CAS statement or manually enter your portfolio data for privacy.</p>
-        <br>
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-            <button class="btn btn-primary" onclick="showUploadModal()">📁 Upload CAS</button>
-            <button class="btn btn-secondary" onclick="showManualEntryModal()">✏️ Manual Entry</button>
+        <h2>📊 Welcome to Your Portfolio Dashboard</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 30px;">Get started by choosing one of the options below:</p>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
+            <button class="btn btn-primary" onclick="loadDemoAndRedirect()" style="min-width: 180px;">
+                🎯 Try Demo Portfolio
+            </button>
+            <button class="btn btn-primary" onclick="showUploadModal()" style="min-width: 180px;">
+                📁 Upload CAS
+            </button>
+            <button class="btn btn-secondary" onclick="showManualEntryModal()" style="min-width: 180px;">
+                ✏️ Manual Entry
+            </button>
         </div>
-        <p style="margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
-            <strong>Privacy Note:</strong> Manual entry keeps your sensitive data in your control
+        
+        <div style="text-align: left; max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+            <p style="margin-bottom: 15px; font-weight: 600; color: #4CAF50;">💡 New to MFHelper?</p>
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+                <li><strong>Demo Portfolio:</strong> Explore features with sample data</li>
+                <li><strong>Upload CAS:</strong> Import your portfolio from NSDL/CAMS statement</li>
+                <li><strong>Manual Entry:</strong> Add funds manually for maximum privacy</li>
+            </ul>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+            🔒 Your data is stored locally in your browser. We respect your privacy.
         </p>
     </div>
     
@@ -1114,6 +1144,11 @@
                 document.getElementById('noData').style.display = 'block';
                 window.showToast?.('Failed to load demo portfolio', 'error');
             }
+        }
+        
+        // Function to load demo portfolio and redirect
+        function loadDemoAndRedirect() {
+            window.location.href = '/dashboard.html?mode=demo';
         }
         
         async function loadPortfolioFromDatabase() {
