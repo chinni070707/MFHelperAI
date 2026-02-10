@@ -4,7 +4,7 @@ MFHelper - Configuration Settings
 from pydantic_settings import BaseSettings
 from typing import Optional
 import os
-import sys
+import logging
 
 
 class Settings(BaseSettings):
@@ -82,14 +82,9 @@ settings = Settings()
 if settings.DATABASE_URL.startswith("sqlite"):
     # Local development - force DEBUG=True for convenience
     settings.DEBUG = True
-    print(f"[DEBUG] Local Development Mode: DEBUG={settings.DEBUG}", file=sys.stderr)
-else:
-    # Production environment - respect DEBUG from environment variable
-    print(f"[DEBUG] Production Mode: DEBUG={settings.DEBUG}", file=sys.stderr)
 
-# Debug: Print database info
-print(f"[DEBUG] Database: {settings.DATABASE_URL.split('@')[0] if '@' in settings.DATABASE_URL else 'sqlite'}...", file=sys.stderr)
-print(f"[DEBUG] DEBUG Type: {type(settings.DEBUG)}", file=sys.stderr)
+logger = logging.getLogger(__name__)
+logger.info(f"Environment: {'Local (SQLite)' if settings.DATABASE_URL.startswith('sqlite') else 'Production'}, DEBUG={settings.DEBUG}")
 
 # Ensure upload directory exists
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)

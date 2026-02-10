@@ -213,6 +213,9 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 // Inject styles
-const style = document.createElement('style');
-style.textContent = DemoBanner.getStyles();
-document.head.appendChild(style);
+// Inject styles (use IIFE to avoid const redeclaration collisions with other scripts)
+(function() {
+    const demoBannerStyle = document.createElement('style');
+    demoBannerStyle.textContent = DemoBanner.getStyles();
+    document.head.appendChild(demoBannerStyle);
+})();

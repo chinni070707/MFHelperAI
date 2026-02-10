@@ -2,6 +2,14 @@
  * Dashboard JavaScript - Extracted from inline JS for performance
  */
 
+// HTML escape helper to prevent XSS when rendering user data
+function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
+}
+
 // Mobile Menu Toggle
 function toggleMenu() {
     const menu = document.querySelector('.nav-menu');
@@ -151,6 +159,7 @@ async function loadDemoPortfolio() {
                 mode: 'demo',
                 holdings: data.holdings.map(h => ({
                     scheme_name: h.scheme_name,
+                    fund_name: h.scheme_name,
                     scheme_code: h.scheme_code,
                     category: h.category || 'Others',
                     amc: h.amc || 'Unknown',
@@ -218,6 +227,7 @@ async function loadPortfolioFromDatabase() {
             source: data.source || 'upload',
             holdings: data.holdings.map(h => ({
                 scheme_name: h.fund_name,
+                fund_name: h.fund_name,
                 category: h.category || 'Others',
                 amc: h.amc || 'Unknown',
                 invested: h.invested,
@@ -399,12 +409,12 @@ function renderAMCChart(holdings) {
             const display = document.getElementById('amcFundsDisplay');
             display.classList.add('visible');
             display.style.borderLeft = `4px solid ${color}`;
-            let html = `<h5 style="color: ${color}; margin-bottom: 10px;">🏢 ${amc}</h5><div style="display: grid; gap: 8px;">`;
+            let html = `<h5 style="color: ${color}; margin-bottom: 10px;">🏢 ${escapeHtml(amc)}</h5><div style="display: grid; gap: 8px;">`;
             funds.forEach(f => {
                 const val = (parseFloat(f.current_value || 0) / 100000).toFixed(2);
                 const gain = parseFloat(f.current_value || 0) - parseFloat(f.invested || 0);
                 const gainColor = gain >= 0 ? 'var(--primary-green)' : '#ff4757';
-                html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--white); border-radius: 6px;"><div><span style="color: #fff;">${f.fund_name}</span><br><span style="color: var(--text-secondary); font-size: 0.8rem;">${f.category || '-'}</span></div><div style="text-align: right;"><span style="color: ${color}; font-weight: 600;">₹${val}L</span><br><span style="color: ${gainColor}; font-size: 0.85rem;">${gain >= 0 ? '+' : ''}${((gain/parseFloat(f.invested||1))*100).toFixed(1)}%</span></div></div>`;
+                html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--white); border-radius: 6px;"><div><span style="color: #fff;">${escapeHtml(f.fund_name)}</span><br><span style="color: var(--text-secondary); font-size: 0.8rem;">${escapeHtml(f.category || '-')}</span></div><div style="text-align: right;"><span style="color: ${color}; font-weight: 600;">₹${val}L</span><br><span style="color: ${gainColor}; font-size: 0.85rem;">${gain >= 0 ? '+' : ''}${((gain/parseFloat(f.invested||1))*100).toFixed(1)}%</span></div></div>`;
             });
             html += '</div>';
             display.innerHTML = html;
@@ -440,10 +450,10 @@ function renderStyleChart(holdings) {
             const display = document.getElementById('styleFundsDisplay');
             display.classList.add('visible');
             display.style.borderLeft = `4px solid ${color}`;
-            let html = `<h5 style="color: ${color}; margin-bottom: 10px;">🎨 ${style} Style</h5><div style="display: grid; gap: 8px;">`;
+            let html = `<h5 style="color: ${color}; margin-bottom: 10px;">🎨 ${escapeHtml(style)} Style</h5><div style="display: grid; gap: 8px;">`;
             funds.forEach(f => {
                 const val = (parseFloat(f.current_value || 0) / 100000).toFixed(2);
-                html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--white); border-radius: 6px;"><span>${f.fund_name}</span><span style="color: ${color};">₹${val}L</span></div>`;
+                html += `<div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--white); border-radius: 6px;"><span>${escapeHtml(f.fund_name)}</span><span style="color: ${color};">₹${val}L</span></div>`;
             });
             html += '</div>';
             display.innerHTML = html;
@@ -521,7 +531,7 @@ function renderRiskTable(holdings) {
         const invested = parseFloat(h.invested || 0), current = parseFloat(h.current_value || 0);
         const returnPct = invested > 0 ? ((current - invested) / invested * 100).toFixed(1) : '0.0';
         const returnClass = current >= invested ? 'gain' : 'loss';
-        html += `<tr><td>${h.fund_name || '-'}</td><td>${h.category || '-'}</td><td>₹${(invested/100000).toFixed(2)}L</td><td>₹${(current/100000).toFixed(2)}L</td><td class="${returnClass}">${current >= invested ? '+' : ''}${returnPct}%</td><td class="${parseFloat(h.alpha) >= 0 ? 'gain' : 'loss'}">${h.alpha || '-'}</td><td>${h.return_1y || h['1Y Return'] || '-'}</td><td>${h.return_3y || h['3Y Return'] || '-'}</td></tr>`;
+        html += `<tr><td>${escapeHtml(h.fund_name || '-')}</td><td>${escapeHtml(h.category || '-')}</td><td>₹${(invested/100000).toFixed(2)}L</td><td>₹${(current/100000).toFixed(2)}L</td><td class="${returnClass}">${current >= invested ? '+' : ''}${returnPct}%</td><td class="${parseFloat(h.alpha) >= 0 ? 'gain' : 'loss'}">${h.alpha || '-'}</td><td>${h.return_1y || h['1Y Return'] || '-'}</td><td>${h.return_3y || h['3Y Return'] || '-'}</td></tr>`;
     });
     document.getElementById('riskTableBody').innerHTML = html;
 }
@@ -542,7 +552,7 @@ function renderHoldingsTable(holdings) {
         else if (alpha < -3) actionBadge = '<span class="badge badge-exit">EXIT</span>';
         else if (invested === current) actionBadge = '<span class="badge badge-new">NEW</span>';
         
-        html += `<tr><td class="fund-name">${h.fund_name || '-'}</td><td><span class="category-badge">${h.category || '-'}</span></td><td>₹${(invested/100000).toFixed(2)}L</td><td>₹${(current/100000).toFixed(2)}L</td><td class="${gainClass}">${gain >= 0 ? '+' : ''}₹${(Math.abs(gain)/100000).toFixed(2)}L</td><td class="${gainClass}">${gain >= 0 ? '+' : ''}${returnPct}%</td><td><span class="${styleClass}">${h.style || '-'}</span></td><td>${h.return_1y || h['1Y Return'] || '-'}</td><td>${h.return_3y || h['3Y Return'] || '-'}</td><td class="${parseFloat(h.alpha) >= 0 ? 'gain' : 'loss'}">${h.alpha || '-'}</td><td>${actionBadge}</td></tr>`;
+        html += `<tr><td class="fund-name">${escapeHtml(h.fund_name || '-')}</td><td><span class="category-badge">${escapeHtml(h.category || '-')}</span></td><td>₹${(invested/100000).toFixed(2)}L</td><td>₹${(current/100000).toFixed(2)}L</td><td class="${gainClass}">${gain >= 0 ? '+' : ''}₹${(Math.abs(gain)/100000).toFixed(2)}L</td><td class="${gainClass}">${gain >= 0 ? '+' : ''}${returnPct}%</td><td><span class="${styleClass}">${escapeHtml(h.style || '-')}</span></td><td>${h.return_1y || h['1Y Return'] || '-'}</td><td>${h.return_3y || h['3Y Return'] || '-'}</td><td class="${parseFloat(h.alpha) >= 0 ? 'gain' : 'loss'}">${h.alpha || '-'}</td><td>${actionBadge}</td></tr>`;
     });
     document.getElementById('holdingsTable').innerHTML = html;
 }
@@ -793,7 +803,7 @@ async function autoPopulatePortfolioId() {
     if (!pidInput) return;
 
     const headers = { 'Content-Type': 'application/json' };
-    const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+    const token = localStorage.getItem('authToken') || localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
@@ -816,7 +826,7 @@ async function fetchXirrAndCompare() {
 
     // Prepare headers with auth if present
     const headers = { 'Content-Type': 'application/json' };
-    const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+    const token = localStorage.getItem('authToken') || localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {

@@ -477,4 +477,160 @@ alembic upgrade head
 
 ---
 
-**Last Updated:** February 1, 2026 (after CAS parsing investigation)
+**Last Updated:** February 10, 2026 (after E2E audit)
+
+---
+
+# Non-Critical Issues (E2E Audit — 2026-02-10)
+
+> Critical bugs fixed separately: appendChild null, style redeclaration, portfolioStorage.load, marketCap misclassification, style misclassification, route conflict
+
+## Fix First (Medium Severity, High Impact)
+
+### SECURITY
+
+- [ ] **#1** `SECRET_KEY` / `JWT_SECRET_KEY` fall back to weak hardcoded defaults → Raise startup error if not set in non-DEBUG mode  
+  **File:** `backend/app/config.py`
+
+- [x] **#2** `ADMIN_API_KEY` hardcoded, passed as query param → Moved to `os.getenv()`, added `X-Admin-Key` header support  
+  **File:** `backend/app/routes/admin.py`
+
+- [x] **#3** All 5 data update endpoints (`/api/data/update/*`) had zero authentication → Added `Depends(verify_data_admin)` with `X-Admin-Key` header  
+  **File:** `backend/app/routes/data_updates.py`
+
+- [ ] **#4** Google OAuth client ID hardcoded in HTML → Inject via API or env  
+  **File:** `frontend/auth.html`
+
+- [x] **#5** `/api/auth/check-email` enabled email enumeration → Now returns generic `"Email checked"` message  
+  **File:** `backend/app/routes/auth.py`
+
+- [x] **#6** `/api/admin/users` exposed full PAN and phone → PAN redacted to `****XXXX`, phone removed from list  
+  **File:** `backend/app/routes/admin.py`
+
+### CODE QUALITY / XSS
+
+- [x] **#21** `innerHTML` XSS vector → Added `escapeHtml()` helper, all user data (fund names, AMC, category, style) now escaped  
+  **File:** `frontend/js/dashboard.js`
+
+- [x] **#22** `toast.innerHTML` XSS → Added `escapeHtml()` to ToastManager, message now sanitized  
+  **File:** `frontend/js/toast.js`
+
+### FUNCTIONAL BUG
+
+- [x] **#10** Token key mismatch → Now checks `authToken` first, falls back to `access_token`  
+  **File:** `frontend/js/dashboard.js`
+
+### PERFORMANCE
+
+- [x] **#15** 12 render-blocking scripts → Added `defer` to all 14 `<script>` tags in dashboard head  
+  **File:** `frontend/dashboard.html`
+
+### DEPRECATION
+
+- [x] **#12** Plotly CDN frozen at v1.58.5 → Updated to `plotly-2.35.2.min.js`  
+  **Files:** `frontend/dashboard.html`, `frontend/dashboard-pro.html`
+
+### UX
+
+- [x] **#30** Auth modal missing confirm password → Added confirm password field + regex strength validation  
+  **File:** `frontend/js/auth-modals.js`
+
+### ACCESSIBILITY
+
+- [x] **#33** Auth page missing ARIA → Added `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`, `role="tabpanel"`  
+  **File:** `frontend/auth.html`
+
+### BACKEND
+
+- [x] **#23** 4 bare `print()` at import time → Replaced with `logger.info()`  
+  **File:** `backend/app/config.py`
+
+---
+
+## Fix Later (Low Severity)
+
+### SECURITY
+
+- [ ] **#7** No `Content-Security-Policy` header set anywhere  
+  **File:** `backend/app/main.py`
+
+- [ ] **#8** `POST /api/auth/logout` is a no-op — JWT remains valid for 7 days, no token blacklist  
+  **File:** `backend/app/routes/auth.py`
+
+- [ ] **#9** JWT expiry is 7 days with no revocation mechanism  
+  **File:** `backend/app/utils/auth.py`
+
+- [ ] **#11** Guest uploads saved to `./uploads` with no cleanup/TTL mechanism  
+  **File:** `backend/app/routes/upload.py`
+
+### DEPRECATION
+
+- [ ] **#13** `from sqlalchemy.ext.declarative import declarative_base` deprecated since SQLAlchemy 1.4  
+  **File:** `backend/app/database.py`
+
+- [ ] **#14** Google Analytics `GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'` — placeholder never replaced  
+  **File:** `frontend/js/analytics.js`
+
+### PERFORMANCE
+
+- [ ] **#16** N+1 query in `/api/admin/stats` — per-portfolio count queries in a loop  
+  **File:** `backend/app/routes/admin.py`
+
+- [ ] **#17** N+1 query in `/api/admin/users` — 2 queries per user  
+  **File:** `backend/app/routes/admin.py`
+
+- [ ] **#18** `user-scalable=no` disables pinch-to-zoom (WCAG 1.4.4 violation)  
+  **Files:** `frontend/dashboard.html`, `frontend/how-it-works.html`
+
+- [ ] **#19** `echo=settings.DEBUG` logs every SQL query; DEBUG force-set to True for SQLite  
+  **File:** `backend/app/database.py`
+
+- [ ] **#20** ~170 lines of inline `<script>` in index.html duplicating logic from index.js  
+  **File:** `frontend/index.html`
+
+### CODE QUALITY
+
+- [ ] **#24** ~60+ `console.log` / `console.warn` left in production code across all JS files  
+  **Files:** Multiple frontend JS files
+
+- [ ] **#25** Component stubs show "coming soon" toasts — placeholder code  
+  **File:** `frontend/js/components.js`
+
+- [ ] **#26** `print()` instead of `logger.warning()` for fund-not-found  
+  **File:** `backend/app/routes/holdings.py`
+
+- [ ] **#27** `print()` instead of `logger.error()` in error handlers  
+  **File:** `backend/app/routes/errors.py`
+
+- [ ] **#28** ~270 lines of repetitive static file route handlers  
+  **File:** `backend/app/main.py`
+
+- [ ] **#29** `sendDashboardChat()` uses hardcoded `'Bearer demo-token'` — always fails auth  
+  **File:** `frontend/js/dashboard.js`
+
+### UX
+
+- [ ] **#31** "Forgot password?" is a dead `href="#"` link — no reset flow  
+  **File:** `frontend/auth.html`
+
+- [ ] **#32** "Settings" link in user dropdown opens admin panel, not user settings  
+  **File:** `frontend/js/navbar-auth.js`
+
+### ACCESSIBILITY
+
+- [ ] **#34** `user-scalable=no` blocks zoom for low-vision users  
+  **Files:** `frontend/dashboard.html`, `frontend/how-it-works.html`
+
+- [ ] **#35** Charts have no text alternatives for screen readers  
+  **File:** `frontend/js/dashboard.js`
+
+- [ ] **#36** Modals don't trap focus or handle Escape key  
+  **File:** `frontend/js/auth-modals.js`
+
+### BACKEND
+
+- [ ] **#39** Upload has no file content validation beyond extension  
+  **File:** `backend/app/routes/upload.py`
+
+- [ ] **#40** `DEBUG` silently force-set to `True` for SQLite, overriding explicit config  
+  **File:** `backend/app/config.py`

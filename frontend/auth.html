@@ -583,14 +583,14 @@
                 </div>
                 
                 <!-- Tabs -->
-                <div class="auth-tabs">
-                    <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
-                    <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+                <div class="auth-tabs" role="tablist" aria-label="Authentication">
+                    <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="loginTab" id="loginTabBtn" onclick="switchTab('login')">Sign In</button>
+                    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="signupTab" id="signupTabBtn" onclick="switchTab('signup')">Sign Up</button>
                 </div>
             </div>
 
             <!-- Login Tab -->
-            <div id="loginTab" class="tab-content active">
+            <div id="loginTab" class="tab-content active" role="tabpanel" aria-labelledby="loginTabBtn">
                 <div class="form-subtitle">Welcome back! Sign in to access your portfolio</div>
 
                 <!-- Social Login Buttons -->
@@ -625,7 +625,7 @@
             </div>
 
             <!-- Signup Tab -->
-            <div id="signupTab" class="tab-content">
+            <div id="signupTab" class="tab-content" role="tabpanel" aria-labelledby="signupTabBtn">
                 <div class="form-subtitle">Create your account and start managing your investments</div>
 
                 <!-- Social Login Buttons -->
@@ -682,14 +682,19 @@
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = document.querySelectorAll('.tab-content');
             
-            tabs.forEach(t => t.classList.remove('active'));
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
             contents.forEach(c => c.classList.remove('active'));
             
             if (tab === 'login') {
                 tabs[0].classList.add('active');
+                tabs[0].setAttribute('aria-selected', 'true');
                 document.getElementById('loginTab').classList.add('active');
             } else {
                 tabs[1].classList.add('active');
+                tabs[1].setAttribute('aria-selected', 'true');
                 document.getElementById('signupTab').classList.add('active');
             }
         }

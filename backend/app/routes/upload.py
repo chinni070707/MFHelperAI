@@ -312,25 +312,8 @@ def detect_category(fund_name: str, existing_category: str = '') -> str:
 
 
 def detect_style_from_name(fund_name: str) -> str:
-    """Detect investment style from fund name"""
-    fund_name = str(fund_name).lower()
-    
-    if 'quant' in fund_name:
-        return 'Momentum'
-    elif 'parag parikh' in fund_name or 'ppfas' in fund_name or 'hdfc flexi' in fund_name:
-        return 'GARP'
-    elif 'motilal' in fund_name or 'icici' in fund_name or 'quality' in fund_name:
-        return 'Quality'
-    elif 'contra' in fund_name or 'value' in fund_name or 'sbi contra' in fund_name:
-        return 'Value'
-    elif 'nasdaq' in fund_name or 'fang' in fund_name or 'nifty' in fund_name or 'index' in fund_name or 'etf' in fund_name:
-        return 'Passive'
-    elif 'digital' in fund_name or 'tech' in fund_name or 'sector' in fund_name or 'pharma' in fund_name or 'banking' in fund_name:
-        return 'Sectoral'
-    elif 'liquid' in fund_name:
-        return 'Liquid'
-    else:
-        return 'Blend'
+    """Detect investment style from fund name (alias for determine_style)"""
+    return determine_style(fund_name)
 
 
 # ============ CAS PDF Parser ============
@@ -436,7 +419,7 @@ def extract_holdings_from_cas_text(text: str) -> list:
                 # Determine AMC from fund name
                 amc = determine_amc(fund_name)
                 category = determine_category(fund_name)
-                style = determine_style(fund_name)
+                style = determine_style(fund_name, category)
                 
                 holdings.append({
                     'fund_name': clean_fund_name(fund_name),
@@ -575,26 +558,47 @@ def determine_category(fund_name: str) -> str:
         return 'Equity'
 
 
-def determine_style(fund_name: str) -> str:
-    """Determine investment style from fund name"""
+def determine_style(fund_name: str, category: str = '') -> str:
+    """Determine investment style from fund name and category"""
     fund_lower = fund_name.lower()
+    cat_lower = (category or '').lower()
+    combined = fund_lower + ' ' + cat_lower
     
-    if 'quant' in fund_lower:
-        return 'Momentum'
-    elif 'contra' in fund_lower or 'value' in fund_lower:
-        return 'Value'
-    elif 'index' in fund_lower or 'nifty' in fund_lower or 'sensex' in fund_lower or 'nasdaq' in fund_lower or 'etf' in fund_lower:
+    # Passive / Index
+    if any(kw in combined for kw in ['index', 'nifty', 'sensex', 'nasdaq', 'etf', 's&p', 'bse']):
         return 'Passive'
-    elif 'liquid' in fund_lower or 'money market' in fund_lower:
+    # Momentum
+    if any(kw in combined for kw in ['quant', 'momentum']):
+        return 'Momentum'
+    # Value / Contra
+    if any(kw in combined for kw in ['contra', 'value', 'dividend yield']):
+        return 'Value'
+    # Liquid / Debt
+    if any(kw in combined for kw in ['liquid', 'money market', 'overnight', 'debt', 'bond',
+                                      'gilt', 'corporate bond', 'dynamic bond', 'credit risk',
+                                      'floater', 'ultra short', 'low duration']):
         return 'Liquid'
-    elif 'sector' in fund_lower or 'banking' in fund_lower or 'pharma' in fund_lower or 'digital' in fund_lower:
+    # Sectoral / Thematic
+    if any(kw in combined for kw in ['sector', 'thematic', 'banking', 'pharma', 'digital',
+                                      'infra', 'consumption', 'manufacturing', 'energy',
+                                      'commodit', 'esg', 'technology', 'healthcare']):
         return 'Sectoral'
-    elif 'parag parikh' in fund_lower or 'ppfas' in fund_lower:
-        return 'GARP'
-    elif 'motilal' in fund_lower or 'icici' in fund_lower:
+    # Quality Growth
+    if any(kw in combined for kw in ['quality', 'focused', 'motilal', 'icici pru blue']):
         return 'Quality'
-    else:
+    # GARP (Growth at Reasonable Price)
+    if any(kw in combined for kw in ['parag parikh', 'ppfas', 'flexi', 'multi cap',
+                                      'hdfc flexi', 'growth']):
+        return 'GARP'
+    # Hybrid / Balanced — map to Blend
+    if any(kw in combined for kw in ['hybrid', 'balanced', 'advantage', 'arbitrage',
+                                      'equity saving', 'aggressive hybrid']):
         return 'Blend'
+    # ELSS
+    if any(kw in combined for kw in ['elss', 'tax sav']):
+        return 'GARP'
+    
+    return 'Blend'
 
 
 def clean_fund_name(name: str) -> str:

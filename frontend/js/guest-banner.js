@@ -193,7 +193,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Inject styles
-const style = document.createElement('style');
-style.textContent = GuestBanner.getStyles();
-document.head.appendChild(style);
+// Inject styles (use unique variable name to avoid redeclaration with other scripts)
+(function() {
+    const guestBannerStyle = document.createElement('style');
+    guestBannerStyle.textContent = GuestBanner.getStyles();
+    document.head.appendChild(guestBannerStyle);
+})();

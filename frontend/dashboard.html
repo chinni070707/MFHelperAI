@@ -23,23 +23,23 @@
     <link rel="stylesheet" href="/css/dashboard.css">
     
     <!-- Google Analytics -->
-    <script src="/js/analytics.js"></script>
+    <script src="/js/analytics.js" defer></script>
     <script src="/js/navbar-auth.js" defer></script>
     
     <!-- Core Utilities -->
-    <script src="/js/toast.js"></script>
-    <script src="/js/errorHandler.js"></script>
-    <script src="/js/responsive.js"></script>
-    <script src="/js/overlap.js"></script>
-    <script src="/js/portfolio-storage.js"></script>
-    <script src="/js/auth-modals.js"></script>
-    <script src="/js/conversion-prompts.js"></script>
-    <script src="/js/export-email-gate.js"></script>
-    <script src="/js/portfolio-source-modal.js"></script>
-    <script src="/js/demo-banner.js"></script>
-    <script src="/js/guest-banner.js"></script>
+    <script src="/js/toast.js" defer></script>
+    <script src="/js/errorHandler.js" defer></script>
+    <script src="/js/responsive.js" defer></script>
+    <script src="/js/overlap.js" defer></script>
+    <script src="/js/portfolio-storage.js" defer></script>
+    <script src="/js/auth-modals.js" defer></script>
+    <script src="/js/conversion-prompts.js" defer></script>
+    <script src="/js/export-email-gate.js" defer></script>
+    <script src="/js/portfolio-source-modal.js" defer></script>
+    <script src="/js/demo-banner.js" defer></script>
+    <script src="/js/guest-banner.js" defer></script>
     
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -1084,8 +1084,19 @@
                 }
                 
                 // Fallback: Try to load from portfolio storage
-                const portfolioStorage = new PortfolioStorage();
-                const storedData = portfolioStorage.load();
+                // Use the global portfolioStorage instance (from portfolio-storage.js)
+                // with a safety check in case the script failed to load
+                let storedData = null;
+                try {
+                    if (typeof portfolioStorage !== 'undefined' && portfolioStorage && typeof portfolioStorage.load === 'function') {
+                        storedData = portfolioStorage.load();
+                    } else if (typeof PortfolioStorage === 'function') {
+                        const ps = new PortfolioStorage();
+                        storedData = ps.load();
+                    }
+                } catch (e) {
+                    console.warn('Portfolio storage load failed:', e.message);
+                }
                 
                 if (storedData && storedData.holdings && storedData.holdings.length > 0) {
                     portfolioData = storedData;
@@ -1118,6 +1129,7 @@
                         mode: 'demo',
                         holdings: data.holdings.map(h => ({
                             scheme_name: h.scheme_name,
+                            fund_name: h.scheme_name,
                             scheme_code: h.scheme_code,
                             category: h.category || 'Others',
                             amc: h.amc || 'Unknown',
@@ -1190,6 +1202,7 @@
                     source: data.source || 'upload',
                     holdings: data.holdings.map(h => ({
                         scheme_name: h.fund_name,
+                        fund_name: h.fund_name,
                         category: h.category || 'Others',
                         amc: h.amc || 'Unknown',
                         invested: h.invested,
@@ -1287,14 +1300,18 @@
         }
         
         const marketCapMap = {
-            'Large Cap': 'large', 'Flexi Cap': 'large', 'Multi Cap': 'large',
-            'Large & Mid': 'large', 'ELSS': 'large', 'Focused': 'large', 'Contra': 'large',
-            'Mid Cap': 'mid', 'Small Cap': 'small',
-            'International': 'other', 'Sectoral': 'other', 'Liquid': 'other', 'Debt': 'other', 'Hybrid': 'other'
+            'Large Cap': 'large', 'Large & Mid Cap': 'large',
+            'Flexi Cap': 'flexi', 'Multi Cap': 'multi',
+            'ELSS': 'multi', 'Focused': 'multi', 'Contra': 'large',
+            'Mid Cap': 'mid', 'Mid & Small Cap': 'mid',
+            'Small Cap': 'small',
+            'International': 'other', 'Sectoral': 'other', 'Liquid': 'other',
+            'Debt': 'other', 'Hybrid': 'other', 'Balanced Advantage': 'other',
+            'Dynamic Bond': 'other', 'Corporate Bond': 'other', 'Arbitrage': 'other'
         };
         
         function renderAllocationChart(holdings) {
-            const totals = { 'Large Cap': 0, 'Mid Cap': 0, 'Small Cap': 0, 'International': 0, 'Other': 0 };
+            const totals = { 'Large Cap': 0, 'Mid Cap': 0, 'Small Cap': 0, 'Flexi/Multi Cap': 0, 'Other': 0 };
             marketCapAllocation = { large: 0, mid: 0, small: 0, other: 0 };
             
             holdings.forEach(h => {
@@ -1305,13 +1322,14 @@
                 if (mcType === 'large') { totals['Large Cap'] += current; marketCapAllocation.large += current; }
                 else if (mcType === 'mid') { totals['Mid Cap'] += current; marketCapAllocation.mid += current; }
                 else if (mcType === 'small') { totals['Small Cap'] += current; marketCapAllocation.small += current; }
-                else if (cat === 'International') { totals['International'] += current; marketCapAllocation.other += current; }
+                else if (mcType === 'flexi' || mcType === 'multi') { totals['Flexi/Multi Cap'] += current; marketCapAllocation.large += current * 0.5; marketCapAllocation.mid += current * 0.3; marketCapAllocation.small += current * 0.2; }
+                else if (cat === 'International') { totals['Other'] += current; marketCapAllocation.other += current; }
                 else { totals['Other'] += current; marketCapAllocation.other += current; }
             });
             
             const labels = Object.keys(totals).filter(k => totals[k] > 0);
             const values = labels.map(k => totals[k]);
-            const colorMap = { 'Large Cap': 'var(--primary-green)', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'International': '#9c27b0', 'Other': 'var(--text-secondary)' };
+            const colorMap = { 'Large Cap': 'var(--primary-green)', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'Flexi/Multi Cap': '#00bcd4', 'Other': 'var(--text-secondary)' };
             
             Plotly.newPlot('allocationChart', [{
                 values: values, labels: labels, type: 'pie', hole: 0.5,

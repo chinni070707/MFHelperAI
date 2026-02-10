@@ -71,13 +71,19 @@ class ToastManager {
         return toast;
     }
 
+    escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
     createToast(message, type) {
         const toast = document.createElement('div');
         toast.className = `toast toast-${type}`;
-        
+
         const icons = {
-            success: '✓',
-            error: '✕',
+            success: '\u2713',
+            error: '\u2715',
             warning: '⚠',
             info: 'ℹ'
         };
@@ -91,7 +97,7 @@ class ToastManager {
 
         toast.innerHTML = `
             <div class="toast-icon">${icons[type] || icons.info}</div>
-            <div class="toast-message">${message}</div>
+            <div class="toast-message">${this.escapeHtml(message)}</div>
             <button class="toast-close" onclick="toast.remove(this.parentElement)">×</button>
         `;
 

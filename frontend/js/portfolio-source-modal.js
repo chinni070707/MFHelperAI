@@ -10,13 +10,21 @@ class PortfolioSourceModal {
     }
 
     init() {
-        // Inject CSS
-        const style = document.createElement('style');
-        style.textContent = this.getStyles();
-        document.head.appendChild(style);
+        // Inject styles into <head> — safe even before <body> exists
+        if (document.head) {
+            const style = document.createElement('style');
+            style.textContent = this.getStyles();
+            document.head.appendChild(style);
+        }
 
-        // Create modal HTML
-        this.createModal();
+        // Defer modal creation until <body> is available
+        if (document.body) {
+            this.createModal();
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.createModal();
+            });
+        }
     }
 
     createModal() {

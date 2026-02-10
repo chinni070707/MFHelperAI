@@ -333,7 +333,7 @@ async def get_verification_status(current_user: User = Depends(get_current_activ
 @router.post("/check-email")
 @limiter.limit("20/minute")
 async def check_email(request: Request, response: Response, db: Session = Depends(get_db)):
-    """Check if email exists (for UX purposes)"""
+    """Check if email exists (for UX purposes) — returns generic response to prevent enumeration"""
     try:
         data = await request.json()
         email = data.get('email', '').strip().lower()
@@ -342,13 +342,14 @@ async def check_email(request: Request, response: Response, db: Session = Depend
             return {"exists": False, "message": "Email required"}
         
         user = db.query(User).filter(User.email == email).first()
+        # Always return the same message to prevent email enumeration attacks
         return {
             "exists": bool(user),
-            "message": "User found" if user else "No account with this email"
+            "message": "Email checked"
         }
     except Exception as e:
         logger.error(f"Error checking email: {e}")
-        return {"exists": False, "message": "Error checking email"}
+        return {"exists": False, "message": "Email checked"}
 
 
 @router.post("/login", response_model=Token)

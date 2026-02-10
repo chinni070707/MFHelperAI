@@ -11,12 +11,23 @@ class AuthModals {
     }
 
     init() {
-        const style = document.createElement('style');
-        style.textContent = this.getStyles();
-        document.head.appendChild(style);
+        // Inject styles into <head> — safe even before <body> exists
+        if (document.head) {
+            const style = document.createElement('style');
+            style.textContent = this.getStyles();
+            document.head.appendChild(style);
+        }
 
-        this.createSignupModal();
-        this.createLoginModal();
+        // Defer modal creation until <body> is available
+        if (document.body) {
+            this.createSignupModal();
+            this.createLoginModal();
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                this.createSignupModal();
+                this.createLoginModal();
+            });
+        }
     }
 
     createSignupModal() {
@@ -47,7 +58,12 @@ class AuthModals {
                     
                     <div class="form-group">
                         <label>Password*</label>
-                        <input type="password" name="password" required placeholder="Min. 8 characters" minlength="8">
+                        <input type="password" name="password" required placeholder="Min. 8 chars, 1 uppercase, 1 digit" minlength="8">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Confirm Password*</label>
+                        <input type="password" name="confirm_password" required placeholder="Re-enter password" minlength="8">
                     </div>
                     
                     <div class="form-group">
@@ -141,14 +157,38 @@ class AuthModals {
         const btn = document.getElementById('signupBtn');
         const originalText = btn.textContent;
         
+        // Password validation
+        const formData = new FormData(form);
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirm_password');
+        
+        if (password !== confirmPassword) {
+            if (typeof showToast === 'function') {
+                showToast('Passwords do not match', 'error');
+            } else {
+                alert('Passwords do not match');
+            }
+            return;
+        }
+        
+        // Strength check: 1 uppercase, 1 lowercase, 1 digit, min 8 chars
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(password)) {
+            if (typeof showToast === 'function') {
+                showToast('Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 digit', 'error');
+            } else {
+                alert('Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 digit');
+            }
+            return;
+        }
+        
         btn.disabled = true;
         btn.textContent = 'Creating Account...';
         
         try {
-            const formData = new FormData(form);
             const data = {
                 email: formData.get('email'),
                 password: formData.get('password'),
+                confirm_password: formData.get('confirm_password'),
                 full_name: formData.get('full_name'),
                 phone: formData.get('phone') || null,
                 source: sessionStorage.getItem('signup_source') || 'direct'

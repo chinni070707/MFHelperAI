@@ -2,10 +2,11 @@
 Data update API endpoints
 Admin endpoints for triggering data updates
 """
-from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException
+from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException, Header
 from sqlalchemy.orm import Session
 from typing import Dict
 import logging
+import os
 
 from app.database import get_db
 from app.services.data_ingestion import FundDataIngestionService
@@ -14,11 +15,21 @@ from app.services.data_ingestion import FundDataIngestionService
 router = APIRouter(prefix="/api/data", tags=["data-updates"])
 logger = logging.getLogger(__name__)
 
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "admin-secret-key-change-in-production")
+
+
+def verify_data_admin(x_admin_key: str = Header(None, alias="X-Admin-Key")):
+    """Verify admin API key via header (not query param)"""
+    if not x_admin_key or x_admin_key != ADMIN_API_KEY:
+        raise HTTPException(status_code=401, detail="Admin authentication required")
+    return True
+
 
 @router.post("/update/market-caps")
 async def update_market_caps(
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: bool = Depends(verify_data_admin)
 ) -> Dict:
     """
     Trigger market cap data update
@@ -44,7 +55,8 @@ async def update_fund_holdings(
     fund_id: int,
     fund_name: str,
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: bool = Depends(verify_data_admin)
 ) -> Dict:
     """
     Trigger holdings update for a specific fund
@@ -71,7 +83,8 @@ async def update_fund_holdings(
 @router.post("/update/weekly")
 async def trigger_weekly_update(
     background_tasks: BackgroundTasks,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: bool = Depends(verify_data_admin)
 ) -> Dict:
     """
     Trigger full weekly data update
@@ -95,7 +108,8 @@ async def trigger_weekly_update(
 @router.get("/update/logs")
 async def get_update_logs(
     limit: int = 10,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    _admin: bool = Depends(verify_data_admin)
 ) -> Dict:
     """Get recent update logs"""
     try:

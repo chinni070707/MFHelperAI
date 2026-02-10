@@ -13,7 +13,7 @@ from app.database import get_db
 from app.models.models import User
 from app.utils.auth import get_current_user
 
-router = APIRouter(prefix="/api/upload", tags=["upload"])
+router = APIRouter(prefix="/api/cas", tags=["CAS Import"])
 
 
 @router.post("/cas", response_model=dict)

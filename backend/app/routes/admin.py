@@ -2,12 +2,13 @@
 Admin API endpoints
 Dashboard statistics and analytics for administrators
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
 from typing import Dict
 from datetime import datetime, timedelta
 import logging
+import os
 
 from app.database import get_db
 from app.models.models import User, Portfolio, Holding
@@ -16,13 +17,14 @@ router = APIRouter(prefix="/api/admin", tags=["admin"])
 logger = logging.getLogger(__name__)
 
 
-# Simple admin authentication - replace with proper auth in production
-ADMIN_API_KEY = "admin-secret-key-change-in-production"
+# Load admin key from environment variable instead of hardcoding
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "admin-secret-key-change-in-production")
 
 
-def verify_admin(api_key: str = None):
-    """Verify admin API key"""
-    if not api_key or api_key != ADMIN_API_KEY:
+def verify_admin(x_admin_key: str = Header(None, alias="X-Admin-Key"), api_key: str = None):
+    """Verify admin API key via header (preferred) or query param (deprecated)"""
+    key = x_admin_key or api_key  # Header takes priority, fall back to query param
+    if not key or key != ADMIN_API_KEY:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid admin credentials"
@@ -224,8 +226,8 @@ async def get_users_list(
                 "id": user.id,
                 "email": user.email,
                 "full_name": user.full_name,
-                "pan": user.pan,
-                "phone": user.phone,
+                "pan": ("****" + user.pan[-4:]) if user.pan and len(user.pan) >= 4 else ("****" if user.pan else None),
+                "phone": None,  # Redacted from list view for privacy
                 "is_active": user.is_active,
                 "is_verified": user.is_verified,
                 "created_at": user.created_at.isoformat(),
