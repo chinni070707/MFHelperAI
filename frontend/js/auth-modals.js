@@ -126,18 +126,22 @@ class AuthModals {
 
     showSignup() {
         this.signupModal.style.display = 'flex';
+        this._trapFocus(this.signupModal);
     }
 
     closeSignup() {
         this.signupModal.style.display = 'none';
+        this._releaseFocus();
     }
 
     showLogin() {
         this.loginModal.style.display = 'flex';
+        this._trapFocus(this.loginModal);
     }
 
     closeLogin() {
         this.loginModal.style.display = 'none';
+        this._releaseFocus();
     }
 
     switchToLogin() {
@@ -336,6 +340,27 @@ class AuthModals {
         }
     }
 
+    // Focus trap for modals (#36)
+    _trapFocus(modal) {
+        this._previousFocus = document.activeElement;
+        const focusable = modal.querySelectorAll('input, button, a, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length > 0) focusable[0].focus();
+        this._focusHandler = (e) => {
+            if (e.key === 'Tab' && modal.style.display === 'flex') {
+                const list = modal.querySelectorAll('input, button, a, [tabindex]:not([tabindex="-1"])');
+                const first = list[0], last = list[list.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
+        };
+        document.addEventListener('keydown', this._focusHandler);
+    }
+
+    _releaseFocus() {
+        if (this._focusHandler) document.removeEventListener('keydown', this._focusHandler);
+        if (this._previousFocus) this._previousFocus.focus();
+    }
+
     getStyles() {
         return `
             .auth-modal {
@@ -480,6 +505,18 @@ class AuthModals {
 
 // Initialize global instance
 const authModals = new AuthModals();
+
+// Global Escape key handler for modals (#36)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (authModals.signupModal && authModals.signupModal.style.display === 'flex') {
+            authModals.closeSignup();
+        }
+        if (authModals.loginModal && authModals.loginModal.style.display === 'flex') {
+            authModals.closeLogin();
+        }
+    }
+});
 
 // Make showSignupModal available globally
 function showSignupModal(source = 'direct') {

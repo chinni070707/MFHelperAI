@@ -109,22 +109,32 @@ async def get_admin_stats(
             desc(Holding.return_pct)
         ).limit(5).all()
         
-        # Recent activity
-        recent_portfolios = db.query(Portfolio).order_by(
-            desc(Portfolio.created_at)
-        ).limit(10).all()
+        # Recent activity (fixed N+1 query #16 — use subquery instead of per-portfolio count)
+        holdings_count_subq = db.query(
+            Holding.portfolio_id,
+            func.count(Holding.id).label('funds_count')
+        ).group_by(Holding.portfolio_id).subquery()
+        
+        recent_query = db.query(
+            Portfolio.user_id,
+            Portfolio.name,
+            Portfolio.total_current,
+            Portfolio.created_at,
+            func.coalesce(holdings_count_subq.c.funds_count, 0).label('funds_count')
+        ).outerjoin(
+            holdings_count_subq,
+            Portfolio.id == holdings_count_subq.c.portfolio_id
+        ).order_by(desc(Portfolio.created_at)).limit(10).all()
         
         recent_activity = [
             {
-                "user_id": p.user_id,
-                "portfolio_name": p.name,
-                "total_value": p.total_current,
-                "funds_count": db.query(func.count(Holding.id)).filter(
-                    Holding.portfolio_id == p.id
-                ).scalar(),
-                "created_at": p.created_at.isoformat()
+                "user_id": r.user_id,
+                "portfolio_name": r.name,
+                "total_value": r.total_current,
+                "funds_count": r.funds_count,
+                "created_at": r.created_at.isoformat()
             }
-            for p in recent_portfolios
+            for r in recent_query
         ]
         
         # Growth metrics (compared to last week)
@@ -209,19 +219,26 @@ async def get_users_list(
     verify_admin(api_key)
     
     try:
-        users = db.query(User).order_by(desc(User.created_at)).offset(skip).limit(limit).all()
+        # Fixed N+1 query (#17) — use subquery to batch portfolio counts + AUM
+        user_portfolio_subq = db.query(
+            Portfolio.user_id,
+            func.count(Portfolio.id).label('portfolio_count'),
+            func.coalesce(func.sum(Portfolio.total_current), 0).label('total_aum')
+        ).group_by(Portfolio.user_id).subquery()
+        
+        users_with_stats = db.query(
+            User,
+            func.coalesce(user_portfolio_subq.c.portfolio_count, 0).label('portfolio_count'),
+            func.coalesce(user_portfolio_subq.c.total_aum, 0).label('total_aum')
+        ).outerjoin(
+            user_portfolio_subq,
+            User.id == user_portfolio_subq.c.user_id
+        ).order_by(desc(User.created_at)).offset(skip).limit(limit).all()
+        
         total = db.query(func.count(User.id)).scalar()
         
         users_data = []
-        for user in users:
-            portfolio_count = db.query(func.count(Portfolio.id)).filter(
-                Portfolio.user_id == user.id
-            ).scalar()
-            
-            total_aum = db.query(func.sum(Portfolio.total_current)).filter(
-                Portfolio.user_id == user.id
-            ).scalar() or 0
-            
+        for user, portfolio_count, total_aum in users_with_stats:
             users_data.append({
                 "id": user.id,
                 "email": user.email,

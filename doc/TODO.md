@@ -551,7 +551,7 @@ alembic upgrade head
 
 ### SECURITY
 
-- [ ] **#7** No `Content-Security-Policy` header set anywhere  
+- [x] **#7** No `Content-Security-Policy` header → Added CSP, X-Frame-Options, X-Content-Type-Options, HSTS, Referrer-Policy via middleware  
   **File:** `backend/app/main.py`
 
 - [ ] **#8** `POST /api/auth/logout` is a no-op — JWT remains valid for 7 days, no token blacklist  
@@ -565,24 +565,24 @@ alembic upgrade head
 
 ### DEPRECATION
 
-- [ ] **#13** `from sqlalchemy.ext.declarative import declarative_base` deprecated since SQLAlchemy 1.4  
+- [x] **#13** Deprecated `declarative_base` import → Updated to `sqlalchemy.orm.declarative_base`  
   **File:** `backend/app/database.py`
 
-- [ ] **#14** Google Analytics `GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'` — placeholder never replaced  
+- [x] **#14** GA placeholder `G-XXXXXXXXXX` → Disabled until configured via `window.GA_MEASUREMENT_ID`  
   **File:** `frontend/js/analytics.js`
 
 ### PERFORMANCE
 
-- [ ] **#16** N+1 query in `/api/admin/stats` — per-portfolio count queries in a loop  
+- [x] **#16** N+1 query in `/api/admin/stats` → Replaced with subquery join for holdings count  
   **File:** `backend/app/routes/admin.py`
 
-- [ ] **#17** N+1 query in `/api/admin/users` — 2 queries per user  
+- [x] **#17** N+1 query in `/api/admin/users` → Replaced with aggregated subquery for portfolio count + AUM  
   **File:** `backend/app/routes/admin.py`
 
-- [ ] **#18** `user-scalable=no` disables pinch-to-zoom (WCAG 1.4.4 violation)  
+- [x] **#18** `user-scalable=no` disabled pinch-to-zoom → Removed from viewport meta  
   **Files:** `frontend/dashboard.html`, `frontend/how-it-works.html`
 
-- [ ] **#19** `echo=settings.DEBUG` logs every SQL query; DEBUG force-set to True for SQLite  
+- [x] **#19** `echo=settings.DEBUG` logged every SQL query → Set `echo=False`, removed DEBUG force-set  
   **File:** `backend/app/database.py`
 
 - [ ] **#20** ~170 lines of inline `<script>` in index.html duplicating logic from index.js  
@@ -590,41 +590,41 @@ alembic upgrade head
 
 ### CODE QUALITY
 
-- [ ] **#24** ~60+ `console.log` / `console.warn` left in production code across all JS files  
+- [x] **#24** ~60+ `console.log` / `console.warn` in production JS → Removed informational logs, kept `console.error`  
   **Files:** Multiple frontend JS files
 
 - [ ] **#25** Component stubs show "coming soon" toasts — placeholder code  
   **File:** `frontend/js/components.js`
 
-- [ ] **#26** `print()` instead of `logger.warning()` for fund-not-found  
+- [x] **#26** `print()` in holdings.py → Replaced with `logger.warning()`  
   **File:** `backend/app/routes/holdings.py`
 
-- [ ] **#27** `print()` instead of `logger.error()` in error handlers  
+- [x] **#27** `print()` in error handlers → Replaced with `logger.warning()` / `logger.error()`  
   **File:** `backend/app/routes/errors.py`
 
-- [ ] **#28** ~270 lines of repetitive static file route handlers  
+- [x] **#28** ~270 lines of repetitive static routes → Replaced with generic catch-all handler  
   **File:** `backend/app/main.py`
 
-- [ ] **#29** `sendDashboardChat()` uses hardcoded `'Bearer demo-token'` — always fails auth  
+- [x] **#29** `sendDashboardChat()` hardcoded `Bearer demo-token` → Now uses real `authToken` from localStorage  
   **File:** `frontend/js/dashboard.js`
 
 ### UX
 
-- [ ] **#31** "Forgot password?" is a dead `href="#"` link — no reset flow  
+- [x] **#31** "Forgot password?" dead link → Shows alert with support email (full reset flow deferred)  
   **File:** `frontend/auth.html`
 
-- [ ] **#32** "Settings" link in user dropdown opens admin panel, not user settings  
+- [x] **#32** "Settings" link opened admin panel → Now points to `/dashboard.html`  
   **File:** `frontend/js/navbar-auth.js`
 
 ### ACCESSIBILITY
 
-- [ ] **#34** `user-scalable=no` blocks zoom for low-vision users  
+- [x] **#34** `user-scalable=no` blocked zoom → Removed (same fix as #18)  
   **Files:** `frontend/dashboard.html`, `frontend/how-it-works.html`
 
-- [ ] **#35** Charts have no text alternatives for screen readers  
+- [x] **#35** Charts had no text alternatives → Added `role="img"` + `aria-label` to all 6 chart containers  
   **File:** `frontend/js/dashboard.js`
 
-- [ ] **#36** Modals don't trap focus or handle Escape key  
+- [x] **#36** Modals lacked focus trap + Escape → Added `_trapFocus()`/`_releaseFocus()` + Escape key handler  
   **File:** `frontend/js/auth-modals.js`
 
 ### BACKEND
@@ -632,5 +632,5 @@ alembic upgrade head
 - [ ] **#39** Upload has no file content validation beyond extension  
   **File:** `backend/app/routes/upload.py`
 
-- [ ] **#40** `DEBUG` silently force-set to `True` for SQLite, overriding explicit config  
+- [x] **#40** `DEBUG` force-set to `True` for SQLite → Removed silent override, respects env var  
   **File:** `backend/app/config.py`

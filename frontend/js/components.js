@@ -3,6 +3,23 @@
  * Inspired by Dezerv, INDmoney, Kuvera
  */
 
+// Defensive stubs for onclick handlers that may not be defined on all pages
+if (typeof viewFundDetails === 'undefined') {
+    window.viewFundDetails = function(fundName) {
+        if (typeof toast !== 'undefined') toast.info('Fund details coming soon');
+    };
+}
+if (typeof investMore === 'undefined') {
+    window.investMore = function(fundName) {
+        if (typeof toast !== 'undefined') toast.info('Invest feature coming soon');
+    };
+}
+if (typeof rebalancePortfolio === 'undefined') {
+    window.rebalancePortfolio = function() {
+        if (typeof toast !== 'undefined') toast.info('Rebalance feature coming soon');
+    };
+}
+
 class FundCard {
     constructor(fund) {
         this.fund = fund;

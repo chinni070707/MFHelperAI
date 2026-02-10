@@ -10,12 +10,6 @@
         const authToken = localStorage.getItem('authToken');
         const userInfoStr = localStorage.getItem('userInfo');
         
-        console.log('Updating navbar auth state:', { 
-            hasToken: !!authToken, 
-            hasUserInfo: !!userInfoStr,
-            userInfo: userInfoStr 
-        });
-        
         // Find all nav menus on the page
         const navMenus = document.querySelectorAll('.nav-menu');
         
@@ -56,7 +50,7 @@
                                     <a href="/goal-planning.html" class="dropdown-item">
                                         <span>🎯</span> Goals
                                     </a>
-                                    <a href="/admin.html" class="dropdown-item">
+                                    <a href="/dashboard.html" class="dropdown-item">
                                         <span>⚙️</span> Settings
                                     </a>
                                     <div class="dropdown-divider"></div>

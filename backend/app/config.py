@@ -76,13 +76,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-# Auto-detect environment and set DEBUG appropriately
-# Force DEBUG=True only in local development (when using SQLite)
-# In production (Render/PostgreSQL), respect the DEBUG env var
-if settings.DATABASE_URL.startswith("sqlite"):
-    # Local development - force DEBUG=True for convenience
-    settings.DEBUG = True
-
+# Respect the DEBUG env var in all environments — no silent override (#40)
 logger = logging.getLogger(__name__)
 logger.info(f"Environment: {'Local (SQLite)' if settings.DATABASE_URL.startswith('sqlite') else 'Production'}, DEBUG={settings.DEBUG}")
 

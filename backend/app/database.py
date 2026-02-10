@@ -2,8 +2,7 @@
 Database configuration with connection pooling for scalability
 """
 from sqlalchemy import create_engine, event
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy.pool import QueuePool
 from app.config import settings
 import logging
@@ -27,7 +26,7 @@ if "sqlite" in settings.DATABASE_URL:
         connect_args={"check_same_thread": False},
         # SQLite doesn't support connection pooling well, use NullPool
         poolclass=None,
-        echo=settings.DEBUG  # Log SQL queries in debug mode
+        echo=False  # SQL echo disabled — use logger for structured query logging
     )
     logger.info("Database: SQLite (development mode, no pooling)")
 else:
@@ -35,7 +34,7 @@ else:
     engine = create_engine(
         settings.DATABASE_URL,
         **POOL_SETTINGS,
-        echo=settings.DEBUG  # Log SQL queries in debug mode
+        echo=False  # SQL echo disabled — use logger for structured query logging
     )
     logger.info(f"Database: Production mode with connection pool (size: {POOL_SETTINGS['pool_size']}, max: {POOL_SETTINGS['pool_size'] + POOL_SETTINGS['max_overflow']})")
 

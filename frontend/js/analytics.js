@@ -3,16 +3,16 @@
  * Provides consistent event tracking across the application
  */
 
-// Configuration - Replace with your actual GA4 Measurement ID
-const GA_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // TODO: Replace with actual ID from Google Analytics
+// Configuration — Set a real GA4 Measurement ID via window.GA_MEASUREMENT_ID or leave disabled
+const GA_MEASUREMENT_ID = window.GA_MEASUREMENT_ID || ''; // Disabled until configured (#14)
 
 /**
  * Initialize Google Analytics
  * Call this once when the page loads
  */
 function initGoogleAnalytics() {
-    // Check if already initialized
-    if (window.GA_INITIALIZED) {
+    // Check if already initialized or not configured
+    if (window.GA_INITIALIZED || !GA_MEASUREMENT_ID) {
         return;
     }
 
@@ -33,8 +33,6 @@ function initGoogleAnalytics() {
 
     window.gtag = gtag;
     window.GA_INITIALIZED = true;
-    
-    console.log('✓ Google Analytics initialized');
 }
 
 /**
@@ -49,7 +47,6 @@ function trackEvent(eventName, params = {}) {
     }
 
     gtag('event', eventName, params);
-    console.log(`📊 Event tracked: ${eventName}`, params);
 }
 
 /**
@@ -67,8 +64,6 @@ function trackPageView(pagePath, pageTitle) {
         page_path: pagePath,
         page_title: pageTitle
     });
-    
-    console.log(`📄 Page view tracked: ${pageTitle} (${pagePath})`);
 }
 
 // ============================================================================

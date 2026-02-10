@@ -10,6 +10,15 @@ function escapeHtml(str) {
     return div.innerHTML;
 }
 
+// Chart accessibility helper (#35) \u2014 add ARIA labels to Plotly chart containers
+function setChartA11y(chartId, description) {
+    const el = document.getElementById(chartId);
+    if (el) {
+        el.setAttribute('role', 'img');
+        el.setAttribute('aria-label', description);
+    }
+}
+
 // Mobile Menu Toggle
 function toggleMenu() {
     const menu = document.querySelector('.nav-menu');
@@ -215,7 +224,6 @@ async function loadPortfolioFromDatabase() {
         
         // Check if portfolio exists
         if (!data.holdings || data.holdings.length === 0) {
-            console.log('No portfolio data in database');
             return false;
         }
         
@@ -248,7 +256,6 @@ async function loadPortfolioFromDatabase() {
             uploadedFileName: data.source || 'CAS Upload'
         };
         
-        console.log('✅ Successfully loaded portfolio from database:', data.holdings.length, 'holdings');
         renderDashboard();
         return true;
         
@@ -360,6 +367,7 @@ function renderAllocationChart(holdings) {
         showlegend: false, margin: { t: 10, b: 10, l: 10, r: 10 },
         annotations: [{ text: 'Market Cap', x: 0.5, y: 0.5, font: { size: 14, color: '#fff' }, showarrow: false }]
     }, { responsive: true });
+    setChartA11y('allocationChart', `Market cap allocation: ${labels.map((l,i) => l + ' ' + ((values[i]/values.reduce((a,b)=>a+b,0))*100).toFixed(0) + '%').join(', ')}`);
 }
 
 function renderFundDistChart(holdings) {
@@ -380,6 +388,7 @@ function renderFundDistChart(holdings) {
         textfont: { size: 11 },
         marker: { colors: ['', 'var(--primary-green)', 'var(--primary-green)', 'var(--dark-green)', 'var(--light-green)', '#ff4757', '#ff6b81', '#ffc107', '#00bcd4', '#e91e63', '#9c27b0', 'var(--text-secondary)'] }
     }], { paper_bgcolor: 'rgba(0,0,0,0)', margin: { t: 10, b: 10, l: 10, r: 10 } }, { responsive: true });
+    setChartA11y('fundDistChart', `Fund category distribution: ${labels.join(', ')}`);
 }
 
 function renderAMCChart(holdings) {
@@ -402,6 +411,7 @@ function renderAMCChart(holdings) {
         paper_bgcolor: 'rgba(0,0,0,0)', showlegend: false, margin: { t: 10, b: 10, l: 10, r: 10 },
         annotations: [{ text: 'AMC', x: 0.5, y: 0.5, font: { size: 14, color: '#fff' }, showarrow: false }]
     }, { responsive: true });
+    setChartA11y('amcChart', `AMC distribution: ${Object.keys(totals).join(', ')}`);
     
     document.getElementById('amcChart').on('plotly_click', function(data) {
         const amc = data.points[0].label, color = data.points[0].color, funds = amcFunds[amc];
@@ -443,6 +453,7 @@ function renderStyleChart(holdings) {
         paper_bgcolor: 'rgba(0,0,0,0)', showlegend: false, margin: { t: 10, b: 10, l: 10, r: 10 },
         annotations: [{ text: 'Style', x: 0.5, y: 0.5, font: { size: 14, color: '#fff' }, showarrow: false }]
     }, { responsive: true });
+    setChartA11y('styleChart', `Investment style distribution: ${Object.keys(totals).join(', ')}`);
     
     document.getElementById('styleChart').on('plotly_click', function(data) {
         const style = data.points[0].label, color = data.points[0].color, funds = styleFunds[style];
@@ -480,6 +491,7 @@ function renderPerformanceChart(holdings) {
         yaxis: { tickfont: { color: 'var(--text-secondary)', size: 9 } },
         margin: { t: 10, b: 50, l: 180, r: 60 }
     }, { responsive: true });
+    setChartA11y('performanceChart', 'Horizontal bar chart showing fund returns by percentage');
 }
 
 function renderRiskChart(holdings) {
@@ -507,6 +519,7 @@ function renderRiskChart(holdings) {
         yaxis: { title: 'Alpha', tickfont: { color: 'var(--text-secondary)' }, gridcolor: 'var(--gray-100)', zeroline: true, zerolinecolor: '#ffc107' },
         margin: { t: 30, b: 50, l: 60, r: 20 }
     }, { responsive: true });
+    setChartA11y('riskChart', 'Fund risk analysis scatter plot showing alpha values by category');
 }
 
 function renderMetrics(holdings) {
@@ -769,9 +782,10 @@ async function sendDashboardChat() {
     }
 
     try {
+        const token = localStorage.getItem('authToken') || localStorage.getItem('access_token');
         const resp = await fetch('/api/ai/chat', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer demo-token` },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token || ''}` },
             body: JSON.stringify({ message })
         });
         if (!resp.ok) throw new Error('AI chat failed');

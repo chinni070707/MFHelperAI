@@ -8,8 +8,10 @@ from typing import Optional, Dict, Any
 from datetime import datetime
 import json
 import os
+import logging
 
 router = APIRouter(prefix="/api", tags=["errors"])
+logger = logging.getLogger(__name__)
 
 # Error log file path
 LOG_DIR = "logs"
@@ -60,8 +62,8 @@ async def log_error(error_log: ErrorLog):
         with open(ERROR_LOG_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(log_entry) + "\n")
         
-        # Also print to console for development
-        print(f"[FRONTEND ERROR] {error_log.type}: {error_log.message}")
+        # Log to application logger
+        logger.warning(f"[FRONTEND ERROR] {error_log.type}: {error_log.message}")
         
         # TODO: Send critical errors to monitoring service (Sentry, etc.)
         if error_log.type in ["ERROR", "PROMISE_REJECTION"]:
@@ -72,7 +74,7 @@ async def log_error(error_log: ErrorLog):
         
     except Exception as e:
         # Don't fail if logging fails
-        print(f"Error logging frontend error: {str(e)}")
+        logger.error(f"Error logging frontend error: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to log error")
 
 @router.get("/errors/stats")

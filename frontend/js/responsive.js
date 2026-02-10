@@ -261,13 +261,3 @@ window.addEventListener('resize', () => {
 window.device = device;
 window.viewport = viewport;
 window.breakpoints = breakpoints;
-
-// Log device info for debugging
-console.log('[Responsive] Device info:', {
-    isMobile: device.isMobile(),
-    isTablet: device.isTablet(),
-    isDesktop: device.isDesktop(),
-    isTouchDevice: device.isTouchDevice(),
-    viewport: `${viewport.width()}x${viewport.height()}`,
-    orientation: viewport.orientation()
-});

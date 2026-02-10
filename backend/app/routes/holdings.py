@@ -134,7 +134,7 @@ async def calculate_overlap(request: OverlapRequest, db: Session = Depends(get_d
                 "sectors": {s.sector: s.weight for s in sectors}
             })
         else:
-            print(f"⚠️ Fund not found: {fund_name}")
+            logger.warning(f"Fund not found: {fund_name}")
     
     if len(funds_data) < 2:
         raise HTTPException(

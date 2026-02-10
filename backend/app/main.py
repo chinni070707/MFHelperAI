@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 import os
@@ -56,10 +56,10 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# Request logging middleware
+# Request logging + security headers middleware
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    """Log all HTTP requests with timing"""
+    """Log all HTTP requests with timing and add security headers"""
     start_time = time.time()
     
     # Log incoming request
@@ -76,6 +76,23 @@ async def log_requests(request: Request, call_next):
             status_code=response.status_code,
             duration_ms=duration_ms
         )
+        
+        # Security headers (#7)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        if not settings.DEBUG:
+            response.headers["Content-Security-Policy"] = (
+                "default-src 'self'; "
+                "script-src 'self' 'unsafe-inline' https://cdn.plot.ly https://www.googletagmanager.com https://accounts.google.com https://apis.google.com; "
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+                "font-src 'self' https://fonts.gstatic.com; "
+                "img-src 'self' data: https:; "
+                "connect-src 'self' https://www.google-analytics.com https://accounts.google.com; "
+                "frame-src https://accounts.google.com;"
+            )
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
         
         return response
     except Exception as e:
@@ -166,219 +183,7 @@ async def root():
         return FileResponse(index_path)
     return {"message": "Welcome to MFHelper API", "docs": "/api/docs"}
 
-@app.get("/dashboard")
-async def dashboard():
-    """Serve the original dashboard page"""
-    logger.info("Serving dashboard.html")
-    dashboard_path = os.path.join(frontend_path, "dashboard.html")
-    if os.path.exists(dashboard_path):
-        return FileResponse(dashboard_path)
-    return {"error": "Dashboard not found"}
-
-@app.get("/dashboard.html")
-async def dashboard_html():
-    """Serve the original dashboard page with .html extension"""
-    logger.info("Serving dashboard.html")
-    dashboard_path = os.path.join(frontend_path, "dashboard.html")
-    if os.path.exists(dashboard_path):
-        return FileResponse(dashboard_path)
-    return {"error": "Dashboard not found"}
-
-@app.get("/dashboard-pro")
-async def dashboard_pro():
-    """Serve the professional dashboard page"""
-    logger.info("Serving dashboard-pro.html")
-    dashboard_path = os.path.join(frontend_path, "dashboard-pro.html")
-    if os.path.exists(dashboard_path):
-        return FileResponse(dashboard_path)
-    return {"error": "Professional dashboard not found"}
-
-@app.get("/dashboard-pro.html")
-async def dashboard_pro_html():
-    """Serve the professional dashboard page with .html extension"""
-    logger.info("Serving dashboard-pro.html")
-    dashboard_path = os.path.join(frontend_path, "dashboard-pro.html")
-    if os.path.exists(dashboard_path):
-        return FileResponse(dashboard_path)
-    return {"error": "Professional dashboard not found"}
-
-@app.get("/dashboard-old")
-async def dashboard_old():
-    """Serve the old dashboard page (for reference)"""
-    dashboard_path = os.path.join(frontend_path, "dashboard.html")
-    if os.path.exists(dashboard_path):
-        return FileResponse(dashboard_path)
-    return {"error": "Dashboard not found"}
-
-@app.get("/signup")
-async def signup():
-    """Serve the signup page"""
-    signup_path = os.path.join(frontend_path, "signup.html")
-    if os.path.exists(signup_path):
-        return FileResponse(signup_path)
-    return {"error": "Signup page not found"}
-
-@app.get("/signup.html")
-async def signup_html():
-    """Serve the signup page with .html extension"""
-    signup_path = os.path.join(frontend_path, "signup.html")
-    if os.path.exists(signup_path):
-        return FileResponse(signup_path)
-    return {"error": "Signup page not found"}
-
-@app.get("/login")
-async def login():
-    """Serve the login page"""
-    login_path = os.path.join(frontend_path, "login.html")
-    if os.path.exists(login_path):
-        return FileResponse(login_path)
-    return {"error": "Login page not found"}
-
-@app.get("/login.html")
-async def login_html():
-    """Serve the login page with .html extension"""
-    login_path = os.path.join(frontend_path, "login.html")
-    if os.path.exists(login_path):
-        return FileResponse(login_path)
-    return {"error": "Login page not found"}
-
-@app.get("/auth")
-async def auth():
-    """Serve the unified auth page"""
-    auth_path = os.path.join(frontend_path, "auth.html")
-    if os.path.exists(auth_path):
-        return FileResponse(auth_path)
-    return {"error": "Auth page not found"}
-
-@app.get("/auth.html")
-async def auth_html():
-    """Serve the unified auth page with .html extension"""
-    auth_path = os.path.join(frontend_path, "auth.html")
-    if os.path.exists(auth_path):
-        return FileResponse(auth_path)
-    return {"error": "Auth page not found"}
-
-@app.get("/verify-email.html")
-async def verify_email_html():
-    """Serve the email verification page"""
-    verify_path = os.path.join(frontend_path, "verify-email.html")
-    if os.path.exists(verify_path):
-        return FileResponse(verify_path)
-    return {"error": "Email verification page not found"}
-
-@app.get("/privacy-policy.html")
-async def privacy_policy_html():
-    """Serve the privacy policy page"""
-    privacy_path = os.path.join(frontend_path, "privacy-policy.html")
-    if os.path.exists(privacy_path):
-        return FileResponse(privacy_path)
-    return {"error": "Privacy policy page not found"}
-
-@app.get("/terms-of-service.html")
-async def terms_of_service_html():
-    """Serve the terms of service page"""
-    terms_path = os.path.join(frontend_path, "terms-of-service.html")
-    if os.path.exists(terms_path):
-        return FileResponse(terms_path)
-    return {"error": "Terms of service page not found"}
-
-@app.get("/ai-demo.html")
-async def ai_demo():
-    """Serve the AI demo page"""
-    demo_path = os.path.join(frontend_path, "ai-demo.html")
-    if os.path.exists(demo_path):
-        return FileResponse(demo_path)
-    return {"error": "AI demo page not found"}
-
-@app.get("/admin")
-async def admin_panel():
-    """Serve the admin dashboard"""
-    admin_path = os.path.join(frontend_path, "admin.html")
-    if os.path.exists(admin_path):
-        return FileResponse(admin_path)
-    return {"error": "Admin panel not found"}
-
-@app.get("/admin.html")
-async def admin_panel_html():
-    """Serve the admin dashboard with .html extension"""
-    admin_path = os.path.join(frontend_path, "admin.html")
-    if os.path.exists(admin_path):
-        return FileResponse(admin_path)
-    return {"error": "Admin panel not found"}
-
-@app.get("/how-it-works")
-async def how_it_works():
-    """Serve the How It Works page"""
-    page_path = os.path.join(frontend_path, "how-it-works.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "How It Works page not found"}
-
-@app.get("/how-it-works.html")
-async def how_it_works_html():
-    """Serve the How It Works page with .html extension"""
-    page_path = os.path.join(frontend_path, "how-it-works.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "How It Works page not found"}
-
-@app.get("/goal-planning")
-async def goal_planning():
-    """Serve the Goal Planning page"""
-    page_path = os.path.join(frontend_path, "goal-planning.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Goal Planning page not found"}
-
-@app.get("/goal-planning.html")
-async def goal_planning_html():
-    """Serve the Goal Planning page with .html extension"""
-    page_path = os.path.join(frontend_path, "goal-planning.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Goal Planning page not found"}
-
-@app.get("/icon-styles-demo.html")
-async def icon_styles_demo():
-    """Serve the Icon Styles Demo page"""
-    page_path = os.path.join(frontend_path, "icon-styles-demo.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Icon Styles Demo page not found"}
-
-@app.get("/overlap-analysis.html")
-async def overlap_analysis_html():
-    """Serve the Overlap Analysis page"""
-    page_path = os.path.join(frontend_path, "www", "overlap-analysis.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Overlap Analysis page not found"}
-
-@app.get("/stock-allocation.html")
-async def stock_allocation_html():
-    """Serve the Stock Allocation page"""
-    page_path = os.path.join(frontend_path, "www", "stock-allocation.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Stock Allocation page not found"}
-
-@app.get("/goal-checker.html")
-async def goal_checker_html():
-    """Serve the Goal Checker page"""
-    page_path = os.path.join(frontend_path, "www", "goal-checker.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Goal Checker page not found"}
-
-@app.get("/fund-reallocator.html")
-async def fund_reallocator_html():
-    """Serve the Fund Reallocator page"""
-    page_path = os.path.join(frontend_path, "www", "fund-reallocator.html")
-    if os.path.exists(page_path):
-        return FileResponse(page_path)
-    return {"error": "Fund Reallocator page not found"}
-
-# Serve CSS and JS files
+# Serve CSS, JS, icons, and other static assets
 @app.get("/css/{file_path:path}")
 async def serve_css(file_path: str):
     """Serve CSS files"""
@@ -396,39 +201,6 @@ async def serve_js(file_path: str):
     logger.warning(f"JS file not found: {file_path}")
     return {"error": "JS file not found"}
 
-@app.get("/sw.js")
-async def serve_service_worker():
-    """Serve service worker"""
-    sw_path = os.path.join(frontend_path, "sw.js")
-    if os.path.exists(sw_path):
-        return FileResponse(sw_path, media_type="application/javascript")
-    logger.warning("Service worker not found")
-    return {"error": "Service worker not found"}
-
-@app.get("/manifest.json")
-async def serve_manifest():
-    """Serve PWA manifest"""
-    manifest_path = os.path.join(frontend_path, "manifest.json")
-    if os.path.exists(manifest_path):
-        return FileResponse(manifest_path, media_type="application/json")
-    return {"error": "Manifest not found"}
-
-@app.get("/index.html")
-async def serve_index_html():
-    """Serve index.html for service worker"""
-    index_path = os.path.join(frontend_path, "index.html")
-    if os.path.exists(index_path):
-        return FileResponse(index_path)
-    return RedirectResponse(url="/")
-
-@app.get("/offline.html")
-async def serve_offline():
-    """Serve offline page for PWA"""
-    offline_path = os.path.join(frontend_path, "offline.html")
-    if os.path.exists(offline_path):
-        return FileResponse(offline_path)
-    return {"message": "You are offline"}
-
 @app.get("/icons/{file_path:path}")
 async def serve_icons(file_path: str):
     """Serve icon files"""
@@ -438,10 +210,57 @@ async def serve_icons(file_path: str):
     logger.warning(f"Icon not found: {file_path}")
     return {"error": "Icon not found"}
 
+@app.get("/sw.js")
+async def serve_service_worker():
+    """Serve service worker from root"""
+    sw_path = os.path.join(frontend_path, "sw.js")
+    if os.path.exists(sw_path):
+        return FileResponse(sw_path, media_type="application/javascript")
+    return {"error": "Service worker not found"}
+
+@app.get("/manifest.json")
+async def serve_manifest():
+    """Serve PWA manifest from root"""
+    manifest_path = os.path.join(frontend_path, "manifest.json")
+    if os.path.exists(manifest_path):
+        return FileResponse(manifest_path, media_type="application/json")
+    return {"error": "Manifest not found"}
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "version": "1.0.0"}
+
+# Generic catch-all for all HTML pages (#28 \u2014 replaces ~40 repetitive route handlers)
+# Must be registered LAST so explicit routes above take priority
+@app.get("/{page_path:path}")
+async def serve_html_page(page_path: str):
+    """Serve any frontend HTML page or www/ sub-page by path"""
+    # Sanitize: only allow alphanumeric, hyphens, slashes, dots
+    import re
+    if not re.match(r'^[a-zA-Z0-9/_.-]+$', page_path):
+        return {"error": "Invalid path"}
+
+    # Prevent directory traversal
+    if '..' in page_path:
+        return {"error": "Invalid path"}
+
+    # Try direct path (e.g. "dashboard.html")
+    file_path = os.path.join(frontend_path, page_path)
+    if os.path.isfile(file_path):
+        return FileResponse(file_path)
+
+    # Try with .html extension (e.g. "dashboard" \u2192 "dashboard.html")
+    html_path = os.path.join(frontend_path, f"{page_path}.html")
+    if os.path.isfile(html_path):
+        return FileResponse(html_path)
+
+    # Try in www/ subdirectory (e.g. "overlap-analysis.html")
+    www_path = os.path.join(frontend_path, "www", page_path)
+    if os.path.isfile(www_path):
+        return FileResponse(www_path)
+
+    return {"error": f"Page not found: {page_path}"}
 
 
 if __name__ == "__main__":
