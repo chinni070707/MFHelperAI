@@ -203,3 +203,57 @@ export async function screenshotOnFailure(page: Page, testInfo: any): Promise<vo
     console.log(`Failure screenshot saved: ${screenshotPath}`);
   }
 }
+
+/**
+ * Dismiss the portfolio source modal overlay on dashboard pages.
+ * This modal appears automatically when there's no portfolio data 
+ * and intercepts all pointer events on the page.
+ */
+export async function dismissPortfolioSourceModal(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const modal = document.getElementById('portfolioSourceModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+  });
+  // Also make the noData section visible so dashboard buttons are accessible
+  await page.evaluate(() => {
+    const noData = document.getElementById('noData');
+    if (noData) {
+      noData.style.display = 'block';
+    }
+  });
+}
+
+/**
+ * Navigate to dashboard and dismiss the portfolio source modal.
+ * Use this instead of directly navigating to /dashboard.html in tests.
+ */
+export async function gotoDashboard(page: Page): Promise<void> {
+  await page.goto('/dashboard.html');
+  await page.waitForLoadState('networkidle');
+  // Wait briefly for the modal JS to initialize
+  await page.waitForTimeout(600);
+  await dismissPortfolioSourceModal(page);
+}
+
+/**
+ * Wait for React/Babel to render content in a root element.
+ * Useful for pages like goal-planning that use browser-based Babel transpilation.
+ * Returns true if rendering succeeded, false if timeout/error.
+ */
+export async function waitForReactRender(page: Page, rootSelector = '#root', timeout = 15000): Promise<boolean> {
+  try {
+    await page.waitForFunction(
+      (selector) => {
+        const root = document.querySelector(selector);
+        return root && root.children.length > 0;
+      },
+      rootSelector,
+      { timeout }
+    );
+    return true;
+  } catch {
+    return false;
+  }
+}

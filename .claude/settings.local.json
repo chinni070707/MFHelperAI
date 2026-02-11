@@ -33,7 +33,10 @@
       "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.routes.auth import router; print\\(''OK''\\)\")",
       "Bash(\"..\\\\venv\\\\Scripts\\\\python.exe\" -c \"from app.main import app; print\\(''OK''\\)\")",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(curl:*)",
+      "Bash(git push:*)",
+      "Bash(python -m pytest:*)"
     ]
   }
 }

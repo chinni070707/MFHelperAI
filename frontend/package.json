@@ -9,9 +9,18 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx playwright test",
+    "test:auth": "npx playwright test tests/e2e/auth.spec.ts",
+    "test:dashboard": "npx playwright test tests/e2e/dashboard.spec.ts",
+    "test:upload": "npx playwright test tests/e2e/cas-upload.spec.ts",
+    "test:journey": "npx playwright test tests/e2e/full-journey.spec.ts",
+    "test:report": "npx playwright show-report test-results/playwright-report"
   },
-  "keywords": ["mutual-funds", "portfolio", "analytics"],
+  "keywords": [
+    "mutual-funds",
+    "portfolio",
+    "analytics"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -19,10 +28,11 @@
     "@capacitor/cli": "^8.0.2",
     "@capacitor/core": "^8.0.2",
     "chart.js": "^4.4.0",
-    "plotly.js-dist": "^2.27.0",
-    "html2canvas": "^1.4.1"
+    "html2canvas": "^1.4.1",
+    "plotly.js-dist": "^2.27.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@types/node": "^20.10.0",
     "@types/plotly.js": "^2.12.29",
     "typescript": "^5.3.3",

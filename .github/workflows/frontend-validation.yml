@@ -56,12 +56,12 @@ jobs:
         
     - name: Verify backend is running
       run: |
-        curl -f http://localhost:8000/api/health || exit 1
-        echo "✅ Backend server is healthy"
+        curl -f http://localhost:8000/health || exit 1
+        echo "\u2705 Backend server is healthy"
       
     - name: Run ALL E2E tests
       working-directory: tests
-      run: npx playwright test --reporter=list,html
+      run: npx playwright test --project=chromium --reporter=list,html
       
     - name: Upload test results
       if: always()

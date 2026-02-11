@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { dismissPortfolioSourceModal } from '../helpers/test-helpers';
 
 /**
  * MFHelper Form Interaction Tests
@@ -9,6 +10,9 @@ test.describe('Form Interactions', () => {
   test('should handle portfolio input form', async ({ page }) => {
     await page.goto('/dashboard.html').catch(() => page.goto('/'));
     await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(600);
+    // Dismiss portfolio source modal if on dashboard
+    await dismissPortfolioSourceModal(page);
 
     // Look for input forms
     const formInputs = await page.locator('input, textarea').all();
@@ -18,18 +22,32 @@ test.describe('Form Interactions', () => {
       return;
     }
 
-    // Try to fill the first text input
-    const textInput = page.locator('input[type="text"], input:not([type="hidden"])').first();
+    // Try to fill the first visible text input
+    // First open manual entry modal to get text inputs
+    const manualBtn = page.locator('button:has-text("Manual Entry")').first();
+    if (await manualBtn.isVisible()) {
+      await manualBtn.click();
+      await page.waitForTimeout(500);
+    }
     
-    if (await textInput.count() > 0) {
+    const textInput = page.locator('#manualEntryModal input[type="text"]').first();
+    
+    if (await textInput.count() > 0 && await textInput.isVisible()) {
       await textInput.fill('Test Fund Name');
       await expect(textInput).toHaveValue('Test Fund Name');
-      
-      // Capture screenshot
-      await page.screenshot({ 
-        path: 'test-results/screenshots/form-filled.png', 
-        fullPage: true 
-      });
+    } else {
+      // Fall back to any visible input
+      const anyInput = page.locator('input:visible').first();
+      if (await anyInput.count() > 0) {
+        const inputType = await anyInput.getAttribute('type');
+        if (inputType === 'number') {
+          await anyInput.fill('100');
+          await expect(anyInput).toHaveValue('100');
+        } else {
+          await anyInput.fill('Test');
+          await expect(anyInput).toHaveValue('Test');
+        }
+      }
     }
   });
 

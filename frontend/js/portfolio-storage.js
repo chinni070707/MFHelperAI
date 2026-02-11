@@ -132,6 +132,20 @@ class PortfolioStorage {
 
     // ============ Generic Portfolio Operations ============
 
+    /**
+     * Load the current portfolio data (alias for getCurrentPortfolio)
+     */
+    load() {
+        return this.getCurrentPortfolio();
+    }
+
+    /**
+     * Save the current portfolio data (alias for saveCurrentPortfolio)
+     */
+    save(portfolioData) {
+        return this.saveCurrentPortfolio(portfolioData);
+    }
+
     getCurrentPortfolio() {
         const mode = this.getMode();
         

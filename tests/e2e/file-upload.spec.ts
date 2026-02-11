@@ -1,20 +1,23 @@
 import { test, expect } from '@playwright/test';
 import path from 'path';
+import { dismissPortfolioSourceModal } from '../helpers/test-helpers';
 
 test.describe('File Upload', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:8000/dashboard.html');
+    await page.goto('/dashboard.html');
     await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(600);
+    await dismissPortfolioSourceModal(page);
   });
 
   test('should open upload modal', async ({ page }) => {
-    await page.click('text=Upload Portfolio');
+    await page.click('text=Upload CAS');
     await expect(page.locator('#uploadModal')).toBeVisible();
     console.log('✅ Upload modal opens');
   });
 
   test('should show PDF password field for PDF files', async ({ page }) => {
-    await page.click('text=Upload Portfolio');
+    await page.click('text=Upload CAS');
     await expect(page.locator('#uploadModal')).toBeVisible();
     
     // The password section should be hidden initially
@@ -46,7 +49,7 @@ test.describe('File Upload', () => {
   });
 
   test('should enable upload button after file selection', async ({ page }) => {
-    await page.click('text=Upload Portfolio');
+    await page.click('text=Upload CAS');
     await expect(page.locator('#uploadModal')).toBeVisible();
     
     const uploadBtn = page.locator('#uploadButton');
@@ -75,7 +78,7 @@ test.describe('File Upload', () => {
   });
 
   test('should close modal on Cancel', async ({ page }) => {
-    await page.click('text=Upload Portfolio');
+    await page.click('text=Upload CAS');
     await expect(page.locator('#uploadModal')).toBeVisible();
     
     await page.click('#uploadModal button:has-text("Cancel")');
@@ -90,7 +93,7 @@ test.describe('File Upload', () => {
       errors.push(error.message);
     });
     
-    await page.click('text=Upload Portfolio');
+    await page.click('text=Upload CAS');
     await expect(page.locator('#uploadModal')).toBeVisible();
     await page.waitForTimeout(1000);
     

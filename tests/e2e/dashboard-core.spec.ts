@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { dismissPortfolioSourceModal } from '../helpers/test-helpers';
 
 test.describe('Dashboard Core Features', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:8000/dashboard.html');
+    await page.goto('/dashboard.html');
     await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(600);
+    await dismissPortfolioSourceModal(page);
   });
 
   test('should load dashboard without errors', async ({ page }) => {

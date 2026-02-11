@@ -52,17 +52,17 @@ test.describe('API Integration Tests', () => {
   });
 
   test('should handle health check', async ({ request }) => {
-    const response = await request.get(`${BASE_URL}/api/health`);
+    const response = await request.get(`${BASE_URL}/health`);
     
     expect(response.ok()).toBeTruthy();
     const data = await response.json();
     
-    expect(data.status).toBe('ok');
+    expect(data.status).toBe('healthy');
     console.log('✅ Health check passed:', data);
   });
 
   test('should handle CORS headers', async ({ request }) => {
-    const response = await request.get(`${BASE_URL}/api/health`);
+    const response = await request.get(`${BASE_URL}/health`);
     
     const headers = response.headers();
     // Check if CORS header exists (may vary by configuration)
@@ -75,7 +75,7 @@ test.describe('API Integration Tests', () => {
     const endpoints = [
       '/api/funds/amc-list',
       '/api/funds/list?limit=5',
-      '/api/health'
+      '/health'
     ];
     
     for (const endpoint of endpoints) {
