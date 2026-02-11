@@ -44,6 +44,137 @@ else:
 Base.metadata.create_all(bind=engine)
 logger.info("Database tables created/verified")
 
+# Auto-seed demo portfolio if table is empty
+def seed_demo_portfolio_if_empty():
+    """Seed demo portfolio with realistic Indian mutual fund data on first run"""
+    from app.database import SessionLocal
+    from app.models.demo_portfolio import DemoPortfolio
+
+    db = SessionLocal()
+    try:
+        count = db.query(DemoPortfolio).filter(DemoPortfolio.is_active == True).count()
+        if count > 0:
+            logger.info(f"Demo portfolio already has {count} holdings - skipping seed")
+            return
+
+        logger.info("Demo portfolio empty - seeding with sample data...")
+
+        demo_holdings = [
+            {
+                "scheme_name": "HDFC Top 100 Fund - Direct Plan - Growth",
+                "scheme_code": "135832",
+                "amc": "HDFC Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Large Cap",
+                "units": 245.50,
+                "avg_cost": 612.30,
+                "current_nav": 895.45,
+            },
+            {
+                "scheme_name": "ICICI Prudential Bluechip Fund - Direct Plan - Growth",
+                "scheme_code": "120586",
+                "amc": "ICICI Prudential Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Large Cap",
+                "units": 310.75,
+                "avg_cost": 52.80,
+                "current_nav": 89.60,
+            },
+            {
+                "scheme_name": "Axis Midcap Fund - Direct Plan - Growth",
+                "scheme_code": "141240",
+                "amc": "Axis Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Mid Cap",
+                "units": 180.20,
+                "avg_cost": 68.40,
+                "current_nav": 112.75,
+            },
+            {
+                "scheme_name": "SBI Small Cap Fund - Direct Plan - Growth",
+                "scheme_code": "125497",
+                "amc": "SBI Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Small Cap",
+                "units": 420.00,
+                "avg_cost": 88.15,
+                "current_nav": 155.30,
+            },
+            {
+                "scheme_name": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
+                "scheme_code": "122639",
+                "amc": "PPFAS Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Flexi Cap",
+                "units": 520.80,
+                "avg_cost": 42.50,
+                "current_nav": 72.85,
+            },
+            {
+                "scheme_name": "Mirae Asset Large Cap Fund - Direct Plan - Growth",
+                "scheme_code": "118834",
+                "amc": "Mirae Asset Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Large Cap",
+                "units": 275.30,
+                "avg_cost": 65.20,
+                "current_nav": 98.40,
+            },
+            {
+                "scheme_name": "Kotak Emerging Equity Fund - Direct Plan - Growth",
+                "scheme_code": "120200",
+                "amc": "Kotak Mahindra Mutual Fund",
+                "category": "Equity",
+                "sub_category": "Mid Cap",
+                "units": 350.00,
+                "avg_cost": 55.80,
+                "current_nav": 95.20,
+            },
+            {
+                "scheme_name": "HDFC Liquid Fund - Direct Plan - Growth",
+                "scheme_code": "119065",
+                "amc": "HDFC Mutual Fund",
+                "category": "Debt",
+                "sub_category": "Liquid",
+                "units": 15.50,
+                "avg_cost": 4285.60,
+                "current_nav": 4612.30,
+            },
+        ]
+
+        for h in demo_holdings:
+            invested = round(h["units"] * h["avg_cost"], 2)
+            current = round(h["units"] * h["current_nav"], 2)
+            gain = round(current - invested, 2)
+            gain_pct = round((gain / invested * 100), 2) if invested > 0 else 0
+
+            holding = DemoPortfolio(
+                scheme_name=h["scheme_name"],
+                scheme_code=h["scheme_code"],
+                amc=h["amc"],
+                category=h["category"],
+                sub_category=h["sub_category"],
+                units=h["units"],
+                avg_cost=h["avg_cost"],
+                current_nav=h["current_nav"],
+                invested_amount=invested,
+                current_value=current,
+                gain_loss=gain,
+                gain_loss_percent=gain_pct,
+                is_active=True,
+            )
+            db.add(holding)
+
+        db.commit()
+        logger.info(f"Demo portfolio seeded with {len(demo_holdings)} holdings")
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Failed to seed demo portfolio: {e}")
+    finally:
+        db.close()
+
+seed_demo_portfolio_if_empty()
+
 app = FastAPI(
     title="MFHelper API",
     description="Mutual Fund Portfolio Analytics Platform",

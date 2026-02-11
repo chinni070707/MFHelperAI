@@ -417,14 +417,14 @@
             max-width: 900px;
             margin: 0 auto;
         }
-        .no-data h2 { 
-            margin-bottom: 15px; 
-            color: #fff; 
+        .no-data h2 {
+            margin-bottom: 15px;
+            color: var(--text-primary);
             font-size: 2rem;
         }
         .no-data ul {
             text-align: left;
-            color: rgba(255,255,255,0.8);
+            color: var(--text-secondary);
         }
         .no-data li {
             margin-bottom: 10px;
@@ -663,16 +663,16 @@
             </button>
         </div>
         
-        <div style="text-align: left; max-width: 600px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;">
+        <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #FFFFFF; padding: 20px; border-radius: 12px; border: 1px solid #E9ECEF; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
             <p style="margin-bottom: 15px; font-weight: 600; color: #4CAF50;">💡 New to MFHelper?</p>
-            <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
+            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #495057;">
                 <li><strong>Demo Portfolio:</strong> Explore features with sample data</li>
                 <li><strong>Upload CAS:</strong> Import your portfolio from NSDL/CAMS statement</li>
                 <li><strong>Manual Entry:</strong> Add funds manually for maximum privacy</li>
             </ul>
         </div>
-        
-        <p style="margin-top: 20px; font-size: 0.85rem; color: rgba(255,255,255,0.5);">
+
+        <p style="margin-top: 20px; font-size: 0.85rem; color: #6C757D;">
             🔒 Your data is stored locally in your browser. We respect your privacy.
         </p>
     </div>
@@ -1108,6 +1108,14 @@
                         portfolioData = JSON.parse(stored);
                         renderDashboard();
                     } else {
+                        // No data found - auto-load demo for first-time visitors
+                        const hasVisited = localStorage.getItem('mfhelper_visited');
+                        if (!hasVisited) {
+                            localStorage.setItem('mfhelper_visited', 'true');
+                            window.location.href = '/dashboard.html?mode=demo';
+                            return;
+                        }
+                        // Returning visitor with no data - show options
                         document.getElementById('dashboardContent').style.display = 'none';
                         document.getElementById('noData').style.display = 'block';
                     }
