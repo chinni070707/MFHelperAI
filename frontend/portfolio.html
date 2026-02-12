@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Setup - MFHelper | Build Your Portfolio</title>
+    <meta name="description" content="Set up your mutual fund portfolio. Import CAS statements or manually enter your holdings to get started with portfolio analysis.">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/js/navbar-auth.js" defer></script>
+    <script src="/js/toast.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --text-primary: #212529;
+            --text-secondary: #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-top: 90px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 5px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 2rem;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Options Grid */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .option-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .option-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(127, 192, 76, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .option-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .option-card p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: var(--primary-green);
+            font-weight: 800;
+            font-size: 1.25rem;
+        }
+
+        .cta-button {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(127, 192, 76, 0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Dashboard CTA */
+        .dashboard-cta {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--white);
+            display: none;
+        }
+
+        .dashboard-cta.show {
+            display: block;
+        }
+
+        .dashboard-cta h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-cta p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-cta .cta-button {
+            background: var(--white);
+            color: var(--primary-green);
+            font-size: 1.2rem;
+            padding: 1.25rem 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .option-card {
+                padding: 2rem;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu" role="list">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools.html" class="nav-link">Tools</a></li>
+                <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
+                <li><a href="/portfolio.html" class="nav-link" style="color: var(--primary-green);" aria-current="page">Portfolio</a></li>
+                <li><a href="/auth.html?tab=signup" class="btn-primary">Get Started</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>📊 Build Your Portfolio</h1>
+            <p>Choose how you want to set up your mutual fund portfolio. We'll analyze it and provide detailed insights.</p>
+        </div>
+
+        <!-- Options Grid -->
+        <div class="options-grid">
+            <!-- CAS Upload Option -->
+            <div class="option-card">
+                <div class="badge">Recommended</div>
+                <div class="option-icon">🚀</div>
+                <h2>Quick Import</h2>
+                <p>Upload your Consolidated Account Statement (CAS) from CAMS or KFintech for instant portfolio import.</p>
+                <ul class="features-list">
+                    <li>Instant import from CAS PDF/Excel</li>
+                    <li>All holdings imported automatically</li>
+                    <li>Historical transactions included</li>
+                    <li>Supports password-protected files</li>
+                </ul>
+                <button class="cta-button" onclick="window.location.href='/dashboard.html'">
+                    Upload CAS File →
+                </button>
+            </div>
+
+            <!-- Manual Entry Option -->
+            <div class="option-card">
+                <div class="option-icon">📝</div>
+                <h2>Manual Entry</h2>
+                <p>Enter your mutual fund holdings manually, one fund at a time. Perfect for smaller portfolios.</p>
+                <ul class="features-list">
+                    <li>Add funds one by one</li>
+                    <li>Search from 5000+ funds</li>
+                    <li>Flexible data entry</li>
+                    <li>Full control over details</li>
+                </ul>
+                <button class="cta-button" onclick="window.location.href='/dashboard.html'">
+                    Enter Manually →
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard CTA (shown after data entry) -->
+        <div class="dashboard-cta" id="dashboardCta">
+            <h3>✅ Portfolio Ready!</h3>
+            <p>Your portfolio has been set up successfully. View detailed analytics, performance metrics, and insights now.</p>
+            <a href="/dashboard.html" class="cta-button">
+                View Dashboard Analytics →
+            </a>
+        </div>
+
+        <!-- Info Box -->
+        <div style="background: var(--white); border-radius: 20px; padding: 2.5rem; margin-top: 4rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">💡 Need Help?</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                <div>
+                    <strong style="color: var(--primary-green);">Where to get CAS?</strong>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Download from CAMS (camsonline.com) or KFintech (kfintech.com) websites. It's free!</p>
+                </div>
+                <div>
+                    <strong style="color: var(--primary-green);">Is my data safe?</strong>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Yes! All data is processed securely. We never store your CAS files permanently.</p>
+                </div>
+                <div>
+                    <strong style="color: var(--primary-green);">Can I edit later?</strong>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Absolutely! You can add, edit, or remove holdings anytime from the dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Check if portfolio exists in localStorage
+        window.addEventListener('DOMContentLoaded', () => {
+            const portfolioData = localStorage.getItem('portfolioData');
+            if (portfolioData) {
+                try {
+                    const data = JSON.parse(portfolioData);
+                    if (data.holdings && data.holdings.length > 0) {
+                        document.getElementById('dashboardCta').classList.add('show');
+                    }
+                } catch (e) {
+                    console.error('Error checking portfolio data:', e);
+                }
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

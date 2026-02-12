@@ -301,6 +301,40 @@
             border-color: var(--primary-green);
         }
 
+        .amc-selector {
+            margin-bottom: 20px;
+        }
+
+        .amc-selector label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .amc-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            color: var(--text-primary);
+        }
+
+        .amc-select:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .amc-select:disabled {
+            background: var(--bg-dark);
+            cursor: not-allowed;
+        }
+
         .fund-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -611,10 +645,10 @@
             <a href="/" class="logo" aria-label="MFHelper Home">MFHelper</a>
             <ul class="nav-menu" role="list">
                 <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools.html" class="nav-link">Tools</a></li>
                 <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
-                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
                 <!-- <li><a href="/#ai-features" class="nav-link">AI Features</a></li> -->
-                <li><a href="/auth.html" class="nav-link">Sign In</a></li>
                 <li><a href="/auth.html?tab=signup" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
             </ul>
             <div class="hamburger" onclick="toggleMenu()">
@@ -660,11 +694,20 @@
                 </div>
             </div>
 
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchFunds" placeholder="Search funds by name, AMC, or category...">
+            <!-- AMC Selector -->
+            <div class="amc-selector">
+                <label for="amcSelect">1️⃣ Select Fund House (AMC)</label>
+                <select class="amc-select" id="amcSelect">
+                    <option value="">-- Select a Fund House --</option>
+                </select>
             </div>
 
-            <div class="fund-grid" id="fundGrid">
+            <div class="search-box" id="searchBox" style="display: none;">
+                <label for="searchFunds" style="display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-primary);">2️⃣ Search and Select Funds</label>
+                <input type="text" class="search-input" id="searchFunds" placeholder="Search funds by name or category...">
+            </div>
+
+            <div class="fund-grid" id="fundGrid" style="display: none;">
                 <!-- Funds will be loaded here -->
             </div>
 
@@ -751,10 +794,12 @@
     </div>
 
     <script>
-        const API_BASE = window.location.origin;
+        const API_BASE = '';
         let allFunds = [];
         let selectedFunds = new Set();
         let userTopFunds = [];
+        let currentAMC = '';
+        let uniqueAMCs = [];
 
         // Load user's top funds and available funds
         async function init() {
@@ -888,13 +933,51 @@
                 
                 if (data.status === 'success') {
                     allFunds = data.funds;
-                    renderFunds(allFunds);
+                    populateAMCDropdown();
                 }
             } catch (error) {
                 console.error('Error loading funds:', error);
                 alert('Failed to load funds. Please refresh the page.');
             }
         }
+
+        // Populate AMC dropdown with unique AMCs
+        function populateAMCDropdown() {
+            const amcSet = new Set();
+            allFunds.forEach(fund => {
+                if (fund.amc) {
+                    amcSet.add(fund.amc);
+                }
+            });
+            
+            uniqueAMCs = Array.from(amcSet).sort();
+            
+            const amcSelect = document.getElementById('amcSelect');
+            amcSelect.innerHTML = '<option value="">-- Select a Fund House --</option>' +
+                uniqueAMCs.map(amc => `<option value="${amc}">${amc}</option>`).join('');
+        }
+
+        // Handle AMC selection
+        document.getElementById('amcSelect').addEventListener('change', (e) => {
+            currentAMC = e.target.value;
+            
+            if (currentAMC) {
+                // Show search box and fund grid
+                document.getElementById('searchBox').style.display = 'block';
+                document.getElementById('fundGrid').style.display = 'grid';
+                
+                // Filter and render funds for selected AMC
+                const amcFunds = allFunds.filter(fund => fund.amc === currentAMC);
+                renderFunds(amcFunds);
+                
+                // Clear search input
+                document.getElementById('searchFunds').value = '';
+            } else {
+                // Hide search box and fund grid
+                document.getElementById('searchBox').style.display = 'none';
+                document.getElementById('fundGrid').style.display = 'none';
+            }
+        });
 
         // Render fund cards
         function renderFunds(funds) {
@@ -909,12 +992,14 @@
             `).join('');
         }
 
-        // Search funds
+        // Search funds within selected AMC
         document.getElementById('searchFunds').addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
-            const filtered = allFunds.filter(fund =>
+            
+            // Filter only within current AMC
+            const amcFunds = allFunds.filter(fund => fund.amc === currentAMC);
+            const filtered = amcFunds.filter(fund =>
                 fund.name.toLowerCase().includes(query) ||
-                fund.amc.toLowerCase().includes(query) ||
                 fund.category.toLowerCase().includes(query)
             );
             renderFunds(filtered);

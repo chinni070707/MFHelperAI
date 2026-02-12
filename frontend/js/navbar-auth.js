@@ -44,14 +44,14 @@
                                     </svg>
                                 </button>
                                 <div class="user-dropdown-menu">
-                                    <a href="/dashboard.html" class="dropdown-item">
-                                        <span>📊</span> Dashboard
+                                    <a href="/portfolio.html" class="dropdown-item">
+                                        <span>📊</span> Portfolio
                                     </a>
                                     <a href="/goal-planning.html" class="dropdown-item">
                                         <span>🎯</span> Goals
                                     </a>
                                     <a href="/dashboard.html" class="dropdown-item">
-                                        <span>⚙️</span> Settings
+                                        <span>📈</span> Analytics
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a href="#" onclick="handleLogout(event)" class="dropdown-item logout-item">

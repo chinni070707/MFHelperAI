@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Rebalancing Tool - MFHelper</title>
+    <meta name="description" content="Rebalance your mutual fund portfolio. Get actionable recommendations to achieve your target asset allocation.">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/js/navbar-auth.js" defer></script>
+    <script src="/js/toast.js" defer></script>
+    <script src="/js/portfolio-storage.js" defer></script>
+    
+    <style>
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --light-green: #9ED670;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --text-primary: #212529;
+            --text-secondary: #6B7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-top: 90px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: white;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--gray-200);
+            background: white;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn:hover {
+            border-color: var(--primary-green);
+        }
+
+        .mode-btn.active {
+            background: var(--primary-green);
+            color: white;
+            border-color: var(--primary-green);
+        }
+
+        .slider-container {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: var(--gray-200);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            cursor: pointer;
+        }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            cursor: pointer;
+            border: none;
+        }
+
+        .preset-btn {
+            padding: 0.75rem 1.5rem;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--primary-green);
+            background: white;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .current-allocation {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .allocation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .mode-toggle {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools.html" class="nav-link">Tools</a></li>
+                <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
+                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>⚙️ Portfolio Rebalancing Tool</h1>
+        <p>Adjust your asset allocation to match your investment strategy</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div id="content">
+            <div class="chart-container">
+                <div class="chart-title">🎯 Portfolio Rebalancing Calculator</div>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">Adjust sliders to set your target allocation and see what changes you need to make</p>
+                
+                <!-- Current Allocation -->
+                <div class="current-allocation">
+                    <h4 style="margin-bottom: 1rem;">📊 Current Allocation (Equity Only)</h4>
+                    <div class="allocation-item">
+                        <span><strong>Large Cap:</strong></span>
+                        <span id="currentLargeDisplay">-</span>
+                    </div>
+                    <div class="allocation-item">
+                        <span><strong>Mid Cap:</strong></span>
+                        <span id="currentMidDisplay">-</span>
+                    </div>
+                    <div class="allocation-item">
+                        <span><strong>Small Cap:</strong></span>
+                        <span id="currentSmallDisplay">-</span>
+                    </div>
+                    <div class="allocation-item" style="background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: white;">
+                        <span><strong>Total Equity:</strong></span>
+                        <span id="totalEquityDisplay">-</span>
+                    </div>
+                </div>
+
+                <!-- Mode Selection Toggle -->
+                <div class="mode-toggle">
+                    <button id="modeRebalance" class="mode-btn active" onclick="setMode('rebalance')">🔄 Rebalance Existing</button>
+                    <button id="modeFresh" class="mode-btn" onclick="setMode('fresh')">💰 Add Fresh Money</button>
+                </div>
+                <div id="modeDescription" style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 20px;">
+                    Sell from overweight categories, buy in underweight (may have tax implications)
+                </div>
+                
+                <!-- Target Allocation Sliders -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 2rem;">
+                    <div class="slider-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: var(--primary-green); font-weight: 600;">Large Cap Target</span>
+                            <span id="largeTarget" style="color: var(--primary-green); font-weight: 700;">40%</span>
+                        </div>
+                        <input type="range" id="largeSlider" min="0" max="100" value="40" oninput="updateRebalance()">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                            <span id="largeCurrent">Current: -</span>
+                            <span id="largeDiff">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #ffc107; font-weight: 600;">Mid Cap Target</span>
+                            <span id="midTarget" style="color: #ffc107; font-weight: 700;">30%</span>
+                        </div>
+                        <input type="range" id="midSlider" min="0" max="100" value="30" oninput="updateRebalance()">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                            <span id="midCurrent">Current: -</span>
+                            <span id="midDiff">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #ff4757; font-weight: 600;">Small Cap Target</span>
+                            <span id="smallTarget" style="color: #ff4757; font-weight: 700;">30%</span>
+                        </div>
+                        <input type="range" id="smallSlider" min="0" max="100" value="30" oninput="updateRebalance()">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-top: 5px;">
+                            <span id="smallCurrent">Current: -</span>
+                            <span id="smallDiff">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Preset Buttons -->
+                <div style="margin-top: 20px; margin-bottom: 2rem;">
+                    <h4 style="margin-bottom: 1rem;">Quick Presets:</h4>
+                    <button class="preset-btn" onclick="setPreset(33,33,34)">Equal (33/33/34)</button>
+                    <button class="preset-btn" onclick="setPreset(50,30,20)">Conservative (50/30/20)</button>
+                    <button class="preset-btn" onclick="setPreset(40,35,25)">Moderate (40/35/25)</button>
+                    <button class="preset-btn" onclick="setPreset(30,30,40)">Aggressive (30/30/40)</button>
+                </div>
+                
+                <!-- Recommendations -->
+                <div style="margin-top: 25px; background: linear-gradient(135deg, rgba(127,192,76,0.1) 0%, rgba(107,168,60,0.1) 100%); border-radius: 12px; padding: 20px; border: 2px solid var(--primary-green);">
+                    <h4 style="margin-bottom: 15px;" id="rebalanceTitle">📋 Recommended Actions to Reach Target</h4>
+                    <div id="rebalanceActions"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <h3>📊 No Portfolio Data Found</h3>
+            <p>Please add your portfolio data in the dashboard first.</p>
+            <a href="/dashboard.html" class="btn-primary">Go to Dashboard</a>
+        </div>
+    </main>
+
+    <script>
+        let portfolioData = null;
+        let marketCapAllocation = { large: 0, mid: 0, small: 0 };
+        let currentMode = 'rebalance';
+
+        async function loadPortfolio() {
+            try {
+                const token = localStorage.getItem('authToken');
+                
+                if (token) {
+                    const response = await fetch('/api/portfolio', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    
+                    if (response.ok) {
+                        portfolioData = await response.json();
+                    }
+                }
+                
+                // Fallback to local storage
+                if (!portfolioData || !portfolioData.holdings || portfolioData.holdings.length === 0) {
+                    if (typeof portfolioStorage !== 'undefined') {
+                        const localData = portfolioStorage.getGuestData();
+                        if (localData && localData.holdings && localData.holdings.length > 0) {
+                            portfolioData = localData;
+                        }
+                    }
+                }
+                
+                if (portfolioData && portfolioData.holdings && portfolioData.holdings.length > 0) {
+                    calculateMarketCapAllocation();
+                    displayCurrentAllocation();
+                    updateRebalance();
+                } else {
+                    showEmptyState();
+                }
+            } catch (error) {
+                console.error('Error loading portfolio:', error);
+                showEmptyState();
+            }
+        }
+
+        function showEmptyState() {
+            document.getElementById('content').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'block';
+        }
+
+        function calculateMarketCapAllocation() {
+            marketCapAllocation = { large: 0, mid: 0, small: 0 };
+            
+            portfolioData.holdings.forEach(h => {
+                const current = parseFloat(h.current_value || 0);
+                const category = (h.category || '').toLowerCase();
+                
+                if (category.includes('large') || category.includes('flexi')) {
+                    marketCapAllocation.large += current;
+                } else if (category.includes('mid')) {
+                    marketCapAllocation.mid += current;
+                } else if (category.includes('small')) {
+                    marketCapAllocation.small += current;
+                }
+            });
+        }
+
+        function displayCurrentAllocation() {
+            const totalEquity = marketCapAllocation.large + marketCapAllocation.mid + marketCapAllocation.small;
+            
+            if (totalEquity === 0) {
+                document.getElementById('currentLargeDisplay').textContent = 'No equity funds';
+                return;
+            }
+            
+            const largePct = (marketCapAllocation.large / totalEquity * 100).toFixed(1);
+            const midPct = (marketCapAllocation.mid / totalEquity * 100).toFixed(1);
+            const smallPct = (marketCapAllocation.small / totalEquity * 100).toFixed(1);
+            
+            document.getElementById('currentLargeDisplay').textContent = 
+                `₹${(marketCapAllocation.large/100000).toFixed(2)}L (${largePct}%)`;
+            document.getElementById('currentMidDisplay').textContent = 
+                `₹${(marketCapAllocation.mid/100000).toFixed(2)}L (${midPct}%)`;
+            document.getElementById('currentSmallDisplay').textContent = 
+                `₹${(marketCapAllocation.small/100000).toFixed(2)}L (${smallPct}%)`;
+            document.getElementById('totalEquityDisplay').textContent = 
+                `₹${(totalEquity/100000).toFixed(2)}L`;
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('modeRebalance').classList.toggle('active', mode === 'rebalance');
+            document.getElementById('modeFresh').classList.toggle('active', mode === 'fresh');
+            document.getElementById('modeDescription').textContent = mode === 'rebalance' 
+                ? 'Sell from overweight categories, buy in underweight (may have tax implications)'
+                : 'Calculate how much fresh money to add to each category';
+            document.getElementById('rebalanceTitle').textContent = mode === 'rebalance'
+                ? '📋 Recommended Actions to Reach Target'
+                : '💰 Fresh Investment Recommendations';
+            updateRebalance();
+        }
+
+        function setPreset(large, mid, small) {
+            document.getElementById('largeSlider').value = large;
+            document.getElementById('midSlider').value = mid;
+            document.getElementById('smallSlider').value = small;
+            updateRebalance();
+        }
+
+        function updateRebalance() {
+            const totalEquity = marketCapAllocation.large + marketCapAllocation.mid + marketCapAllocation.small;
+            if (totalEquity === 0) return;
+            
+            const currentLargePct = (marketCapAllocation.large / totalEquity * 100).toFixed(1);
+            const currentMidPct = (marketCapAllocation.mid / totalEquity * 100).toFixed(1);
+            const currentSmallPct = (marketCapAllocation.small / totalEquity * 100).toFixed(1);
+            
+            const targetLarge = parseInt(document.getElementById('largeSlider').value);
+            const targetMid = parseInt(document.getElementById('midSlider').value);
+            const targetSmall = parseInt(document.getElementById('smallSlider').value);
+            
+            document.getElementById('largeTarget').textContent = targetLarge + '%';
+            document.getElementById('midTarget').textContent = targetMid + '%';
+            document.getElementById('smallTarget').textContent = targetSmall + '%';
+            
+            document.getElementById('largeCurrent').textContent = `Current: ${currentLargePct}%`;
+            document.getElementById('midCurrent').textContent = `Current: ${currentMidPct}%`;
+            document.getElementById('smallCurrent').textContent = `Current: ${currentSmallPct}%`;
+            
+            const largeDiff = (targetLarge - currentLargePct).toFixed(1);
+            const midDiff = (targetMid - currentMidPct).toFixed(1);
+            const smallDiff = (targetSmall - currentSmallPct).toFixed(1);
+            
+            document.getElementById('largeDiff').textContent = (largeDiff >= 0 ? '+' : '') + largeDiff + '%';
+            document.getElementById('largeDiff').style.color = largeDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
+            document.getElementById('midDiff').textContent = (midDiff >= 0 ? '+' : '') + midDiff + '%';
+            document.getElementById('midDiff').style.color = midDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
+            document.getElementById('smallDiff').textContent = (smallDiff >= 0 ? '+' : '') + smallDiff + '%';
+            document.getElementById('smallDiff').style.color = smallDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
+            
+            let html = currentMode === 'rebalance' 
+                ? generateRebalanceActions(totalEquity, targetLarge, targetMid, targetSmall, currentLargePct, currentMidPct, currentSmallPct)
+                : generateFreshInvestmentActions(totalEquity, targetLarge, targetMid, targetSmall, currentLargePct, currentMidPct, currentSmallPct);
+            document.getElementById('rebalanceActions').innerHTML = html;
+        }
+
+        function generateRebalanceActions(total, tgtL, tgtM, tgtS, curL, curM, curS) {
+            const targetLargeAmt = total * tgtL / 100;
+            const targetMidAmt = total * tgtM / 100;
+            const targetSmallAmt = total * tgtS / 100;
+            
+            const sellLarge = Math.max(0, marketCapAllocation.large - targetLargeAmt);
+            const sellMid = Math.max(0, marketCapAllocation.mid - targetMidAmt);
+            const sellSmall = Math.max(0, marketCapAllocation.small - targetSmallAmt);
+            const buyLarge = Math.max(0, targetLargeAmt - marketCapAllocation.large);
+            const buyMid = Math.max(0, targetMidAmt - marketCapAllocation.mid);
+            const buySmall = Math.max(0, targetSmallAmt - marketCapAllocation.small);
+            
+            let html = '<div style="display: grid; gap: 15px;">';
+            
+            if (sellLarge > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.1); border-radius: 8px; border-left: 3px solid #ff4757;"><strong style="color: #ff4757;">📉 SELL Large Cap:</strong> ₹${(sellLarge/100000).toFixed(2)}L</div>`;
+            if (sellMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px; border-left: 3px solid #ffc107;"><strong style="color: #ffc107;">📉 SELL Mid Cap:</strong> ₹${(sellMid/100000).toFixed(2)}L</div>`;
+            if (sellSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.1); border-radius: 8px; border-left: 3px solid #ff4757;"><strong style="color: #ff4757;">📉 SELL Small Cap:</strong> ₹${(sellSmall/100000).toFixed(2)}L</div>`;
+            
+            if (buyLarge > 0) html += `<div style="padding: 15px; background: rgba(127,192,76,0.1); border-radius: 8px; border-left: 3px solid var(--primary-green);"><strong style="color: var(--primary-green);">📈 BUY Large Cap:</strong> ₹${(buyLarge/100000).toFixed(2)}L</div>`;
+            if (buyMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px; border-left: 3px solid #ffc107;"><strong style="color: #ffc107;">📈 BUY Mid Cap:</strong> ₹${(buyMid/100000).toFixed(2)}L</div>`;
+            if (buySmall > 0) html += `<div style="padding: 15px; background: rgba(127,192,76,0.1); border-radius: 8px; border-left: 3px solid var(--primary-green);"><strong style="color: var(--primary-green);">📈 BUY Small Cap:</strong> ₹${(buySmall/100000).toFixed(2)}L</div>`;
+            
+            if (sellLarge === 0 && sellMid === 0 && sellSmall === 0 && buyLarge === 0 && buyMid === 0 && buySmall === 0) {
+                html += '<div style="padding: 15px; background: rgba(127,192,76,0.1); border-radius: 8px;"><strong style="color: var(--primary-green);">✅ Portfolio is already balanced!</strong></div>';
+            }
+            
+            html += '</div>';
+            
+            if (sellLarge > 0 || sellMid > 0 || sellSmall > 0) {
+                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px;"><strong style="color: #ffc107;">⚠️ Tax Note:</strong><p style="color: var(--text-secondary); margin-top: 5px; font-size: 0.85rem;">Selling may attract LTCG tax (12.5% on gains above ₹1.25L). Consider using "Add Fresh Money" mode to avoid taxes.</p></div>`;
+            }
+            
+            return html;
+        }
+
+        function generateFreshInvestmentActions(total, tgtL, tgtM, tgtS, curL, curM, curS) {
+            const targetTotal = total / (Math.max(curL, curM, curS) / Math.max(tgtL, tgtM, tgtS));
+            const freshTotal = Math.max(0, targetTotal - total);
+            const freshLarge = Math.max(0, (targetTotal * tgtL / 100) - marketCapAllocation.large);
+            const freshMid = Math.max(0, (targetTotal * tgtM / 100) - marketCapAllocation.mid);
+            const freshSmall = Math.max(0, (targetTotal * tgtS / 100) - marketCapAllocation.small);
+            
+            let html = '<div style="display: grid; gap: 15px;">';
+            html += `<div style="padding: 15px; background: rgba(127,192,76,0.2); border-radius: 8px; border-left: 3px solid var(--dark-green);"><strong style="color: var(--dark-green);">💰 Total Fresh Investment Needed:</strong> ₹${(freshTotal/100000).toFixed(2)}L</div>`;
+            
+            if (freshLarge > 0) html += `<div style="padding: 15px; background: rgba(127,192,76,0.05); border-radius: 8px;"><strong style="color: var(--primary-green);">Large Cap:</strong> Add ₹${(freshLarge/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Parag Parikh Flexi Cap, HDFC Flexicap</span></div>`;
+            if (freshMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.05); border-radius: 8px;"><strong style="color: #ffc107;">Mid Cap:</strong> Add ₹${(freshMid/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Motilal Oswal Midcap, Kotak Emerging Equity</span></div>`;
+            if (freshSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.05); border-radius: 8px;"><strong style="color: #ff4757;">Small Cap:</strong> Add ₹${(freshSmall/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Nippon Small Cap, Axis Small Cap</span></div>`;
+            
+            html += '</div>';
+            
+            if (freshTotal > 100000) {
+                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(127,192,76,0.05); border-radius: 8px;"><strong style="color: var(--primary-green);">💡 SIP Alternative:</strong><p style="color: var(--text-secondary); margin-top: 5px; font-size: 0.9rem;">Instead of lumpsum, start SIP of ₹${((freshTotal/12)/1000).toFixed(0)}K/month for 12 months to average out market volatility.</p></div>`;
+            }
+            
+            return html;
+        }
+
+        // Load portfolio on page load
+        document.addEventListener('DOMContentLoaded', loadPortfolio);
+    </script>
+</body>
+</html>

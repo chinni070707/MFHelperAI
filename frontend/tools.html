@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Fund Tools - MFHelper | Analysis Tools & Utilities</title>
+    <meta name="description" content="Free mutual fund analysis tools. Portfolio analyzer, overlap analysis, fund comparison, risk analysis, and more financial utilities.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mutual Fund Tools - MFHelper">
+    <meta property="og:description" content="Free mutual fund analysis tools and financial planning utilities.">
+    <meta property="og:url" content="https://mfhelper.onrender.com/tools.html">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/js/navbar-auth.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --accent-green: #5A9030;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --text-primary: #212529;
+            --text-secondary: #6B7280;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Fixed Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(127, 192, 76, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 2rem 80px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 2rem;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tool-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(127, 192, 76, 0.15);
+            border-color: var(--primary-green);
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .tool-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-features {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .tool-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-features li::before {
+            content: "✓";
+            color: var(--primary-green);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .badge-popular {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge-new {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .badge-advanced {
+            background: #FCE7F3;
+            color: #9F1239;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin: 4rem 0;
+        }
+
+        .category-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .category-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .category-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--white);
+            padding: 3rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            opacity: 0.8;
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="/" class="logo" aria-label="MFHelper Home">MFHelper</a>
+            <ul class="nav-menu" role="list">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools.html" class="nav-link" style="color: var(--primary-green);" aria-current="page">Tools</a></li>
+                <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
+                <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="/auth.html?tab=signup" class="btn-primary">Get Started</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle navigation menu" tabindex="0">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>🧰 Mutual Fund Analysis Tools</h1>
+        <p>Advanced analysis tools to help you make smarter investment decisions</p>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <!-- Analysis Tools Section -->
+        <section class="category-section">
+            <div class="category-header">
+                <h2>🔍 Analysis Tools</h2>
+                <p>Deep dive into your portfolio performance</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Overlap Analysis -->
+                <div class="tool-card" onclick="window.location.href='/overlap-analysis.html'">
+                    <div class="tool-icon">🔄</div>
+                    <h3>Fund Overlap Analysis</h3>
+                    <p>Identify overlapping holdings across your mutual funds.</p>
+                    <ul class="tool-features">
+                        <li>Common stock identification</li>
+                        <li>Concentration risk analysis</li>
+                        <li>Diversification score</li>
+                        <li>Visual overlap matrix</li>
+                    </ul>
+                    <span class="tool-badge badge-popular">Popular</span>
+                </div>
+
+                <!-- Portfolio Analyzer -->
+                <div class="tool-card" onclick="window.location.href='/portfolio.html'">
+                    <div class="tool-icon">📊</div>
+                    <h3>Portfolio Analyzer</h3>
+                    <p>Comprehensive analysis of your entire mutual fund portfolio.</p>
+                    <ul class="tool-features">
+                        <li>Asset allocation breakdown</li>
+                        <li>Sector-wise analysis</li>
+                        <li>Risk assessment</li>
+                        <li>Performance metrics</li>
+                    </ul>
+                </div>
+
+                <!-- Fund Compare -->
+                <div class="tool-card" onclick="window.location.href='/fund-comparison.html'">
+                    <div class="tool-icon">⚖️</div>
+                    <h3>Fund Comparison</h3>
+                    <p>Compare multiple mutual funds side-by-side.</p>
+                    <ul class="tool-features">
+                        <li>Side-by-side comparison</li>
+                        <li>Performance metrics</li>
+                        <li>Expense ratio analysis</li>
+                        <li>Risk-adjusted returns</li>
+                    </ul>
+                    <span class="tool-badge badge-advanced">Advanced</span>
+                </div>
+
+                <!-- Risk Analyzer -->
+                <div class="tool-card" onclick="window.location.href='/risk-analyzer.html'">
+                    <div class="tool-icon">⚠️</div>
+                    <h3>Risk Analyzer</h3>
+                    <p>Assess the risk profile of your portfolio.</p>
+                    <ul class="tool-features">
+                        <li>Standard deviation</li>
+                        <li>Sharpe ratio calculation</li>
+                        <li>Beta analysis</li>
+                        <li>Risk-return scatter</li>
+                    </ul>
+                    <span class="tool-badge badge-advanced">Advanced</span>
+                </div>
+
+                <!-- Rebalancing Tool -->
+                <div class="tool-card" onclick="window.location.href='/rebalancing-tool.html'">
+                    <div class="tool-icon">⚙️</div>
+                    <h3>Rebalancing Tool</h3>
+                    <p>Get recommendations to rebalance your portfolio.</p>
+                    <ul class="tool-features">
+                        <li>Target allocation setting</li>
+                        <li>Rebalancing suggestions</li>
+                        <li>Tax-efficient rebalancing</li>
+                        <li>Automated alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Utility Tools Section -->
+        <section class="category-section">
+            <div class="category-header">
+                <h2>🛠️ Utilities</h2>
+                <p>Handy tools for everyday investing</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- CAS Parser -->
+                <div class="tool-card" onclick="window.location.href='/portfolio.html'">
+                    <div class="tool-icon">📄</div>
+                    <h3>CAS Statement Parser</h3>
+                    <p>Upload and parse your Consolidated Account Statement (CAS).</p>
+                    <ul class="tool-features">
+                        <li>PDF/Excel upload support</li>
+                        <li>Automatic data extraction</li>
+                        <li>Portfolio import</li>
+                        <li>Multi-folio support</li>
+                    </ul>
+                    <span class="tool-badge badge-popular">Popular</span>
+                </div>
+
+                <!-- NAV Tracker -->
+                <div class="tool-card" onclick="window.location.href='#nav-tracker'">
+                    <div class="tool-icon">🔔</div>
+                    <h3>NAV Tracker</h3>
+                    <p>Track daily NAV updates and set price alerts for your funds.</p>
+                    <ul class="tool-features">
+                        <li>Real-time NAV updates</li>
+                        <li>Price alerts</li>
+                        <li>Historical NAV charts</li>
+                        <li>Watchlist management</li>
+                    </ul>
+                    <span class="tool-badge badge-new">Coming Soon</span>
+                </div>
+
+                <!-- Fund Search -->
+                <div class="tool-card" onclick="window.location.href='#fund-search'">
+                    <div class="tool-icon">🔎</div>
+                    <h3>Fund Search & Screener</h3>
+                    <p>Search and filter mutual funds based on your criteria.</p>
+                    <ul class="tool-features">
+                        <li>Advanced search filters</li>
+                        <li>Performance screening</li>
+                        <li>Category-wise sorting</li>
+                        <li>Top performers lists</li>
+                    </ul>
+                    <span class="tool-badge badge-new">Coming Soon</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section style="text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); border-radius: 30px; margin: 4rem 0; color: white;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Get Started?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">Join thousands of investors making smarter decisions with MFHelper</p>
+            <a href="/auth.html?tab=signup" class="btn-primary" style="background: white; color: var(--primary-green); padding: 1rem 3rem; font-size: 1.1rem;">Create Free Account</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p><strong>MFHelper</strong> - Smart Mutual Fund Management</p>
+            <p>&copy; 2026 MFHelper. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (!menu.contains(event.target) && !hamburger.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
