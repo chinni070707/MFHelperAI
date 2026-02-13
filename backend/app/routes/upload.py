@@ -487,45 +487,58 @@ def _parse_summary_table(text: str) -> list:
 def _parse_closing_balance_sections(text: str) -> list:
     """
     Parse KFinTech CAS detail sections. Each fund has a section ending with:
-    Closing Unit Balance: UNITS  Market Value on ... : INR VALUE
+      Closing Unit Balance: UNITS
+       NAV on DD-MON-YYYY : INR NAV_VALUE        (i+1)
+       Market Value on DD-MON-YYYY : INR VALUE   (i+2)
+      Total Cost Value : INR VALUE               (i+3)
     with the scheme name a few lines above (after a folio/ISIN line).
     """
     holdings = []
     lines = text.split('\n')
-    
+
     for i, line in enumerate(lines):
         if 'Closing Unit Balance:' not in line:
             continue
-        
+
         # Extract units
         units_match = re.search(r'Closing Unit Balance:\s*([\d,.]+)', line)
-        # Market value can be on the same line or the next
-        market_match = re.search(r'Market Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', line)
-        if not market_match and i + 1 < len(lines):
-            market_match = re.search(r'Market Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', lines[i + 1])
-        
-        # Cost value
-        cost_match = re.search(r'Total Cost Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', line)
-        if not cost_match and i + 1 < len(lines):
-            cost_match = re.search(r'Total Cost Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', lines[i + 1])
-        
+
+        # KFintech layout: NAV at i+1, Market Value at i+2, Cost Value at i+3
+        # Search lines i through i+4 to handle layout variations
+        market_match = None
+        cost_match = None
+        nav_forward_match = None
+        for lookahead in range(0, 5):
+            check_line = lines[i + lookahead] if i + lookahead < len(lines) else ''
+            if market_match is None:
+                market_match = re.search(r'Market Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', check_line)
+            if cost_match is None:
+                cost_match = re.search(r'Total Cost Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', check_line)
+            if nav_forward_match is None:
+                nav_forward_match = re.search(r'NAV[^:]*:\s*(?:INR|Rs\.?)?\s*([\d,.]+)', check_line, re.IGNORECASE)
+            if market_match and cost_match:
+                break
+
         if not units_match or not market_match:
             continue
-        
+
         units = safe_float_convert(units_match.group(1), "units")
         current_value = safe_float_convert(market_match.group(1), "current_value")
         invested = safe_float_convert(cost_match.group(1), "invested") if cost_match else 0
-        
+
         # Look backward for the scheme name (after folio/ISIN line)
+        # KFintech PDFs can have 60-180 lines of transaction history between
+        # the fund header and the Closing Unit Balance — search up to 200 lines back
         scheme_name = None
-        nav = 0
+        nav = safe_float_convert(nav_forward_match.group(1), "nav") if nav_forward_match else 0
         folio = ''
-        for j in range(max(0, i - 15), i):
+        for j in range(max(0, i - 200), i):
             l = lines[j]
-            # NAV line
-            nav_match = re.search(r'NAV[^:]*:\s*(?:INR|Rs\.?)?\s*([\d,.]+)', l, re.IGNORECASE)
-            if nav_match:
-                nav = safe_float_convert(nav_match.group(1), "nav")
+            # NAV line (backward search as fallback)
+            if nav == 0:
+                nav_match = re.search(r'NAV[^:]*:\s*(?:INR|Rs\.?)?\s*([\d,.]+)', l, re.IGNORECASE)
+                if nav_match:
+                    nav = safe_float_convert(nav_match.group(1), "nav")
             
             # Folio/ISIN line often contains: "Nominee...CODE-Scheme Name (ISIN:...Folio No..."
             if 'ISIN:' in l or ('Folio No' in l and '-' in l):
@@ -575,34 +588,73 @@ def _parse_closing_balance_sections(text: str) -> list:
 def _parse_portfolio_summary(text: str) -> list:
     """
     Parse the PORTFOLIO SUMMARY section (AMC-level totals).
-    Format: AMC_NAME  COST_VALUE  MARKET_VALUE
+    KFintech layout — each AMC is 3 consecutive lines:
+      AMC NAME
+      cost_value
+      market_value
     This is a last-resort — gives AMC-level data, not scheme-level.
     """
     holdings = []
-    
+
     if 'PORTFOLIO SUMMARY' not in text:
         return []
-    
+
     summary_start = text.find('PORTFOLIO SUMMARY')
-    summary_end = text.find('Nominee 1', summary_start)
+    # End at the transaction section or the Nominee block
+    for end_marker in ['(INR)\nTransaction', 'Nominee 1 :', 'Nominee 1:']:
+        summary_end = text.find(end_marker, summary_start)
+        if summary_end != -1:
+            break
     if summary_end == -1:
         summary_end = min(summary_start + 3000, len(text))
-    
+
     summary_section = text[summary_start:summary_end]
-    lines = summary_section.split('\n')
-    
-    for line in lines[1:]:
-        line = line.strip()
+    lines = [l.strip() for l in summary_section.split('\n')]
+
+    def is_numeric(s):
+        try:
+            float(s.replace(',', ''))
+            return True
+        except (ValueError, AttributeError):
+            return False
+
+    i = 1  # skip 'PORTFOLIO SUMMARY' header
+    while i < len(lines):
+        line = lines[i]
+        i += 1
         if not line or line.startswith('Total') or line.startswith('PORTFOLIO'):
             continue
-        
+        # Expect next two lines to be cost_value and market_value
+        if i + 1 < len(lines) and is_numeric(lines[i]) and is_numeric(lines[i + 1]):
+            try:
+                cost_value = safe_float_convert(lines[i], "cost")
+                market_value = safe_float_convert(lines[i + 1], "market_value")
+                i += 2  # consume the two value lines
+                if market_value > 0 and cost_value >= 0 and line:
+                    holdings.append({
+                        'fund_name': f"{line} (Portfolio Summary)",
+                        'folio': '',
+                        'amc': determine_amc(line),
+                        'category': determine_category(line),
+                        'style': determine_style(line),
+                        'units': 0,
+                        'nav': 0,
+                        'invested': cost_value,
+                        'current_value': market_value,
+                        'return_1y': '-',
+                        'return_3y': '-',
+                        'alpha': '-'
+                    })
+                continue
+            except (ValueError, IndexError):
+                pass
+        # Fallback: try single-line format (AMC_NAME COST MARKET on same line)
         parts = line.split()
         if len(parts) >= 3:
             try:
-                market_value = float(parts[-1].replace(',', ''))
-                cost_value = float(parts[-2].replace(',', ''))
+                market_value = safe_float_convert(parts[-1], "market_value")
+                cost_value = safe_float_convert(parts[-2], "cost")
                 amc_name = ' '.join(parts[:-2])
-                
                 if market_value > 0 and cost_value >= 0 and amc_name:
                     holdings.append({
                         'fund_name': f"{amc_name} (Portfolio Summary)",
@@ -619,8 +671,8 @@ def _parse_portfolio_summary(text: str) -> list:
                         'alpha': '-'
                     })
             except (ValueError, IndexError):
-                continue
-    
+                pass
+
     return holdings
 
 
