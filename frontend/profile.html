@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile – MFHelper</title>
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --text-primary: #212529;
+            --text-secondary: #6B7280;
+            --danger: #dc3545;
+            --danger-light: #fff5f5;
+            --radius: 16px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        /* ── Page layout ── */
+        .profile-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .page-header p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        /* ── Avatar ── */
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ── Form grid ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group.full { grid-column: 1 / -1; }
+        label {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            padding: 0.65rem 0.9rem;
+            border: 1.5px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--text-primary);
+            background: var(--white);
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        input:focus { border-color: var(--primary-green); }
+        input:disabled {
+            background: var(--gray-100);
+            color: var(--text-secondary);
+            cursor: default;
+        }
+        .field-hint {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 0.15rem;
+        }
+
+        /* ── Toggle switches ── */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        .toggle-row:last-child { border-bottom: none; }
+        .toggle-label { font-size: 0.95rem; }
+        .toggle-desc { font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.15rem; }
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: var(--gray-200);
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            left: 3px;
+            top: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.2s;
+        }
+        .toggle input:checked + .toggle-slider { background: var(--primary-green); }
+        .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+        /* ── Buttons ── */
+        .btn {
+            padding: 0.65rem 1.4rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--primary-green);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--dark-green); }
+        .btn-primary:disabled { opacity: 0.6; cursor: default; }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--gray-200);
+            color: var(--text-primary);
+        }
+        .btn-outline:hover { border-color: var(--primary-green); color: var(--primary-green); }
+        .btn-danger {
+            background: transparent;
+            border: 1.5px solid var(--danger);
+            color: var(--danger);
+        }
+        .btn-danger:hover { background: var(--danger-light); }
+        .btn-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        /* ── Badge ── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+        .badge-green { background: #e8f5e9; color: #2e7d32; }
+        .badge-yellow { background: #fff8e1; color: #f57f17; }
+        .badge-gray { background: var(--gray-100); color: var(--text-secondary); }
+
+        /* ── Portfolio history table ── */
+        .history-table { width: 100%; border-collapse: collapse; }
+        .history-table th {
+            text-align: left;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 0.6rem 0.9rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+        .history-table td {
+            padding: 0.85rem 0.9rem;
+            font-size: 0.93rem;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+        }
+        .history-table tr:last-child td { border-bottom: none; }
+        .history-table tr:hover td { background: var(--gray-50); }
+        .source-chip {
+            display: inline-block;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+        .source-cas { background: #e3f2fd; color: #1565c0; }
+        .source-excel { background: #e8f5e9; color: #2e7d32; }
+        .source-manual { background: #fff3e0; color: #e65100; }
+        .gain-pos { color: #2e7d32; font-weight: 600; }
+        .gain-neg { color: var(--danger); font-weight: 600; }
+        .empty-state {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .empty-state span { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+
+        /* ── Account info row ── */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 0.93rem;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-key { color: var(--text-secondary); }
+        .info-val { font-weight: 500; }
+
+        /* ── Loading skeleton ── */
+        .skeleton {
+            background: linear-gradient(90deg, var(--gray-100) 25%, var(--gray-200) 50%, var(--gray-100) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 6px;
+        }
+        @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+        /* ── Toast ── */
+        .inline-toast {
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .inline-toast.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; display: block; }
+        .inline-toast.error { background: #ffebee; color: #b71c1c; border: 1px solid #ffcdd2; display: block; }
+
+        /* ── Danger zone ── */
+        .danger-zone { border: 1.5px solid #ffcdd2; }
+        .danger-zone .card-title { color: var(--danger); }
+        .danger-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar injected by navbar-auth.js -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-logo"><span class="logo-text">MFHelper</span></a>
+        <ul class="nav-menu">
+            <li><a href="/index.html" class="nav-link">Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle">▾ Tools</a>
+                <div class="dropdown-content">
+                    <a href="/risk-analyzer.html">Risk Analyzer</a>
+                    <a href="/overlap-analysis.html">Overlap Analysis</a>
+                    <a href="/fund-comparison.html">Fund Comparison</a>
+                    <a href="/rebalancing-tool.html">Rebalancing Tool</a>
+                </div>
+            </li>
+            <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
+            <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
+            <li><a href="/login.html" class="btn btn-outline nav-btn">Sign In</a></li>
+            <li><a href="/signup.html" class="btn btn-primary nav-btn">Get Started</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main class="profile-page">
+
+    <!-- Page header -->
+    <div class="page-header">
+        <div class="avatar-circle" id="avatarCircle">?</div>
+        <div>
+            <h1 id="headerName">My Profile</h1>
+            <p id="headerEmail">Loading…</p>
+        </div>
+    </div>
+
+    <!-- ── 1. Personal Details ── -->
+    <div class="card">
+        <div class="card-title">👤 Personal Details</div>
+        <div id="profileToast" class="inline-toast"></div>
+        <form id="profileForm" autocomplete="off">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" disabled>
+                    <span class="field-hint" id="verifiedBadge"></span>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="e.g. +91 98765 43210">
+                </div>
+                <div class="form-group">
+                    <label for="pan">PAN</label>
+                    <input type="text" id="pan" disabled>
+                    <span class="field-hint">Used for CAS import. Cannot be changed here.</span>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- ── 2. Email Notifications ── -->
+    <div class="card">
+        <div class="card-title">🔔 Notification Preferences</div>
+        <div id="settingsToast" class="inline-toast"></div>
+
+        <div class="toggle-row">
+            <div>
+                <div class="toggle-label">Email Notifications</div>
+                <div class="toggle-desc">Receive email updates about your account</div>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" id="toggleEmail" onchange="saveSettings()">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+        <div class="toggle-row">
+            <div>
+                <div class="toggle-label">Portfolio Alerts</div>
+                <div class="toggle-desc">Alerts when your portfolio value changes significantly</div>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" id="togglePortfolio" onchange="saveSettings()">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+        <div class="toggle-row">
+            <div>
+                <div class="toggle-label">Market Updates</div>
+                <div class="toggle-desc">Weekly market news and fund performance digest</div>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" id="toggleMarket" onchange="saveSettings()">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <!-- ── 3. Portfolio History ── -->
+    <div class="card">
+        <div class="card-title">📂 Portfolio Upload History</div>
+        <div id="historyContainer">
+            <div class="empty-state"><span>⏳</span>Loading history…</div>
+        </div>
+    </div>
+
+    <!-- ── 4. Account Info ── -->
+    <div class="card">
+        <div class="card-title">ℹ️ Account Info</div>
+        <div class="info-row">
+            <span class="info-key">Member Since</span>
+            <span class="info-val" id="memberSince">—</span>
+        </div>
+        <div class="info-row">
+            <span class="info-key">Last Login</span>
+            <span class="info-val" id="lastLogin">—</span>
+        </div>
+        <div class="info-row">
+            <span class="info-key">Login Method</span>
+            <span class="info-val" id="loginMethod">—</span>
+        </div>
+        <div class="info-row">
+            <span class="info-key">Account Status</span>
+            <span class="info-val" id="accountStatus">—</span>
+        </div>
+    </div>
+
+    <!-- ── 5. Change Password ── -->
+    <div class="card" id="changePasswordCard">
+        <div class="card-title">🔑 Change Password</div>
+        <div id="pwToast" class="inline-toast"></div>
+        <form id="passwordForm" autocomplete="off">
+            <div class="form-grid">
+                <div class="form-group full">
+                    <label for="currentPw">Current Password</label>
+                    <input type="password" id="currentPw" placeholder="Enter current password">
+                </div>
+                <div class="form-group">
+                    <label for="newPw">New Password</label>
+                    <input type="password" id="newPw" placeholder="Min 8 characters">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPw">Confirm New Password</label>
+                    <input type="password" id="confirmPw" placeholder="Repeat new password">
+                </div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-primary">Update Password</button>
+            </div>
+        </form>
+    </div>
+
+</main>
+
+<script src="/js/navbar-auth.js"></script>
+<script src="/js/toast.js"></script>
+<script>
+    const API = '';  // same origin
+
+    function getAuthHeaders() {
+        const token = localStorage.getItem('authToken');
+        return token ? { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } : {};
+    }
+
+    // ── Format helpers ──────────────────────────────────────────────
+    function fmtDate(iso) {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    function fmtDateTime(iso) {
+        if (!iso) return '—';
+        return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+    function fmtINR(n) {
+        if (!n && n !== 0) return '—';
+        if (n >= 10000000) return '₹' + (n / 10000000).toFixed(2) + ' Cr';
+        if (n >= 100000)   return '₹' + (n / 100000).toFixed(2) + 'L';
+        return '₹' + Math.round(n).toLocaleString('en-IN');
+    }
+
+    // ── Load user profile ────────────────────────────────────────────
+    async function loadProfile() {
+        try {
+            const res = await fetch(`${API}/api/auth/me`, { headers: getAuthHeaders() });
+            if (res.status === 401) { window.location.href = '/login.html'; return; }
+            const user = await res.json();
+
+            // Header
+            const displayName = user.full_name || user.email?.split('@')[0] || 'User';
+            document.getElementById('avatarCircle').textContent = displayName.charAt(0).toUpperCase();
+            document.getElementById('headerName').textContent = displayName;
+            document.getElementById('headerEmail').textContent = user.email || '';
+
+            // Form fields
+            document.getElementById('fullName').value = user.full_name || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('pan').value = user.pan || '';
+
+            // Verified badge
+            const badge = document.getElementById('verifiedBadge');
+            if (user.is_verified) {
+                badge.innerHTML = '<span class="badge badge-green">✓ Verified</span>';
+            } else {
+                badge.innerHTML = '<span class="badge badge-yellow">⚠ Not verified</span>';
+            }
+
+            // Account info
+            document.getElementById('memberSince').textContent = fmtDate(user.created_at);
+            document.getElementById('lastLogin').textContent = fmtDateTime(user.last_login_at);
+            document.getElementById('loginMethod').textContent = user.oauth_provider
+                ? user.oauth_provider.charAt(0).toUpperCase() + user.oauth_provider.slice(1) + ' (OAuth)'
+                : 'Email & Password';
+            document.getElementById('accountStatus').innerHTML = user.is_active
+                ? '<span class="badge badge-green">Active</span>'
+                : '<span class="badge badge-gray">Inactive</span>';
+
+            // Hide password change for OAuth users
+            if (user.oauth_provider) {
+                document.getElementById('changePasswordCard').style.display = 'none';
+            }
+        } catch (e) {
+            console.error('Failed to load profile', e);
+        }
+    }
+
+    // ── Load notification settings ───────────────────────────────────
+    async function loadSettings() {
+        try {
+            const res = await fetch(`${API}/api/auth/settings`, { headers: getAuthHeaders() });
+            if (!res.ok) return;
+            const s = await res.json();
+            document.getElementById('toggleEmail').checked     = !!s.email_notifications;
+            document.getElementById('togglePortfolio').checked = !!s.portfolio_alerts;
+            document.getElementById('toggleMarket').checked    = !!s.market_updates;
+        } catch (e) {
+            console.error('Failed to load settings', e);
+        }
+    }
+
+    // ── Save notification settings (auto on toggle) ──────────────────
+    let settingsTimer = null;
+    async function saveSettings() {
+        clearTimeout(settingsTimer);
+        settingsTimer = setTimeout(async () => {
+            const body = {
+                email_notifications: document.getElementById('toggleEmail').checked,
+                portfolio_alerts:    document.getElementById('togglePortfolio').checked,
+                market_updates:      document.getElementById('toggleMarket').checked,
+            };
+            try {
+                const res = await fetch(`${API}/api/auth/settings`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(body)
+                });
+                const toast = document.getElementById('settingsToast');
+                if (res.ok) {
+                    toast.textContent = '✓ Preferences saved';
+                    toast.className = 'inline-toast success';
+                    setTimeout(() => { toast.className = 'inline-toast'; }, 2500);
+                } else {
+                    toast.textContent = 'Failed to save preferences';
+                    toast.className = 'inline-toast error';
+                }
+            } catch (e) {
+                console.error('saveSettings error', e);
+            }
+        }, 400);
+    }
+
+    // ── Save profile form ────────────────────────────────────────────
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('saveProfileBtn');
+        btn.disabled = true;
+        btn.textContent = 'Saving…';
+
+        const body = {
+            full_name: document.getElementById('fullName').value.trim(),
+            phone:     document.getElementById('phone').value.trim(),
+        };
+
+        const toast = document.getElementById('profileToast');
+        try {
+            const res = await fetch(`${API}/api/auth/me`, {
+                method: 'PUT',
+                headers: getAuthHeaders(),
+                body: JSON.stringify(body)
+            });
+            if (res.ok) {
+                const updated = await res.json();
+                // Update localStorage userInfo so navbar reflects new name
+                const stored = JSON.parse(localStorage.getItem('userInfo') || '{}');
+                stored.full_name = updated.full_name;
+                localStorage.setItem('userInfo', JSON.stringify(stored));
+
+                const displayName = updated.full_name || updated.email?.split('@')[0] || 'User';
+                document.getElementById('headerName').textContent = displayName;
+                document.getElementById('avatarCircle').textContent = displayName.charAt(0).toUpperCase();
+
+                toast.textContent = '✓ Profile updated successfully';
+                toast.className = 'inline-toast success';
+                if (window.updateNavbarAuth) window.updateNavbarAuth();
+            } else {
+                const err = await res.json().catch(() => ({}));
+                toast.textContent = err.detail || 'Failed to update profile';
+                toast.className = 'inline-toast error';
+            }
+        } catch (e) {
+            toast.textContent = 'Network error — please try again';
+            toast.className = 'inline-toast error';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Save Changes';
+            setTimeout(() => { toast.className = 'inline-toast'; }, 3000);
+        }
+    });
+
+    // ── Change password form ─────────────────────────────────────────
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const currentPw = document.getElementById('currentPw').value;
+        const newPw     = document.getElementById('newPw').value;
+        const confirmPw = document.getElementById('confirmPw').value;
+        const toast     = document.getElementById('pwToast');
+
+        if (newPw !== confirmPw) {
+            toast.textContent = 'New passwords do not match';
+            toast.className = 'inline-toast error';
+            return;
+        }
+        if (newPw.length < 8) {
+            toast.textContent = 'New password must be at least 8 characters';
+            toast.className = 'inline-toast error';
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API}/api/auth/change-password`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ current_password: currentPw, new_password: newPw })
+            });
+            if (res.ok) {
+                toast.textContent = '✓ Password changed successfully';
+                toast.className = 'inline-toast success';
+                document.getElementById('passwordForm').reset();
+            } else {
+                const err = await res.json().catch(() => ({}));
+                toast.textContent = err.detail || 'Failed to change password';
+                toast.className = 'inline-toast error';
+            }
+        } catch (e) {
+            toast.textContent = 'Network error — please try again';
+            toast.className = 'inline-toast error';
+        } finally {
+            setTimeout(() => { toast.className = 'inline-toast'; }, 4000);
+        }
+    });
+
+    // ── Load portfolio history ────────────────────────────────────────
+    async function loadHistory() {
+        const container = document.getElementById('historyContainer');
+        try {
+            const res = await fetch(`${API}/api/portfolio/history?limit=20`, { headers: getAuthHeaders() });
+            if (!res.ok) throw new Error('Failed');
+            const data = await res.json();
+            const snapshots = data.snapshots || [];
+
+            if (!snapshots.length) {
+                container.innerHTML = '<div class="empty-state"><span>📭</span>No portfolios uploaded yet.<br><a href="/portfolio.html" style="color:var(--primary-green)">Upload your first CAS or Excel file →</a></div>';
+                return;
+            }
+
+            const sourceLabel = s => {
+                if (s === 'cas_pdf') return '<span class="source-chip source-cas">CAS PDF</span>';
+                if (s === 'excel')   return '<span class="source-chip source-excel">Excel</span>';
+                return '<span class="source-chip source-manual">Manual</span>';
+            };
+
+            const rows = snapshots.map(s => {
+                const gain = (s.total_current || 0) - (s.total_invested || 0);
+                const retPct = s.total_invested > 0 ? ((gain / s.total_invested) * 100).toFixed(1) : '—';
+                const gainStr = gain >= 0
+                    ? `<span class="gain-pos">+${fmtINR(gain)}</span>`
+                    : `<span class="gain-neg">${fmtINR(gain)}</span>`;
+                const retStr = s.total_invested > 0
+                    ? (gain >= 0 ? `<span class="gain-pos">+${retPct}%</span>` : `<span class="gain-neg">${retPct}%</span>`)
+                    : '—';
+                return `<tr>
+                    <td>${fmtDate(s.snapshot_date)}</td>
+                    <td>${sourceLabel(s.source)}</td>
+                    <td>${s.holdings_count || 0} funds</td>
+                    <td>${fmtINR(s.total_invested)}</td>
+                    <td>${fmtINR(s.total_current)}</td>
+                    <td>${gainStr} (${retStr})</td>
+                </tr>`;
+            }).join('');
+
+            container.innerHTML = `
+                <div style="overflow-x:auto;">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Source</th>
+                            <th>Funds</th>
+                            <th>Invested</th>
+                            <th>Current Value</th>
+                            <th>Gain / Return</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+                </div>`;
+        } catch (e) {
+            container.innerHTML = '<div class="empty-state"><span>⚠️</span>Could not load portfolio history.</div>';
+        }
+    }
+
+    // ── Initialise ───────────────────────────────────────────────────
+    (async () => {
+        const token = localStorage.getItem('authToken');
+        if (!token) { window.location.href = '/login.html'; return; }
+        await Promise.all([loadProfile(), loadSettings(), loadHistory()]);
+    })();
+</script>
+</body>
+</html>

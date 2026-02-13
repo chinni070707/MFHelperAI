@@ -67,6 +67,9 @@
                                     </svg>
                                 </button>
                                 <div class="user-dropdown-menu">
+                                    <a href="/profile.html" class="dropdown-item">
+                                        <span>👤</span> My Profile
+                                    </a>
                                     <a href="/portfolio.html" class="dropdown-item">
                                         <span>📊</span> Portfolio
                                     </a>
