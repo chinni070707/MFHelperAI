@@ -6,25 +6,25 @@
 function createFooter() {
     const footerHTML = `
         <footer style="
-            background: rgba(0,0,0,0.4);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 60px;
-            padding: 40px 20px 20px;
-            color: rgba(255,255,255,0.8);
+            background: #1A3A2A;
+            border-top: 1px solid rgba(127,192,76,0.2);
+            margin-top: 40px;
+            padding: 24px 20px 12px;
+            color: rgba(255,255,255,0.85);
         ">
             <div style="max-width: 1400px; margin: 0 auto;">
                 <!-- Main Footer Content -->
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 16px;">
                     
                     <!-- About Section -->
                     <div>
-                        <h3 style="color: #00d4ff; margin-bottom: 15px; font-size: 1.1rem;">📊 About MFHelper</h3>
-                        <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">
+                        <h3 style="color: #7FC04C; margin-bottom: 8px; font-size: 1rem;">📊 About MFHelper</h3>
+                        <p style="font-size: 0.85rem; line-height: 1.5; opacity: 0.8;">
                             MFHelper is a free portfolio tracking and analysis tool for Indian mutual fund investors. 
                             We help you understand your investments better with advanced analytics and insights.
                         </p>
-                        <div style="margin-top: 15px;">
-                            <a href="mailto:support@mfhelper.com" style="color: #00d4ff; text-decoration: none; font-size: 0.9rem;">
+                        <div style="margin-top: 8px;">
+                            <a href="mailto:support@mfhelper.com" style="color: #7FC04C; text-decoration: none; font-size: 0.85rem;">
                                 ✉️ support@mfhelper.com
                             </a>
                         </div>
@@ -32,8 +32,8 @@ function createFooter() {
                     
                     <!-- Quick Links -->
                     <div>
-                        <h3 style="color: #00d4ff; margin-bottom: 15px; font-size: 1.1rem;">🔗 Quick Links</h3>
-                        <ul style="list-style: none; padding: 0; font-size: 0.9rem; line-height: 2;">
+                        <h3 style="color: #7FC04C; margin-bottom: 8px; font-size: 1rem;">🔗 Quick Links</h3>
+                        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.85rem; line-height: 1.7;">
                             <li><a href="/dashboard.html" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s;">🏠 Dashboard</a></li>
                             <li><a href="/goal-planning.html" style="color: rgba(255,255,255,0.7); text-decoration: none;">🎯 Goal Planning</a></li>
                             <li><a href="#" onclick="showAboutModal(); return false;" style="color: rgba(255,255,255,0.7); text-decoration: none;">ℹ️ About Us</a></li>
@@ -45,12 +45,12 @@ function createFooter() {
                     
                     <!-- SEBI Disclaimer -->
                     <div>
-                        <h3 style="color: #00d4ff; margin-bottom: 15px; font-size: 1.1rem;">⚖️ SEBI Guidelines</h3>
-                        <div style="font-size: 0.85rem; line-height: 1.6; opacity: 0.7;">
-                            <p style="margin-bottom: 10px;">
+                        <h3 style="color: #7FC04C; margin-bottom: 8px; font-size: 1rem;">⚖️ SEBI Guidelines</h3>
+                        <div style="font-size: 0.8rem; line-height: 1.5; opacity: 0.7;">
+                            <p style="margin-bottom: 6px;">
                                 <strong>IMPORTANT:</strong> MFHelper is NOT a SEBI registered investment adviser.
                             </p>
-                            <p style="margin-bottom: 10px;">
+                            <p style="margin-bottom: 6px;">
                                 We provide portfolio tracking and analysis tools only. This is NOT investment advice.
                             </p>
                             <p>
@@ -59,27 +59,27 @@ function createFooter() {
                         </div>
                         <a href="#" onclick="showSEBIModal(); return false;" style="
                             display: inline-block;
-                            margin-top: 15px;
-                            padding: 8px 16px;
-                            background: rgba(0,212,255,0.2);
-                            border: 1px solid #00d4ff;
+                            margin-top: 8px;
+                            padding: 6px 12px;
+                            background: rgba(127,192,76,0.15);
+                            border: 1px solid #7FC04C;
                             border-radius: 6px;
-                            color: #00d4ff;
+                            color: #7FC04C;
                             text-decoration: none;
-                            font-size: 0.85rem;
+                            font-size: 0.8rem;
                             transition: all 0.3s;
                         ">📖 Read Full Disclaimer</a>
                     </div>
                     
                     <!-- Social & Trust Badges -->
                     <div>
-                        <h3 style="color: #00d4ff; margin-bottom: 15px; font-size: 1.1rem;">🌐 Connect</h3>
-                        <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <h3 style="color: #7FC04C; margin-bottom: 8px; font-size: 1rem;">🌐 Connect</h3>
+                        <div style="display: flex; gap: 12px; margin-bottom: 12px;">
                             <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s;" title="Twitter">🐦</a>
                             <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s;" title="LinkedIn">💼</a>
                             <a href="#" style="color: rgba(255,255,255,0.7); font-size: 1.5rem; transition: color 0.3s;" title="GitHub">💻</a>
                         </div>
-                        <div style="font-size: 0.85rem; line-height: 1.8; opacity: 0.7;">
+                        <div style="font-size: 0.8rem; line-height: 1.6; opacity: 0.7;">
                             <p>✅ 100% Free to Use</p>
                             <p>🔒 Your Data is Private</p>
                             <p>📱 Mobile Responsive</p>
@@ -90,14 +90,14 @@ function createFooter() {
                 
                 <!-- Bottom Bar -->
                 <div style="
-                    border-top: 1px solid rgba(255,255,255,0.1);
-                    padding-top: 20px;
+                    border-top: 1px solid rgba(127,192,76,0.15);
+                    padding-top: 12px;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     flex-wrap: wrap;
-                    gap: 15px;
-                    font-size: 0.85rem;
+                    gap: 10px;
+                    font-size: 0.8rem;
                     opacity: 0.6;
                 ">
                     <div>

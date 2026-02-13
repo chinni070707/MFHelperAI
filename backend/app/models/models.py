@@ -1,7 +1,7 @@
 """
 MFHelper - Database Models
 """
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, Index
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Boolean, Index, JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
@@ -42,6 +42,7 @@ class User(Base):
     portfolios = relationship("Portfolio", back_populates="user", cascade="all, delete-orphan")
     holdings = relationship("Holding", back_populates="user", cascade="all, delete-orphan")
     settings = relationship("UserSettings", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    goals = relationship("Goal", back_populates="user", cascade="all, delete-orphan")
 
 
 class UserSettings(Base):
@@ -67,11 +68,39 @@ class UserSettings(Base):
     show_xirr = Column(Boolean, default=True)
     group_by = Column(String(20), default="category")  # 'category', 'amc', 'none'
     
+    # Goal Planning Data
+    goal_planning_data = Column(JSON, nullable=True)  # Store goals, lumpsums, expenses, and parameters
+    
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     
     # Relationships
     user = relationship("User", back_populates="settings")
+
+
+class Goal(Base):
+    """Financial goals for goal planning"""
+    __tablename__ = "goals"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    
+    # Goal details
+    name = Column(String(255), nullable=False)  # Custom name like "1st Daughter wedding"
+    icon_type = Column(String(50), default="custom")  # house, vehicle, education, marriage, etc.
+    amount = Column(Float, nullable=False)
+    age = Column(Integer, nullable=False)  # Age when goal is to be achieved
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    # Relationships
+    user = relationship("User", back_populates="goals")
+    
+    # Composite Index for user goals
+    __table_args__ = (
+        Index('idx_goal_user_age', 'user_id', 'age'),
+    )
 
 
 class Portfolio(Base):

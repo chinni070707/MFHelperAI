@@ -14,7 +14,9 @@
     "test:dashboard": "npx playwright test tests/e2e/dashboard.spec.ts",
     "test:upload": "npx playwright test tests/e2e/cas-upload.spec.ts",
     "test:journey": "npx playwright test tests/e2e/full-journey.spec.ts",
-    "test:report": "npx playwright show-report test-results/playwright-report"
+    "test:report": "npx playwright show-report test-results/playwright-report",
+    "build:goals": "node esbuild.goal-planning.mjs",
+    "watch:goals": "node esbuild.goal-planning.mjs --watch"
   },
   "keywords": [
     "mutual-funds",
@@ -28,13 +30,17 @@
     "@capacitor/cli": "^8.0.2",
     "@capacitor/core": "^8.0.2",
     "chart.js": "^4.4.0",
+    "d3": "^7.9.0",
     "html2canvas": "^1.4.1",
-    "plotly.js-dist": "^2.27.0"
+    "plotly.js-dist": "^2.27.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "@types/node": "^20.10.0",
     "@types/plotly.js": "^2.12.29",
+    "esbuild": "^0.27.3",
     "typescript": "^5.3.3",
     "vite": "^5.0.8",
     "vite-plugin-html": "^3.2.0"

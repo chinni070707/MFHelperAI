@@ -14,7 +14,7 @@ import logging
 import time
 
 from app.config import settings
-from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo, funds, overlap
+from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo, funds, overlap, blog, seo, email
 from app.database import engine, Base
 from app.middleware.rate_limiter import limiter
 
@@ -306,6 +306,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(email.router, tags=["Email & OTP"])
 app.include_router(upload.router, prefix="/api/upload", tags=["Upload"])
 app.include_router(cas.router, tags=["CAS Import"])
 app.include_router(portfolio.router, prefix="/api/portfolio", tags=["Portfolio"])
@@ -333,6 +334,12 @@ app.include_router(errors.router, tags=["Error Logging"])
 
 # Register AI routes
 app.include_router(ai.router, prefix="/api", tags=["AI"])
+
+# Register blog routes
+app.include_router(blog.router, prefix="/api/blog", tags=["Blog"])
+
+# Register SEO routes (sitemap, robots.txt)
+app.include_router(seo.router, tags=["SEO"])
 
 # Serve static files (frontend)
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "..", "frontend")

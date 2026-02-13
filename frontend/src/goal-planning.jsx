@@ -100,6 +100,61 @@ const iconTypeToEmoji = {
     expense: '💸'
 };
 
+// Input field component with live amount text
+function InputField({ field, idx, formatAmountText }) {
+    const [amountText, setAmountText] = useState(
+        field.type === 'number' && field.defaultValue 
+            ? formatAmountText(parseFloat(field.defaultValue)) 
+            : ''
+    );
+    
+    return (
+        <div style={{marginBottom: '16px'}}>
+            <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '8px'}}>
+                {field.label}
+            </label>
+            <input
+                type={field.type || 'text'}
+                name={field.name}
+                defaultValue={field.defaultValue || ''}
+                placeholder={field.placeholder || ''}
+                required={field.required !== false}
+                autoFocus={idx === 0}
+                onChange={(e) => {
+                    if (field.type === 'number' && e.target.value) {
+                        const num = parseFloat(e.target.value);
+                        if (!isNaN(num)) {
+                            setAmountText(formatAmountText(num));
+                        } else {
+                            setAmountText('');
+                        }
+                    }
+                }}
+                style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    borderRadius: '8px',
+                    background: 'var(--white)',
+                    border: '1px solid var(--gray-200)',
+                    color: 'var(--text-primary)',
+                    fontSize: '1rem',
+                    transition: 'border-color 0.3s'
+                }}
+            />
+            {field.type === 'number' && amountText && (
+                <div style={{
+                    marginTop: '6px',
+                    fontSize: '0.85rem',
+                    color: 'var(--primary-green)',
+                    fontWeight: 600
+                }}>
+                    ≈ {amountText}
+                </div>
+            )}
+        </div>
+    );
+}
+
 function FinancialPlanner() {
     // State
     const [currentAge, setCurrentAge] = useState(30);
@@ -107,7 +162,7 @@ function FinancialPlanner() {
     const [growthRate, setGrowthRate] = useState(8);
     const [inflationRate, setInflationRate] = useState(6);
     const [retirementAge, setRetirementAge] = useState(60);
-    const [retirementExpense, setRetirementExpense] = useState(100000);
+    const [retirementExpense, setRetirementExpense] = useState(200000);
     const [lifeEndAge, setLifeEndAge] = useState(80);
     const [goals, setGoals] = useState([]);
     const [sips, setSips] = useState([]);
@@ -119,6 +174,8 @@ function FinancialPlanner() {
     const [draggedTemplate, setDraggedTemplate] = useState(null);
     const [dropAge, setDropAge] = useState(null);
     const [isDraggingOver, setIsDraggingOver] = useState(false);
+    const [saveStatus, setSaveStatus] = useState('unsaved'); // 'saved', 'unsaved', 'saving'
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
     
     // Input Modal State
     const [inputModal, setInputModal] = useState({
@@ -165,6 +222,126 @@ function FinancialPlanner() {
     const closeConfirmModal = () => {
         setConfirmModal(prev => ({...prev, show: false}));
     };
+    
+    // Helper function to format amount in Indian format
+    const formatAmountText = (amount) => {
+        if (amount >= 10000000) {
+            const crores = amount / 10000000;
+            return `${crores.toFixed(crores % 1 === 0 ? 0 : 2)} Crore${crores > 1 ? 's' : ''}`;
+        } else if (amount >= 100000) {
+            const lakhs = amount / 100000;
+            return `${lakhs.toFixed(lakhs % 1 === 0 ? 0 : 2)} Lakh${lakhs > 1 ? 's' : ''}`;
+        } else if (amount >= 1000) {
+            const thousands = amount / 1000;
+            return `${thousands.toFixed(thousands % 1 === 0 ? 0 : 2)} Thousand`;
+        }
+        return amount.toString();
+    };
+    
+    // API Helper Functions
+    const getAuthToken = () => {
+        return localStorage.getItem('authToken');
+    };
+    
+    const isUserAuthenticated = () => {
+        return !!getAuthToken();
+    };
+    
+    const saveGoalToBackend = async (goal) => {
+        if (!isUserAuthenticated()) {
+            console.log('User not authenticated, goal not saved to backend');
+            return;
+        }
+        
+        try {
+            const token = getAuthToken();
+            const response = await fetch('/api/auth/goals', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    name: goal.name,
+                    icon_type: goal.iconType,
+                    amount: goal.amount,
+                    age: goal.age
+                })
+            });
+            
+            if (response.ok) {
+                const savedGoal = await response.json();
+                console.log('Goal saved successfully:', savedGoal);
+            } else {
+                console.error('Failed to save goal:', await response.text());
+            }
+        } catch (error) {
+            console.error('Error saving goal:', error);
+        }
+    };
+    
+    const loadGoalsFromBackend = async () => {
+        if (!isUserAuthenticated()) {
+            console.log('User not authenticated, cannot load goals');
+            return;
+        }
+        
+        try {
+            const token = getAuthToken();
+            const response = await fetch('/api/auth/goals', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (response.ok) {
+                const backendGoals = await response.json();
+                const formattedGoals = backendGoals.map(g => ({
+                    id: g.id,
+                    name: g.name,
+                    iconType: g.icon_type,
+                    amount: g.amount,
+                    age: g.age
+                }));
+                setGoals(formattedGoals);
+                console.log('Goals loaded successfully:', formattedGoals);
+            } else {
+                console.error('Failed to load goals:', await response.text());
+            }
+        } catch (error) {
+            console.error('Error loading goals:', error);
+        }
+    };
+    
+    const deleteGoalFromBackend = async (goalId) => {
+        if (!isUserAuthenticated() || !goalId) {
+            return;
+        }
+        
+        try {
+            const token = getAuthToken();
+            const response = await fetch(`/api/auth/goals/${goalId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
+            if (response.ok) {
+                console.log('Goal deleted successfully');
+            } else {
+                console.error('Failed to delete goal:', await response.text());
+            }
+        } catch (error) {
+            console.error('Error deleting goal:', error);
+        }
+    };
+    
+    // Load goals on component mount
+    useEffect(() => {
+        loadGoalsFromBackend();
+    }, []);
     
     const svgRef = useRef(null);
     const containerRef = useRef(null);
@@ -235,6 +412,82 @@ function FinancialPlanner() {
         if (amount >= 1000) return `₹${(amount / 1000).toFixed(2)} K`;
         return `₹${amount.toLocaleString('en-IN')}`;
     };
+    
+    // Format amount with text (e.g., "₹2,00,000 (2 Lakh)")
+    const formatAmountWithText = (amount) => {
+        const numericStr = `₹${amount.toLocaleString('en-IN')}`;
+        let textStr = '';
+        
+        if (amount >= 10000000) {
+            textStr = `${(amount / 10000000).toFixed(2)} Crore`;
+        } else if (amount >= 100000) {
+            textStr = `${(amount / 100000).toFixed(2)} Lakh`;
+        } else if (amount >= 1000) {
+            textStr = `${(amount / 1000).toFixed(2)} Thousand`;
+        }
+        
+        return textStr ? `${numericStr} (${textStr})` : numericStr;
+    };
+    
+    // Load goal planning data on component mount
+    useEffect(() => {
+        const loadGoalPlanningData = async () => {
+            try {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    console.log('No token found, skipping goal planning data load');
+                    return;
+                }
+                
+                console.log('Loading goal planning data...');
+                
+                const response = await fetch('/api/auth/goal-planning-data', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Load goals
+                    if (data.goals && data.goals.length > 0) {
+                        setGoals(data.goals);
+                    }
+                    
+                    // Load lumpsums
+                    if (data.lumpsums && data.lumpsums.length > 0) {
+                        setLumpsums(data.lumpsums);
+                    }
+                    
+                    // Load parameters
+                    if (data.parameters) {
+                        if (data.parameters.currentAge) setCurrentAge(data.parameters.currentAge);
+                        if (data.parameters.currentNetworth) setCurrentNetworth(data.parameters.currentNetworth);
+                        if (data.parameters.growthRate) setGrowthRate(data.parameters.growthRate);
+                        if (data.parameters.inflationRate) setInflationRate(data.parameters.inflationRate);
+                        if (data.parameters.retirementAge) setRetirementAge(data.parameters.retirementAge);
+                        if (data.parameters.retirementExpense) setRetirementExpense(data.parameters.retirementExpense);
+                        if (data.parameters.lifeEndAge) setLifeEndAge(data.parameters.lifeEndAge);
+                        if (data.parameters.scenario) setScenario(data.parameters.scenario);
+                    }
+                    
+                    console.log('Goal planning data loaded successfully');
+                    setSaveStatus('saved'); // Mark as saved after loading
+                } else if (response.status === 401) {
+                    console.log('User not authenticated');
+                } else {
+                    console.error('Failed to load goal planning data');
+                }
+            } catch (error) {
+                console.error('Error loading goal planning data:', error);
+            } finally {
+                setIsDataLoaded(true);
+            }
+        };
+        
+        loadGoalPlanningData();
+    }, []); // Run only once on component mount
     
     // D3 Visualization
     useEffect(() => {
@@ -459,7 +712,8 @@ function FinancialPlanner() {
             const goalG = g.append('g')
                 .attr('class', 'goal-marker')
                 .attr('transform', `translate(${xScale(goal.age)},${yScale(goalData.wealth)})`)
-                .style('cursor', 'grab');
+                .style('cursor', 'grab')
+                .style('pointer-events', 'all');
             
             goalG.append('circle')
                 .attr('r', 24)
@@ -491,8 +745,77 @@ function FinancialPlanner() {
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [showGoalPopup]);
     
+    // Manual save function
+    const handleManualSave = async () => {
+        const token = getAuthToken();
+        console.log('[goal-planning] Attempting to save. Token exists:', !!token);
+        
+        if (!isUserAuthenticated()) {
+            console.error('[goal-planning] No auth token found');
+            alert('Please sign in to save your goals');
+            return;
+        }
+        
+        setSaveStatus('saving');
+        
+        try {
+            const token = getAuthToken();
+            const planningData = {
+                goals,
+                lumpsums,
+                parameters: {
+                    currentAge,
+                    currentNetworth,
+                    growthRate,
+                    inflationRate,
+                    retirementAge,
+                    retirementExpense,
+                    lifeEndAge,
+                    scenario
+                }
+            };
+            
+            const response = await fetch('/api/auth/goal-planning-data', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(planningData)
+            });
+            
+            console.log('[goal-planning] Save response status:', response.status);
+            
+            if (response.ok) {
+                setSaveStatus('saved');
+                console.log('Goal planning data saved successfully');
+            } else if (response.status === 401) {
+                const errorText = await response.text();
+                console.error('[goal-planning] 401 Unauthorized:', errorText);
+                setSaveStatus('unsaved');
+                alert('Session expired. Please sign in again.');
+            } else {
+                const errorText = await response.text();
+                console.error('[goal-planning] Save failed with status', response.status, ':', errorText);
+                setSaveStatus('unsaved');
+                alert(`Failed to save (Error ${response.status}). Please try again.`);
+            }
+        } catch (error) {
+            setSaveStatus('unsaved');
+            console.error('[goal-planning] Error saving goal planning data:', error);
+            alert('Error saving data. Please check your connection.');
+        }
+    };
+    
+    // Mark as unsaved when state changes (only after initial load)
+    useEffect(() => {
+        if (isDataLoaded && isUserAuthenticated()) {
+            setSaveStatus('unsaved');
+        }
+    }, [goals, lumpsums, currentAge, currentNetworth, growthRate, inflationRate, retirementAge, retirementExpense, lifeEndAge, scenario, isDataLoaded]);
+    
     const goalTemplates = [
-        { iconType: 'house', name: 'House Purchase', defaultAmount: 5000000 },
+        { iconType: 'house', name: 'House Purchase', defaultAmount: 15000000 },
         { iconType: 'vehicle', name: 'Vehicle', defaultAmount: 1000000 },
         { iconType: 'education', name: 'Education', defaultAmount: 2500000 },
         { iconType: 'marriage', name: 'Marriage', defaultAmount: 1500000 },
@@ -502,15 +825,18 @@ function FinancialPlanner() {
         { iconType: 'custom', name: 'Custom', defaultAmount: 1000000 }
     ];
     
-    const addGoalFromPopup = (template, amount) => {
+    const addGoalFromPopup = (template, amount, customName) => {
         if (!amount || amount <= 0 || !clickedAge) return;
         
-        setGoals([...goals, {
+        const newGoal = {
             iconType: template.iconType,
-            name: template.name,
+            name: customName || template.name,
             amount: parseFloat(amount),
             age: clickedAge
-        }]);
+        };
+        
+        setGoals([...goals, newGoal]);
+        saveGoalToBackend(newGoal);
         
         setShowGoalPopup(false);
         setClickedAge(null);
@@ -527,23 +853,30 @@ function FinancialPlanner() {
     const addExpense = (amount, name = 'Expense') => {
         if (!amount || amount <= 0 || !clickedAge) return;
         
-        setGoals([...goals, {
+        const newGoal = {
             iconType: 'expense',
             name: name,
             amount: parseFloat(amount),
             age: clickedAge
-        }]);
+        };
+        
+        setGoals([...goals, newGoal]);
+        saveGoalToBackend(newGoal);
         
         setShowGoalPopup(false);
         setClickedAge(null);
     };
     
     const deleteGoal = (index) => {
+        const goalToDelete = goals[index];
         showConfirmModal({
             title: '🗑️ Delete Goal',
             message: 'Are you sure you want to delete this goal?',
             onConfirm: () => {
                 setGoals(goals.filter((_, i) => i !== index));
+                if (goalToDelete.id) {
+                    deleteGoalFromBackend(goalToDelete.id);
+                }
             }
         });
     };
@@ -580,8 +913,15 @@ function FinancialPlanner() {
             title: `🎯 Add ${template.name} at Age ${age}`,
             fields: [
                 {
+                    name: 'name',
+                    label: 'Goal Name',
+                    type: 'text',
+                    defaultValue: template.name,
+                    placeholder: 'e.g., 1st Daughter wedding, Dream Home, etc.'
+                },
+                {
                     name: 'amount',
-                    label: 'Amount (₹)',
+                    label: `Amount - ${formatAmountWithText(template.defaultAmount)}`,
                     type: 'number',
                     defaultValue: template.defaultAmount,
                     placeholder: 'Enter amount'
@@ -589,14 +929,16 @@ function FinancialPlanner() {
             ],
             onSubmit: (values) => {
                 const amount = parseFloat(values.amount);
-                if (amount && amount > 0) {
+                const name = values.name || template.name;
+                if (amount && amount > 0 && name) {
                     const newGoal = {
                         iconType: template.iconType,
-                        name: template.name,
+                        name: name,
                         amount: amount,
                         age: age
                     };
                     setGoals([...goals, newGoal]);
+                    saveGoalToBackend(newGoal);
                 }
                 setDraggedTemplate(null);
                 setDropAge(null);
@@ -699,13 +1041,34 @@ function FinancialPlanner() {
         <div style={{minHeight: '100vh', padding: '24px'}}>
             <div style={{maxWidth: '1280px', margin: '0 auto'}}>
                 {/* Header */}
-                <div className="glass-card" style={{marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                <div className="glass-card" style={{marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px'}}>
                     <h1 style={{fontSize: '1.875rem', fontWeight: 700, color: 'var(--primary-green)'}}>
                         💰 Your Financial Life Journey
                     </h1>
-                    <a href="/" className="btn-secondary" style={{width: 'auto', padding: '10px 20px'}}>
-                        ← Back
-                    </a>
+                    <div style={{display: 'flex', gap: '12px', alignItems: 'center'}}>
+                        <button
+                            onClick={handleManualSave}
+                            disabled={saveStatus === 'saving'}
+                            className="btn-primary"
+                            style={{
+                                width: 'auto',
+                                padding: '10px 20px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                background: saveStatus === 'saved' ? '#10b981' : 'var(--primary-green)',
+                                opacity: saveStatus === 'saving' ? 0.7 : 1,
+                                cursor: saveStatus === 'saving' ? 'not-allowed' : 'pointer'
+                            }}
+                        >
+                            {saveStatus === 'saving' && '⏳ Saving...'}
+                            {saveStatus === 'saved' && '✓ Saved'}
+                            {saveStatus === 'unsaved' && '💾 Save Goals'}
+                        </button>
+                        <a href="/" className="btn-secondary" style={{width: 'auto', padding: '10px 20px'}}>
+                            ← Back
+                        </a>
+                    </div>
                 </div>
                 
                 <p style={{textAlign: 'center', fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '32px'}}>
@@ -763,15 +1126,24 @@ function FinancialPlanner() {
                                             onClick={() => {
                                                 showInputModal({
                                                     title: `🎯 Add ${template.name}`,
-                                                    fields: [{
-                                                        name: 'amount',
-                                                        label: 'Amount (₹)',
-                                                        type: 'number',
-                                                        defaultValue: template.defaultAmount,
-                                                        placeholder: 'Enter amount'
-                                                    }],
+                                                    fields: [
+                                                        {
+                                                            name: 'name',
+                                                            label: 'Goal Name',
+                                                            type: 'text',
+                                                            defaultValue: template.name,
+                                                            placeholder: 'e.g., "1st Daughter Wedding", "Dream Home"'
+                                                        },
+                                                        {
+                                                            name: 'amount',
+                                                            label: `Amount - ${formatAmountWithText(template.defaultAmount)}`,
+                                                            type: 'number',
+                                                            defaultValue: template.defaultAmount,
+                                                            placeholder: 'Enter amount'
+                                                        }
+                                                    ],
                                                     onSubmit: (values) => {
-                                                        if (values.amount) addGoalFromPopup(template, values.amount);
+                                                        if (values.amount) addGoalFromPopup(template, values.amount, values.name);
                                                     }
                                                 });
                                             }}
@@ -827,7 +1199,7 @@ function FinancialPlanner() {
                                                     },
                                                     {
                                                         name: 'amount',
-                                                        label: 'Amount (₹)',
+                                                        label: `Amount - ${formatAmountWithText(100000)}`,
                                                         type: 'number',
                                                         defaultValue: '100000',
                                                         placeholder: 'Enter amount'
@@ -1183,29 +1555,12 @@ function FinancialPlanner() {
                             closeInputModal();
                         }}>
                             {inputModal.fields.map((field, idx) => (
-                                <div key={idx} style={{marginBottom: '16px'}}>
-                                    <label style={{display: 'block', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '8px'}}>
-                                        {field.label}
-                                    </label>
-                                    <input
-                                        type={field.type || 'text'}
-                                        name={field.name}
-                                        defaultValue={field.defaultValue || ''}
-                                        placeholder={field.placeholder || ''}
-                                        required={field.required !== false}
-                                        autoFocus={idx === 0}
-                                        style={{
-                                            width: '100%',
-                                            padding: '12px 16px',
-                                            borderRadius: '8px',
-                                            background: 'var(--white)',
-                                            border: '1px solid var(--gray-200)',
-                                            color: 'var(--text-primary)',
-                                            fontSize: '1rem',
-                                            transition: 'border-color 0.3s'
-                                        }}
-                                    />
-                                </div>
+                                <InputField 
+                                    key={idx} 
+                                    field={field} 
+                                    idx={idx} 
+                                    formatAmountText={formatAmountText}
+                                />
                             ))}
                             
                             <div style={{display: 'flex', gap: '12px', marginTop: '24px'}}>

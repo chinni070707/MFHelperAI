@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Blog Post - MFHelper</title>
+    
+    <!-- SEO Meta Tags (will be dynamically updated) -->
+    <meta name="description" content="" id="metaDescription">
+    <meta name="keywords" content="" id="metaKeywords">
+    <link rel="canonical" href="" id="canonicalLink">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="" id="ogTitle">
+    <meta property="og:description" content="" id="ogDescription">
+    <meta property="og:url" content="" id="ogUrl">
+    <meta property="og:image" content="" id="ogImage">
+    <meta property="article:published_time" content="" id="ogPublished">
+    <meta property="article:modified_time" content="" id="ogModified">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="" id="twitterTitle">
+    <meta name="twitter:description" content="" id="twitterDescription">
+    <meta name="twitter:image" content="" id="twitterImage">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/styles/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <script src="/js/navbar-auth.js" defer></script>
+    
+    <!-- Structured Data (JSON-LD) will be injected dynamically -->
+    <script type="application/ld+json" id="structuredData"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navbar-container"></div>
+
+    <!-- Blog Post Container -->
+    <main class="blog-post-container">
+        <div class="container">
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading article...</p>
+            </div>
+            
+            <!-- Error State -->
+            <div id="errorState" class="error-state" style="display: none;">
+                <h2>Article Not Found</h2>
+                <p>The article you're looking for doesn't exist or has been removed.</p>
+                <a href="/blog.html" class="btn-primary">← Back to Blog</a>
+            </div>
+            
+            <!-- Article Content -->
+            <article id="articleContent" class="blog-post" style="display: none;">
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumbs" id="breadcrumbs">
+                    <a href="/">Home</a>
+                    <span>/</span>
+                    <a href="/blog.html">Blog</a>
+                    <span>/</span>
+                    <span id="breadcrumbCategory"></span>
+                </nav>
+                
+                <!-- Article Header -->
+                <header class="post-header">
+                    <div id="postCategory" class="post-category"></div>
+                    <h1 id="postTitle" class="post-title"></h1>
+                    <p id="postDescription" class="post-description"></p>
+                    
+                    <div class="post-meta">
+                        <div class="meta-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span id="postAuthor"></span>
+                        </div>
+                        <div class="meta-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span id="postDate"></span>
+                        </div>
+                        <div class="meta-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span id="postReadTime"></span> min read
+                        </div>
+                        <div class="meta-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <span id="postViews"></span> views
+                        </div>
+                    </div>
+                    
+                    <!-- Featured Image -->
+                    <div id="featuredImageContainer" class="featured-image" style="display: none;">
+                        <img id="featuredImage" src="" alt="">
+                    </div>
+                </header>
+                
+                <!-- Article Body -->
+                <div class="post-content">
+                    <div id="postContent" class="prose"></div>
+                </div>
+                
+                <!-- Tags -->
+                <div id="postTagsContainer" class="post-tags" style="display: none;">
+                    <strong>Tags:</strong>
+                    <div id="postTags" class="tags-list"></div>
+                </div>
+                
+                <!-- Share Buttons -->
+                <div class="share-buttons">
+                    <span>Share this article:</span>
+                    <button id="shareTwitter" class="share-btn" aria-label="Share on Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                        </svg>
+                    </button>
+                    <button id="shareLinkedIn" class="share-btn" aria-label="Share on LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </button>
+                    <button id="shareFacebook" class="share-btn" aria-label="Share on Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                        </svg>
+                    </button>
+                    <button id="copyLink" class="share-btn" aria-label="Copy link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Related Posts -->
+                <section id="relatedPostsSection" class="related-posts" style="display: none;">
+                    <h2>Related Articles</h2>
+                    <div id="relatedPosts" class="related-posts-grid"></div>
+                </section>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MFHelper. Built with ❤️ for Indian investors.</p>
+            <div class="footer-links">
+                <a href="/how-it-works.html">How It Works</a>
+                <a href="/blog.html">Blog</a>
+                <a href="mailto:support@mfhelper.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const API_BASE = '/api/blog';
+        const urlParams = new URLSearchParams(window.location.search);
+        const postSlug = urlParams.get('slug');
+        
+        // DOM Elements
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const articleContent = document.getElementById('articleContent');
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!postSlug) {
+                showError();
+                return;
+            }
+            
+            await loadPost();
+            setupShareButtons();
+        });
+        
+        async function loadPost() {
+            try {
+                const response = await fetch(`${API_BASE}/posts/${postSlug}`);
+                
+                if (!response.ok) {
+                    throw new Error('Post not found');
+                }
+                
+                const post = await response.json();
+                
+                // Update SEO meta tags
+                updateMetaTags(post);
+                
+                // Display post content
+                displayPost(post);
+                
+                // Increment view count
+                await fetch(`${API_BASE}/posts/${postSlug}/view`, { method: 'POST' });
+                
+                // Highlight code blocks
+                document.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+                
+                loadingState.style.display = 'none';
+                articleContent.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading post:', error);
+                showError();
+            }
+        }
+        
+        function displayPost(post) {
+            // Title and header
+            document.getElementById('postTitle').textContent = post.title;
+            document.getElementById('postDescription').textContent = post.description || '';
+            
+            // Category
+            if (post.category) {
+                document.getElementById('postCategory').textContent = post.category.name;
+                document.getElementById('breadcrumbCategory').textContent = post.category.name;
+            }
+            
+            // Meta information
+            document.getElementById('postAuthor').textContent = post.author?.name || 'MFHelper Team';
+            document.getElementById('postDate').textContent = formatDate(post.published_at);
+            document.getElementById('postReadTime').textContent = post.reading_time_minutes;
+            document.getElementById('postViews').textContent = post.view_count;
+            
+            // Featured image
+            if (post.featured_image) {
+                document.getElementById('featuredImage').src = post.featured_image;
+                document.getElementById('featuredImage').alt = post.title;
+                document.getElementById('featuredImageContainer').style.display = 'block';
+            }
+            
+            // Content
+            document.getElementById('postContent').innerHTML = post.content;
+            
+            // Tags
+            if (post.tags && post.tags.length > 0) {
+                const tagsHtml = post.tags.map(tag => 
+                    `<a href="/blog.html?tag=${tag.slug}" class="tag">${tag.name}</a>`
+                ).join('');
+                document.getElementById('postTags').innerHTML = tagsHtml;
+                document.getElementById('postTagsContainer').style.display = 'block';
+            }
+            
+            // Related posts
+            if (post.related_posts && post.related_posts.length > 0) {
+                displayRelatedPosts(post.related_posts);
+            }
+        }
+        
+        function displayRelatedPosts(posts) {
+            const html = posts.map(post => `
+                <article class="related-post-card">
+                    ${post.featured_image ? `
+                        <img src="${post.featured_image}" alt="${post.title}" loading="lazy">
+                    ` : ''}
+                    <h3><a href="/blog-post.html?slug=${post.slug}">${post.title}</a></h3>
+                    <p>${post.description || ''}</p>
+                </article>
+            `).join('');
+            
+            document.getElementById('relatedPosts').innerHTML = html;
+            document.getElementById('relatedPostsSection').style.display = 'block';
+        }
+        
+        function updateMetaTags(post) {
+            const baseUrl = 'https://mfhelper.com';
+            const postUrl = `${baseUrl}/blog-post.html?slug=${post.slug}`;
+            const title = `${post.title} - MFHelper Blog`;
+            const description = post.description || post.title;
+            const image = post.og_image || post.featured_image || `${baseUrl}/images/og-blog.png`;
+            
+            // Page title
+            document.title = title;
+            document.getElementById('pageTitle').textContent = title;
+            
+            // Standard meta
+            document.getElementById('metaDescription').content = description;
+            if (post.tags) {
+                document.getElementById('metaKeywords').content = post.tags.map(t => t.name).join(', ');
+            }
+            document.getElementById('canonicalLink').href = postUrl;
+            
+            // Open Graph
+            document.getElementById('ogTitle').content = title;
+            document.getElementById('ogDescription').content = description;
+            document.getElementById('ogUrl').content = postUrl;
+            document.getElementById('ogImage').content = image;
+            document.getElementById('ogPublished').content = post.published_at;
+            document.getElementById('ogModified').content = post.updated_at;
+            
+            // Twitter
+            document.getElementById('twitterTitle').content = title;
+            document.getElementById('twitterDescription').content = description;
+            document.getElementById('twitterImage').content = image;
+            
+            // Structured Data (JSON-LD)
+            const structuredData = {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "headline": post.title,
+                "description": description,
+                "image": image,
+                "datePublished": post.published_at,
+                "dateModified": post.updated_at,
+                "author": {
+                    "@type": "Person",
+                    "name": post.author?.name || "MFHelper Team"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "MFHelper",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": `${baseUrl}/images/logo.png`
+                    }
+                }
+            };
+            document.getElementById('structuredData').textContent = JSON.stringify(structuredData);
+        }
+        
+        function setupShareButtons() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            
+            document.getElementById('shareTwitter').onclick = () => {
+                window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
+            };
+            
+            document.getElementById('shareLinkedIn').onclick = () => {
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+            };
+            
+            document.getElementById('shareFacebook').onclick = () => {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            };
+            
+            document.getElementById('copyLink').onclick = async () => {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            };
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+        
+        function showError() {
+            loadingState.style.display = 'none';
+            errorState.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>

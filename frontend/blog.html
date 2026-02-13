@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - MFHelper | Mutual Fund Insights & Tips</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to maximize your mutual fund investments with expert insights, guides, and tips from MFHelper. Discover portfolio optimization strategies and financial planning advice.">
+    <meta name="keywords" content="mutual funds, portfolio management, investment tips, financial planning, SIP calculator, retirement planning">
+    <link rel="canonical" href="https://mfhelper.com/blog.html">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Blog - MFHelper | Mutual Fund Insights & Tips">
+    <meta property="og:description" content="Expert insights on mutual fund investing, portfolio optimization, and financial planning.">
+    <meta property="og:url" content="https://mfhelper.com/blog.html">
+    <meta property="og:image" content="https://mfhelper.com/images/og-blog.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog - MFHelper">
+    <meta name="twitter:description" content="Expert insights on mutual fund investing and portfolio optimization.">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link rel="stylesheet" href="/styles/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="/js/navbar-auth.js" defer></script>
+</head>
+<body>
+    <!-- Navigation (will be injected by navbar-auth.js) -->
+    <div id="navbar-container"></div>
+
+    <!-- Blog Header -->
+    <header class="blog-header">
+        <div class="container">
+            <h1>MFHelper <span class="highlight">Blog</span></h1>
+            <p class="subtitle">Insights, guides, and tips to maximize your mutual fund investments</p>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search articles..."
+                    aria-label="Search blog posts"
+                >
+                <button id="searchBtn" class="search-btn" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Bar -->
+    <section class="filter-bar">
+        <div class="container">
+            <div class="filter-group">
+                <label for="categoryFilter">Category:</label>
+                <select id="categoryFilter" class="filter-select">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="tagFilter">Tag:</label>
+                <select id="tagFilter" class="filter-select">
+                    <option value="">All Tags</option>
+                </select>
+            </div>
+            
+            <button id="clearFilters" class="btn-secondary">Clear Filters</button>
+        </div>
+    </section>
+
+    <!-- Blog Posts Grid -->
+    <main class="blog-main">
+        <div class="container">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Posts will be loaded dynamically -->
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading articles...</p>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination" id="pagination" style="display: none;">
+                <button id="prevBtn" class="pagination-btn" disabled>← Previous</button>
+                <span id="pageInfo" class="page-info">Page 1</span>
+                <button id="nextBtn" class="pagination-btn">Next →</button>
+            </div>
+            
+            <!-- No Results Message -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="11" y1="16" x2="11.01" y2="16"></line>
+                </svg>
+                <h3>No articles found</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sidebar - Popular Posts (Optional) -->
+    <aside class="blog-sidebar">
+        <div class="container">
+            <div class="sidebar-section">
+                <h3>Popular Posts</h3>
+                <div id="popularPosts" class="popular-posts-list">
+                    <!-- Will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 MFHelper. Built with ❤️ for Indian investors.</p>
+            <div class="footer-links">
+                <a href="/how-it-works.html">How It Works</a>
+                <a href="/blog.html">Blog</a>
+                <a href="mailto:support@mfhelper.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration
+        const API_BASE = '/api/blog';
+        const POSTS_PER_PAGE = 9;
+        let currentPage = 0;
+        let currentFilters = {
+            category: '',
+            tag: '',
+            search: ''
+        };
+
+        // DOM Elements
+        const blogGrid = document.getElementById('blogGrid');
+        const pagination = document.getElementById('pagination');
+        const noResults = document.getElementById('noResults');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageInfo = document.getElementById('pageInfo');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const tagFilter = document.getElementById('tagFilter');
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        const popularPostsContainer = document.getElementById('popularPosts');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCategories();
+            loadTags();
+            loadPosts();
+            loadPopularPosts();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            searchBtn.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSearch();
+            });
+            
+            categoryFilter.addEventListener('change', () => {
+                currentFilters.category = categoryFilter.value;
+                currentPage = 0;
+                loadPosts();
+            });
+            
+            tagFilter.addEventListener('change', () => {
+                currentFilters.tag = tagFilter.value;
+                currentPage = 0;
+                loadPosts();
+            });
+            
+            clearFiltersBtn.addEventListener('click', () => {
+                currentFilters = { category: '', tag: '', search: '' };
+                categoryFilter.value = '';
+                tagFilter.value = '';
+                searchInput.value = '';
+                currentPage = 0;
+                loadPosts();
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    loadPosts();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                currentPage++;
+                loadPosts();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        function handleSearch() {
+            currentFilters.search = searchInput.value.trim();
+            currentPage = 0;
+            loadPosts();
+        }
+
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_BASE}/categories`);
+                const data = await response.json();
+                
+                data.categories.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat.slug;
+                    option.textContent = `${cat.name} (${cat.post_count})`;
+                    categoryFilter.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        async function loadTags() {
+            try {
+                const response = await fetch(`${API_BASE}/tags`);
+                const data = await response.json();
+                
+                data.tags.forEach(tag => {
+                    const option = document.createElement('option');
+                    option.value = tag.slug;
+                    option.textContent = `${tag.name} (${tag.post_count})`;
+                    tagFilter.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading tags:', error);
+            }
+        }
+
+        async function loadPosts() {
+            try {
+                blogGrid.innerHTML = '<div class="loading-state"><div class="spinner"></div><p>Loading articles...</p></div>';
+                noResults.style.display = 'none';
+                pagination.style.display = 'none';
+                
+                const offset = currentPage * POSTS_PER_PAGE;
+                let url = `${API_BASE}/posts?limit=${POSTS_PER_PAGE}&offset=${offset}`;
+                
+                if (currentFilters.search) {
+                    url = `${API_BASE}/search?q=${encodeURIComponent(currentFilters.search)}&limit=${POSTS_PER_PAGE}&offset=${offset}`;
+                } else {
+                    if (currentFilters.category) url += `&category=${currentFilters.category}`;
+                    if (currentFilters.tag) url += `&tag=${currentFilters.tag}`;
+                }
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.posts.length === 0) {
+                    blogGrid.innerHTML = '';
+                    noResults.style.display = 'flex';
+                    return;
+                }
+                
+                displayPosts(data.posts);
+                updatePagination(data.total, data.offset, data.limit);
+                
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                blogGrid.innerHTML = '<div class="error-state"><p>Error loading articles. Please try again.</p></div>';
+            }
+        }
+
+        function displayPosts(posts) {
+            blogGrid.innerHTML = posts.map(post => `
+                <article class="blog-card">
+                    ${post.featured_image ? `
+                        <div class="blog-card-image">
+                            <img src="${post.featured_image}" alt="${post.title}" loading="lazy">
+                        </div>
+                    ` : ''}
+                    <div class="blog-card-content">
+                        ${post.category ? `<span class="blog-category">${post.category.name}</span>` : ''}
+                        <h2 class="blog-card-title">
+                            <a href="/blog-post.html?slug=${post.slug}">${post.title}</a>
+                        </h2>
+                        <p class="blog-card-description">${post.description || ''}</p>
+                        <div class="blog-card-meta">
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                ${post.reading_time_minutes} min read
+                            </span>
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                ${post.view_count} views
+                            </span>
+                        </div>
+                        ${post.tags && post.tags.length > 0 ? `
+                            <div class="blog-tags">
+                                ${post.tags.map(tag => `<span class="tag">${tag.name}</span>`).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function updatePagination(total, offset, limit) {
+            const totalPages = Math.ceil(total / limit);
+            const currentPageNum = Math.floor(offset / limit) + 1;
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            pagination.style.display = 'flex';
+            pageInfo.textContent = `Page ${currentPageNum} of ${totalPages}`;
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPageNum >= totalPages;
+        }
+
+        async function loadPopularPosts() {
+            try {
+                const response = await fetch(`${API_BASE}/popular?limit=5`);
+                const data = await response.json();
+                
+                popularPostsContainer.innerHTML = data.posts.map(post => `
+                    <div class="popular-post-item">
+                        <a href="/blog-post.html?slug=${post.slug}" class="popular-post-link">
+                            <div class="popular-post-title">${post.title}</div>
+                            <div class="popular-post-meta">${post.view_count} views</div>
+                        </a>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading popular posts:', error);
+            }
+        }
+    </script>
+</body>
+</html>

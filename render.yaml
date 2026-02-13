@@ -16,6 +16,9 @@ services:
       bash ../scripts/cleanup-production.sh || echo "⚠️ Cleanup script not found (non-blocking)"
       echo "Installing Python dependencies..."
       pip install -r requirements.txt
+      echo "Running database migrations..."
+      cd .. && PYTHONPATH=backend python -m alembic upgrade head
+      cd backend
       echo "Running database tests..."
       python test_db_connection.py || echo "⚠️ Warning: Database test failed (non-blocking)"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5RBTST8N');</script>
+    <!-- End Google Tag Manager -->
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced SIP Calculator - MFHelper | Goal-Based Investment Planning</title>
+    <meta name="description" content="Smart SIP calculator with goal-based planning, retirement calculator, step-up SIP, and market scenario analysis. Plan your wealth creation journey.">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <script src="/js/analytics.js"></script>
+    <script src="/js/navbar-auth.js" defer></script>
+    <script src="/js/toast.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --white: #FFFFFF;
+            --bg-dark: #151926;
+            --bg-card: #1E2330;
+            --text-primary: #FFFFFF;
+            --text-secondary: #9CA3AF;
+            --border-color: #2D3748;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --info: #3B82F6;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-top: 90px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(30, 35, 48, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-green), #10B981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Calculator Mode Tabs */
+        .mode-tabs {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .mode-tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .mode-tab.active {
+            background: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+        }
+
+        .mode-tab:hover:not(.active) {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        /* Calculator Grid */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1200px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Input Card */
+        .input-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .input-field, .select-field {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus, .select-field:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .input-help {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.35rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-dark);
+            border-radius: 8px;
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary-green);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(127, 192, 76, 0.3);
+        }
+
+        .calculate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Card */
+        .results-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-green);
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .summary-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-sub {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Scenario Cards */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-card {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        .scenario-card.pessimistic {
+            border-color: var(--danger);
+        }
+
+        .scenario-card.realistic {
+            border-color: var(--info);
+        }
+
+        .scenario-card.optimistic {
+            border-color: var(--success);
+        }
+
+        .scenario-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scenario-return {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .scenario-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .scenario-card.pessimistic .scenario-value {
+            color: var(--danger);
+        }
+
+        .scenario-card.realistic .scenario-value {
+            color: var(--info);
+        }
+
+        .scenario-card.optimistic .scenario-value {
+            color: var(--success);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--info);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--info);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box-content {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            background: var(--bg-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            background: rgba(127, 192, 76, 0.1);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .benefit-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .mode-tabs {
+                flex-direction: column;
+            }
+
+            .mode-tab {
+                width: 100%;
+            }
+
+            .input-card {
+                position: static;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RBTST8N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/tools.html" class="nav-link">Tools</a></li>
+                <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
+                <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">🎯 Smart SIP Calculator</h1>
+            <p class="page-subtitle">Goal-based investment planning with retirement calculator, step-up SIP & market scenarios</p>
+        </div>
+
+        <!-- Calculator Mode Tabs -->
+        <div class="mode-tabs">
+            <div class="mode-tab active" onclick="switchMode('forward')" id="tab-forward">
+                📊 Calculate Returns
+            </div>
+            <div class="mode-tab" onclick="switchMode('reverse')" id="tab-reverse">
+                🎯 Goal-Based Planning
+            </div>
+            <div class="mode-tab" onclick="switchMode('retirement')" id="tab-retirement">
+                🏖️ Retirement Calculator
+            </div>
+        </div>
+
+        <div class="calculator-grid">
+            <!-- Input Section -->
+            <div class="input-card">
+                <div id="forwardMode">
+                    <h2 class="card-title">💰 Investment Details</h2>
+                    
+                    <div class="input-group">
+                        <label class="input-label" for="sipAmount">Monthly SIP Amount (₹)</label>
+                        <input type="number" id="sipAmount" class="input-field" value="10000" min="500" step="500" placeholder="10000">
+                        <div class="input-help">Minimum ₹500</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="duration">Investment Period (Years)</label>
+                        <input type="number" id="duration" class="input-field" value="10" min="1" max="40" placeholder="10">
+                        <div class="input-help">1 to 40 years</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="returnRate">Expected Annual Return (%)</label>
+                        <input type="number" id="returnRate" class="input-field" value="12" min="1" max="30" step="0.5" placeholder="12">
+                        <div class="input-help">Historical equity returns: 10-15%</div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="enableStepUp" class="checkbox-input" onchange="toggleStepUp()">
+                        <label for="enableStepUp" class="input-label" style="margin: 0; cursor: pointer;">Enable Step-up SIP</label>
+                    </div>
+
+                    <div class="input-group" id="stepUpGroup" style="display: none;">
+                        <label class="input-label" for="stepUpRate">Annual Step-up (%)</label>
+                        <input type="number" id="stepUpRate" class="input-field" value="10" min="1" max="50" step="1" placeholder="10">
+                        <div class="input-help">Increase SIP by this % every year</div>
+                    </div>
+
+                    <button class="calculate-btn" onclick="calculateSIP()">
+                        <span>📊</span> Calculate Returns
+                    </button>
+                </div>
+
+                <!-- Reverse Calculator Mode -->
+                <div id="reverseMode" style="display: none;">
+                    <h2 class="card-title">🎯 Goal Planning</h2>
+                    
+                    <div class="input-group">
+                        <label class="input-label" for="goalType">Goal Type</label>
+                        <select id="goalType" class="select-field" onchange="updateGoalInflation()">
+                            <option value="retirement">Retirement</option>
+                            <option value="education">Child Education</option>
+                            <option value="house">House/Property</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="car">Car/Vehicle</option>
+                            <option value="custom">Custom Goal</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="goalAmount">Target Amount (₹)</label>
+                        <input type="number" id="goalAmount" class="input-field" value="10000000" min="100000" step="100000" placeholder="1 Crore">
+                        <div class="input-help">Amount needed in today's value</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="goalYears">Years to Goal</label>
+                        <input type="number" id="goalYears" class="input-field" value="15" min="1" max="40" placeholder="15">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="inflationRate">Inflation Rate (%)</label>
+                        <input type="number" id="inflationRate" class="input-field" value="6" min="0" max="20" step="0.5" placeholder="6">
+                        <div class="input-help" id="inflationHelp">General inflation: 5-6%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="expectedReturn">Expected Return (%)</label>
+                        <input type="number" id="expectedReturn" class="input-field" value="12" min="1" max="30" step="0.5" placeholder="12">
+                        <div class="input-help">Historical equity returns: 10-15%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="existingCorpus">Existing Corpus (₹)</label>
+                        <input type="number" id="existingCorpus" class="input-field" value="0" min="0" step="10000" placeholder="0">
+                        <div class="input-help">Amount already saved (optional)</div>
+                    </div>
+
+                    <button class="calculate-btn" onclick="calculateGoal()">
+                        <span>🎯</span> Calculate Required SIP
+                    </button>
+                </div>
+
+                <!-- Retirement Calculator Mode -->
+                <div id="retirementMode" style="display: none;">
+                    <h2 class="card-title">🏖️ Retirement Planning</h2>
+                    
+                    <div class="input-group">
+                        <label class="input-label" for="currentAge">Current Age</label>
+                        <input type="number" id="currentAge" class="input-field" value="35" min="18" max="65" placeholder="35">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="retirementAge">Retirement Age</label>
+                        <input type="number" id="retirementAge" class="input-field" value="60" min="40" max="75" placeholder="60">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="lifeExpectancy">Life Expectancy</label>
+                        <input type="number" id="lifeExpectancy" class="input-field" value="80" min="60" max="100" placeholder="80">
+                        <div class="input-help">Average in India: 75-80 years</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="monthlyExpenses">Current Monthly Expenses (₹)</label>
+                        <input type="number" id="monthlyExpenses" class="input-field" value="50000" min="10000" step="5000" placeholder="50000">
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="expenseInflation">Expense Inflation (%)</label>
+                        <input type="number" id="expenseInflation" class="input-field" value="6" min="0" max="15" step="0.5" placeholder="6">
+                        <div class="input-help">Inflation during retirement years</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="preRetirementReturn">Expected Return - Pre-Retirement (%)</label>
+                        <input type="number" id="preRetirementReturn" class="input-field" value="12" min="1" max="25" step="0.5" placeholder="12">
+                        <div class="input-help">Aggressive: 12-15%</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label" for="postRetirementReturn">Expected Return - Post-Retirement (%)</label>
+                        <input type="number" id="postRetirementReturn" class="input-field" value="8" min="1" max="15" step="0.5" placeholder="8">
+                        <div class="input-help">Conservative: 7-8%</div>
+                    </div>
+
+                    <button class="calculate-btn" onclick="calculateRetirement()">
+                        <span>🏖️</span> Calculate Retirement SIP
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-card" id="resultsCard">
+                <div class="empty-state">
+                    <div class="empty-icon">📈</div>
+                    <h3>Start Your Investment Planning</h3>
+                    <p>Choose a calculator mode and enter your details to see projections</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/sip-calculator.js"></script>
+</body>
+</html>

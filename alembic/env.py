@@ -16,6 +16,8 @@ fileConfig(config.config_file_name)
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from app.models.models import Base as ModelBase
+# Import all models so Alembic can detect them
+from app.models import blog, demo_portfolio, market_data, user_leads
 
 # get sqlalchemy.url from environment (DATABASE_URL) if present
 from app.config import settings

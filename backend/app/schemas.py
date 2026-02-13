@@ -113,6 +113,7 @@ class UserSettingsBase(BaseModel):
     default_view: Optional[str] = "summary"
     show_xirr: Optional[bool] = True
     group_by: Optional[str] = "category"
+    goal_planning_data: Optional[dict] = None
 
 
 class UserSettingsUpdate(UserSettingsBase):
@@ -120,6 +121,35 @@ class UserSettingsUpdate(UserSettingsBase):
 
 
 class UserSettingsResponse(UserSettingsBase):
+    id: int
+    user_id: int
+    created_at: datetime
+    updated_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+
+# Goal Schemas
+class GoalBase(BaseModel):
+    name: str = Field(..., min_length=1, max_length=255, description="Custom name for the goal")
+    icon_type: str = Field(default="custom", description="Icon type: house, vehicle, education, marriage, vacation, business, emergency, custom, expense")
+    amount: float = Field(..., gt=0, description="Goal amount in rupees")
+    age: int = Field(..., gt=0, le=150, description="Age when goal is to be achieved")
+
+
+class GoalCreate(GoalBase):
+    pass
+
+
+class GoalUpdate(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=255)
+    icon_type: Optional[str] = None
+    amount: Optional[float] = Field(None, gt=0)
+    age: Optional[int] = Field(None, gt=0, le=150)
+
+
+class GoalResponse(GoalBase):
     id: int
     user_id: int
     created_at: datetime

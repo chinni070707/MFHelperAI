@@ -12,9 +12,9 @@ from authlib.integrations.starlette_client import OAuth
 import httpx
 
 from app.database import get_db
-from app.models.models import User, UserSettings
+from app.models.models import User, UserSettings, Goal
 from app.models.user_leads import UserLead
-from app.schemas import UserCreate, UserLogin, UserResponse, Token, UserSettingsResponse, UserSettingsUpdate, PasswordChange, DeleteAccountRequest
+from app.schemas import UserCreate, UserLogin, UserResponse, Token, UserSettingsResponse, UserSettingsUpdate, PasswordChange, DeleteAccountRequest, GoalCreate, GoalUpdate, GoalResponse
 from app.utils.auth import (
     get_password_hash,
     verify_password,
@@ -646,6 +646,144 @@ async def update_user_settings(
     
     logger.info(f"Settings updated successfully: {current_user.email}")
     return settings
+
+
+# Goal Planning Data Endpoints (for goal-planning.html page)
+@router.get("/goal-planning-data")
+async def get_goal_planning_data(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Get goal planning data (goals, lumpsums, expenses, parameters) for current user"""
+    settings = db.query(UserSettings).filter(UserSettings.user_id == current_user.id).first()
+    
+    if not settings or not settings.goal_planning_data:
+        # Return default empty structure
+        return {
+            "goals": [],
+            "lumpsums": [],
+            "parameters": {}
+        }
+    
+    return settings.goal_planning_data
+
+
+@router.post("/goal-planning-data")
+async def save_goal_planning_data(
+    planning_data: dict,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Save goal planning data (goals, lumpsums, expenses, parameters) for current user"""
+    logger.info(f"Saving goal planning data for user: {current_user.email}")
+    
+    settings = db.query(UserSettings).filter(UserSettings.user_id == current_user.id).first()
+    
+    if not settings:
+        settings = UserSettings(user_id=current_user.id)
+        db.add(settings)
+    
+    # Update goal planning data
+    settings.goal_planning_data = planning_data
+    
+    db.commit()
+    db.refresh(settings)
+    
+    logger.info(f"Goal planning data saved successfully for user: {current_user.email}")
+    return {"message": "Goal planning data saved successfully", "data": settings.goal_planning_data}
+
+
+# Goal Planning Endpoints
+@router.get("/goals", response_model=list[GoalResponse])
+async def get_user_goals(
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Get all goals for the current user"""
+    goals = db.query(Goal).filter(Goal.user_id == current_user.id).order_by(Goal.age).all()
+    return goals
+
+
+@router.post("/goals", response_model=GoalResponse, status_code=status.HTTP_201_CREATED)
+async def create_goal(
+    goal_data: GoalCreate,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Create a new goal"""
+    logger.info(f"Creating goal for user: {current_user.email}")
+    
+    new_goal = Goal(
+        user_id=current_user.id,
+        name=goal_data.name,
+        icon_type=goal_data.icon_type,
+        amount=goal_data.amount,
+        age=goal_data.age
+    )
+    
+    db.add(new_goal)
+    db.commit()
+    db.refresh(new_goal)
+    
+    logger.info(f"Goal created successfully: {new_goal.name} for user {current_user.email}")
+    return new_goal
+
+
+@router.put("/goals/{goal_id}", response_model=GoalResponse)
+async def update_goal(
+    goal_id: int,
+    goal_data: GoalUpdate,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Update an existing goal"""
+    goal = db.query(Goal).filter(
+        Goal.id == goal_id,
+        Goal.user_id == current_user.id
+    ).first()
+    
+    if not goal:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Goal not found"
+        )
+    
+    # Update fields
+    update_data = goal_data.dict(exclude_unset=True)
+    for field, value in update_data.items():
+        setattr(goal, field, value)
+    
+    db.commit()
+    db.refresh(goal)
+    
+    logger.info(f"Goal updated successfully: {goal.name} for user {current_user.email}")
+    return goal
+
+
+@router.delete("/goals/{goal_id}")
+async def delete_goal(
+    goal_id: int,
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Delete a goal"""
+    goal = db.query(Goal).filter(
+        Goal.id == goal_id,
+        Goal.user_id == current_user.id
+    ).first()
+    
+    if not goal:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Goal not found"
+        )
+    
+    db.delete(goal)
+    db.commit()
+    
+    logger.info(f"Goal deleted successfully: {goal.name} for user {current_user.email}")
+    return {"message": "Goal deleted successfully"}
+
 
 @router.post("/leads/capture")
 @limiter.limit("10/hour")

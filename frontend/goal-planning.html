@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VWXS7Z499Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VWXS7Z499Q');
+    </script>
+    
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -258,11 +268,11 @@
         
         .goal-marker { 
             cursor: grab; 
-            transition: all 0.3s ease; 
+            transition: filter 0.2s ease;
+            will-change: filter;
         }
         .goal-marker:hover { 
-            transform: scale(1.1); 
-            filter: drop-shadow(0 4px 12px rgba(127, 192, 76, 0.6)); 
+            filter: drop-shadow(0 4px 12px rgba(127, 192, 76, 0.8)) brightness(1.1); 
         }
         .goal-marker:active { cursor: grabbing; }
         
