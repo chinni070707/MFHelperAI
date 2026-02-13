@@ -363,6 +363,27 @@
             background: var(--bg-card-hover);
         }
 
+        .fund-card .add-compare-label {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary-green);
+            opacity: 0.7;
+        }
+
+        .fund-card.selected .add-compare-label {
+            color: var(--danger);
+        }
+
+        .fund-card.selected .add-compare-label::before {
+            content: '✓ Added';
+        }
+
+        .fund-card:not(.selected) .add-compare-label::before {
+            content: '+ Add to Compare';
+        }
+
         .fund-name {
             font-weight: 600;
             font-size: 14px;
@@ -634,6 +655,124 @@
             font-size: 48px;
             font-weight: 800;
         }
+
+        /* Compare Strip */
+        .compare-strip {
+            display: none;
+            margin-top: 16px;
+            padding: 14px;
+            background: var(--bg-card);
+            border: 2px dashed var(--primary-green);
+            border-radius: 10px;
+        }
+
+        .compare-strip.shown {
+            display: block;
+        }
+
+        .compare-strip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .compare-strip-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .compare-strip-clear {
+            font-size: 12px;
+            color: var(--danger);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: 600;
+        }
+
+        .compare-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .compare-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(127, 192, 76, 0.15);
+            border: 1px solid var(--primary-green);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .compare-chip .chip-remove {
+            cursor: pointer;
+            color: var(--danger);
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .compare-chip .chip-remove:hover {
+            color: #dc2626;
+        }
+
+        /* Multi Pie Charts Grid */
+        .pie-charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .pie-chart-card {
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .pie-chart-card .chart-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pie-chart-card .chart-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        /* Weight cell coloring in table */
+        .weight-cell {
+            font-weight: 600;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .weight-cell.high { color: var(--danger); }
+        .weight-cell.medium { color: var(--warning); }
+        .weight-cell.low { color: var(--text-secondary); }
+        .weight-cell.none { color: var(--border-color); }
+
+        th.fund-col {
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -711,6 +850,17 @@
                 <!-- Funds will be loaded here -->
             </div>
 
+            <!-- Compare Strip -->
+            <div class="compare-strip" id="compareStrip">
+                <div class="compare-strip-header">
+                    <div class="compare-strip-title">📋 Funds to Compare (<span id="compareCount">0</span>)</div>
+                    <button class="compare-strip-clear" onclick="clearAllFunds()">Clear All</button>
+                </div>
+                <div class="compare-chips" id="compareChips">
+                    <!-- Fund chips will appear here -->
+                </div>
+            </div>
+
             <button class="analyze-btn" id="analyzeBtn" disabled>
                 Analyze Overlap
             </button>
@@ -752,16 +902,17 @@
                 </div>
             </div>
 
-            <!-- Charts -->
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <div class="chart-title">Stock Concentration</div>
-                    <div id="pieChart"></div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-title">Overlap Heatmap</div>
-                    <div id="heatmapChart"></div>
-                </div>
+            <!-- Per-Fund Sector Pie Charts -->
+            <div class="chart-title" style="margin-bottom: 12px;">Sector Allocation by Fund</div>
+            <div class="pie-charts-grid" id="pieChartsGrid">
+                <!-- Multiple pie charts will be rendered here -->
+            </div>
+
+            <!-- Pairwise Overlap Heatmap -->
+            <div class="chart-card" style="margin-bottom: 24px;">
+                <div class="chart-title">Fund-to-Fund Overlap Matrix</div>
+                <div class="chart-subtitle" style="font-size: 13px; color: var(--text-secondary); margin-top: -12px; margin-bottom: 12px;">Shows the percentage of stocks shared between each pair of funds</div>
+                <div id="heatmapChart"></div>
             </div>
 
             <!-- Insights -->
@@ -775,14 +926,15 @@
             <!-- Overlapping Stocks Table -->
             <div class="overlap-table">
                 <div class="chart-title">Top Overlapping Stocks</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: -12px; margin-bottom: 16px;">Weight of each stock in each selected fund</div>
                 <table>
-                    <thead>
+                    <thead id="stocksTableHead">
                         <tr>
                             <th>Stock</th>
                             <th>Sector</th>
                             <th>Appears In</th>
                             <th>Concentration</th>
-                            <th>Avg Weight</th>
+                            <!-- Per-fund weight columns rendered dynamically -->
                         </tr>
                     </thead>
                     <tbody id="stocksTableBody">
@@ -915,6 +1067,7 @@
                 });
                 
                 updateSelectedCount();
+                updateCompareStrip();
                 
                 if (selectedFunds.size < 2) {
                     alert('Not enough funds with holdings data. Please select additional funds manually.');
@@ -983,11 +1136,12 @@
         function renderFunds(funds) {
             const fundGrid = document.getElementById('fundGrid');
             fundGrid.innerHTML = funds.map(fund => `
-                <div class="fund-card" data-key="${fund.key}" onclick="toggleFund('${fund.key}')">
+                <div class="fund-card ${selectedFunds.has(fund.key) ? 'selected' : ''}" data-key="${fund.key}" onclick="toggleFund('${fund.key}')">
                     <div class="fund-name">${fund.name}</div>
                     <div class="fund-meta">
                         ${fund.amc} • ${fund.category} • ${fund.holdings_count} holdings
                     </div>
+                    <span class="add-compare-label"></span>
                 </div>
             `).join('');
         }
@@ -1017,17 +1171,53 @@
             
             if (selectedFunds.has(key)) {
                 selectedFunds.delete(key);
-                card.classList.remove('selected');
+                if (card) card.classList.remove('selected');
             } else {
                 if (selectedFunds.size >= 10) {
                     alert('Maximum 10 funds allowed');
                     return;
                 }
                 selectedFunds.add(key);
-                card.classList.add('selected');
+                if (card) card.classList.add('selected');
             }
             
             updateSelectedCount();
+            updateCompareStrip();
+        }
+
+        // Clear all selected funds
+        function clearAllFunds() {
+            selectedFunds.forEach(key => {
+                const card = document.querySelector(`[data-key="${key}"]`);
+                if (card) card.classList.remove('selected');
+            });
+            selectedFunds.clear();
+            updateSelectedCount();
+            updateCompareStrip();
+        }
+
+        // Update compare strip with chips
+        function updateCompareStrip() {
+            const strip = document.getElementById('compareStrip');
+            const chips = document.getElementById('compareChips');
+            const countEl = document.getElementById('compareCount');
+            
+            if (selectedFunds.size === 0) {
+                strip.classList.remove('shown');
+                return;
+            }
+            
+            strip.classList.add('shown');
+            countEl.textContent = selectedFunds.size;
+            
+            chips.innerHTML = Array.from(selectedFunds).map(key => {
+                const fund = allFunds.find(f => f.key === key);
+                const shortName = fund ? fund.name.replace(' - Direct Plan - Growth', '').replace(' - Direct - Growth', '') : key;
+                return `<div class="compare-chip">
+                    <span>${shortName}</span>
+                    <span class="chip-remove" onclick="event.stopPropagation(); toggleFund('${key}')">×</span>
+                </div>`;
+            }).join('');
         }
 
         // Update selected count
@@ -1094,15 +1284,17 @@
                 scoreEl.className = 'summary-value danger';
             }
 
-            // Render charts
-            renderPieChart(data.top_overlapping_stocks);
-            renderHeatmap(data);
+            // Render per-fund pie charts (sector allocation)
+            renderMultiplePieCharts(data.fund_holdings_summary);
+
+            // Render real pairwise heatmap
+            renderPairwiseHeatmap(data.pairwise_overlap, data.fund_names);
 
             // Render insights
             renderInsights(data.insights);
 
-            // Render stocks table
-            renderStocksTable(data.top_overlapping_stocks);
+            // Render stocks table with per-fund weight columns
+            renderStocksTable(data.top_overlapping_stocks, data.fund_names);
 
             // Show results
             document.getElementById('results').classList.add('shown');
@@ -1192,70 +1384,117 @@
         }
 
         // Render pie chart
-        function renderPieChart(stocks) {
-            const topStocks = stocks.slice(0, 10);
-            const otherWeight = stocks.slice(10).reduce((sum, s) => sum + s.total_weight, 0);
+        // Render multiple per-fund pie charts (sector allocation)
+        function renderMultiplePieCharts(fundSummary) {
+            const grid = document.getElementById('pieChartsGrid');
+            
+            if (!fundSummary || Object.keys(fundSummary).length === 0) {
+                grid.innerHTML = '<div style="color: var(--text-secondary); padding: 20px;">No sector data available</div>';
+                return;
+            }
 
-            const labels = topStocks.map(s => s.stock);
-            const values = topStocks.map(s => s.total_weight);
+            const colors = ['#7FC04C', '#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6', '#ec4899', '#10b981', '#f97316', '#6366f1'];
+            
+            grid.innerHTML = Object.entries(fundSummary).map(([name, info], idx) => {
+                const shortName = name.replace(' - Direct Plan - Growth', '').replace(' - Direct - Growth', '');
+                return `<div class="pie-chart-card">
+                    <div class="chart-title" title="${shortName}">${shortName}</div>
+                    <div class="chart-subtitle">${info.amc} • ${info.total_holdings} holdings</div>
+                    <div id="pieChart_${idx}" style="height: 250px;"></div>
+                </div>`;
+            }).join('');
 
-            if (otherWeight > 0) {
-                labels.push('Others');
-                values.push(otherWeight);
+            // Render each pie chart
+            Object.entries(fundSummary).forEach(([name, info], idx) => {
+                const sectors = info.sectors || [];
+                const data = [{
+                    labels: sectors.map(s => s.sector),
+                    values: sectors.map(s => s.weight),
+                    type: 'pie',
+                    hole: 0.45,
+                    marker: { colors: colors },
+                    textinfo: 'label+percent',
+                    textposition: 'outside',
+                    textfont: { size: 10 },
+                    hoverinfo: 'label+value+percent'
+                }];
+
+                const layout = {
+                    showlegend: false,
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: '#212529', size: 10 },
+                    margin: { t: 10, b: 10, l: 10, r: 10 },
+                    height: 250
+                };
+
+                Plotly.newPlot(`pieChart_${idx}`, data, layout, { responsive: true, displayModeBar: false });
+            });
+        }
+
+        // Render real pairwise overlap heatmap (fund-to-fund matrix)
+        function renderPairwiseHeatmap(pairwiseData, fundNames) {
+            if (!pairwiseData || pairwiseData.length === 0) {
+                document.getElementById('heatmapChart').innerHTML = '<div style="color: var(--text-secondary); padding: 20px;">Need at least 2 funds for heatmap</div>';
+                return;
+            }
+
+            // Build fund list and matrix
+            const funds = Object.values(fundNames).map(n => n.replace(' - Direct Plan - Growth', '').replace(' - Direct - Growth', ''));
+            const n = funds.length;
+            
+            // Initialize matrix with 100% diagonal
+            const matrix = Array.from({ length: n }, () => Array(n).fill(0));
+            for (let i = 0; i < n; i++) matrix[i][i] = 100;
+
+            // Fill in pairwise overlaps
+            const fundNamesList = Object.values(fundNames);
+            for (const pair of pairwiseData) {
+                const i = fundNamesList.indexOf(pair.fund1);
+                const j = fundNamesList.indexOf(pair.fund2);
+                if (i >= 0 && j >= 0) {
+                    matrix[i][j] = pair.overlap_pct;
+                    matrix[j][i] = pair.overlap_pct;
+                }
+            }
+
+            // Annotate with values
+            const annotations = [];
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    annotations.push({
+                        x: funds[j], y: funds[i],
+                        text: matrix[i][j] + '%',
+                        font: { color: matrix[i][j] > 50 ? 'white' : '#333', size: 12 },
+                        showarrow: false
+                    });
+                }
             }
 
             const data = [{
-                labels: labels,
-                values: values,
-                type: 'pie',
-                hole: 0.4,
-                marker: {
-                    colors: ['#7FC04C', '#6BA83C', '#5A9030', '#ef4444', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ec4899', '#f97316', '#6366f1']
-                },
-                textinfo: 'label+percent',
-                textposition: 'outside'
+                z: matrix,
+                x: funds,
+                y: funds,
+                type: 'heatmap',
+                colorscale: [[0, '#e8f5e9'], [0.3, '#f59e0b'], [0.6, '#ef4444'], [1, '#991b1b']],
+                showscale: true,
+                colorbar: { title: 'Overlap %', titleside: 'right' },
+                hoverongaps: false,
+                hovertemplate: '%{y} vs %{x}: %{z}% overlap<extra></extra>'
             }];
 
             const layout = {
-                showlegend: false,
-                paper_bgcolor: 'rgba(0,0,0,0)',
-                plot_bgcolor: 'rgba(0,0,0,0)',
-                font: {
-                    color: '#212529'
-                },
-                margin: { t: 0, b: 0, l: 0, r: 0 }
-            };
-
-            Plotly.newPlot('pieChart', data, layout, {responsive: true});
-        }
-
-        // Render heatmap (simplified - shows overlap intensity)
-        function renderHeatmap(data) {
-            // Create a simple bar chart showing stocks by fund count
-            const stocks = data.top_overlapping_stocks.slice(0, 15);
-            
-            const data_bar = [{
-                x: stocks.map(s => s.appears_in),
-                y: stocks.map(s => s.stock),
-                type: 'bar',
-                orientation: 'h',
-                marker: {
-                    color: stocks.map(s => s.appears_in),
-                    colorscale: [[0, '#10b981'], [0.5, '#f59e0b'], [1, '#ef4444']],
-                    showscale: false
-                }
-            }];
-
-            const layout = {
-                xaxis: { title: 'Number of Funds', color: '#6B7280' },
-                yaxis: { automargin: true, color: '#6B7280' },
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor: 'rgba(0,0,0,0)',
                 font: { color: '#212529' },
-                margin: { l: 150, r: 20, t: 20, b: 40 }
+                xaxis: { tickangle: -30, automargin: true, side: 'bottom' },
+                yaxis: { automargin: true, autorange: 'reversed' },
+                annotations: annotations,
+                margin: { l: 150, r: 60, t: 20, b: 100 },
+                height: Math.max(350, n * 60 + 150)
             };
 
-            Plotly.newPlot('heatmapChart', data_bar, layout, {responsive: true});
+            Plotly.newPlot('heatmapChart', data, layout, { responsive: true, displayModeBar: false });
         }
 
         // Render insights
@@ -1276,23 +1515,50 @@
             `).join('');
         }
 
-        // Render stocks table
-        function renderStocksTable(stocks) {
+        // Render stocks table with per-fund weight columns
+        function renderStocksTable(stocks, fundNames) {
+            // Build dynamic table headers
+            const thead = document.getElementById('stocksTableHead');
+            const fundList = fundNames ? Object.values(fundNames) : [];
+            const shortNames = fundList.map(n => n.replace(' - Direct Plan - Growth', '').replace(' - Direct - Growth', ''));
+            
+            thead.innerHTML = `<tr>
+                <th>Stock</th>
+                <th>Sector</th>
+                <th>Appears In</th>
+                <th>Concentration</th>
+                ${shortNames.map(n => `<th class="fund-col" title="${n}">${n.length > 18 ? n.substring(0, 16) + '..' : n}</th>`).join('')}
+            </tr>`;
+            
             const tbody = document.getElementById('stocksTableBody');
             
-            tbody.innerHTML = stocks.slice(0, 20).map(stock => `
-                <tr>
+            tbody.innerHTML = stocks.slice(0, 20).map(stock => {
+                const fundWeights = stock.fund_weights || {};
+                
+                const weightCells = fundList.map(fundName => {
+                    const w = fundWeights[fundName];
+                    if (w !== undefined && w !== null) {
+                        let cls = 'low';
+                        if (w >= 7) cls = 'high';
+                        else if (w >= 3) cls = 'medium';
+                        return `<td class="weight-cell ${cls}">${w}%</td>`;
+                    } else {
+                        return `<td class="weight-cell none">—</td>`;
+                    }
+                }).join('');
+                
+                return `<tr>
                     <td><strong>${stock.stock}</strong></td>
                     <td>${stock.sector}</td>
-                    <td>${stock.appears_in} / ${selectedFunds.size} funds</td>
+                    <td>${stock.appears_in} / ${fundList.length} funds</td>
                     <td>
                         <span class="concentration-badge concentration-${stock.concentration_risk.toLowerCase()}">
                             ${stock.concentration_risk}
                         </span>
                     </td>
-                    <td>${stock.avg_weight}%</td>
-                </tr>
-            `).join('');
+                    ${weightCells}
+                </tr>`;
+            }).join('');
         }
 
         // Initialize

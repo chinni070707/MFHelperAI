@@ -179,6 +179,7 @@ class OverlapAnalyzer:
                     "appears_in": len(appearances),
                     "fund_count": len(appearances),
                     "funds": [a["fund"] for a in appearances],
+                    "fund_weights": {a["fund"]: a["weight"] for a in appearances},
                     "total_weight": sum(a["weight"] for a in appearances),
                     "avg_weight": round(sum(a["weight"] for a in appearances) / len(appearances), 2),
                     "concentration_risk": "High" if len(appearances) >= len(fund_keys) * 0.7 else "Medium"
@@ -186,6 +187,48 @@ class OverlapAnalyzer:
         
         # Sort by number of appearances and weight
         stock_analysis.sort(key=lambda x: (x["appears_in"], x["avg_weight"]), reverse=True)
+        
+        # Compute pairwise overlap between all fund pairs
+        pairwise_overlap = []
+        fund_key_list = [k for k in fund_keys if k in fund_details]
+        for i in range(len(fund_key_list)):
+            for j in range(i + 1, len(fund_key_list)):
+                k1, k2 = fund_key_list[i], fund_key_list[j]
+                f1 = self.fund_data[k1]
+                f2 = self.fund_data[k2]
+                stocks1 = {h["stock"] for h in f1.get("holdings", [])}
+                stocks2 = {h["stock"] for h in f2.get("holdings", [])}
+                common = stocks1 & stocks2
+                union = stocks1 | stocks2
+                pct = round((len(common) / len(union)) * 100, 1) if union else 0
+                pairwise_overlap.append({
+                    "fund1": fund_details[k1],
+                    "fund2": fund_details[k2],
+                    "overlap_pct": pct,
+                    "common_count": len(common)
+                })
+        
+        # Per-fund sector breakdown for pie charts
+        fund_holdings_summary = {}
+        for key in fund_key_list:
+            fund = self.fund_data[key]
+            sector_weights = defaultdict(float)
+            for h in fund.get("holdings", []):
+                sector_weights[h["sector"]] += h["weight"]
+            # Sort by weight desc, keep top 8 sectors + Others
+            sorted_sectors = sorted(sector_weights.items(), key=lambda x: -x[1])
+            top_sectors = sorted_sectors[:8]
+            others = sum(w for _, w in sorted_sectors[8:])
+            sectors = [{"sector": s, "weight": round(w, 2)} for s, w in top_sectors]
+            if others > 0:
+                sectors.append({"sector": "Others", "weight": round(others, 2)})
+            fund_holdings_summary[fund["name"]] = {
+                "key": key,
+                "category": fund.get("category", ""),
+                "amc": fund.get("amc", ""),
+                "total_holdings": len(fund.get("holdings", [])),
+                "sectors": sectors
+            }
         
         # Sector-wise overlap
         sector_overlap = defaultdict(lambda: {"stocks": [], "total_weight": 0})
@@ -202,10 +245,13 @@ class OverlapAnalyzer:
             "unique_stocks": len(all_stocks),
             "overlapping_stocks": len(stock_analysis),
             "overlap_ratio": round((len(stock_analysis) / len(all_stocks)) * 100, 1) if all_stocks else 0,
-            "top_overlapping_stocks": stock_analysis[:15],
+            "top_overlapping_stocks": stock_analysis[:20],
             "sector_concentration": dict(sector_overlap),
             "insights": insights,
-            "diversification_score": self._calculate_diversification_score(stock_analysis, len(fund_keys))
+            "diversification_score": self._calculate_diversification_score(stock_analysis, len(fund_keys)),
+            "pairwise_overlap": pairwise_overlap,
+            "fund_holdings_summary": fund_holdings_summary,
+            "fund_names": {k: fund_details[k] for k in fund_key_list}
         }
     
     def _calculate_sector_overlap(self, fund1: Dict, fund2: Dict, common_stocks: List[Dict]) -> Dict:
