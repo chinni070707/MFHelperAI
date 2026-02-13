@@ -269,174 +269,249 @@
       "category": "Mid Cap",
       "holdings": [
         {
-          "stock": "Trent",
-          "weight": 4.66,
-          "sector": "Retail"
+          "stock": "HDFC Bank Ltd.",
+          "weight": 7.36,
+          "sector": "Private sector bank"
         },
         {
-          "stock": "Polycab India",
-          "weight": 4.3,
-          "sector": "Capital Goods"
+          "stock": "ICICI Bank Ltd.",
+          "weight": 7.22,
+          "sector": "Private sector bank"
         },
         {
-          "stock": "Persistent Systems",
-          "weight": 4.04,
-          "sector": "IT"
+          "stock": "State Bank Of India",
+          "weight": 5.07,
+          "sector": "Public sector bank"
         },
         {
-          "stock": "Max Healthcare",
-          "weight": 3.77,
-          "sector": "Healthcare"
+          "stock": "Reliance Industries Ltd.",
+          "weight": 4.22,
+          "sector": "Refineries & marketing"
         },
         {
-          "stock": "Tube Investments",
+          "stock": "Infosys Ltd.",
           "weight": 3.5,
-          "sector": "Auto Components"
+          "sector": "Computers - software & consulting"
         },
         {
-          "stock": "Coforge",
-          "weight": 3.23,
-          "sector": "IT"
+          "stock": "Axis Bank Ltd.",
+          "weight": 2.89,
+          "sector": "Private sector bank"
         },
         {
-          "stock": "Varun Beverages",
-          "weight": 3.05,
-          "sector": "FMCG"
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 2.81,
+          "sector": "Civil construction"
         },
         {
-          "stock": "PI Industries",
-          "weight": 2.87,
-          "sector": "Chemicals"
+          "stock": "Kotak Mahindra Bank Ltd.",
+          "weight": 2.57,
+          "sector": "Private sector bank"
         },
         {
-          "stock": "Avenue Supermarts",
-          "weight": 2.69,
-          "sector": "Retail"
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 2.48,
+          "sector": "Telecom - cellular & fixed line services"
         },
         {
-          "stock": "SRF",
-          "weight": 2.51,
-          "sector": "Chemicals"
+          "stock": "ITC Limited",
+          "weight": 2.23,
+          "sector": "Diversified fmcg"
         },
         {
-          "stock": "HDFC Bank",
-          "weight": 7.62,
-          "sector": "Banking"
+          "stock": "Maruti Suzuki India Ltd.",
+          "weight": 1.72,
+          "sector": "Passenger cars & utility vehicles"
         },
         {
-          "stock": "ICICI Bank",
-          "weight": 6.46,
-          "sector": "Banking"
+          "stock": "Redington Ltd.",
+          "weight": 1.62,
+          "sector": "Trading & distributors"
         },
         {
-          "stock": "Reliance Industries",
-          "weight": 6.1,
-          "sector": "Oil & Gas"
+          "stock": "Zensar Technologies Ltd.",
+          "weight": 1.52,
+          "sector": "Computers - software & consulting"
         },
         {
-          "stock": "Infosys",
-          "weight": 5.29,
-          "sector": "IT"
+          "stock": "Tata Consultancy Services Ltd.",
+          "weight": 1.44,
+          "sector": "Computers - software & consulting"
         },
         {
-          "stock": "TCS",
-          "weight": 4.93,
-          "sector": "IT"
+          "stock": "Eris Lifesciences Ltd.",
+          "weight": 1.42,
+          "sector": "Pharmaceuticals"
         },
         {
-          "stock": "Axis Bank",
-          "weight": 3.86,
-          "sector": "Banking"
+          "stock": "United Spirits Ltd.",
+          "weight": 1.38,
+          "sector": "Breweries & distilleries"
         },
         {
-          "stock": "Bharti Airtel",
-          "weight": 3.68,
-          "sector": "Telecom"
+          "stock": "Hyundai Motor India Ltd.",
+          "weight": 1.11,
+          "sector": "Passenger cars & utility vehicles"
         },
         {
-          "stock": "ITC",
-          "weight": 3.41,
-          "sector": "FMCG"
+          "stock": "Hindustan Petroleum Corporation Ltd.",
+          "weight": 1.08,
+          "sector": "Refineries & marketing"
         },
         {
-          "stock": "Hindustan Unilever",
-          "weight": 3.14,
-          "sector": "FMCG"
+          "stock": "SKF India (Industrial) Ltd.",
+          "weight": 1.08,
+          "sector": "Auto components & equipments"
         },
         {
-          "stock": "State Bank of India",
-          "weight": 2.87,
-          "sector": "Banking"
+          "stock": "Krishna Institute of Medical Sciences Ltd.",
+          "weight": 1.06,
+          "sector": "Hospital"
         },
         {
-          "stock": "Larsen & Toubro",
-          "weight": 2.6,
-          "sector": "Capital Goods"
+          "stock": "Divis Laboratories Ltd.",
+          "weight": 1.02,
+          "sector": "Pharmaceuticals"
         },
         {
-          "stock": "Bajaj Finance",
-          "weight": 2.42,
-          "sector": "NBFC"
+          "stock": "HDFC Life Insurance Company Ltd.",
+          "weight": 0.98,
+          "sector": "Life insurance"
         },
         {
-          "stock": "Asian Paints",
-          "weight": 2.24,
+          "stock": "KEC International Ltd.",
+          "weight": 0.97,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "J K Tyre & Inds. Ltd.",
+          "weight": 0.92,
+          "sector": "Tyres & allied"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.9,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Havells India Ltd.",
+          "weight": 0.86,
+          "sector": "Consumer electronics"
+        },
+        {
+          "stock": "Bajaj Auto Ltd.",
+          "weight": 0.81,
+          "sector": "2/3 wheelers"
+        },
+        {
+          "stock": "The Ramco Cements Ltd.",
+          "weight": 0.75,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "SKF India Ltd.",
+          "weight": 0.71,
+          "sector": "Abrasives & bearings"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 0.69,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "Godrej Consumer Products Ltd",
+          "weight": 0.68,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "PNC Infratech Ltd.",
+          "weight": 0.67,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Vardhman Textiles Ltd.",
+          "weight": 0.65,
+          "sector": "Other textile products"
+        },
+        {
+          "stock": "Alkem Laboratories Ltd.",
+          "weight": 0.64,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Dabur India Ltd.",
+          "weight": 0.64,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "Blue Dart Express Ltd.",
+          "weight": 0.59,
+          "sector": "Logistics solution provider"
+        },
+        {
+          "stock": "Chalet Hotels Ltd.",
+          "weight": 0.59,
+          "sector": "Hotels & resorts"
+        },
+        {
+          "stock": "Mahindra Holidays & Resorts India Ltd.",
+          "weight": 0.59,
+          "sector": "Hotels & resorts"
+        },
+        {
+          "stock": "Kalpataru Power Transmission Ltd.",
+          "weight": 0.51,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "GMM Pfaudler Ltd.",
+          "weight": 0.5,
+          "sector": "Industrial products"
+        },
+        {
+          "stock": "Metropolis Healthcare Ltd.",
+          "weight": 0.48,
+          "sector": "Healthcare service provider"
+        },
+        {
+          "stock": "Sharda Cropchem Ltd.",
+          "weight": 0.4,
+          "sector": "Pesticides & agrochemicals"
+        },
+        {
+          "stock": "Gland Pharma Ltd.",
+          "weight": 0.38,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Akzo Nobel India Ltd.",
+          "weight": 0.35,
           "sector": "Paints"
         },
         {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.06,
-          "sector": "Banking"
+          "stock": "CIE AUTOMOTIVE INDIA Ltd.",
+          "weight": 0.32,
+          "sector": "Auto components & equipments"
         },
         {
-          "stock": "Maruti Suzuki",
-          "weight": 1.88,
-          "sector": "Auto"
+          "stock": "M M Forgings Ltd.",
+          "weight": 0.31,
+          "sector": "Castings & forgings"
         },
         {
-          "stock": "HCL Technologies",
-          "weight": 1.7,
-          "sector": "IT"
+          "stock": "Finolex Cables Ltd.",
+          "weight": 0.23,
+          "sector": "Cables - electricals"
         },
         {
-          "stock": "Wipro",
-          "weight": 1.52,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.35,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.17,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.08,
-          "sector": "Power"
+          "stock": "Jagran Prakashan Ltd.",
+          "weight": 0.07,
+          "sector": "Print media"
         }
       ],
-      "sector_allocation": {
-        "Retail": 8.2,
-        "Capital Goods": 7.699999999999999,
-        "IT": 24.599999999999998,
-        "Healthcare": 4.2,
-        "Auto Components": 3.9,
-        "FMCG": 10.7,
-        "Chemicals": 6.0,
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "Telecom": 4.1,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 30
+      "holdings_count": 48,
+      "as_of_date": "2026-02-13",
+      "source": "MoneyControl Scraping"
     },
     "hdfc-small-cap-fund": {
       "name": "HDFC Small Cap Fund",
@@ -869,604 +944,389 @@
       "category": "Large Cap",
       "holdings": [
         {
-          "stock": "HDFC Bank",
-          "weight": 8.5,
-          "sector": "Banking"
+          "stock": "Max Financial Services Ltd.",
+          "weight": 4.51,
+          "sector": "Life insurance"
         },
         {
-          "stock": "ICICI Bank",
-          "weight": 7.2,
-          "sector": "Banking"
+          "stock": "Au Small Finance Bank Ltd.",
+          "weight": 4.19,
+          "sector": "Other bank"
         },
         {
-          "stock": "Reliance Industries",
-          "weight": 6.8,
-          "sector": "Oil & Gas"
+          "stock": "Federal Bank Ltd.",
+          "weight": 3.99,
+          "sector": "Private sector bank"
         },
         {
-          "stock": "Infosys",
-          "weight": 5.9,
-          "sector": "IT"
+          "stock": "Indian Bank",
+          "weight": 3.64,
+          "sector": "Public sector bank"
         },
         {
-          "stock": "TCS",
-          "weight": 5.5,
-          "sector": "IT"
+          "stock": "Balkrishna Industries Ltd.",
+          "weight": 3.31,
+          "sector": "Tyres & rubber products"
         },
         {
-          "stock": "Axis Bank",
-          "weight": 4.3,
-          "sector": "Banking"
+          "stock": "Ipca Laboratories Ltd.",
+          "weight": 2.87,
+          "sector": "Pharmaceuticals"
         },
         {
-          "stock": "Bharti Airtel",
-          "weight": 4.1,
-          "sector": "Telecom"
+          "stock": "Coforge Ltd.",
+          "weight": 2.8,
+          "sector": "Computers - software & consulting"
         },
         {
-          "stock": "ITC",
-          "weight": 3.8,
-          "sector": "FMCG"
+          "stock": "Glenmark Pharmaceuticals Ltd.",
+          "weight": 2.77,
+          "sector": "Pharmaceuticals"
         },
         {
-          "stock": "Hindustan Unilever",
-          "weight": 3.5,
-          "sector": "FMCG"
+          "stock": "Fortis Healthcare Ltd.",
+          "weight": 2.62,
+          "sector": "Hospital"
         },
         {
-          "stock": "State Bank of India",
-          "weight": 3.2,
-          "sector": "Banking"
+          "stock": "Hindustan Petroleum Corporation Ltd.",
+          "weight": 2.57,
+          "sector": "Refineries & marketing"
         },
         {
-          "stock": "Larsen & Toubro",
-          "weight": 2.9,
-          "sector": "Capital Goods"
+          "stock": "Mahindra & Mahindra Financial Services Ltd.",
+          "weight": 2.52,
+          "sector": "Non banking financial company (nbfc)"
         },
         {
-          "stock": "Bajaj Finance",
-          "weight": 2.7,
-          "sector": "NBFC"
+          "stock": "Marico Ltd.",
+          "weight": 2.38,
+          "sector": "Personal care"
         },
         {
-          "stock": "Asian Paints",
-          "weight": 2.5,
-          "sector": "Paints"
+          "stock": "Vishal Mega Mart Ltd.",
+          "weight": 2.37,
+          "sector": "Diversified retail"
         },
         {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
-          "sector": "Banking"
+          "stock": "Apollo Tyres Limited",
+          "weight": 2.24,
+          "sector": "Tyres & rubber products"
         },
         {
-          "stock": "Maruti Suzuki",
-          "weight": 2.1,
-          "sector": "Auto"
+          "stock": "Persistent Systems Ltd.",
+          "weight": 2.19,
+          "sector": "Computers - software & consulting"
         },
         {
-          "stock": "HCL Technologies",
+          "stock": "Cummins India Ltd.",
+          "weight": 2.01,
+          "sector": "Compressors, pumps & diesel engines"
+        },
+        {
+          "stock": "Tata Communications Ltd.",
           "weight": 1.9,
-          "sector": "IT"
+          "sector": "Telecom - cellular & fixed line services"
         },
         {
-          "stock": "Wipro",
-          "weight": 1.7,
-          "sector": "IT"
+          "stock": "Union Bank Of India",
+          "weight": 1.9,
+          "sector": "Public sector bank"
         },
         {
-          "stock": "Tech Mahindra",
-          "weight": 1.5,
-          "sector": "IT"
+          "stock": "Jindal Steel Ltd.",
+          "weight": 1.81,
+          "sector": "Iron & steel products"
         },
         {
-          "stock": "Sun Pharma",
+          "stock": "Aurobindo Pharma Ltd.",
+          "weight": 1.75,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Dabur India Ltd.",
+          "weight": 1.69,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "Alkem Laboratories Ltd.",
+          "weight": 1.6,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Mphasis Ltd.",
+          "weight": 1.51,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Bosch Ltd.",
+          "weight": 1.47,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "AIA Engineering Ltd.",
+          "weight": 1.44,
+          "sector": "Castings & forgings"
+        },
+        {
+          "stock": "Delhivery Ltd.",
+          "weight": 1.41,
+          "sector": "Logistics solution provider"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
           "weight": 1.3,
-          "sector": "Pharma"
+          "sector": "Private sector bank"
         },
         {
-          "stock": "NTPC",
-          "weight": 1.2,
-          "sector": "Power"
+          "stock": "PB Fintech Ltd.",
+          "weight": 1.28,
+          "sector": "Financial technology (fintech)"
+        },
+        {
+          "stock": "United Spirits Ltd.",
+          "weight": 1.24,
+          "sector": "Breweries & distilleries"
+        },
+        {
+          "stock": "Coromandel International Ltd.",
+          "weight": 1.22,
+          "sector": "Fertilizers"
+        },
+        {
+          "stock": "Gland Pharma Ltd.",
+          "weight": 1.22,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Hexaware Technologies Ltd.",
+          "weight": 1.12,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 1.07,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "Star Health and Allied Insurance Co Ltd.",
+          "weight": 1.05,
+          "sector": "General insurance"
+        },
+        {
+          "stock": "Redington Ltd.",
+          "weight": 1.04,
+          "sector": "Trading & distributors"
+        },
+        {
+          "stock": "Indian Hotels Company Limited",
+          "weight": 1.03,
+          "sector": "Hotels & resorts"
+        },
+        {
+          "stock": "Bharat Forge Ltd.",
+          "weight": 1.01,
+          "sector": "Castings & forgings"
+        },
+        {
+          "stock": "Indraprastha Gas Ltd.",
+          "weight": 0.99,
+          "sector": "Lpg/cng/png/lng supplier"
+        },
+        {
+          "stock": "Nippon Life India Asset Management Ltd.",
+          "weight": 0.95,
+          "sector": "Asset management company"
+        },
+        {
+          "stock": "Godrej Consumer Products Ltd",
+          "weight": 0.9,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "Indusind Bank Ltd.",
+          "weight": 0.9,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Escorts Ltd.",
+          "weight": 0.88,
+          "sector": "Tractors"
+        },
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.85,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Associated Cement Companies Ltd.",
+          "weight": 0.84,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Sundram Fasteners Ltd.",
+          "weight": 0.75,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Timken India Ltd.",
+          "weight": 0.7,
+          "sector": "Abrasives & bearings"
+        },
+        {
+          "stock": "Crompton Greaves Consumer Electricals Ltd.",
+          "weight": 0.69,
+          "sector": "Household appliances"
+        },
+        {
+          "stock": "SKF India (Industrial) Ltd.",
+          "weight": 0.69,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "KEC International Ltd.",
+          "weight": 0.65,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Supreme Industries Ltd.",
+          "weight": 0.63,
+          "sector": "Plastic products - industrial"
+        },
+        {
+          "stock": "Dixon Technologies (India) Ltd.",
+          "weight": 0.58,
+          "sector": "Consumer electronics"
+        },
+        {
+          "stock": "Sona BLW Precision Forgings Ltd.",
+          "weight": 0.54,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Gujarat Fluorochemicals Ltd.",
+          "weight": 0.46,
+          "sector": "Specialty chemicals"
+        },
+        {
+          "stock": "SKF India Ltd.",
+          "weight": 0.43,
+          "sector": "Abrasives & bearings"
+        },
+        {
+          "stock": "Cholamandalam Financial Holdings Ltd.",
+          "weight": 0.41,
+          "sector": "Investment company"
+        },
+        {
+          "stock": "Vesuvius India Ltd.",
+          "weight": 0.4,
+          "sector": "Electrodes & refractories"
+        },
+        {
+          "stock": "Emami Ltd.",
+          "weight": 0.39,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "Ceat Ltd.",
+          "weight": 0.37,
+          "sector": "Tyres & rubber products"
+        },
+        {
+          "stock": "Symphony Ltd.",
+          "weight": 0.37,
+          "sector": "Consumer electronics"
+        },
+        {
+          "stock": "Vardhman Textiles Ltd.",
+          "weight": 0.34,
+          "sector": "Other textile products"
+        },
+        {
+          "stock": "Greenlam Industries Ltd.",
+          "weight": 0.32,
+          "sector": "Plywood boards/ laminates"
+        },
+        {
+          "stock": "Aarti Industries Ltd.",
+          "weight": 0.31,
+          "sector": "Specialty chemicals"
+        },
+        {
+          "stock": "Oracle Financial Services Software Limited",
+          "weight": 0.29,
+          "sector": "Software products"
+        },
+        {
+          "stock": "Arvind Ltd.",
+          "weight": 0.28,
+          "sector": "Garments & apparels"
+        },
+        {
+          "stock": "ICICI Lombard General Insurance Co Ltd.",
+          "weight": 0.26,
+          "sector": "General insurance"
+        },
+        {
+          "stock": "Navneet Education Ltd.",
+          "weight": 0.24,
+          "sector": "Printing & publication"
+        },
+        {
+          "stock": "Bharti Hexacom Ltd.",
+          "weight": 0.23,
+          "sector": "Telecom - equipment & accessories"
+        },
+        {
+          "stock": "Billionbrains Garage Ventures Ltd.",
+          "weight": 0.19,
+          "sector": "Stockbroking & allied"
+        },
+        {
+          "stock": "Five-Star Business Finance Ltd.",
+          "weight": 0.19,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Colgate - Palmolive (India) Limited",
+          "weight": 0.18,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "KNR Constructions",
+          "weight": 0.17,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "LG Electronics India Pvt. Ltd.",
+          "weight": 0.16,
+          "sector": "Consumer electronics"
+        },
+        {
+          "stock": "Dhanuka Agritech Ltd.",
+          "weight": 0.13,
+          "sector": "Pesticides & agrochemicals"
+        },
+        {
+          "stock": "Greenpanel Industries Ltd.",
+          "weight": 0.13,
+          "sector": "Plywood boards/ laminates"
+        },
+        {
+          "stock": "Greenply Industries Ltd.",
+          "weight": 0.13,
+          "sector": "Plywood boards/ laminates"
+        },
+        {
+          "stock": "Jagran Prakashan Ltd.",
+          "weight": 0.05,
+          "sector": "Print media"
         }
       ],
-      "sector_allocation": {
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "IT": 16.5,
-        "Telecom": 4.1,
-        "FMCG": 7.3,
-        "Capital Goods": 2.9,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 20
-    },
-    "hdfc-balanced-advantage-fund": {
-      "name": "HDFC Balanced Advantage Fund",
-      "amc": "HDFC Mutual Fund",
-      "category": "Hybrid",
-      "holdings": [
-        {
-          "stock": "HDFC Bank",
-          "weight": 8.5,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 7.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.8,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 5.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 4.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 4.1,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.8,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.5,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 3.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.9,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.7,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.5,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 2.1,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.3,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.2,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "IT": 16.5,
-        "Telecom": 4.1,
-        "FMCG": 7.3,
-        "Capital Goods": 2.9,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 20
-    },
-    "icici-prudential-bluechip-fund": {
-      "name": "ICICI Prudential Bluechip Fund",
-      "amc": "ICICI Prudential",
-      "category": "Large Cap",
-      "holdings": [
-        {
-          "stock": "HDFC Bank",
-          "weight": 8.5,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 7.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.8,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 5.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 4.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 4.1,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.8,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.5,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 3.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.9,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.7,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.5,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 2.1,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.3,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.2,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "IT": 16.5,
-        "Telecom": 4.1,
-        "FMCG": 7.3,
-        "Capital Goods": 2.9,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 20
-    },
-    "icici-prudential-equity--debt-fund": {
-      "name": "ICICI Prudential Equity & Debt Fund",
-      "amc": "ICICI Prudential",
-      "category": "Hybrid",
-      "holdings": [
-        {
-          "stock": "HDFC Bank",
-          "weight": 8.5,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 7.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.8,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 5.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 4.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 4.1,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.8,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.5,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 3.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.9,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.7,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.5,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 2.1,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.3,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.2,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "IT": 16.5,
-        "Telecom": 4.1,
-        "FMCG": 7.3,
-        "Capital Goods": 2.9,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 20
-    },
-    "axis-bluechip-fund": {
-      "name": "Axis Bluechip Fund",
-      "amc": "Axis Mutual Fund",
-      "category": "Large Cap",
-      "holdings": [
-        {
-          "stock": "HDFC Bank",
-          "weight": 8.5,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 7.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.8,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 5.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 4.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 4.1,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.8,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.5,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 3.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.9,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.7,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.5,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 2.1,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.3,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.2,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "IT": 16.5,
-        "Telecom": 4.1,
-        "FMCG": 7.3,
-        "Capital Goods": 2.9,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 20
+      "holdings_count": 76,
+      "as_of_date": "2026-02-13",
+      "source": "MoneyControl Scraping"
     },
     "axis-midcap-fund": {
       "name": "Axis Midcap Fund",
@@ -2623,127 +2483,6 @@
       "as_of_date": "2026-01-31",
       "source": "MoneyControl Portfolio Disclosure"
     },
-    "sbi-bluechip-fund": {
-      "name": "SBI Bluechip Fund",
-      "amc": "SBI Mutual Fund",
-      "category": "Large Cap",
-      "holdings": [
-        {
-          "stock": "HDFC Bank",
-          "weight": 8.5,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 7.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.8,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 5.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 4.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 4.1,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.8,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.5,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 3.2,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.9,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.7,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.5,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 2.1,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.5,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.3,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.2,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "IT": 16.5,
-        "Telecom": 4.1,
-        "FMCG": 7.3,
-        "Capital Goods": 2.9,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 20
-    },
     "sbi-small-cap-fund": {
       "name": "SBI Small Cap Fund",
       "amc": "SBI Mutual Fund",
@@ -3489,181 +3228,6 @@
       "as_of_date": "2026-01-31",
       "source": "MoneyControl Portfolio Disclosure"
     },
-    "mirae-asset-emerging-bluechip-fund": {
-      "name": "Mirae Asset Emerging Bluechip Fund",
-      "amc": "Mirae Asset",
-      "category": "Large & Mid Cap",
-      "holdings": [
-        {
-          "stock": "Trent",
-          "weight": 4.66,
-          "sector": "Retail"
-        },
-        {
-          "stock": "Polycab India",
-          "weight": 4.3,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Persistent Systems",
-          "weight": 4.04,
-          "sector": "IT"
-        },
-        {
-          "stock": "Max Healthcare",
-          "weight": 3.77,
-          "sector": "Healthcare"
-        },
-        {
-          "stock": "Tube Investments",
-          "weight": 3.5,
-          "sector": "Auto Components"
-        },
-        {
-          "stock": "Coforge",
-          "weight": 3.23,
-          "sector": "IT"
-        },
-        {
-          "stock": "Varun Beverages",
-          "weight": 3.05,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "PI Industries",
-          "weight": 2.87,
-          "sector": "Chemicals"
-        },
-        {
-          "stock": "Avenue Supermarts",
-          "weight": 2.69,
-          "sector": "Retail"
-        },
-        {
-          "stock": "SRF",
-          "weight": 2.51,
-          "sector": "Chemicals"
-        },
-        {
-          "stock": "HDFC Bank",
-          "weight": 7.62,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 6.46,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.1,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.29,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 4.93,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 3.86,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 3.68,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.41,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.14,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 2.87,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.6,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.42,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.24,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.06,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 1.88,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.52,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.35,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.17,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.08,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Retail": 8.2,
-        "Capital Goods": 7.699999999999999,
-        "IT": 24.599999999999998,
-        "Healthcare": 4.2,
-        "Auto Components": 3.9,
-        "FMCG": 10.7,
-        "Chemicals": 6.0,
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "Telecom": 4.1,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 30
-    },
     "parag-parikh-flexi-cap-fund": {
       "name": "Parag Parikh Flexi Cap Fund",
       "amc": "Parag Parikh MF",
@@ -3888,181 +3452,6 @@
       "holdings_count": 43,
       "as_of_date": "2026-01-31",
       "source": "MoneyControl Portfolio Disclosure"
-    },
-    "kotak-equity-opportunities-fund": {
-      "name": "Kotak Equity Opportunities Fund",
-      "amc": "Kotak Mutual Fund",
-      "category": "Large & Mid Cap",
-      "holdings": [
-        {
-          "stock": "Trent",
-          "weight": 4.66,
-          "sector": "Retail"
-        },
-        {
-          "stock": "Polycab India",
-          "weight": 4.3,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Persistent Systems",
-          "weight": 4.04,
-          "sector": "IT"
-        },
-        {
-          "stock": "Max Healthcare",
-          "weight": 3.77,
-          "sector": "Healthcare"
-        },
-        {
-          "stock": "Tube Investments",
-          "weight": 3.5,
-          "sector": "Auto Components"
-        },
-        {
-          "stock": "Coforge",
-          "weight": 3.23,
-          "sector": "IT"
-        },
-        {
-          "stock": "Varun Beverages",
-          "weight": 3.05,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "PI Industries",
-          "weight": 2.87,
-          "sector": "Chemicals"
-        },
-        {
-          "stock": "Avenue Supermarts",
-          "weight": 2.69,
-          "sector": "Retail"
-        },
-        {
-          "stock": "SRF",
-          "weight": 2.51,
-          "sector": "Chemicals"
-        },
-        {
-          "stock": "HDFC Bank",
-          "weight": 7.62,
-          "sector": "Banking"
-        },
-        {
-          "stock": "ICICI Bank",
-          "weight": 6.46,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Reliance Industries",
-          "weight": 6.1,
-          "sector": "Oil & Gas"
-        },
-        {
-          "stock": "Infosys",
-          "weight": 5.29,
-          "sector": "IT"
-        },
-        {
-          "stock": "TCS",
-          "weight": 4.93,
-          "sector": "IT"
-        },
-        {
-          "stock": "Axis Bank",
-          "weight": 3.86,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Bharti Airtel",
-          "weight": 3.68,
-          "sector": "Telecom"
-        },
-        {
-          "stock": "ITC",
-          "weight": 3.41,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "Hindustan Unilever",
-          "weight": 3.14,
-          "sector": "FMCG"
-        },
-        {
-          "stock": "State Bank of India",
-          "weight": 2.87,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Larsen & Toubro",
-          "weight": 2.6,
-          "sector": "Capital Goods"
-        },
-        {
-          "stock": "Bajaj Finance",
-          "weight": 2.42,
-          "sector": "NBFC"
-        },
-        {
-          "stock": "Asian Paints",
-          "weight": 2.24,
-          "sector": "Paints"
-        },
-        {
-          "stock": "Kotak Mahindra Bank",
-          "weight": 2.06,
-          "sector": "Banking"
-        },
-        {
-          "stock": "Maruti Suzuki",
-          "weight": 1.88,
-          "sector": "Auto"
-        },
-        {
-          "stock": "HCL Technologies",
-          "weight": 1.7,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
-          "weight": 1.52,
-          "sector": "IT"
-        },
-        {
-          "stock": "Tech Mahindra",
-          "weight": 1.35,
-          "sector": "IT"
-        },
-        {
-          "stock": "Sun Pharma",
-          "weight": 1.17,
-          "sector": "Pharma"
-        },
-        {
-          "stock": "NTPC",
-          "weight": 1.08,
-          "sector": "Power"
-        }
-      ],
-      "sector_allocation": {
-        "Retail": 8.2,
-        "Capital Goods": 7.699999999999999,
-        "IT": 24.599999999999998,
-        "Healthcare": 4.2,
-        "Auto Components": 3.9,
-        "FMCG": 10.7,
-        "Chemicals": 6.0,
-        "Banking": 25.5,
-        "Oil & Gas": 6.8,
-        "Telecom": 4.1,
-        "NBFC": 2.7,
-        "Paints": 2.5,
-        "Auto": 2.1,
-        "Pharma": 1.3,
-        "Power": 1.2
-      },
-      "holdings_count": 30
     },
     "kotak-small-cap-fund": {
       "name": "Kotak Small Cap Fund",
@@ -32444,166 +31833,6 @@
       "as_of_date": "2026-01-31",
       "source": "MoneyControl Portfolio Disclosure"
     },
-    "quantum-elss-tax-saver-fund": {
-      "name": "Quantum ELSS Tax Saver Fund",
-      "amc": "Quantum MF",
-      "category": "Elss",
-      "holdings": [
-        {
-          "stock": "HDFC Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 8.49
-        },
-        {
-          "stock": "ICICI Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 6.82
-        },
-        {
-          "stock": "Tata Consultancy Services Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 5.48
-        },
-        {
-          "stock": "Infosys Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 5.34
-        },
-        {
-          "stock": "State Bank Of India",
-          "sector": "Public sector bank",
-          "weight": 4.18
-        },
-        {
-          "stock": "ICICI Prudential Life Insurance Co Ltd.",
-          "sector": "Life insurance",
-          "weight": 3.85
-        },
-        {
-          "stock": "Kotak Mahindra Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 3.61
-        },
-        {
-          "stock": "Axis Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 3.55
-        },
-        {
-          "stock": "Wipro Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 3.33
-        },
-        {
-          "stock": "Tech Mahindra Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 3.26
-        },
-        {
-          "stock": "Hero Motocorp Ltd.",
-          "sector": "2/3 wheelers",
-          "weight": 3.22
-        },
-        {
-          "stock": "Container Corporation Of India Ltd.",
-          "sector": "Logistics solution provider",
-          "weight": 3.08
-        },
-        {
-          "stock": "Bharti Airtel Ltd.",
-          "sector": "Telecom - cellular & fixed line services",
-          "weight": 3.07
-        },
-        {
-          "stock": "Crompton Greaves Consumer Electricals Ltd.",
-          "sector": "Household appliances",
-          "weight": 2.91
-        },
-        {
-          "stock": "Nuvoco Vistas Corporation Ltd.",
-          "sector": "Cement & cement products",
-          "weight": 2.8
-        },
-        {
-          "stock": "Star Health and Allied Insurance Co Ltd.",
-          "sector": "General insurance",
-          "weight": 2.66
-        },
-        {
-          "stock": "Aditya Birla Sun Life AMC Ltd.",
-          "sector": "Asset management company",
-          "weight": 2.62
-        },
-        {
-          "stock": "Cipla Ltd.",
-          "sector": "Pharmaceuticals",
-          "weight": 2.61
-        },
-        {
-          "stock": "Exide Industries Ltd.",
-          "sector": "Auto components & equipments",
-          "weight": 2.61
-        },
-        {
-          "stock": "GAIL (India) Ltd.",
-          "sector": "Gas transmission/marketing",
-          "weight": 2.44
-        },
-        {
-          "stock": "LIC Housing Finance Ltd.",
-          "sector": "Housing finance company",
-          "weight": 2.38
-        },
-        {
-          "stock": "Cms Info Systems Ltd.",
-          "sector": "Diversified commercial services",
-          "weight": 2.32
-        },
-        {
-          "stock": "Dr. Reddys Laboratories Ltd.",
-          "sector": "Pharmaceuticals",
-          "weight": 2.08
-        },
-        {
-          "stock": "Indusind Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 2.06
-        },
-        {
-          "stock": "ICICI Lombard General Insurance Co Ltd.",
-          "sector": "General insurance",
-          "weight": 2.01
-        },
-        {
-          "stock": "Gujarat State Petronet Ltd.",
-          "sector": "Gas transmission/marketing",
-          "weight": 1.79
-        },
-        {
-          "stock": "Mahindra & Mahindra Ltd.",
-          "sector": "Passenger cars & utility vehicles",
-          "weight": 1.46
-        },
-        {
-          "stock": "Bajaj Auto Ltd.",
-          "sector": "2/3 wheelers",
-          "weight": 1.39
-        },
-        {
-          "stock": "Tata Steel Ltd.",
-          "sector": "Iron & steel products",
-          "weight": 1.19
-        },
-        {
-          "stock": "Godrej Properties Ltd.",
-          "sector": "Residential, commercial projects",
-          "weight": 0.76
-        }
-      ],
-      "holdings_count": 30,
-      "as_of_date": "2026-01-31",
-      "source": "MoneyControl Portfolio Disclosure"
-    },
     "quant-aggressive-hybrid-fund": {
       "name": "Quant Aggressive Hybrid Fund",
       "amc": "Quant Mutual Fund",
@@ -32959,165 +32188,210 @@
       "as_of_date": "2026-01-31",
       "source": "MoneyControl Portfolio Disclosure"
     },
-    "quantum-value-fund": {
-      "name": "Quantum Value Fund",
-      "amc": "Quantum MF",
-      "category": "Value",
+    "hdfc-balanced-advantage-fund": {
+      "name": "hdfc-balanced-advantage-fund",
+      "amc": "HDFC Mutual Fund",
+      "category": "Hybrid",
       "holdings": [
         {
           "stock": "HDFC Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 8.6
+          "weight": 9.99,
+          "sector": "Banks"
         },
         {
-          "stock": "ICICI Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 6.81
+          "stock": "Housing Development Finance Corporation Ltd.",
+          "weight": 7.87,
+          "sector": "Housing finance"
         },
         {
-          "stock": "Tata Consultancy Services Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 5.61
+          "stock": "Reliance Industries Ltd.",
+          "weight": 7.85,
+          "sector": "Refineries & marketing"
+        },
+        {
+          "stock": "ITC Limited",
+          "weight": 6.05,
+          "sector": "Cigarettes"
         },
         {
           "stock": "Infosys Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 5.39
+          "weight": 5.75,
+          "sector": "Computers - software"
         },
         {
-          "stock": "ICICI Prudential Life Insurance Co Ltd.",
-          "sector": "Life insurance",
-          "weight": 3.96
+          "stock": "ICICI Bank Ltd.",
+          "weight": 4.61,
+          "sector": "Banks"
         },
         {
-          "stock": "State Bank Of India",
-          "sector": "Public sector bank",
-          "weight": 3.95
+          "stock": "Tata Consultancy Services Ltd.",
+          "weight": 4.44,
+          "sector": "Computers - software"
         },
         {
-          "stock": "Tech Mahindra Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 3.58
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 4.31,
+          "sector": "Engineering, designing, construction"
         },
         {
-          "stock": "Axis Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 3.58
+          "stock": "Solar Industries India Ltd.",
+          "weight": 3.62,
+          "sector": "Explosives"
         },
         {
           "stock": "Kotak Mahindra Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 3.47
+          "weight": 3.61,
+          "sector": "Banks"
         },
         {
-          "stock": "Wipro Ltd.",
-          "sector": "Computers - software & consulting",
-          "weight": 3.47
+          "stock": "Maruti Suzuki India Ltd.",
+          "weight": 2.96,
+          "sector": "Passenger cars & utility vehicles"
         },
         {
-          "stock": "Hero Motocorp Ltd.",
-          "sector": "2/3 wheelers",
-          "weight": 3.16
-        },
-        {
-          "stock": "Container Corporation Of India Ltd.",
-          "sector": "Logistics solution provider",
-          "weight": 3.11
-        },
-        {
-          "stock": "Bharti Airtel Ltd.",
-          "sector": "Telecom - cellular & fixed line services",
-          "weight": 3.09
-        },
-        {
-          "stock": "Crompton Greaves Consumer Electricals Ltd.",
-          "sector": "Household appliances",
-          "weight": 2.84
-        },
-        {
-          "stock": "Nuvoco Vistas Corporation Ltd.",
-          "sector": "Cement & cement products",
-          "weight": 2.75
-        },
-        {
-          "stock": "Star Health and Allied Insurance Co Ltd.",
-          "sector": "General insurance",
-          "weight": 2.68
-        },
-        {
-          "stock": "Exide Industries Ltd.",
-          "sector": "Auto components & equipments",
-          "weight": 2.64
-        },
-        {
-          "stock": "Aditya Birla Sun Life AMC Ltd.",
-          "sector": "Asset management company",
-          "weight": 2.63
-        },
-        {
-          "stock": "Cipla Ltd.",
-          "sector": "Pharmaceuticals",
-          "weight": 2.49
-        },
-        {
-          "stock": "LIC Housing Finance Ltd.",
-          "sector": "Housing finance company",
-          "weight": 2.43
-        },
-        {
-          "stock": "GAIL (India) Ltd.",
-          "sector": "Gas transmission/marketing",
-          "weight": 2.41
-        },
-        {
-          "stock": "Cms Info Systems Ltd.",
-          "sector": "Diversified commercial services",
-          "weight": 2.32
-        },
-        {
-          "stock": "Dr. Reddys Laboratories Ltd.",
-          "sector": "Pharmaceuticals",
-          "weight": 2.07
-        },
-        {
-          "stock": "ICICI Lombard General Insurance Co Ltd.",
-          "sector": "General insurance",
-          "weight": 2.01
+          "stock": "Hindustan Unilever Ltd.",
+          "weight": 2.72,
+          "sector": "Diversified"
         },
         {
           "stock": "Indusind Bank Ltd.",
-          "sector": "Private sector bank",
-          "weight": 1.95
+          "weight": 2.44,
+          "sector": "Banks"
         },
         {
-          "stock": "Gujarat State Petronet Ltd.",
-          "sector": "Gas transmission/marketing",
-          "weight": 1.72
+          "stock": "Axis Bank Ltd.",
+          "weight": 2.38,
+          "sector": "Banks"
         },
         {
-          "stock": "Bajaj Auto Ltd.",
-          "sector": "2/3 wheelers",
-          "weight": 1.36
+          "stock": "Grasim Industries Limited",
+          "weight": 2.33,
+          "sector": "Cement"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 2.31,
+          "sector": "Banks"
         },
         {
           "stock": "Mahindra & Mahindra Ltd.",
-          "sector": "Passenger cars & utility vehicles",
-          "weight": 1.34
+          "weight": 2.05,
+          "sector": "Passenger cars & utility vehicles"
+        },
+        {
+          "stock": "Birla Corporation Ltd.",
+          "weight": 1.96,
+          "sector": "Cement"
+        },
+        {
+          "stock": "Yes Bank",
+          "weight": 1.67,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Tata Motors Ltd.",
+          "weight": 1.61,
+          "sector": "Passenger cars & utility vehicles"
+        },
+        {
+          "stock": "Sun Pharmaceutical Industries Ltd.",
+          "weight": 1.44,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Asian Paints (india) Ltd.",
+          "weight": 1.37,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Bharat Petroleum Corporation Ltd.",
+          "weight": 1.33,
+          "sector": "Refineries & marketing"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 1.32,
+          "sector": "Power"
+        },
+        {
+          "stock": "Oil & Natural Gas Corporation Ltd.",
+          "weight": 1.29,
+          "sector": "Oil exploration"
+        },
+        {
+          "stock": "Hero Motocorp Ltd.",
+          "weight": 1.22,
+          "sector": "2/3 wheelers"
+        },
+        {
+          "stock": "Kirloskar Pneumatic Co. Ltd.",
+          "weight": 1.17,
+          "sector": "Compressors / pumps"
         },
         {
           "stock": "Tata Steel Ltd.",
-          "sector": "Iron & steel products",
-          "weight": 1.33
+          "weight": 1.17,
+          "sector": "Steel"
         },
         {
-          "stock": "Godrej Properties Ltd.",
-          "sector": "Residential, commercial projects",
-          "weight": 0.76
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 1.16,
+          "sector": "Telecom - services"
+        },
+        {
+          "stock": "Power Grid Corporation of India Ltd.",
+          "weight": 1.15,
+          "sector": "Power - transmission"
+        },
+        {
+          "stock": "Canara Bank",
+          "weight": 1.14,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Bajaj Auto Ltd.",
+          "weight": 1.01,
+          "sector": "2/3 wheelers"
+        },
+        {
+          "stock": "Coal India Ltd.",
+          "weight": 0.93,
+          "sector": "Industrial minerals"
+        },
+        {
+          "stock": "Wipro Ltd.",
+          "weight": 0.83,
+          "sector": "Computers - software"
+        },
+        {
+          "stock": "Adani Ports And Special Economic Zone Ltd.",
+          "weight": 0.81,
+          "sector": "Port"
+        },
+        {
+          "stock": "Bayer Cropscience Ltd.",
+          "weight": 0.8,
+          "sector": "Pesticides and agrochemicals"
+        },
+        {
+          "stock": "Dr. Reddys Laboratories Ltd.",
+          "weight": 0.65,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Allahabad Bank",
+          "weight": 0.5,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Tata Motors Ltd. - A Class",
+          "weight": 0.25,
+          "sector": "Passenger cars & utility vehicles"
         }
       ],
-      "holdings_count": 30,
-      "as_of_date": "2026-01-31",
-      "source": "MoneyControl Portfolio Disclosure"
+      "holdings_count": 39,
+      "as_of_date": "2026-02-13",
+      "source": "MoneyControl Scraping"
     }
   }
 }
