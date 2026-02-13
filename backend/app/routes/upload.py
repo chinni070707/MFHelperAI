@@ -318,52 +318,162 @@ def detect_style_from_name(fund_name: str) -> str:
 
 
 # ============ CAS PDF Parser ============
+def _parse_cas_with_casparser(file_content: bytes, password: Optional[str] = None) -> dict:
+    """
+    Parse CAS PDF using the casparser library (primary path).
+    casparser handles CAMS, KFintech, and NSDL/CDSL formats robustly.
+    Returns the same {holdings[], summary{}} shape as the legacy PyMuPDF path.
+    Raises HTTPException on failure so callers can fall back to the legacy path.
+    """
+    import tempfile
+    import os
+
+    temp_path = None
+    try:
+        import casparser
+    except ImportError:
+        raise HTTPException(status_code=500, detail="casparser not installed. Run: pip install casparser")
+
+    try:
+        # casparser needs a file path, not bytes
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp:
+            tmp.write(file_content)
+            temp_path = tmp.name
+
+        try:
+            cas_data = casparser.read_cas_pdf(temp_path, password or "")
+        except Exception as parse_error:
+            err = str(parse_error)
+            if 'password' in err.lower() or 'decrypt' in err.lower() or 'incorrect' in err.lower():
+                raise HTTPException(status_code=400, detail="Invalid password. Please check your PDF password and try again.")
+            raise HTTPException(status_code=400, detail=f"casparser could not read this PDF: {err}")
+
+        holdings = []
+        total_invested = 0.0
+        total_current = 0.0
+
+        for folio in cas_data.folios:
+            for scheme in folio.schemes:
+                # Skip zero-unit / redeemed holdings
+                units = safe_float_convert(scheme.close, "units", 0)
+                if units == 0 and not scheme.valuation:
+                    continue
+
+                nav = 0.0
+                current_value = 0.0
+                invested = 0.0
+
+                if scheme.valuation:
+                    nav = safe_float_convert(scheme.valuation.nav, "nav", 0)
+                    current_value = safe_float_convert(scheme.valuation.value, "current_value", 0)
+                    invested = safe_float_convert(scheme.valuation.cost, "invested", 0)
+
+                # Skip fully-zero entries (redeemed / empty)
+                if units == 0 and current_value == 0 and invested == 0:
+                    continue
+
+                scheme_name = scheme.scheme or "Unknown Fund"
+                amc = folio.amc or determine_amc(scheme_name)
+                category = determine_category(scheme_name)
+                style = determine_style(scheme_name, category)
+
+                total_invested += invested
+                total_current += current_value
+
+                holdings.append({
+                    'fund_name': scheme_name,
+                    'folio': folio.folio or '',
+                    'isin': scheme.isin or '',
+                    'amc': amc,
+                    'category': category,
+                    'style': style,
+                    'units': units,
+                    'nav': nav,
+                    'invested': invested,
+                    'current_value': current_value,
+                    'return_1y': '-',
+                    'return_3y': '-',
+                    'alpha': '-',
+                })
+
+        total_gain = total_current - total_invested
+        logger.info(f"casparser: {len(holdings)} holdings | invested={total_invested:,.2f} | current={total_current:,.2f}")
+        for idx, h in enumerate(holdings[:5]):
+            logger.info(f"  [{idx+1}] {h['fund_name'][:55]} | invested={h['invested']:.2f} | current={h['current_value']:.2f} | units={h['units']:.3f}")
+        if len(holdings) > 5:
+            logger.info(f"  ... and {len(holdings) - 5} more")
+
+        return {
+            "success": True,
+            "source": "cas_pdf",
+            "holdings": holdings,
+            "summary": {
+                "total_funds": len(holdings),
+                "total_invested": round(total_invested, 2),
+                "total_current": round(total_current, 2),
+                "total_gain": round(total_gain, 2),
+                "return_pct": round((total_gain / total_invested * 100), 2) if total_invested > 0 else 0,
+            },
+            "parsed_at": datetime.now().isoformat(),
+        }
+
+    finally:
+        if temp_path and os.path.exists(temp_path):
+            try:
+                os.unlink(temp_path)
+            except Exception:
+                pass
+
+
 def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
-    """Parse CAMS/KFintech CAS PDF and extract portfolio data"""
+    """
+    Parse CAMS/KFintech CAS PDF and extract portfolio data.
+    Primary path: casparser library (robust, format-aware).
+    Fallback: PyMuPDF + regex (legacy, kept for edge cases).
+    """
     logger.info(f"Starting CAS PDF parsing (size: {len(file_content)} bytes)")
-    
+
+    # ── Primary: use casparser ────────────────────────────────────────────────
+    try:
+        result = _parse_cas_with_casparser(file_content, password)
+        logger.info("CAS parsing via casparser succeeded")
+        return result
+    except HTTPException:
+        # Re-raise auth / password errors immediately — no point falling back
+        raise
+    except Exception as e:
+        logger.warning(f"casparser failed ({e}), falling back to PyMuPDF regex parser")
+
+    # ── Fallback: PyMuPDF + regex ─────────────────────────────────────────────
     try:
         import fitz  # PyMuPDF
-        
-        # Open PDF
+
         doc = fitz.open(stream=file_content, filetype="pdf")
         logger.debug(f"PDF opened: {doc.page_count} pages, encrypted: {doc.is_encrypted}")
-        
-        # If password protected, try to decrypt
+
         if doc.is_encrypted:
             if not password:
-                logger.warning("CAS PDF is encrypted but no password provided")
                 raise HTTPException(
-                    status_code=400, 
+                    status_code=400,
                     detail="CAS PDF is password protected. Please provide the PDF password."
                 )
             if not doc.authenticate(password):
-                logger.error(f"Failed to authenticate PDF with provided password")
                 raise HTTPException(status_code=400, detail="Invalid password. Please check your PDF password and try again.")
             logger.info("PDF successfully authenticated")
-        
-        # Extract text from all pages
+
         full_text = ""
         for page in doc:
             full_text += page.get_text()
-        
         doc.close()
         logger.debug(f"Extracted {len(full_text)} characters from PDF")
-        
-        # Parse the text to extract holdings
+
         holdings = extract_holdings_from_cas_text(full_text)
-        
-        logger.info(f"CAS parsing complete: {len(holdings)} holdings found")
-        for idx, h in enumerate(holdings[:5]):
-            logger.info(f"  Holding {idx+1}: {h.get('fund_name', '?')[:50]} | invested={h.get('invested', 0):.2f} | current={h.get('current_value', 0):.2f} | units={h.get('units', 0):.3f}")
-        if len(holdings) > 5:
-            logger.info(f"  ... and {len(holdings) - 5} more")
-        
-        # Calculate totals
+        logger.info(f"CAS fallback (regex) parsing complete: {len(holdings)} holdings found")
+
         total_invested = sum(h.get('invested', 0) for h in holdings)
         total_current = sum(h.get('current_value', 0) for h in holdings)
         total_gain = total_current - total_invested
-        
+
         return {
             "success": True,
             "source": "cas_pdf",
@@ -373,16 +483,15 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
                 "total_invested": total_invested,
                 "total_current": total_current,
                 "total_gain": total_gain,
-                "return_pct": (total_gain / total_invested * 100) if total_invested > 0 else 0
+                "return_pct": (total_gain / total_invested * 100) if total_invested > 0 else 0,
             },
-            "parsed_at": datetime.now().isoformat()
+            "parsed_at": datetime.now().isoformat(),
         }
-        
+
     except ImportError:
-        raise HTTPException(
-            status_code=500, 
-            detail="PDF parsing library not installed. Run: pip install PyMuPDF"
-        )
+        raise HTTPException(status_code=500, detail="PDF parsing library not installed. Run: pip install PyMuPDF")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error parsing CAS PDF: {str(e)}")
 
