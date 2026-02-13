@@ -183,6 +183,12 @@ app = FastAPI(
     redoc_url="/api/redoc"
 )
 
+# Health check endpoint - registered FIRST for Render.com
+@app.get("/health")
+async def health_check_render():
+    """Root health check endpoint for Render.com monitoring"""
+    return {"status": "healthy", "version": "1.0.0"}
+
 # Add rate limiter state
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
@@ -367,12 +373,7 @@ async def serve_manifest():
         return FileResponse(manifest_path, media_type="application/json")
     return {"error": "Manifest not found"}
 
-@app.get("/health")
-async def health_check():
-    """Health check endpoint"""
-    return {"status": "healthy", "version": "1.0.0"}
-
-# Generic catch-all for all HTML pages (#28 \u2014 replaces ~40 repetitive route handlers)
+# Generic catch-all for all HTML pages (#28 — replaces ~40 repetitive route handlers)
 # Must be registered LAST so explicit routes above take priority
 @app.get("/{page_path:path}")
 async def serve_html_page(page_path: str):
