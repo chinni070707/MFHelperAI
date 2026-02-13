@@ -122,7 +122,7 @@ test.describe('Portfolio Analysis', () => {
     await page.goto('/');
     
     // Find portfolio link using proper locator
-    const portfolioLink = page.getByRole('link', { name: 'Dashboard' }).first();
+    const portfolioLink = page.getByRole('link', { name: 'Portfolio' }).first();
     
     if (await portfolioLink.count() > 0) {
       await portfolioLink.click();

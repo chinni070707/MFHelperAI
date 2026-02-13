@@ -28,10 +28,10 @@ test.describe('Homepage Navigation', () => {
     
     // Verify key navigation elements exist
     const navElements = [
-      'text=Dashboard',
       'text=Portfolio',
-      'text=Analysis',
-      'text=AI Assistant'
+      'text=Tools',
+      'text=Goal Planning',
+      'text=Get Started'
     ];
 
     for (const selector of navElements) {
@@ -81,27 +81,27 @@ test.describe('Homepage Navigation', () => {
 });
 
 test.describe('Homepage Links', () => {
-  test('should navigate to dashboard', async ({ page }) => {
+  test('should navigate to portfolio', async ({ page }) => {
     await page.goto('/');
     
-    // Click dashboard link (try multiple selectors)
-    const dashboardLink = page.locator('a[href*="dashboard"], text=Dashboard').first();
+    // Click portfolio link (try multiple selectors)
+    const portfolioLink = page.locator('a[href*="portfolio"], text=Portfolio').first();
     
-    if (await dashboardLink.count() > 0) {
-      await dashboardLink.click();
+    if (await portfolioLink.count() > 0) {
+      await portfolioLink.click();
       
-      // Wait for navigation - may redirect to auth or dashboard
-      await page.waitForURL(/\/(dashboard|auth)/, { timeout: 10000 }).catch(() => {
-        console.log('Dashboard navigation timed out or redirected');
+      // Wait for navigation - may redirect to auth or portfolio
+      await page.waitForURL(/\/(portfolio|auth)/, { timeout: 10000 }).catch(() => {
+        console.log('Portfolio navigation timed out or redirected');
       });
       
-      // Verify we navigated to a valid page (dashboard or auth redirect or stayed on page)
+      // Verify we navigated to a valid page (portfolio or auth redirect or stayed on page)
       const url = page.url();
-      const validNavigation = url.includes('dashboard') || url.includes('auth') || url.includes('index');
+      const validNavigation = url.includes('portfolio') || url.includes('auth') || url.includes('index');
       expect(validNavigation).toBeTruthy();
     } else {
-      // No dashboard link found - this is acceptable
-      console.log('Dashboard link not found on homepage - skipping');
+      // No portfolio link found - this is acceptable
+      console.log('Portfolio link not found on homepage - skipping');
     }
   });
 });
