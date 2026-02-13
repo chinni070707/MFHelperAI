@@ -726,7 +726,7 @@
         /* Multi Pie Charts Grid */
         .pie-charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -737,6 +737,8 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+            min-width: 0;
         }
 
         .pie-chart-card .chart-title {
@@ -954,6 +956,86 @@
             </div>
         </div>
     </div>
+
+    <!-- Feedback Section -->
+    <div style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+        <div class="chart-card" id="feedbackSection">
+            <div class="chart-title" style="margin-bottom: 4px;">Was this analysis helpful?</div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Your feedback helps us improve this tool</div>
+            
+            <div id="feedbackForm">
+                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                    <button onclick="selectRating('like')" id="btnLike" style="flex: 1; padding: 14px; border-radius: 10px; border: 2px solid var(--border-color); background: var(--bg-dark); cursor: pointer; font-size: 16px; transition: all 0.2s;">
+                        👍 Helpful
+                    </button>
+                    <button onclick="selectRating('dislike')" id="btnDislike" style="flex: 1; padding: 14px; border-radius: 10px; border: 2px solid var(--border-color); background: var(--bg-dark); cursor: pointer; font-size: 16px; transition: all 0.2s;">
+                        👎 Needs Improvement
+                    </button>
+                </div>
+                
+                <div id="feedbackDetails" style="display: none;">
+                    <textarea id="feedbackComment" rows="2" placeholder="Any comments? (optional)" 
+                        style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-primary); font-size: 13px; resize: vertical; margin-bottom: 8px; font-family: inherit;"></textarea>
+                    <textarea id="feedbackSuggestion" rows="2" placeholder="Suggestions for improvement? (optional)" 
+                        style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: var(--text-primary); font-size: 13px; resize: vertical; margin-bottom: 12px; font-family: inherit;"></textarea>
+                    <button onclick="submitFeedback()" id="submitFeedbackBtn" 
+                        style="background: var(--primary-green); color: white; border: none; padding: 10px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 14px;">Submit Feedback</button>
+                </div>
+            </div>
+            
+            <div id="feedbackThanks" style="display: none; text-align: center; padding: 20px;">
+                <div style="font-size: 32px; margin-bottom: 8px;">🎉</div>
+                <div style="font-weight: 700; font-size: 16px; color: var(--primary-green);">Thank you for your feedback!</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Your input helps us improve this tool.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedRating = null;
+        const FEEDBACK_API = '/api/feedback';
+        
+        function selectRating(rating) {
+            selectedRating = rating;
+            const btnLike = document.getElementById('btnLike');
+            const btnDislike = document.getElementById('btnDislike');
+            
+            btnLike.style.borderColor = rating === 'like' ? 'var(--success)' : 'var(--border-color)';
+            btnLike.style.background = rating === 'like' ? 'rgba(34,197,94,0.1)' : 'var(--bg-dark)';
+            btnDislike.style.borderColor = rating === 'dislike' ? 'var(--danger)' : 'var(--border-color)';
+            btnDislike.style.background = rating === 'dislike' ? 'rgba(239,68,68,0.1)' : 'var(--bg-dark)';
+            
+            document.getElementById('feedbackDetails').style.display = 'block';
+        }
+        
+        async function submitFeedback() {
+            if (!selectedRating) return;
+            
+            const btn = document.getElementById('submitFeedbackBtn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+            
+            try {
+                await fetch(`${FEEDBACK_API}/submit`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        page: 'overlap-analysis',
+                        rating: selectedRating,
+                        comment: document.getElementById('feedbackComment').value.trim(),
+                        suggestion: document.getElementById('feedbackSuggestion').value.trim()
+                    })
+                });
+                
+                document.getElementById('feedbackForm').style.display = 'none';
+                document.getElementById('feedbackThanks').style.display = 'block';
+            } catch (err) {
+                btn.disabled = false;
+                btn.textContent = 'Submit Feedback';
+                alert('Failed to submit feedback. Please try again.');
+            }
+        }
+    </script>
 
     <script>
         const API_BASE = '';
@@ -1465,7 +1547,7 @@
                 return `<div class="pie-chart-card">
                     <div class="chart-title" title="${shortName}">${shortName}</div>
                     <div class="chart-subtitle">${info.amc} • ${info.total_holdings} holdings</div>
-                    <div id="pieChart_${idx}" style="height: 250px;"></div>
+                    <div id="pieChart_${idx}" style="height: 300px;"></div>
                 </div>`;
             }).join('');
 
@@ -1479,18 +1561,21 @@
                     hole: 0.45,
                     marker: { colors: colors },
                     textinfo: 'label+percent',
-                    textposition: 'outside',
-                    textfont: { size: 10 },
-                    hoverinfo: 'label+value+percent'
+                    textposition: 'inside',
+                    insidetextorientation: 'radial',
+                    textfont: { size: 10, color: '#fff' },
+                    hoverinfo: 'label+value+percent',
+                    automargin: true
                 }];
 
                 const layout = {
-                    showlegend: false,
+                    showlegend: true,
+                    legend: { orientation: 'h', y: -0.15, x: 0.5, xanchor: 'center', font: { size: 9 } },
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     font: { color: '#212529', size: 10 },
-                    margin: { t: 10, b: 10, l: 10, r: 10 },
-                    height: 250
+                    margin: { t: 5, b: 40, l: 5, r: 5 },
+                    height: 300
                 };
 
                 Plotly.newPlot(`pieChart_${idx}`, data, layout, { responsive: true, displayModeBar: false });
@@ -1541,7 +1626,7 @@
                 x: funds,
                 y: funds,
                 type: 'heatmap',
-                colorscale: [[0, '#e8f5e9'], [0.3, '#f59e0b'], [0.6, '#ef4444'], [1, '#991b1b']],
+                colorscale: [[0, '#22c55e'], [0.15, '#86efac'], [0.3, '#fef08a'], [0.5, '#facc15'], [0.7, '#f97316'], [0.85, '#ef4444'], [1, '#991b1b']],
                 showscale: true,
                 colorbar: { title: 'Overlap %', titleside: 'right' },
                 hoverongaps: false,

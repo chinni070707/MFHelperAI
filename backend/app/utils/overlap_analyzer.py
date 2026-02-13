@@ -387,16 +387,22 @@ class OverlapAnalyzer:
             if len(fund_weights) >= 2:
                 weight_overlap_total += min(fund_weights.values())
         
-        if weight_overlap_total < 5:
+        # Normalize: with N funds, max possible overlap scales up
+        # Divide by (fund_count - 1) to normalize for number of funds
+        normalized_weight_overlap = weight_overlap_total / max(1, fund_count - 1)
+        
+        if normalized_weight_overlap < 5:
             f2_score = 100
-        elif weight_overlap_total < 15:
-            f2_score = 100 - ((weight_overlap_total - 5) / 10) * 30
-        elif weight_overlap_total < 25:
-            f2_score = 70 - ((weight_overlap_total - 15) / 10) * 30
-        elif weight_overlap_total < 35:
-            f2_score = 40 - ((weight_overlap_total - 25) / 10) * 25
+        elif normalized_weight_overlap < 12:
+            f2_score = 100 - ((normalized_weight_overlap - 5) / 7) * 25
+        elif normalized_weight_overlap < 20:
+            f2_score = 75 - ((normalized_weight_overlap - 12) / 8) * 25
+        elif normalized_weight_overlap < 30:
+            f2_score = 50 - ((normalized_weight_overlap - 20) / 10) * 25
+        elif normalized_weight_overlap < 45:
+            f2_score = 25 - ((normalized_weight_overlap - 30) / 15) * 15
         else:
-            f2_score = max(0, 15 - ((weight_overlap_total - 35) / 15) * 15)
+            f2_score = max(0, 10 - ((normalized_weight_overlap - 45) / 20) * 10)
         
         # Factor 3: Sector Concentration HHI (20%)
         combined_sector_weights = defaultdict(float)
@@ -486,7 +492,7 @@ class OverlapAnalyzer:
                 "weight_overlap": {
                     "score": round(f2_score, 1),
                     "weight": "30%",
-                    "detail": f"{weight_overlap_total:.1f}% weight-based overlap"
+                    "detail": f"{weight_overlap_total:.1f}% total ({normalized_weight_overlap:.1f}% normalized for {fund_count} funds)"
                 },
                 "sector_concentration": {
                     "score": round(f3_score, 1),

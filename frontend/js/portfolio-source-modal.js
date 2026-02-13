@@ -342,6 +342,13 @@ window.addEventListener('DOMContentLoaded', () => {
                           window.location.pathname.includes('fund-reallocator');
     
     if (isFeaturePage && typeof portfolioStorage !== 'undefined') {
+        // Don't show modal if user is authenticated (data lives server-side)
+        const authToken = localStorage.getItem('authToken');
+        const mode = localStorage.getItem('portfolioMode');
+        if (authToken || mode === 'authenticated') {
+            return; // Authenticated users load from database, no modal needed
+        }
+
         const hasData = portfolioStorage.getCurrentPortfolio() !== null;
         const urlParams = new URLSearchParams(window.location.search);
         const forceShow = urlParams.get('source') === 'select';

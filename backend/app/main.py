@@ -293,6 +293,10 @@ app.include_router(overlap.router, tags=["Enhanced Overlap Analysis"])
 from app.routes import admin
 app.include_router(admin.router, tags=["Admin"])
 
+# Import and register feedback routes
+from app.routes import feedback
+app.include_router(feedback.router, tags=["Feedback"])
+
 # Import and register health check routes
 from app.routes import health
 app.include_router(health.router, tags=["Health & Monitoring"])

@@ -1079,8 +1079,25 @@
                     // Try to load from database first for authenticated users
                     const loadedFromDB = await loadPortfolioFromDatabase();
                     if (loadedFromDB) {
+                        // Close portfolio source modal if it somehow appeared
+                        if (typeof portfolioSourceModal !== 'undefined') {
+                            portfolioSourceModal.close();
+                        }
                         return; // Successfully loaded from database
                     }
+                    
+                    // Retry once after a brief delay (in case of DB commit delay)
+                    console.log('🔄 First load failed, retrying after 1 second...');
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const retryLoaded = await loadPortfolioFromDatabase();
+                    if (retryLoaded) {
+                        console.log('✅ Retry successful!');
+                        if (typeof portfolioSourceModal !== 'undefined') {
+                            portfolioSourceModal.close();
+                        }
+                        return;
+                    }
+                    console.warn('⚠️ Database load failed even after retry');
                 }
                 
                 // Fallback: Try to load from portfolio storage
@@ -1196,11 +1213,16 @@
                 
                 const data = await response.json();
                 
+                console.log('📊 API Response from /api/portfolio/:', data);
+                
                 // Check if portfolio exists
                 if (!data.holdings || data.holdings.length === 0) {
-                    console.log('No portfolio data in database');
+                    console.log('⚠️ No portfolio data in database');
                     return false;
                 }
+                
+                console.log('📦 Raw holdings data:', data.holdings);
+                console.log('💰 Raw summary data:', data.summary);
                 
                 // Transform API data to portfolio format
                 portfolioData = {
@@ -1213,25 +1235,26 @@
                         fund_name: h.fund_name,
                         category: h.category || 'Others',
                         amc: h.amc || 'Unknown',
-                        invested: h.invested,
-                        current_value: h.current_value,
-                        gain: h.gain,
-                        return_pct: h.return_pct,
-                        units: h.units,
-                        avg_cost: h.invested / h.units || 0,
-                        current_nav: h.nav
+                        invested: h.invested || 0,
+                        current_value: h.current_value || 0,
+                        gain: h.gain || 0,
+                        return_pct: h.return_pct || 0,
+                        units: h.units || 0,
+                        avg_cost: h.units > 0 ? (h.invested / h.units) : 0,
+                        current_nav: h.nav || 0
                     })),
                     summary: {
-                        total_invested: data.summary.total_invested,
-                        total_current: data.summary.total_current,
-                        total_gain: data.summary.total_gain,
-                        return_pct: data.summary.return_pct
+                        total_invested: data.summary.total_invested || 0,
+                        total_current: data.summary.total_current || 0,
+                        total_gain: data.summary.total_gain || 0,
+                        return_pct: data.summary.return_pct || 0
                     },
                     uploadedAt: data.summary.last_updated,
                     uploadedFileName: data.source || 'CAS Upload'
                 };
                 
-                console.log('✅ Successfully loaded portfolio from database:', data.holdings.length, 'holdings');
+                console.log('✅ Transformed portfolioData:', portfolioData);
+                console.log('💵 Summary - Invested:', portfolioData.summary.total_invested, 'Current:', portfolioData.summary.total_current);
                 renderDashboard();
                 return true;
                 
@@ -1242,7 +1265,10 @@
         }
         
         function renderDashboard() {
+            console.log('🎨 renderDashboard called with portfolioData:', portfolioData);
+            
             if (!portfolioData || !portfolioData.holdings || portfolioData.holdings.length === 0) {
+                console.log('❌ No portfolio data to render');
                 document.getElementById('dashboardContent').style.display = 'none';
                 document.getElementById('noData').style.display = 'block';
                 return;
@@ -1250,6 +1276,18 @@
             
             const holdings = portfolioData.holdings;
             const summary = portfolioData.summary || calculateSummary(holdings);
+            
+            // Double-check summary values and recalculate if needed
+            if (!summary || summary.total_invested === 0) {
+                console.warn('⚠️ Summary is missing or zero, recalculating from holdings');
+                const recalculated = calculateSummary(holdings);
+                console.log('🔄 Recalculated summary:', recalculated);
+                Object.assign(summary, recalculated);
+            }
+            
+            console.log('📊 Rendering with', holdings.length, 'holdings');
+            console.log('💰 Final Summary:', summary);
+            console.log('💵 Total Invested:', summary.total_invested, 'Total Current:', summary.total_current);
             
             // Show last updated timestamp
             const uploadedAt = portfolioData.uploadedAt ? new Date(portfolioData.uploadedAt) : new Date();

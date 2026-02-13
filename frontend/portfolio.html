@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="/js/navbar-auth.js" defer></script>
     <script src="/js/toast.js" defer></script>
+    <script src="/js/portfolio-storage.js" defer></script>
     
     <style>
         * {
@@ -162,9 +163,13 @@
         }
 
         .option-card:hover {
-            transform: translateY(-8px);
             box-shadow: 0 20px 60px rgba(127, 192, 76, 0.15);
             border-color: var(--primary-green);
+        }
+
+        .option-card.active {
+            border-color: var(--primary-green);
+            box-shadow: 0 20px 60px rgba(127, 192, 76, 0.15);
         }
 
         .option-icon {
@@ -186,7 +191,7 @@
             color: var(--text-primary);
         }
 
-        .option-card p {
+        .option-card > p {
             color: var(--text-secondary);
             font-size: 1.1rem;
             line-height: 1.6;
@@ -233,6 +238,19 @@
             box-shadow: 0 10px 25px rgba(127, 192, 76, 0.3);
         }
 
+        .cta-button.outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 2px solid var(--gray-200);
+        }
+
+        .cta-button.outline:hover {
+            background: var(--gray-100);
+            color: var(--text-primary);
+            transform: none;
+            box-shadow: none;
+        }
+
         .badge {
             display: inline-block;
             background: #FEF3C7;
@@ -242,6 +260,295 @@
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 1rem;
+        }
+
+        /* Inline Action Sections */
+        .action-section {
+            display: none;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gray-100);
+            animation: slideDown 0.35s ease-out;
+        }
+
+        .action-section.visible {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .action-section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .action-section p.section-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--gray-200);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            background: var(--gray-50);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover,
+        .upload-zone.dragover {
+            border-color: var(--primary-green);
+            background: rgba(127, 192, 76, 0.05);
+        }
+
+        .upload-zone .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-zone .choose-btn {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone .choose-btn:hover {
+            background: var(--dark-green);
+        }
+
+        .upload-zone .format-hint {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .selected-file-info {
+            margin-top: 1rem;
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .password-section {
+            display: none;
+            margin-top: 1.25rem;
+            padding: 1.25rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .password-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .password-section input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            background: var(--white);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .password-section input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .password-section .hint {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .upload-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .upload-progress {
+            display: none;
+            margin-top: 1.25rem;
+        }
+
+        .progress-bar-track {
+            background: var(--gray-200);
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--primary-green), var(--dark-green));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+
+        .upload-status {
+            text-align: center;
+            margin-top: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Manual Entry Table */
+        .entry-table-wrapper {
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .entry-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .entry-table th {
+            background: var(--gray-50);
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .entry-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--gray-100);
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .entry-table select,
+        .entry-table input[type="text"],
+        .entry-table input[type="number"] {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: var(--white);
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .entry-table select:focus,
+        .entry-table input:focus {
+            border-color: var(--primary-green);
+        }
+
+        .entry-table .remove-btn {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+            color: #DC2626;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .entry-table .remove-btn:hover {
+            background: #DC2626;
+            color: var(--white);
+        }
+
+        .manual-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .manual-actions .cta-button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .add-row-btn {
+            background: transparent;
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-row-btn:hover {
+            background: rgba(127, 192, 76, 0.1);
+        }
+
+        /* Fund search dropdown */
+        .fund-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0.75rem;
+            right: 0.75rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 100;
+            margin-top: 4px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .fund-dropdown .fund-item {
+            padding: 0.6rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--gray-100);
+            transition: background 0.15s;
+        }
+
+        .fund-dropdown .fund-item:last-child {
+            border-bottom: none;
+        }
+
+        .fund-dropdown .fund-item:hover {
+            background: rgba(127, 192, 76, 0.1);
+        }
+
+        .fund-dropdown .fund-item .fund-category {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
         }
 
         /* Dashboard CTA */
@@ -275,6 +582,33 @@
             color: var(--primary-green);
             font-size: 1.2rem;
             padding: 1.25rem 3rem;
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            background: #ECFDF5;
+            border: 1px solid #A7F3D0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .success-message .success-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .success-message h4 {
+            color: #065F46;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            color: #047857;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         /* Responsive */
@@ -315,6 +649,18 @@
             .hamburger {
                 display: flex;
             }
+
+            .upload-zone {
+                padding: 1.5rem;
+            }
+
+            .manual-actions {
+                flex-direction: column;
+            }
+
+            .upload-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -349,36 +695,120 @@
         <!-- Options Grid -->
         <div class="options-grid">
             <!-- CAS Upload Option -->
-            <div class="option-card">
+            <div class="option-card" id="uploadCard">
                 <div class="badge">Recommended</div>
                 <div class="option-icon">🚀</div>
                 <h2>Quick Import</h2>
                 <p>Upload your Consolidated Account Statement (CAS) from CAMS or KFintech for instant portfolio import.</p>
-                <ul class="features-list">
+                <ul class="features-list" id="uploadFeatures">
                     <li>Instant import from CAS PDF/Excel</li>
                     <li>All holdings imported automatically</li>
                     <li>Historical transactions included</li>
                     <li>Supports password-protected files</li>
                 </ul>
-                <button class="cta-button" onclick="window.location.href='/dashboard.html'">
+                <button class="cta-button" id="uploadToggleBtn" onclick="toggleUploadSection()">
                     Upload CAS File →
                 </button>
+
+                <!-- Inline Upload Section -->
+                <div class="action-section" id="uploadSection">
+                    <h3>📄 Upload Your CAS File</h3>
+                    <p class="section-desc">Drag and drop your CAS file or click to browse. We support PDF and Excel formats.</p>
+
+                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                        <div class="upload-icon">📄</div>
+                        <input type="file" id="fileInput" accept=".pdf,.xlsx,.xls" style="display: none;" onchange="handleFileSelect(event)">
+                        <button class="choose-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">
+                            Choose File
+                        </button>
+                        <p class="format-hint">Supported formats: PDF, Excel (.xlsx, .xls)</p>
+                        <div class="selected-file-info" id="selectedFileName"></div>
+                    </div>
+
+                    <!-- Password Field for PDF -->
+                    <div class="password-section" id="pdfPasswordSection">
+                        <label>🔒 PDF Password (if protected)</label>
+                        <input type="password" id="pdfPassword" placeholder="Enter PDF password">
+                        <p class="hint">Most CAS PDFs use your PAN as the password. Leave blank if not protected.</p>
+                    </div>
+
+                    <!-- Upload Progress -->
+                    <div class="upload-progress" id="uploadProgress">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progressBar"></div>
+                        </div>
+                        <p class="upload-status" id="uploadStatus"></p>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="uploadSuccess">
+                        <div class="success-icon">✅</div>
+                        <h4>Portfolio Imported Successfully!</h4>
+                        <p>Your holdings have been imported. Head to the dashboard to see your analysis.</p>
+                        <a href="/dashboard.html" class="cta-button">View Dashboard →</a>
+                    </div>
+
+                    <div class="upload-actions" id="uploadActions">
+                        <button class="cta-button" id="uploadButton" onclick="uploadFile()" disabled>
+                            Upload & Analyze
+                        </button>
+                        <button class="cta-button outline" onclick="toggleUploadSection()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- Manual Entry Option -->
-            <div class="option-card">
+            <div class="option-card" id="manualCard">
                 <div class="option-icon">📝</div>
                 <h2>Manual Entry</h2>
                 <p>Enter your mutual fund holdings manually, one fund at a time. Perfect for smaller portfolios.</p>
-                <ul class="features-list">
+                <ul class="features-list" id="manualFeatures">
                     <li>Add funds one by one</li>
                     <li>Search from 5000+ funds</li>
                     <li>Flexible data entry</li>
                     <li>Full control over details</li>
                 </ul>
-                <button class="cta-button" onclick="window.location.href='/dashboard.html'">
+                <button class="cta-button" id="manualToggleBtn" onclick="toggleManualSection()">
                     Enter Manually →
                 </button>
+
+                <!-- Inline Manual Entry Section -->
+                <div class="action-section" id="manualSection">
+                    <h3>✏️ Enter Your Holdings</h3>
+                    <p class="section-desc">Select the AMC, search for your fund, and enter the invested amount.</p>
+
+                    <div class="entry-table-wrapper">
+                        <table class="entry-table" id="manualEntryTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 25%;">AMC / Fund House</th>
+                                    <th style="width: 45%;">Scheme Name</th>
+                                    <th style="width: 20%;">Amount Invested (₹)</th>
+                                    <th style="width: 10%;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="entryTableBody">
+                                <!-- Rows added by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="manualSuccess">
+                        <div class="success-icon">✅</div>
+                        <h4>Portfolio Saved Successfully!</h4>
+                        <p>Your holdings have been saved. View your portfolio analysis on the dashboard.</p>
+                        <a href="/dashboard.html" class="cta-button">View Dashboard →</a>
+                    </div>
+
+                    <div class="manual-actions" id="manualActions">
+                        <button class="add-row-btn" onclick="addManualEntryRow()">+ Add Another Fund</button>
+                        <button class="cta-button" onclick="saveManualEntries()">💾 Save Portfolio</button>
+                        <button class="cta-button outline" onclick="toggleManualSection()">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -412,7 +842,493 @@
     </main>
 
     <script>
-        // Toggle mobile menu
+        // ========== Toggle Sections ==========
+        function toggleUploadSection() {
+            const section = document.getElementById('uploadSection');
+            const card = document.getElementById('uploadCard');
+            const btn = document.getElementById('uploadToggleBtn');
+            const features = document.getElementById('uploadFeatures');
+            const isVisible = section.classList.contains('visible');
+
+            // Close manual section if open
+            closeManualSection();
+
+            if (isVisible) {
+                section.classList.remove('visible');
+                card.classList.remove('active');
+                btn.textContent = 'Upload CAS File →';
+                features.style.display = '';
+            } else {
+                section.classList.add('visible');
+                card.classList.add('active');
+                btn.textContent = 'Close';
+                features.style.display = 'none';
+                section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function toggleManualSection() {
+            const section = document.getElementById('manualSection');
+            const card = document.getElementById('manualCard');
+            const btn = document.getElementById('manualToggleBtn');
+            const features = document.getElementById('manualFeatures');
+            const isVisible = section.classList.contains('visible');
+
+            // Close upload section if open
+            closeUploadSection();
+
+            if (isVisible) {
+                section.classList.remove('visible');
+                card.classList.remove('active');
+                btn.textContent = 'Enter Manually →';
+                features.style.display = '';
+            } else {
+                section.classList.add('visible');
+                card.classList.add('active');
+                btn.textContent = 'Close';
+                features.style.display = 'none';
+                // Load AMC list and add initial rows
+                initManualEntry();
+                section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function closeUploadSection() {
+            const section = document.getElementById('uploadSection');
+            const card = document.getElementById('uploadCard');
+            const btn = document.getElementById('uploadToggleBtn');
+            const features = document.getElementById('uploadFeatures');
+            section.classList.remove('visible');
+            card.classList.remove('active');
+            btn.textContent = 'Upload CAS File →';
+            features.style.display = '';
+        }
+
+        function closeManualSection() {
+            const section = document.getElementById('manualSection');
+            const card = document.getElementById('manualCard');
+            const btn = document.getElementById('manualToggleBtn');
+            const features = document.getElementById('manualFeatures');
+            section.classList.remove('visible');
+            card.classList.remove('active');
+            btn.textContent = 'Enter Manually →';
+            features.style.display = '';
+        }
+
+        // ========== CAS Upload ==========
+        let selectedFile = null;
+
+        // Drag and drop support
+        const uploadZone = document.getElementById('uploadZone');
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        });
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragover');
+        });
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                document.getElementById('fileInput').files = e.dataTransfer.files;
+                handleFileSelect({ target: { files: [file] } });
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                selectedFile = file;
+                document.getElementById('selectedFileName').textContent = '📎 Selected: ' + file.name;
+                document.getElementById('uploadButton').disabled = false;
+
+                if (file.name.toLowerCase().endsWith('.pdf')) {
+                    document.getElementById('pdfPasswordSection').style.display = 'block';
+                } else {
+                    document.getElementById('pdfPasswordSection').style.display = 'none';
+                }
+            }
+        }
+
+        async function uploadFile() {
+            if (!selectedFile) return;
+
+            const uploadButton = document.getElementById('uploadButton');
+            const progressDiv = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const statusText = document.getElementById('uploadStatus');
+
+            try {
+                uploadButton.disabled = true;
+                progressDiv.style.display = 'block';
+                statusText.textContent = 'Uploading...';
+                statusText.style.color = '';
+                progressBar.style.width = '30%';
+
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+
+                if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
+                    const password = document.getElementById('pdfPassword').value;
+                    if (password) {
+                        formData.append('password', password);
+                    }
+                }
+
+                const token = localStorage.getItem('authToken');
+                const response = await fetch('/api/upload/cas', {
+                    method: 'POST',
+                    headers: token ? { 'Authorization': 'Bearer ' + token } : {},
+                    body: formData
+                });
+
+                progressBar.style.width = '70%';
+                statusText.textContent = 'Processing...';
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    let errorMsg = error.detail || 'Upload failed';
+                    if (errorMsg.includes('PAN as password') || errorMsg.includes('password protected')) {
+                        errorMsg = 'PDF is password protected. Please enter the PDF password above.';
+                    }
+                    throw new Error(errorMsg);
+                }
+
+                progressBar.style.width = '100%';
+                statusText.textContent = 'Import complete!';
+
+                const uploadResult = await response.json();
+                console.log('📤 CAS Upload Result:', uploadResult);
+                console.log('🔑 Auth token present:', !!token);
+
+                // Mark as authenticated so dashboard loads from DB
+                if (token) {
+                    console.log('✅ Authenticated user - setting portfolioMode to authenticated');
+                    localStorage.setItem('portfolioMode', 'authenticated');
+                } else if (uploadResult.holdings && uploadResult.holdings.length > 0) {
+                    console.log('👤 Guest user - storing', uploadResult.holdings.length, 'holdings locally');
+                    // Guest user - store parsed data locally so dashboard can display it
+                    const portfolioData = {
+                        holdings: uploadResult.holdings.map(h => ({
+                            scheme_name: h.fund_name || h.scheme_name,
+                            fund_name: h.fund_name || h.scheme_name,
+                            category: h.category || 'Others',
+                            amc: h.amc || 'Unknown',
+                            invested: h.invested || 0,
+                            current_value: h.current_value || 0,
+                            gain: (h.current_value || 0) - (h.invested || 0),
+                            return_pct: h.invested > 0 ? (((h.current_value || 0) - h.invested) / h.invested * 100) : 0,
+                            units: h.units || 0,
+                            avg_cost: h.units > 0 ? (h.invested / h.units) : 0,
+                            current_nav: h.nav || 0
+                        })),
+                        source: 'cas_upload',
+                        uploadedAt: new Date().toISOString(),
+                        uploadedFileName: selectedFile.name
+                    };
+                    console.log('💾 Saving portfolio data:', portfolioData);
+                    localStorage.setItem('portfolioData', JSON.stringify(portfolioData));
+                    if (typeof portfolioStorage !== 'undefined') {
+                        console.log('💾 Also saving via portfolioStorage.saveGuestData');
+                        portfolioStorage.saveGuestData(portfolioData);
+                    }
+                } else {
+                    console.warn('⚠️ No holdings found in upload result');
+                }
+
+                // Show success state
+                document.getElementById('uploadActions').style.display = 'none';
+                document.getElementById('uploadSuccess').style.display = 'block';
+                document.getElementById('dashboardCta').classList.add('show');
+
+            } catch (error) {
+                statusText.textContent = '❌ ' + error.message;
+                statusText.style.color = '#DC2626';
+                uploadButton.disabled = false;
+                progressBar.style.width = '0%';
+            }
+        }
+
+        // ========== Manual Entry ==========
+        let amcList = [];
+        let fundsByAmc = {};
+        let manualInitialized = false;
+
+        async function initManualEntry() {
+            if (manualInitialized) return;
+            manualInitialized = true;
+
+            await loadAmcList();
+
+            const tbody = document.getElementById('entryTableBody');
+            if (tbody.children.length === 0) {
+                for (let i = 0; i < 3; i++) {
+                    addManualEntryRow();
+                }
+            }
+        }
+
+        async function loadAmcList() {
+            try {
+                const response = await fetch('/api/funds/amc-list');
+                const data = await response.json();
+                if (data.success) {
+                    amcList = data.amcs || [];
+                }
+            } catch (error) {
+                console.error('Failed to load AMC list:', error);
+                amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'Aditya Birla Sun Life', 'Nippon India', 'UTI', 'DSP', 'Franklin Templeton', 'Mirae Asset', 'Parag Parikh', 'Motilal Oswal', 'Edelweiss', 'PGIM', 'Tata', 'Invesco', 'Sundaram', 'Quantum', 'Quant', 'Mahindra Manulife', 'HSBC', 'Baroda BNP Paribas', 'LIC', 'Canara Robeco'];
+            }
+        }
+
+        function addManualEntryRow() {
+            const tbody = document.getElementById('entryTableBody');
+            const row = document.createElement('tr');
+
+            if (amcList.length === 0) {
+                amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'DSP', 'Nippon India', 'UTI', 'Mirae Asset', 'Parag Parikh'];
+            }
+
+            const amcOptions = amcList.map(amc => '<option value="' + amc + '">' + amc + '</option>').join('');
+
+            row.innerHTML = 
+                '<td>' +
+                    '<select class="amc-select" onchange="onAmcChange(this)" required>' +
+                        '<option value="">Select AMC...</option>' +
+                        amcOptions +
+                    '</select>' +
+                '</td>' +
+                '<td style="position: relative;">' +
+                    '<input type="text" class="fund-search" placeholder="Select AMC first" ' +
+                           'oninput="searchFunds(this)" ' +
+                           'onfocus="showFundDropdown(this)" ' +
+                           'data-fund-id="" ' +
+                           'disabled required>' +
+                    '<div class="fund-dropdown"></div>' +
+                '</td>' +
+                '<td><input type="number" step="0.01" min="0" placeholder="10000" required></td>' +
+                '<td><button class="remove-btn" onclick="removeRow(this)">×</button></td>';
+
+            tbody.appendChild(row);
+        }
+
+        function removeRow(button) {
+            const row = button.closest('tr');
+            const tbody = document.getElementById('entryTableBody');
+            if (tbody.children.length > 1) {
+                row.remove();
+            }
+        }
+
+        function onAmcChange(select) {
+            const row = select.closest('tr');
+            const fundInput = row.querySelector('.fund-search');
+            const amc = select.value;
+
+            fundInput.value = '';
+            fundInput.setAttribute('data-fund-id', '');
+            fundInput.disabled = !amc;
+
+            if (amc) {
+                fundInput.placeholder = 'Search ' + amc + ' funds...';
+                prefetchFundsByAmc(amc);
+            } else {
+                fundInput.placeholder = 'Select AMC first';
+            }
+        }
+
+        async function prefetchFundsByAmc(amc) {
+            if (fundsByAmc[amc]) return;
+            try {
+                const response = await fetch('/api/funds/list?amc=' + encodeURIComponent(amc) + '&limit=100');
+                const data = await response.json();
+                if (data.success && data.funds) {
+                    fundsByAmc[amc] = data.funds;
+                }
+            } catch (error) {
+                console.error('Failed to prefetch funds:', error);
+            }
+        }
+
+        let fundSearchTimeout = null;
+
+        function searchFunds(input) {
+            clearTimeout(fundSearchTimeout);
+            const searchTerm = input.value.trim();
+            const row = input.closest('tr');
+            const selectedAmc = row.querySelector('.amc-select').value;
+            const dropdown = row.querySelector('.fund-dropdown');
+
+            if (searchTerm.length < 2) {
+                showFundDropdown(input);
+                return;
+            }
+
+            fundSearchTimeout = setTimeout(async () => {
+                try {
+                    const response = await fetch('/api/funds/list?search=' + encodeURIComponent(searchTerm) + '&amc=' + encodeURIComponent(selectedAmc) + '&dropdown=true&limit=20');
+                    const data = await response.json();
+                    if (data.success && data.funds) {
+                        showFundResults(data.funds, dropdown, input);
+                    }
+                } catch (error) {
+                    console.error('Fund search failed:', error);
+                }
+            }, 300);
+        }
+
+        function showFundDropdown(input) {
+            const row = input.closest('tr');
+            const selectedAmc = row.querySelector('.amc-select').value;
+            const dropdown = row.querySelector('.fund-dropdown');
+
+            if (selectedAmc && fundsByAmc[selectedAmc]) {
+                showFundResults(fundsByAmc[selectedAmc], dropdown, input);
+            }
+        }
+
+        function showFundResults(funds, dropdown, input) {
+            if (!funds || funds.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            dropdown.innerHTML = funds.map(f => {
+                const name = f.scheme_name || f.name || '';
+                const cat = f.category || '';
+                const val = f.value || f.id || '';
+                return '<div class="fund-item" onclick="selectFund(this, \'' + val.replace(/'/g, "\\'") + '\')">' +
+                    '<div>' + name + '</div>' +
+                    (cat ? '<div class="fund-category">' + cat + '</div>' : '') +
+                '</div>';
+            }).join('');
+
+            dropdown.style.display = 'block';
+
+            // Store reference for selection
+            dropdown._input = input;
+        }
+
+        function selectFund(item, fundId) {
+            const dropdown = item.closest('.fund-dropdown');
+            const input = dropdown._input;
+            input.value = item.querySelector('div').textContent;
+            input.setAttribute('data-fund-id', fundId);
+            dropdown.style.display = 'none';
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.fund-search') && !e.target.closest('.fund-dropdown')) {
+                document.querySelectorAll('.fund-dropdown').forEach(d => d.style.display = 'none');
+            }
+        });
+
+        async function saveManualEntries() {
+            const tbody = document.getElementById('entryTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            const holdings = [];
+
+            for (const row of rows) {
+                const amcSelect = row.querySelector('.amc-select');
+                const fundInput = row.querySelector('.fund-search');
+                const amountInput = row.querySelector('input[type="number"]');
+
+                const amc = amcSelect ? amcSelect.value.trim() : '';
+                const schemeName = fundInput.value.trim();
+                const fundId = fundInput.getAttribute('data-fund-id');
+                const amount = parseFloat(amountInput.value);
+
+                if (!amc && !schemeName && !amount) continue;
+
+                if (!amc || !schemeName || !amount || amount <= 0) {
+                    if (typeof showToast === 'function') {
+                        showToast('Please fill all fields with valid values (AMC, Scheme Name, and Amount)', 'error');
+                    } else {
+                        alert('Please fill all fields with valid values (AMC, Scheme Name, and Amount)');
+                    }
+                    return;
+                }
+
+                holdings.push({
+                    amc: amc,
+                    scheme_name: schemeName,
+                    fund_id: fundId || null,
+                    invested_amount: amount
+                });
+            }
+
+            if (holdings.length === 0) {
+                if (typeof showToast === 'function') {
+                    showToast('Please add at least one fund', 'error');
+                } else {
+                    alert('Please add at least one fund');
+                }
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('authToken');
+
+                if (!token) {
+                    // Save as guest mode using portfolioStorage
+                    if (typeof portfolioStorage !== 'undefined') {
+                        const portfolioData = portfolioStorage.createPortfolioStructure(holdings, {
+                            source: 'manual_entry',
+                            entryDate: new Date().toISOString()
+                        });
+
+                        if (portfolioStorage.saveGuestData(portfolioData)) {
+                            document.getElementById('manualActions').style.display = 'none';
+                            document.getElementById('manualSuccess').style.display = 'block';
+                            document.getElementById('dashboardCta').classList.add('show');
+                            return;
+                        }
+                    }
+
+                    // Fallback: save to localStorage directly
+                    localStorage.setItem('portfolioData', JSON.stringify({
+                        holdings: holdings,
+                        source: 'manual_entry',
+                        date: new Date().toISOString()
+                    }));
+                    document.getElementById('manualActions').style.display = 'none';
+                    document.getElementById('manualSuccess').style.display = 'block';
+                    document.getElementById('dashboardCta').classList.add('show');
+                    return;
+                }
+
+                // Save to backend for authenticated users
+                const response = await fetch('/api/portfolio/manual', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ holdings })
+                });
+
+                if (!response.ok) throw new Error('Failed to save portfolio');
+
+                // Mark as authenticated so dashboard loads from DB
+                localStorage.setItem('portfolioMode', 'authenticated');
+
+                document.getElementById('manualActions').style.display = 'none';
+                document.getElementById('manualSuccess').style.display = 'block';
+                document.getElementById('dashboardCta').classList.add('show');
+
+            } catch (error) {
+                if (typeof showToast === 'function') {
+                    showToast('Error saving portfolio: ' + error.message, 'error');
+                } else {
+                    alert('Error saving portfolio: ' + error.message);
+                }
+            }
+        }
+
+        // ========== General ==========
         function toggleMenu() {
             const menu = document.querySelector('.nav-menu');
             menu.classList.toggle('active');
@@ -437,7 +1353,7 @@
         document.addEventListener('click', (e) => {
             const menu = document.querySelector('.nav-menu');
             const hamburger = document.querySelector('.hamburger');
-            
+
             if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
                 menu.classList.remove('active');
             }

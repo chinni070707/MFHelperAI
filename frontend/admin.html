@@ -383,6 +383,7 @@
                 renderStats(data);
                 await fetchTimeline();
                 await fetchHoldingsDataSummary();
+                await fetchFeedback();
                 
                 document.getElementById('loadingMessage').style.display = 'none';
                 
@@ -737,6 +738,81 @@
                 row.style.display = 'none';
                 arrow.textContent = '▶';
             }
+        }
+
+        // ── Feedback Section ──
+        async function fetchFeedback() {
+            try {
+                const res = await fetch(`${API_BASE}/api/feedback/list?api_key=${apiKey}`);
+                if (!res.ok) return;
+                const data = await res.json();
+                renderFeedback(data);
+            } catch (e) {
+                console.error('Failed to fetch feedback:', e);
+            }
+        }
+
+        function renderFeedback(data) {
+            // Add feedback section if not exists
+            let section = document.getElementById('feedbackSection');
+            if (!section) {
+                section = document.createElement('div');
+                section.id = 'feedbackSection';
+                section.className = 'card';
+                section.style = 'margin-top: 20px;';
+                document.querySelector('.container').appendChild(section);
+            }
+
+            const ratingBar = data.total > 0
+                ? `<div style="display:flex; height:20px; border-radius:10px; overflow:hidden; margin:10px 0;">
+                    <div style="width:${(data.likes/data.total)*100}%; background:#22c55e;" title="${data.likes} likes"></div>
+                    <div style="width:${(data.dislikes/data.total)*100}%; background:#ef4444;" title="${data.dislikes} dislikes"></div>
+                   </div>`
+                : '<div style="color:#9ca3af; padding:10px;">No feedback yet</div>';
+
+            const rows = data.entries.slice(0, 20).map((e, i) => {
+                const icon = e.rating === 'like' ? '👍' : '👎';
+                const color = e.rating === 'like' ? '#22c55e' : '#ef4444';
+                const date = new Date(e.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                return `<tr>
+                    <td style="padding:8px 12px; font-size:13px;">${i+1}</td>
+                    <td style="padding:8px 12px; font-size:13px; color:${color}; font-weight:600;">${icon} ${e.rating}</td>
+                    <td style="padding:8px 12px; font-size:13px;">${e.page}</td>
+                    <td style="padding:8px 12px; font-size:13px;">${e.comment || '<span style="color:#9ca3af;">—</span>'}</td>
+                    <td style="padding:8px 12px; font-size:13px;">${e.suggestion || '<span style="color:#9ca3af;">—</span>'}</td>
+                    <td style="padding:8px 12px; font-size:12px; color:#6b7280;">${date}</td>
+                </tr>`;
+            }).join('');
+
+            section.innerHTML = `
+                <h2 style="color:#667eea; margin-bottom:15px;">💬 User Feedback</h2>
+                <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-bottom:20px;">
+                    <div style="background:#f0fdf4; padding:15px; border-radius:8px; text-align:center;">
+                        <div style="font-size:24px; font-weight:800; color:#22c55e;">${data.likes}</div>
+                        <div style="font-size:12px; color:#6b7280; margin-top:4px;">👍 Likes</div>
+                    </div>
+                    <div style="background:#fef2f2; padding:15px; border-radius:8px; text-align:center;">
+                        <div style="font-size:24px; font-weight:800; color:#ef4444;">${data.dislikes}</div>
+                        <div style="font-size:12px; color:#6b7280; margin-top:4px;">👎 Dislikes</div>
+                    </div>
+                    <div style="background:#eff6ff; padding:15px; border-radius:8px; text-align:center;">
+                        <div style="font-size:24px; font-weight:800; color:#3b82f6;">${data.total}</div>
+                        <div style="font-size:12px; color:#6b7280; margin-top:4px;">Total Feedback</div>
+                    </div>
+                </div>
+                ${ratingBar}
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead><tr>
+                        <th style="padding:10px 12px; text-align:left; font-size:12px; border-bottom:2px solid #e5e7eb;">#</th>
+                        <th style="padding:10px 12px; text-align:left; font-size:12px; border-bottom:2px solid #e5e7eb;">Rating</th>
+                        <th style="padding:10px 12px; text-align:left; font-size:12px; border-bottom:2px solid #e5e7eb;">Page</th>
+                        <th style="padding:10px 12px; text-align:left; font-size:12px; border-bottom:2px solid #e5e7eb;">Comment</th>
+                        <th style="padding:10px 12px; text-align:left; font-size:12px; border-bottom:2px solid #e5e7eb;">Suggestion</th>
+                        <th style="padding:10px 12px; text-align:left; font-size:12px; border-bottom:2px solid #e5e7eb;">Date</th>
+                    </tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
         }
     </script>
     
