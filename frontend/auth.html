@@ -984,11 +984,11 @@
                         
                         try {
                             sessionStorage.setItem('show_email_verification_reminder', 'true');
-                            window.location.href = '/dashboard.html';
+                            redirectAfterAuth();
                         } catch (redirectError) {
                             console.error('Redirect failed:', redirectError);
-                            alert('Account created! Check your email to verify. Click OK to go to dashboard.');
-                            window.location.href = '/dashboard.html';
+                            alert('Account created! Check your email to verify. Click OK to continue.');
+                            redirectAfterAuth();
                         }
                     } else {
                         showToast('Account created! Redirecting...', 'success');
@@ -997,8 +997,8 @@
                             redirectAfterAuth();
                         } catch (redirectError) {
                             console.error('Redirect failed:', redirectError);
-                            alert('Account created successfully! Click OK to go to dashboard.');
-                            window.location.href = '/dashboard.html';
+                            alert('Account created successfully! Click OK to continue.');
+                            redirectAfterAuth();
                         }
                     }
                 } else {

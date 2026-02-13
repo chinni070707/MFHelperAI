@@ -1547,7 +1547,7 @@
                 return `<div class="pie-chart-card">
                     <div class="chart-title" title="${shortName}">${shortName}</div>
                     <div class="chart-subtitle">${info.amc} • ${info.total_holdings} holdings</div>
-                    <div id="pieChart_${idx}" style="height: 300px;"></div>
+                    <div id="pieChart_${idx}" style="height: 320px;"></div>
                 </div>`;
             }).join('');
 
@@ -1560,22 +1560,28 @@
                     type: 'pie',
                     hole: 0.45,
                     marker: { colors: colors },
-                    textinfo: 'label+percent',
+                    textinfo: 'percent',
                     textposition: 'inside',
-                    insidetextorientation: 'radial',
                     textfont: { size: 10, color: '#fff' },
                     hoverinfo: 'label+value+percent',
-                    automargin: true
+                    sort: false
                 }];
 
                 const layout = {
                     showlegend: true,
-                    legend: { orientation: 'h', y: -0.15, x: 0.5, xanchor: 'center', font: { size: 9 } },
+                    legend: {
+                        orientation: 'h',
+                        y: -0.05,
+                        x: 0.5,
+                        xanchor: 'center',
+                        font: { size: 9 },
+                        traceorder: 'normal'
+                    },
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     font: { color: '#212529', size: 10 },
-                    margin: { t: 5, b: 40, l: 5, r: 5 },
-                    height: 300
+                    margin: { t: 0, b: 80, l: 0, r: 0 },
+                    height: 320
                 };
 
                 Plotly.newPlot(`pieChart_${idx}`, data, layout, { responsive: true, displayModeBar: false });
