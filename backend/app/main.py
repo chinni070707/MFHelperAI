@@ -173,7 +173,8 @@ def seed_demo_portfolio_if_empty():
     finally:
         db.close()
 
-seed_demo_portfolio_if_empty()
+# Don't seed here - it blocks startup!
+# seed_demo_portfolio_if_empty()
 
 app = FastAPI(
     title="MFHelper API",
@@ -182,6 +183,15 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc"
 )
+
+# Seed demo data on startup (non-blocking)
+@app.on_event("startup")
+async def startup_event():
+    """Initialize app on startup"""
+    import asyncio
+    # Run seeding in background to not block startup
+    asyncio.create_task(asyncio.to_thread(seed_demo_portfolio_if_empty))
+    logger.info("App startup complete, demo seeding running in background")
 
 # Add rate limiter state
 app.state.limiter = limiter
