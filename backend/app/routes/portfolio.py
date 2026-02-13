@@ -24,11 +24,24 @@ async def get_portfolio(
 ):
     """Get user's latest portfolio"""
     logger.info(f"Fetching portfolio for user: {current_user.email}")
-    
-    # Get latest portfolio
-    portfolio = db.query(Portfolio).filter(
-        Portfolio.user_id == current_user.id
-    ).order_by(Portfolio.snapshot_date.desc()).first()
+
+    # Get latest portfolio — prefer cas_pdf (most authoritative) over excel over manual_entry.
+    # A CAS upload is an official statement and should always win over manual entries
+    # even if the manual entry has a more recent snapshot_date.
+    portfolio = (
+        db.query(Portfolio)
+        .filter(Portfolio.user_id == current_user.id, Portfolio.source == "cas_pdf")
+        .order_by(Portfolio.snapshot_date.desc())
+        .first()
+        or db.query(Portfolio)
+        .filter(Portfolio.user_id == current_user.id, Portfolio.source == "excel")
+        .order_by(Portfolio.snapshot_date.desc())
+        .first()
+        or db.query(Portfolio)
+        .filter(Portfolio.user_id == current_user.id)
+        .order_by(Portfolio.snapshot_date.desc())
+        .first()
+    )
     
     if not portfolio:
         logger.warning(f"No portfolio found for user: {current_user.email}")
@@ -474,10 +487,21 @@ async def get_latest_portfolio_id(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get user's most recent portfolio ID"""
-    portfolio = db.query(Portfolio).filter(
-        Portfolio.user_id == current_user.id
-    ).order_by(Portfolio.created_at.desc()).first()
+    """Get user's most recent portfolio ID — prefers cas_pdf over excel over manual_entry"""
+    portfolio = (
+        db.query(Portfolio)
+        .filter(Portfolio.user_id == current_user.id, Portfolio.source == "cas_pdf")
+        .order_by(Portfolio.snapshot_date.desc())
+        .first()
+        or db.query(Portfolio)
+        .filter(Portfolio.user_id == current_user.id, Portfolio.source == "excel")
+        .order_by(Portfolio.snapshot_date.desc())
+        .first()
+        or db.query(Portfolio)
+        .filter(Portfolio.user_id == current_user.id)
+        .order_by(Portfolio.snapshot_date.desc())
+        .first()
+    )
     
     if not portfolio:
         raise HTTPException(status_code=404, detail="No portfolios found")
