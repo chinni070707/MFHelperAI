@@ -10,27 +10,50 @@
         const authToken = localStorage.getItem('authToken');
         const userInfoStr = localStorage.getItem('userInfo');
         
+        console.log('[navbar-auth] Checking auth status:', { 
+            hasToken: !!authToken, 
+            hasUserInfo: !!userInfoStr,
+            userInfo: userInfoStr 
+        });
+        
         // Find all nav menus on the page
         const navMenus = document.querySelectorAll('.nav-menu');
         
+        console.log('[navbar-auth] Found nav menus:', navMenus.length);
+        
         navMenus.forEach(navMenu => {
-            // Find the Sign In and Get Started items
+            // Find the Sign In and Get Started items - more flexible selectors
             const signInItem = navMenu.querySelector('a[href="/login.html"], a[href="/auth.html"]')?.parentElement;
-            const getStartedItem = navMenu.querySelector('a[href="/signup.html"], a[href*="/auth.html?tab=signup"]')?.parentElement;
+            const getStartedItem = navMenu.querySelector('a[href="/signup.html"], a[href*="/auth.html?tab=signup"], .btn-primary[href*="/auth.html"]')?.parentElement;
+            
+            console.log('[navbar-auth] Found elements:', { 
+                signInItem: !!signInItem, 
+                getStartedItem: !!getStartedItem,
+                getStartedElement: navMenu.querySelector('a[href="/signup.html"], a[href*="/auth.html?tab=signup"], .btn-primary[href*="/auth.html"]')
+            });
             
             if (authToken && userInfoStr) {
                 try {
                     const userInfo = JSON.parse(userInfoStr);
-                    const userName = userInfo.full_name || userInfo.email.split('@')[0];
+                    const userName = userInfo.full_name || userInfo.email?.split('@')[0] || 'User';
+                    
+                    console.log('[navbar-auth] User logged in:', userName);
                     
                     // Hide Sign In and Get Started
-                    if (signInItem) signInItem.style.display = 'none';
-                    if (getStartedItem) getStartedItem.style.display = 'none';
+                    if (signInItem) {
+                        signInItem.style.display = 'none';
+                        console.log('[navbar-auth] Hid sign in item');
+                    }
+                    if (getStartedItem) {
+                        getStartedItem.style.display = 'none';
+                        console.log('[navbar-auth] Hid get started item');
+                    }
                     
                     // Check if user dropdown already exists
                     let userDropdownItem = navMenu.querySelector('.user-dropdown-item');
                     
                     if (!userDropdownItem) {
+                        console.log('[navbar-auth] Creating user dropdown');
                         // Create user dropdown
                         userDropdownItem = document.createElement('li');
                         userDropdownItem.className = 'user-dropdown-item';
@@ -61,11 +84,15 @@
                             </div>
                         `;
                         navMenu.appendChild(userDropdownItem);
+                        console.log('[navbar-auth] User dropdown created and appended');
+                    } else {
+                        console.log('[navbar-auth] User dropdown already exists');
                     }
                 } catch (e) {
-                    console.error('Error parsing user info:', e);
+                    console.error('[navbar-auth] Error parsing user info:', e);
                 }
             } else {
+                console.log('[navbar-auth] User not logged in');
                 // User not logged in - show Sign In and Get Started
                 if (signInItem) signInItem.style.display = '';
                 if (getStartedItem) getStartedItem.style.display = '';
@@ -255,16 +282,35 @@
     `;
     document.head.appendChild(style);
 
-    // Update navbar on page load
-    document.addEventListener('DOMContentLoaded', updateNavbarAuth);
+    // Update navbar on page load - multiple triggers for reliability
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateNavbarAuth);
+    } else {
+        // DOM already loaded, run immediately
+        updateNavbarAuth();
+    }
+    
+    // Also run after full page load
+    window.addEventListener('load', updateNavbarAuth);
+    
+    // Small delay to ensure everything is ready
+    setTimeout(updateNavbarAuth, 100);
     
     // Update navbar when storage changes (e.g., login in another tab)
     window.addEventListener('storage', function(e) {
         if (e.key === 'authToken' || e.key === 'userInfo') {
+            console.log('[navbar-auth] Storage changed, updating navbar');
             updateNavbarAuth();
         }
     });
 
     // Expose function for manual updates
     window.updateNavbarAuth = updateNavbarAuth;
+    
+    // Debug helper
+    console.log('[navbar-auth] Script loaded. Initial auth check:', {
+        hasToken: !!localStorage.getItem('authToken'),
+        hasUserInfo: !!localStorage.getItem('userInfo'),
+        readyState: document.readyState
+    });
 })();

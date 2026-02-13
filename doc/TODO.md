@@ -9,6 +9,8 @@ Recent progress:
 - [x] Created scraper framework for AMC websites
 - [x] Generated comprehensive AMC scraping documentation
 
+look at amc parsing guide for details. Next steps:
+
 Pending (to be done from laptop with Chrome extensions):
 - [ ] **HDFC Mutual Fund** - Top 5 funds holdings extraction
   - HDFC Flexi Cap Fund
