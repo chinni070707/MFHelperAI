@@ -1,0 +1,38 @@
+{
+  "test_date": "2026-02-12T21:17:35.078766",
+  "results": {
+    "HDFC": {
+      "success": true,
+      "files_found": 1,
+      "files": [
+        {
+          "text": "MOA & AOA",
+          "url": "https://files.hdfcfund.com/s3fs-public/2025-01/HDFC%20AMC%20Final%20Booklet.pdf"
+        }
+      ]
+    },
+    "Axis": {
+      "success": false,
+      "files_found": 0,
+      "files": []
+    },
+    "Parag Parikh": {
+      "success": true,
+      "files_found": 360,
+      "files": [
+        {
+          "text": "Consolidated",
+          "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFAS_Monthly_Portfolio_Report_January_31_2026.xls?31012026_1"
+        },
+        {
+          "text": "PPFCF",
+          "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFCF_PPFAS_Monthly_Portfolio_Report_January_31_2026.xls?31012026_1"
+        },
+        {
+          "text": "PPLF",
+          "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPLF_PPFAS_Monthly_Portfolio_Report_January_31_2026.xls?31012026"
+        }
+      ]
+    }
+  }
+}

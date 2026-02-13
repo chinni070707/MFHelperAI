@@ -1,0 +1,127 @@
+{
+  "last_updated": "2026-02-12",
+  "source": "AMFI Portfolio Disclosure Page",
+  "total_amcs": 24,
+  "amcs": [
+    {
+      "amc": "Axis Mutual Fund",
+      "portfolio_url": "https://www.axismf.com/statutory-disclosures",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Baroda BNP Paribas Mutual Fund",
+      "portfolio_url": "https://www.barodabnpparibasmf.in/downloads/financial-reports",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "DSP Investment Managers",
+      "portfolio_url": "https://www.dspim.com/about-us/mandatory-disclosure/annual-reports",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Edelweiss Mutual Fund",
+      "portfolio_url": "https://www.edelweissmf.com/statutory#Portfolio-of-Schemes",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Franklin Templeton Mutual Fund",
+      "portfolio_url": "https://www.franklintempletonindia.com/downloads/fund-literature",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "HDFC Mutual Fund",
+      "portfolio_url": "https://www.hdfcfund.com/statutory-disclosure/portfolio/fortnightly-portfolio",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "HSBC Mutual Fund",
+      "portfolio_url": "https://www.assetmanagement.hsbc.co.in/en/mutual-funds/investor-resources?Date=\\u0026Cap=\\u0026Doc=fund-factsheets#\\u0026module-17=1",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "ICICI Prudential Mutual Fund",
+      "portfolio_url": "https://www.icicipruamc.com/about-us/financials-\\u0026-disclosures?currentTabFilter=annualreportsandaccount\\u0026\\u0026subCatTabFilter=ICICI",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Invesco Mutual Fund",
+      "portfolio_url": "https://invescomutualfund.com/literature-and-form?tab=HalfYearlyHoldings",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "JM Financial Mutual Fund",
+      "portfolio_url": "https://www.jmfinancialmf.com/downloads/Statutory-Disclosure/Annual-Report-AMC",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Kotak Mahindra Mutual Fund",
+      "portfolio_url": "https://www.kotakmf.com/Information/forms-and-downloads",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "LIC Mutual Fund",
+      "portfolio_url": "https://www.licmf.com/statutory-disclosure",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Mahindra Manulife Mutual Fund",
+      "portfolio_url": "https://www.mahindramanulife.com/downloads#FINANCIALS-+-AMC-FINANCIALS",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Motilal Oswal Mutual Fund",
+      "portfolio_url": "https://www.motilaloswalmf.com/downloads/mutual-fund/Financials",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Nippon India Mutual Fund",
+      "portfolio_url": "https://mf.nipponindiaim.com/InvestorServices/FactsheetsDocuments/NIMF_FORTNIGHTLY_PORTFOLIO_31-Jan-26.xls",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "PGIM India Mutual Fund",
+      "portfolio_url": "https://www.pgimindia.com/mutual-funds/disclosures/Other-Disclosures/Asset-Management-Company/AMC-Financial-Annual-Report",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Parag Parikh Mutual Fund",
+      "portfolio_url": "https://amc.ppfas.com/downloads/portfolio-disclosure/fortnightly-debt-portfolio-disclosure/",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Quant Mutual Fund",
+      "portfolio_url": "https://quantmutual.com/statutory-disclosures",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "SBI Mutual Fund",
+      "portfolio_url": "https://www.sbimf.com/portfolios",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Shriram Asset Management",
+      "portfolio_url": "https://www.shriramamc.in/investor-statutory-disclosures",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Tata Mutual Fund",
+      "portfolio_url": "https://www.tatamutualfund.com/schemes-related",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Trust Mutual Fund",
+      "portfolio_url": "https://www.trustmf.com/disclosures?activeTab=financials",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "Union Mutual Fund",
+      "portfolio_url": "https://unionmf.com/about-us/downloads/fortnightly-portfolio",
+      "source": "AMFI Official Page"
+    },
+    {
+      "amc": "UTI Mutual Fund",
+      "portfolio_url": "https://www.utimf.com/statutory-disclosures/company-financials",
+      "source": "AMFI Official Page"
+    }
+  ]
+}

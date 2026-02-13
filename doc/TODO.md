@@ -1,5 +1,46 @@
 # MFHelper — Short TODO
 
+## Portfolio Data Scraping (In Progress)
+
+Recent progress:
+- [x] Discovered AMFI Portfolio Disclosure page (official source)
+- [x] Extracted 24 AMC portfolio URLs from AMFI
+- [x] Downloaded and parsed Parag Parikh Flexi Cap Fund (110 real holdings)
+- [x] Created scraper framework for AMC websites
+- [x] Generated comprehensive AMC scraping documentation
+
+Pending (to be done from laptop with Chrome extensions):
+- [ ] **HDFC Mutual Fund** - Top 5 funds holdings extraction
+  - HDFC Flexi Cap Fund
+  - HDFC Top 100 Fund
+  - HDFC Mid Cap Opportunities Fund
+  - HDFC Small Cap Fund
+  - HDFC Balanced Advantage Fund
+  - Source: https://www.hdfcfund.com/statutory-disclosure/portfolio/fortnightly-portfolio
+
+- [ ] **Axis Mutual Fund** - Top 5 funds holdings extraction
+  - Axis Bluechip Fund
+  - Axis Midcap Fund
+  - Axis Small Cap Fund
+  - Axis Focused 25 Fund
+  - Axis Long Term Equity Fund
+  - Source: https://www.axismf.com/statutory-disclosures
+
+- [ ] Add more Parag Parikh funds (files already downloaded)
+  - PPFAS Consolidated
+  - PPLF Liquid Fund
+
+Scripts created:
+- `backend/scripts/amfi_portfolio_scraper.py` - Main scraper framework
+- `backend/scripts/targeted_scraper.py` - AMC page tester
+- `backend/scripts/download_ppfas.py` - PPFAS downloader
+- `backend/scripts/parse_ppfas_holdings.py` - Holdings parser
+- `backend/scripts/extract_amc_urls.py` - URL extractor from AMFI
+
+---
+
+## Authentication & Email
+
 Recent changes (implemented):
 
 - [x] Email Verification System (Gmail SMTP)
