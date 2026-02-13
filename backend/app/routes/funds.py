@@ -133,6 +133,36 @@ async def get_amcs(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.get("/amc-list")
+async def get_amc_list(
+    db: Session = Depends(get_db)
+):
+    """
+    Get list of all AMCs (Asset Management Companies)
+    
+    Returns unique list of AMC names for dropdown
+    """
+    try:
+        # Get unique AMCs from fund master
+        amcs = db.query(FundMaster.amc).filter(
+            FundMaster.amc.isnot(None),
+            FundMaster.amc != '',
+            FundMaster.is_active == True
+        ).distinct().order_by(FundMaster.amc).all()
+        
+        amc_list = [amc[0] for amc in amcs if amc[0]]
+        
+        return {
+            "success": True,
+            "amcs": amc_list,
+            "count": len(amc_list)
+        }
+        
+    except Exception as e:
+        logger.error(f"Error fetching AMC list: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/{fund_id}")
 async def get_fund_details(fund_id: int, db: Session = Depends(get_db)):
     """Get detailed information about a specific fund"""
@@ -199,36 +229,6 @@ async def seed_funds_master(
     except Exception as e:
         db.rollback()
         logger.error(f"Error seeding funds master: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/amc-list")
-async def get_amc_list(
-    db: Session = Depends(get_db)
-):
-    """
-    Get list of all AMCs (Asset Management Companies)
-    
-    Returns unique list of AMC names for dropdown
-    """
-    try:
-        # Get unique AMCs from fund master
-        amcs = db.query(FundMaster.amc).filter(
-            FundMaster.amc.isnot(None),
-            FundMaster.amc != '',
-            FundMaster.is_active == True
-        ).distinct().order_by(FundMaster.amc).all()
-        
-        amc_list = [amc[0] for amc in amcs if amc[0]]
-        
-        return {
-            "success": True,
-            "amcs": amc_list,
-            "count": len(amc_list)
-        }
-        
-    except Exception as e:
-        logger.error(f"Error fetching AMC list: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

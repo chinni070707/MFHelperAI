@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Entry - MFHelper | Add Your Portfolio</title>
+    <meta name="description" content="Manually add your mutual fund holdings to your portfolio.">
+    
+    <link rel="stylesheet" href="/css/design-system.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="/js/navbar-auth.js" defer></script>
+    <script src="/js/toast.js" defer></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #7FC04C;
+            --dark-green: #6BA83C;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --text-primary: #212529;
+            --text-secondary: #6B7280;
+            --border-color: #E5E7EB;
+            --error-red: #EF4444;
+            --success-green: #10B981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-top: 90px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-green);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        .entry-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .entry-table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .entry-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .entry-table thead {
+            background: var(--gray-100);
+        }
+
+        .entry-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .entry-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .entry-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        /* Autocomplete Input Styles */
+        .autocomplete-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(127, 192, 76, 0.1);
+        }
+
+        .form-input:disabled {
+            background: var(--gray-100);
+            cursor: not-allowed;
+        }
+
+        .form-input.error,
+        .form-select.error {
+            border-color: var(--error-red);
+        }
+
+        /* Autocomplete Dropdown */
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border: 2px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .autocomplete-dropdown.show {
+            display: block;
+        }
+
+        .autocomplete-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--gray-100);
+            transition: background 0.2s ease;
+        }
+
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+
+        .autocomplete-item:hover,
+        .autocomplete-item.active {
+            background: var(--gray-50);
+        }
+
+        .autocomplete-item-title {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .autocomplete-item-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .autocomplete-loading {
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .autocomplete-no-results {
+            padding: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .remove-btn {
+            background: var(--error-red);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remove-btn:hover {
+            background: #DC2626;
+            transform: scale(1.1);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(127, 192, 76, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        .btn-add {
+            background: var(--gray-100);
+            color: var(--text-primary);
+        }
+
+        .btn-add:hover {
+            background: var(--gray-200);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Success Message */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-card h2 {
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-card p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid var(--gray-200);
+            border-top: 3px solid var(--primary-green);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .entry-card {
+                padding: 1.5rem;
+            }
+
+            .entry-table {
+                font-size: 0.9rem;
+            }
+
+            .entry-table th,
+            .entry-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">MFHelper</a>
+            <ul class="nav-menu">
+                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="/overlap-analysis.html" class="nav-link">Overlap</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="page-header">
+            <h1>📝 Manual Entry</h1>
+            <p>Add your mutual fund holdings manually. Search from our database of 5000+ funds.</p>
+        </div>
+
+        <div class="entry-card">
+            <div class="form-section">
+                <h3 class="section-title">
+                    <span>✏️</span>
+                    Enter Your Holdings
+                </h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                    Select the AMC, search for your fund with auto-suggestions, and enter the invested amount.
+                </p>
+
+                <div class="entry-table-wrapper">
+                    <table class="entry-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">AMC / Fund House</th>
+                                <th style="width: 45%;">Scheme Name</th>
+                                <th style="width: 20%;">Amount Invested (₹)</th>
+                                <th style="width: 10%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entryTableBody">
+                            <!-- Rows will be added by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-add" onclick="addEntryRow()">
+                        + Add Another Fund
+                    </button>
+                    <button class="btn btn-secondary" onclick="handleCancel()">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" onclick="savePortfolio()" id="saveBtn">
+                        💾 Save Portfolio
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-card">
+            <div class="success-icon">✅</div>
+            <h2>Portfolio Saved Successfully!</h2>
+            <p>Your holdings have been saved. View your portfolio analysis on the dashboard.</p>
+            <a href="/dashboard.html" class="btn btn-primary">View Dashboard →</a>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let amcList = [];
+        let fundsByAmc = {};
+        let activeDropdown = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadAmcList();
+            addEntryRow(); // Add first row by default
+        });
+
+        // ============ AMC List Loading ============
+        async function loadAmcList() {
+            try {
+                const response = await fetch('/api/funds/amc-list');
+                const data = await response.json();
+                if (data.success && data.amcs) {
+                    amcList = data.amcs;
+                    console.log('Loaded AMC list:', amcList.length, 'AMCs');
+                }
+            } catch (error) {
+                console.error('Failed to load AMC list:', error);
+                // Fallback list
+                amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'Aditya Birla Sun Life', 
+                          'Nippon India', 'UTI', 'DSP', 'Franklin Templeton', 'Mirae Asset', 
+                          'Parag Parikh', 'Motilal Oswal'];
+            }
+        }
+
+        // ============ Add/Remove Rows ============
+        function addEntryRow() {
+            const tbody = document.getElementById('entryTableBody');
+            const row = document.createElement('tr');
+            
+            // Generate AMC options
+            const amcOptions = amcList.map(amc => 
+                `<option value="${amc}">${amc}</option>`
+            ).join('');
+
+            row.innerHTML = `
+                <td>
+                    <select class="form-select amc-select" onchange="onAmcChange(this)" required>
+                        <option value="">Select AMC...</option>
+                        ${amcOptions}
+                    </select>
+                </td>
+                <td>
+                    <div class="autocomplete-wrapper">
+                        <input type="text" 
+                               class="form-input fund-input" 
+                               placeholder="Select AMC first"
+                               data-fund-id=""
+                               data-scheme-name=""
+                               oninput="onFundInput(this)"
+                               onfocus="onFundFocus(this)"
+                               disabled
+                               required>
+                        <div class="autocomplete-dropdown"></div>
+                    </div>
+                </td>
+                <td>
+                    <input type="number" 
+                           class="form-input amount-input" 
+                           step="0.01" 
+                           min="0" 
+                           placeholder="10000"
+                           required>
+                </td>
+                <td style="text-align: center;">
+                    <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+        }
+
+        function removeRow(button) {
+            const tbody = document.getElementById('entryTableBody');
+            if (tbody.children.length > 1) {
+                button.closest('tr').remove();
+            } else {
+                showToast('At least one row is required', 'error');
+            }
+        }
+
+        // ============ AMC Selection ============
+        function onAmcChange(select) {
+            const row = select.closest('tr');
+            const fundInput = row.querySelector('.fund-input');
+            const amc = select.value;
+
+            // Reset fund input
+            fundInput.value = '';
+            fundInput.setAttribute('data-fund-id', '');
+            fundInput.setAttribute('data-scheme-name', '');
+            
+            if (amc) {
+                fundInput.disabled = false;
+                fundInput.placeholder = `Search ${amc} funds...`;
+                // Prefetch funds for this AMC
+                prefetchFundsByAmc(amc);
+            } else {
+                fundInput.disabled = true;
+                fundInput.placeholder = 'Select AMC first';
+            }
+        }
+
+        // ============ Fund Autocomplete ============
+        let prefetchCache = {};
+
+        async function prefetchFundsByAmc(amc) {
+            if (prefetchCache[amc]) return;
+            
+            try {
+                const response = await fetch(`/api/funds/list?amc=${encodeURIComponent(amc)}&limit=100`);
+                const data = await response.json();
+                if (data.success && data.funds) {
+                    prefetchCache[amc] = data.funds;
+                    console.log(`Prefetched ${data.funds.length} funds for ${amc}`);
+                }
+            } catch (error) {
+                console.error('Failed to prefetch funds:', error);
+            }
+        }
+
+        let searchTimeout = null;
+
+        function onFundInput(input) {
+            clearTimeout(searchTimeout);
+            const searchTerm = input.value.trim();
+            const row = input.closest('tr');
+            const amc = row.querySelector('.amc-select').value;
+            const dropdown = row.querySelector('.autocomplete-dropdown');
+
+            if (searchTerm.length < 2) {
+                hideDropdown(dropdown);
+                return;
+            }
+
+            // Show loading
+            dropdown.innerHTML = '<div class="autocomplete-loading">Searching...</div>';
+            dropdown.classList.add('show');
+            activeDropdown = dropdown;
+
+            // Debounced search
+            searchTimeout = setTimeout(async () => {
+                await searchFunds(searchTerm, amc, dropdown, input);
+            }, 300);
+        }
+
+        function onFundFocus(input) {
+            const row = input.closest('tr');
+            const amc = row.querySelector('.amc-select').value;
+            const dropdown = row.querySelector('.autocomplete-dropdown');
+
+            if (amc && input.value.trim().length >= 2) {
+                const searchTerm = input.value.trim();
+                searchFunds(searchTerm, amc, dropdown, input);
+            } else if (amc && prefetchCache[amc]) {
+                showFundSuggestions(prefetchCache[amc], dropdown, input);
+            }
+        }
+
+        async function searchFunds(searchTerm, amc, dropdown, input) {
+            try {
+                const url = `/api/funds/list?search=${encodeURIComponent(searchTerm)}&amc=${encodeURIComponent(amc)}&limit=20`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success && data.funds) {
+                    showFundSuggestions(data.funds, dropdown, input);
+                } else {
+                    dropdown.innerHTML = '<div class="autocomplete-no-results">No funds found</div>';
+                }
+            } catch (error) {
+                console.error('Fund search failed:', error);
+                dropdown.innerHTML = '<div class="autocomplete-no-results">Search failed</div>';
+            }
+        }
+
+        function showFundSuggestions(funds, dropdown, input) {
+            if (!funds || funds.length === 0) {
+                dropdown.innerHTML = '<div class="autocomplete-no-results">No funds found</div>';
+                dropdown.classList.add('show');
+                return;
+            }
+
+            dropdown.innerHTML = funds.map(fund => {
+                const schemeName = fund.scheme_name || fund.name || '';
+                const category = fund.category || '';
+                const fundId = fund.id || fund.scheme_code || '';
+                
+                return `
+                    <div class="autocomplete-item" data-fund-id="${fundId}" data-scheme-name="${schemeName}">
+                        <div class="autocomplete-item-title">${schemeName}</div>
+                        ${category ? `<div class="autocomplete-item-subtitle">${category}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Add click handlers
+            dropdown.querySelectorAll('.autocomplete-item').forEach(item => {
+                item.addEventListener('click', () => selectFund(item, input, dropdown));
+            });
+
+            dropdown.classList.add('show');
+            activeDropdown = dropdown;
+        }
+
+        function selectFund(item, input, dropdown) {
+            const fundId = item.getAttribute('data-fund-id');
+            const schemeName = item.getAttribute('data-scheme-name');
+            
+            input.value = schemeName;
+            input.setAttribute('data-fund-id', fundId);
+            input.setAttribute('data-scheme-name', schemeName);
+            
+            hideDropdown(dropdown);
+        }
+
+        function hideDropdown(dropdown) {
+            dropdown.classList.remove('show');
+            dropdown.innerHTML = '';
+            activeDropdown = null;
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (activeDropdown && !e.target.closest('.autocomplete-wrapper')) {
+                hideDropdown(activeDropdown);
+            }
+        });
+
+        // ============ Save Portfolio ============
+        async function savePortfolio() {
+            const tbody = document.getElementById('entryTableBody');
+            const rows = tbody.querySelectorAll('tr');
+            const holdings = [];
+            let hasError = false;
+
+            // Validate and collect data
+            rows.forEach(row => {
+                const amcSelect = row.querySelector('.amc-select');
+                const fundInput = row.querySelector('.fund-input');
+                const amountInput = row.querySelector('.amount-input');
+
+                const amc = amcSelect.value.trim();
+                const schemeName = fundInput.getAttribute('data-scheme-name') || fundInput.value.trim();
+                const fundId = fundInput.getAttribute('data-fund-id');
+                const amount = parseFloat(amountInput.value);
+
+                // Skip empty rows
+                if (!amc && !schemeName && !amount) return;
+
+                // Validate
+                if (!amc) {
+                    amcSelect.classList.add('error');
+                    hasError = true;
+                } else {
+                    amcSelect.classList.remove('error');
+                }
+
+                if (!schemeName) {
+                    fundInput.classList.add('error');
+                    hasError = true;
+                } else {
+                    fundInput.classList.remove('error');
+                }
+
+                if (!amount || amount <= 0) {
+                    amountInput.classList.add('error');
+                    hasError = true;
+                } else {
+                    amountInput.classList.remove('error');
+                }
+
+                if (amc && schemeName && amount > 0) {
+                    holdings.push({
+                        amc: amc,
+                        scheme_name: schemeName,
+                        fund_id: fundId || null,
+                        invested_amount: amount
+                    });
+                }
+            });
+
+            if (hasError) {
+                showToast('Please fill all required fields with valid values', 'error');
+                return;
+            }
+
+            if (holdings.length === 0) {
+                showToast('Please add at least one fund', 'error');
+                return;
+            }
+
+            // Disable save button
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<span class="spinner"></span> Saving...';
+
+            try {
+                const token = localStorage.getItem('authToken');
+
+                if (!token) {
+                    // Guest mode - save to localStorage
+                    localStorage.setItem('portfolioData', JSON.stringify({
+                        holdings: holdings,
+                        source: 'manual_entry',
+                        date: new Date().toISOString()
+                    }));
+                    
+                    showSuccess();
+                    return;
+                }
+
+                // Authenticated - save to backend
+                const response = await fetch('/api/portfolio/manual', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ holdings })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Failed to save portfolio');
+                }
+
+                const result = await response.json();
+                console.log('Portfolio saved:', result);
+
+                // Mark as authenticated mode
+                localStorage.setItem('portfolioMode', 'authenticated');
+
+                showSuccess();
+
+            } catch (error) {
+                console.error('Error saving portfolio:', error);
+                showToast(`Error: ${error.message}`, 'error');
+                
+                // Re-enable button
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '💾 Save Portfolio';
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('successOverlay').classList.add('show');
+        }
+
+        function handleCancel() {
+            if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+                window.location.href = '/portfolio.html';
+            }
+        }
+
+        // ============ Toast Notification ============
+        function showToast(message, type = 'info') {
+            if (typeof window.showToast === 'function') {
+                window.showToast(message, type);
+            } else {
+                alert(message);
+            }
+        }
+    </script>
+</body>
+</html>

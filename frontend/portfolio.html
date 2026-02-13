@@ -884,45 +884,8 @@
         }
 
         function toggleManualSection() {
-            // Check if user is logged in
-            const token = localStorage.getItem('authToken');
-            if (!token) {
-                // Show message and redirect to login
-                if (typeof showToast === 'function') {
-                    showToast('Please sign in to save your portfolio', 'info');
-                } else {
-                    alert('Please sign in to save your portfolio data securely.');
-                }
-                // Redirect to auth page with return URL
-                setTimeout(() => {
-                    window.location.href = '/auth.html?redirect=' + encodeURIComponent(window.location.pathname);
-                }, 1000);
-                return;
-            }
-
-            const section = document.getElementById('manualSection');
-            const card = document.getElementById('manualCard');
-            const btn = document.getElementById('manualToggleBtn');
-            const features = document.getElementById('manualFeatures');
-            const isVisible = section.classList.contains('visible');
-
-            // Close upload section if open
-            closeUploadSection();
-
-            if (isVisible) {
-                section.classList.remove('visible');
-                card.classList.remove('active');
-                btn.textContent = 'Enter Manually →';
-                features.style.display = '';
-            } else {
-                section.classList.add('visible');
-                card.classList.add('active');
-                btn.textContent = 'Close';
-                features.style.display = 'none';
-                // Load AMC list and add initial rows
-                initManualEntry();
-                section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
+            // Redirect to the new manual entry page
+            window.location.href = '/manual-entry.html';
         }
 
         function closeUploadSection() {

@@ -270,152 +270,152 @@
       "holdings": [
         {
           "stock": "Trent",
-          "weight": 5.2,
+          "weight": 4.66,
           "sector": "Retail"
         },
         {
           "stock": "Polycab India",
-          "weight": 4.8,
+          "weight": 4.3,
           "sector": "Capital Goods"
         },
         {
           "stock": "Persistent Systems",
-          "weight": 4.5,
+          "weight": 4.04,
           "sector": "IT"
         },
         {
           "stock": "Max Healthcare",
-          "weight": 4.2,
+          "weight": 3.77,
           "sector": "Healthcare"
         },
         {
           "stock": "Tube Investments",
-          "weight": 3.9,
+          "weight": 3.5,
           "sector": "Auto Components"
         },
         {
           "stock": "Coforge",
-          "weight": 3.6,
+          "weight": 3.23,
           "sector": "IT"
         },
         {
           "stock": "Varun Beverages",
-          "weight": 3.4,
+          "weight": 3.05,
           "sector": "FMCG"
         },
         {
           "stock": "PI Industries",
-          "weight": 3.2,
+          "weight": 2.87,
           "sector": "Chemicals"
         },
         {
           "stock": "Avenue Supermarts",
-          "weight": 3.0,
+          "weight": 2.69,
           "sector": "Retail"
         },
         {
           "stock": "SRF",
-          "weight": 2.8,
+          "weight": 2.51,
           "sector": "Chemicals"
         },
         {
           "stock": "HDFC Bank",
-          "weight": 8.5,
+          "weight": 7.62,
           "sector": "Banking"
         },
         {
           "stock": "ICICI Bank",
-          "weight": 7.2,
+          "weight": 6.46,
           "sector": "Banking"
         },
         {
           "stock": "Reliance Industries",
-          "weight": 6.8,
+          "weight": 6.1,
           "sector": "Oil & Gas"
         },
         {
           "stock": "Infosys",
-          "weight": 5.9,
+          "weight": 5.29,
           "sector": "IT"
         },
         {
           "stock": "TCS",
-          "weight": 5.5,
+          "weight": 4.93,
           "sector": "IT"
         },
         {
           "stock": "Axis Bank",
-          "weight": 4.3,
+          "weight": 3.86,
           "sector": "Banking"
         },
         {
           "stock": "Bharti Airtel",
-          "weight": 4.1,
+          "weight": 3.68,
           "sector": "Telecom"
         },
         {
           "stock": "ITC",
-          "weight": 3.8,
+          "weight": 3.41,
           "sector": "FMCG"
         },
         {
           "stock": "Hindustan Unilever",
-          "weight": 3.5,
+          "weight": 3.14,
           "sector": "FMCG"
         },
         {
           "stock": "State Bank of India",
-          "weight": 3.2,
+          "weight": 2.87,
           "sector": "Banking"
         },
         {
           "stock": "Larsen & Toubro",
-          "weight": 2.9,
+          "weight": 2.6,
           "sector": "Capital Goods"
         },
         {
           "stock": "Bajaj Finance",
-          "weight": 2.7,
+          "weight": 2.42,
           "sector": "NBFC"
         },
         {
           "stock": "Asian Paints",
-          "weight": 2.5,
+          "weight": 2.24,
           "sector": "Paints"
         },
         {
           "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
+          "weight": 2.06,
           "sector": "Banking"
         },
         {
           "stock": "Maruti Suzuki",
-          "weight": 2.1,
+          "weight": 1.88,
           "sector": "Auto"
         },
         {
           "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
           "weight": 1.7,
           "sector": "IT"
         },
         {
+          "stock": "Wipro",
+          "weight": 1.52,
+          "sector": "IT"
+        },
+        {
           "stock": "Tech Mahindra",
-          "weight": 1.5,
+          "weight": 1.35,
           "sector": "IT"
         },
         {
           "stock": "Sun Pharma",
-          "weight": 1.3,
+          "weight": 1.17,
           "sector": "Pharma"
         },
         {
           "stock": "NTPC",
-          "weight": 1.2,
+          "weight": 1.08,
           "sector": "Power"
         }
       ],
@@ -435,7 +435,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 30
     },
     "hdfc-small-cap-fund": {
       "name": "HDFC Small Cap Fund",
@@ -589,7 +590,7 @@
         },
         {
           "stock": "Pearl Global Industries Limited",
-          "sector": "Trading – textiles",
+          "sector": "Trading Â– textiles",
           "weight": 1.16
         },
         {
@@ -980,7 +981,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 20
     },
     "hdfc-balanced-advantage-fund": {
       "name": "HDFC Balanced Advantage Fund",
@@ -1100,7 +1102,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 20
     },
     "icici-prudential-bluechip-fund": {
       "name": "ICICI Prudential Bluechip Fund",
@@ -1220,7 +1223,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 20
     },
     "icici-prudential-equity--debt-fund": {
       "name": "ICICI Prudential Equity & Debt Fund",
@@ -1340,7 +1344,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 20
     },
     "axis-bluechip-fund": {
       "name": "Axis Bluechip Fund",
@@ -1460,7 +1465,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 20
     },
     "axis-midcap-fund": {
       "name": "Axis Midcap Fund",
@@ -2259,7 +2265,7 @@
         },
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
-          "sector": "It enabled services – software",
+          "sector": "It enabled services Â– software",
           "weight": 0.52
         },
         {
@@ -2735,7 +2741,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 20
     },
     "sbi-small-cap-fund": {
       "name": "SBI Small Cap Fund",
@@ -3489,152 +3496,152 @@
       "holdings": [
         {
           "stock": "Trent",
-          "weight": 5.2,
+          "weight": 4.66,
           "sector": "Retail"
         },
         {
           "stock": "Polycab India",
-          "weight": 4.8,
+          "weight": 4.3,
           "sector": "Capital Goods"
         },
         {
           "stock": "Persistent Systems",
-          "weight": 4.5,
+          "weight": 4.04,
           "sector": "IT"
         },
         {
           "stock": "Max Healthcare",
-          "weight": 4.2,
+          "weight": 3.77,
           "sector": "Healthcare"
         },
         {
           "stock": "Tube Investments",
-          "weight": 3.9,
+          "weight": 3.5,
           "sector": "Auto Components"
         },
         {
           "stock": "Coforge",
-          "weight": 3.6,
+          "weight": 3.23,
           "sector": "IT"
         },
         {
           "stock": "Varun Beverages",
-          "weight": 3.4,
+          "weight": 3.05,
           "sector": "FMCG"
         },
         {
           "stock": "PI Industries",
-          "weight": 3.2,
+          "weight": 2.87,
           "sector": "Chemicals"
         },
         {
           "stock": "Avenue Supermarts",
-          "weight": 3.0,
+          "weight": 2.69,
           "sector": "Retail"
         },
         {
           "stock": "SRF",
-          "weight": 2.8,
+          "weight": 2.51,
           "sector": "Chemicals"
         },
         {
           "stock": "HDFC Bank",
-          "weight": 8.5,
+          "weight": 7.62,
           "sector": "Banking"
         },
         {
           "stock": "ICICI Bank",
-          "weight": 7.2,
+          "weight": 6.46,
           "sector": "Banking"
         },
         {
           "stock": "Reliance Industries",
-          "weight": 6.8,
+          "weight": 6.1,
           "sector": "Oil & Gas"
         },
         {
           "stock": "Infosys",
-          "weight": 5.9,
+          "weight": 5.29,
           "sector": "IT"
         },
         {
           "stock": "TCS",
-          "weight": 5.5,
+          "weight": 4.93,
           "sector": "IT"
         },
         {
           "stock": "Axis Bank",
-          "weight": 4.3,
+          "weight": 3.86,
           "sector": "Banking"
         },
         {
           "stock": "Bharti Airtel",
-          "weight": 4.1,
+          "weight": 3.68,
           "sector": "Telecom"
         },
         {
           "stock": "ITC",
-          "weight": 3.8,
+          "weight": 3.41,
           "sector": "FMCG"
         },
         {
           "stock": "Hindustan Unilever",
-          "weight": 3.5,
+          "weight": 3.14,
           "sector": "FMCG"
         },
         {
           "stock": "State Bank of India",
-          "weight": 3.2,
+          "weight": 2.87,
           "sector": "Banking"
         },
         {
           "stock": "Larsen & Toubro",
-          "weight": 2.9,
+          "weight": 2.6,
           "sector": "Capital Goods"
         },
         {
           "stock": "Bajaj Finance",
-          "weight": 2.7,
+          "weight": 2.42,
           "sector": "NBFC"
         },
         {
           "stock": "Asian Paints",
-          "weight": 2.5,
+          "weight": 2.24,
           "sector": "Paints"
         },
         {
           "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
+          "weight": 2.06,
           "sector": "Banking"
         },
         {
           "stock": "Maruti Suzuki",
-          "weight": 2.1,
+          "weight": 1.88,
           "sector": "Auto"
         },
         {
           "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
           "weight": 1.7,
           "sector": "IT"
         },
         {
+          "stock": "Wipro",
+          "weight": 1.52,
+          "sector": "IT"
+        },
+        {
           "stock": "Tech Mahindra",
-          "weight": 1.5,
+          "weight": 1.35,
           "sector": "IT"
         },
         {
           "stock": "Sun Pharma",
-          "weight": 1.3,
+          "weight": 1.17,
           "sector": "Pharma"
         },
         {
           "stock": "NTPC",
-          "weight": 1.2,
+          "weight": 1.08,
           "sector": "Power"
         }
       ],
@@ -3654,7 +3661,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 30
     },
     "parag-parikh-flexi-cap-fund": {
       "name": "Parag Parikh Flexi Cap Fund",
@@ -3888,152 +3896,152 @@
       "holdings": [
         {
           "stock": "Trent",
-          "weight": 5.2,
+          "weight": 4.66,
           "sector": "Retail"
         },
         {
           "stock": "Polycab India",
-          "weight": 4.8,
+          "weight": 4.3,
           "sector": "Capital Goods"
         },
         {
           "stock": "Persistent Systems",
-          "weight": 4.5,
+          "weight": 4.04,
           "sector": "IT"
         },
         {
           "stock": "Max Healthcare",
-          "weight": 4.2,
+          "weight": 3.77,
           "sector": "Healthcare"
         },
         {
           "stock": "Tube Investments",
-          "weight": 3.9,
+          "weight": 3.5,
           "sector": "Auto Components"
         },
         {
           "stock": "Coforge",
-          "weight": 3.6,
+          "weight": 3.23,
           "sector": "IT"
         },
         {
           "stock": "Varun Beverages",
-          "weight": 3.4,
+          "weight": 3.05,
           "sector": "FMCG"
         },
         {
           "stock": "PI Industries",
-          "weight": 3.2,
+          "weight": 2.87,
           "sector": "Chemicals"
         },
         {
           "stock": "Avenue Supermarts",
-          "weight": 3.0,
+          "weight": 2.69,
           "sector": "Retail"
         },
         {
           "stock": "SRF",
-          "weight": 2.8,
+          "weight": 2.51,
           "sector": "Chemicals"
         },
         {
           "stock": "HDFC Bank",
-          "weight": 8.5,
+          "weight": 7.62,
           "sector": "Banking"
         },
         {
           "stock": "ICICI Bank",
-          "weight": 7.2,
+          "weight": 6.46,
           "sector": "Banking"
         },
         {
           "stock": "Reliance Industries",
-          "weight": 6.8,
+          "weight": 6.1,
           "sector": "Oil & Gas"
         },
         {
           "stock": "Infosys",
-          "weight": 5.9,
+          "weight": 5.29,
           "sector": "IT"
         },
         {
           "stock": "TCS",
-          "weight": 5.5,
+          "weight": 4.93,
           "sector": "IT"
         },
         {
           "stock": "Axis Bank",
-          "weight": 4.3,
+          "weight": 3.86,
           "sector": "Banking"
         },
         {
           "stock": "Bharti Airtel",
-          "weight": 4.1,
+          "weight": 3.68,
           "sector": "Telecom"
         },
         {
           "stock": "ITC",
-          "weight": 3.8,
+          "weight": 3.41,
           "sector": "FMCG"
         },
         {
           "stock": "Hindustan Unilever",
-          "weight": 3.5,
+          "weight": 3.14,
           "sector": "FMCG"
         },
         {
           "stock": "State Bank of India",
-          "weight": 3.2,
+          "weight": 2.87,
           "sector": "Banking"
         },
         {
           "stock": "Larsen & Toubro",
-          "weight": 2.9,
+          "weight": 2.6,
           "sector": "Capital Goods"
         },
         {
           "stock": "Bajaj Finance",
-          "weight": 2.7,
+          "weight": 2.42,
           "sector": "NBFC"
         },
         {
           "stock": "Asian Paints",
-          "weight": 2.5,
+          "weight": 2.24,
           "sector": "Paints"
         },
         {
           "stock": "Kotak Mahindra Bank",
-          "weight": 2.3,
+          "weight": 2.06,
           "sector": "Banking"
         },
         {
           "stock": "Maruti Suzuki",
-          "weight": 2.1,
+          "weight": 1.88,
           "sector": "Auto"
         },
         {
           "stock": "HCL Technologies",
-          "weight": 1.9,
-          "sector": "IT"
-        },
-        {
-          "stock": "Wipro",
           "weight": 1.7,
           "sector": "IT"
         },
         {
+          "stock": "Wipro",
+          "weight": 1.52,
+          "sector": "IT"
+        },
+        {
           "stock": "Tech Mahindra",
-          "weight": 1.5,
+          "weight": 1.35,
           "sector": "IT"
         },
         {
           "stock": "Sun Pharma",
-          "weight": 1.3,
+          "weight": 1.17,
           "sector": "Pharma"
         },
         {
           "stock": "NTPC",
-          "weight": 1.2,
+          "weight": 1.08,
           "sector": "Power"
         }
       ],
@@ -4053,7 +4061,8 @@
         "Auto": 2.1,
         "Pharma": 1.3,
         "Power": 1.2
-      }
+      },
+      "holdings_count": 30
     },
     "kotak-small-cap-fund": {
       "name": "Kotak Small Cap Fund",
@@ -7079,94 +7088,9 @@
           "stock": "364 Days Tbill (MD 15/01/2027)",
           "weight": 0.15,
           "sector": "Sovereign"
-        },
-        {
-          "stock": "Parag Parikh Liquid Fund- Direct Plan- Growth",
-          "weight": 0.45,
-          "sector": ""
-        },
-        {
-          "stock": "TRP_020226",
-          "weight": 5.23,
-          "sector": ""
-        },
-        {
-          "stock": "GRAND TOTAL",
-          "weight": 100.0,
-          "sector": "Unknown"
-        },
-        {
-          "stock": "Asian Paints Limited",
-          "weight": 6984770.81,
-          "sector": "Short"
-        },
-        {
-          "stock": "Since Inception (24 May, 2013)",
-          "weight": 8551980.0,
-          "sector": "0.1925438530519148"
-        },
-        {
-          "stock": "January 31, 2025 to January 30, 2026 (Last 1 Year)",
-          "weight": 1062664.02,
-          "sector": "0.06980726354283306"
-        },
-        {
-          "stock": "January 31, 2023 to January 30, 2026 (Last 3 Years)",
-          "weight": 1761511.54,
-          "sector": "0.21634069429593916"
-        },
-        {
-          "stock": "January 29, 2021 to January 30, 2026 (Last 5 Years)",
-          "weight": 2395297.9,
-          "sector": "0.2005706443815145"
-        },
-        {
-          "stock": "January 29, 2016 to January 30, 2026 (Last 10 Years)",
-          "weight": 5222391.85,
-          "sector": "0.18855472291144504"
-        },
-        {
-          "stock": "Market value of Investment",
-          "weight": 318205421.2,
-          "sector": "123839.611492272"
-        },
-        {
-          "stock": "Returns (Annualised) (%)",
-          "weight": 1853.6,
-          "sector": "5.9998785849352"
-        },
-        {
-          "stock": "Nifty 500 (TRI) Returns (Annualised) (%)",
-          "weight": 1477.84,
-          "sector": "5.77748229455702"
-        },
-        {
-          "stock": "Nifty 50 (TRI) Returns (Annualised) (%)",
-          "weight": 1376.66,
-          "sector": "6.98876314516356"
-        },
-        {
-          "stock": "Market value of Investment",
-          "weight": 335032862.59,
-          "sector": "124280.318702245"
-        },
-        {
-          "stock": "Returns (Annualised) (%)",
-          "weight": 1949.04,
-          "sector": "6.69535555262312"
-        },
-        {
-          "stock": "Nifty 500 (TRI) Returns (Annualised) (%)",
-          "weight": 1477.84,
-          "sector": "5.77748229455702"
-        },
-        {
-          "stock": "Nifty 50 (TRI) Returns (Annualised) (%)",
-          "weight": 1376.66,
-          "sector": "6.98876314516356"
         }
       ],
-      "holdings_count": 110,
+      "holdings_count": 93,
       "as_of_date": "2026-01-31",
       "source": "PPFAS Official Portfolio Disclosure"
     },
@@ -7364,69 +7288,9 @@
           "stock": "5.63% Government of India (12/04/2026)",
           "weight": 5.28,
           "sector": "Sovereign"
-        },
-        {
-          "stock": "Corporate Debt Market Development Fund - Class A2 Units",
-          "weight": 0.33,
-          "sector": ""
-        },
-        {
-          "stock": "REP15_300126",
-          "weight": 13.58,
-          "sector": ""
-        },
-        {
-          "stock": "GRAND TOTAL",
-          "weight": 100.0,
-          "sector": "Unknown"
-        },
-        {
-          "stock": "Since Inception (11 May, 2018)",
-          "weight": 1496266.5,
-          "sector": "0.0545673757412628"
-        },
-        {
-          "stock": "January 24, 2026 to January 31, 2026 (Last 7 days)",
-          "weight": 1001111.13,
-          "sector": "0.05893498524501876"
-        },
-        {
-          "stock": "January 16, 2026 to January 31, 2026 (Last 15 Days)",
-          "weight": 1002175.93,
-          "sector": "0.05394821270031702"
-        },
-        {
-          "stock": "December 31, 2025 to January 31, 2026 (Last 1 Month)",
-          "weight": 1004322.25,
-          "sector": "0.051895437222737484"
-        },
-        {
-          "stock": "October 31, 2025 to January 31, 2026 (Last 3 Month)",
-          "weight": 1013941.65,
-          "sector": "0.05632183550933947"
-        },
-        {
-          "stock": "July 31, 2025 to January 31, 2026 (Last 6 Month)",
-          "weight": 1027979.0,
-          "sector": "0.05652881756523596"
-        },
-        {
-          "stock": "January 31, 2025 to January 31, 2026 (Last 1 Year)",
-          "weight": 1061007.49,
-          "sector": "0.06206562426467643"
-        },
-        {
-          "stock": "January 31, 2023 to January 31, 2026 (Last 3 Years)",
-          "weight": 1210225.67,
-          "sector": "0.06666602051350123"
-        },
-        {
-          "stock": "January 31, 2021 to January 31, 2026 (Last 5 Years)",
-          "weight": 1308073.11,
-          "sector": "0.056196597536900095"
         }
       ],
-      "holdings_count": 50,
+      "holdings_count": 38,
       "as_of_date": "2026-01-31",
       "source": "PPFAS Official Portfolio Disclosure"
     },
@@ -9587,7 +9451,7 @@
         },
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
-          "sector": "It enabled services – software",
+          "sector": "It enabled services Â– software",
           "weight": 0.32
         },
         {
@@ -11087,7 +10951,7 @@
         },
         {
           "stock": "Pearl Global Industries Limited",
-          "sector": "Trading – textiles",
+          "sector": "Trading Â– textiles",
           "weight": 0.64
         },
         {
@@ -13691,11 +13555,6 @@
           "weight": 0.08
         },
         {
-          "stock": "Tega Industries Ltd.",
-          "sector": "Industrial products",
-          "weight": 0.08
-        },
-        {
           "stock": "Tinna Rubber and Infrastructure Ltd.",
           "sector": "Specialty chemicals",
           "weight": 0.07
@@ -13706,7 +13565,7 @@
           "weight": 0.06
         }
       ],
-      "holdings_count": 86,
+      "holdings_count": 85,
       "as_of_date": "2026-01-31",
       "source": "MoneyControl Portfolio Disclosure"
     },
@@ -15207,7 +15066,7 @@
         },
         {
           "stock": "Pearl Global Industries Limited",
-          "sector": "Trading – textiles",
+          "sector": "Trading Â– textiles",
           "weight": 0.85
         },
         {
@@ -21122,7 +20981,7 @@
         },
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
-          "sector": "It enabled services – software",
+          "sector": "It enabled services Â– software",
           "weight": 1.19
         },
         {
