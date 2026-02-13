@@ -247,7 +247,7 @@ async def save_manual_portfolio(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Save manually entered portfolio data"""
+    """Save manually entered portfolio data - works for both authenticated and guest users"""
     logger.info(f"Saving manual portfolio for user: {current_user.email}")
     
     holdings_data = data.get('holdings', [])

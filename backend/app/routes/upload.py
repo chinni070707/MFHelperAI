@@ -13,6 +13,7 @@ import logging
 from app.database import get_db
 from app.models.models import Portfolio, Holding, User
 from app.utils.auth import get_optional_current_user
+from app.services.cas_import import safe_float_convert
 
 # Setup logger
 logger = logging.getLogger(__name__)
@@ -449,10 +450,10 @@ def _parse_summary_table(text: str) -> list:
             fund_name = match.group(2).strip()
             isin = match.group(3).strip()
             folio = match.group(4).strip()
-            units = float(match.group(5).replace(',', ''))
-            nav = float(match.group(6).replace(',', ''))
-            invested = float(match.group(7).replace(',', ''))
-            valuation = float(match.group(8).replace(',', ''))
+            units = safe_float_convert(match.group(5), "units")
+            nav = safe_float_convert(match.group(6), "nav")
+            invested = safe_float_convert(match.group(7), "invested")
+            valuation = safe_float_convert(match.group(8), "valuation")
             
             # Clean up the fund name
             fund_name = re.sub(r'\s+', ' ', fund_name).strip(' -_')
@@ -511,9 +512,9 @@ def _parse_closing_balance_sections(text: str) -> list:
         if not units_match or not market_match:
             continue
         
-        units = float(units_match.group(1).replace(',', ''))
-        current_value = float(market_match.group(1).replace(',', ''))
-        invested = float(cost_match.group(1).replace(',', '')) if cost_match else 0
+        units = safe_float_convert(units_match.group(1), "units")
+        current_value = safe_float_convert(market_match.group(1), "current_value")
+        invested = safe_float_convert(cost_match.group(1), "invested") if cost_match else 0
         
         # Look backward for the scheme name (after folio/ISIN line)
         scheme_name = None
@@ -524,7 +525,7 @@ def _parse_closing_balance_sections(text: str) -> list:
             # NAV line
             nav_match = re.search(r'NAV[^:]*:\s*(?:INR|Rs\.?)?\s*([\d,.]+)', l, re.IGNORECASE)
             if nav_match:
-                nav = float(nav_match.group(1).replace(',', ''))
+                nav = safe_float_convert(nav_match.group(1), "nav")
             
             # Folio/ISIN line often contains: "Nominee...CODE-Scheme Name (ISIN:...Folio No..."
             if 'ISIN:' in l or ('Folio No' in l and '-' in l):
@@ -645,7 +646,8 @@ def fallback_cas_parser(text: str) -> list:
                 
                 # Extract numbers (likely to be value, units, nav)
                 numbers = re.findall(r'[\d,]+\.?\d*', context)
-                numbers = [float(n.replace(',', '')) for n in numbers if n and float(n.replace(',', '')) > 0]
+                numbers = [safe_float_convert(n, "number") for n in numbers if n]
+                numbers = [v for v in numbers if v > 0]
                 
                 if numbers:
                     current_value = max(numbers) if numbers else 0
