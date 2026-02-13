@@ -804,12 +804,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sendBtn) sendBtn.addEventListener('click', () => sendDashboardChat());
     if (input) input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendDashboardChat(); });
 
-    // Auto-populate latest portfolio ID
-    autoPopulatePortfolioId();
-
     // XIRR & Compare handlers
     const fetchBtn = document.getElementById('fetch-xirr-btn');
     if (fetchBtn) fetchBtn.addEventListener('click', () => fetchXirrAndCompare());
+    
+    // Only auto-populate portfolio ID if user is authenticated
+    const token = localStorage.getItem('authToken');
+    if (token) {
+        autoPopulatePortfolioId();
+    }
 });
 
 async function autoPopulatePortfolioId() {

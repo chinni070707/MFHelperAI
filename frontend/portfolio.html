@@ -844,6 +844,22 @@
     <script>
         // ========== Toggle Sections ==========
         function toggleUploadSection() {
+            // Check if user is logged in
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                // Show message and redirect to login
+                if (typeof showToast === 'function') {
+                    showToast('Please sign in to upload your portfolio', 'info');
+                } else {
+                    alert('Please sign in to save your portfolio data securely.');
+                }
+                // Redirect to auth page with return URL
+                setTimeout(() => {
+                    window.location.href = '/auth.html?redirect=' + encodeURIComponent(window.location.pathname);
+                }, 1000);
+                return;
+            }
+
             const section = document.getElementById('uploadSection');
             const card = document.getElementById('uploadCard');
             const btn = document.getElementById('uploadToggleBtn');
@@ -868,6 +884,22 @@
         }
 
         function toggleManualSection() {
+            // Check if user is logged in
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                // Show message and redirect to login
+                if (typeof showToast === 'function') {
+                    showToast('Please sign in to save your portfolio', 'info');
+                } else {
+                    alert('Please sign in to save your portfolio data securely.');
+                }
+                // Redirect to auth page with return URL
+                setTimeout(() => {
+                    window.location.href = '/auth.html?redirect=' + encodeURIComponent(window.location.pathname);
+                }, 1000);
+                return;
+            }
+
             const section = document.getElementById('manualSection');
             const card = document.getElementById('manualCard');
             const btn = document.getElementById('manualToggleBtn');

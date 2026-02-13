@@ -1064,6 +1064,24 @@
             // Check email verification status for authenticated users
             await checkVerificationStatus();
             
+            // DEBUG: Check what's in localStorage
+            console.log('🔍 DEBUG - Checking localStorage:');
+            console.log('  portfolioMode:', localStorage.getItem('portfolioMode'));
+            console.log('  authToken:', localStorage.getItem('authToken') ? 'present' : 'null');
+            console.log('  portfolioData:', localStorage.getItem('portfolioData') ? 'present' : 'null');
+            console.log('  guestPortfolioData:', localStorage.getItem('guestPortfolioData') ? 'present' : 'null');
+            
+            if (localStorage.getItem('portfolioData')) {
+                try {
+                    const stored = JSON.parse(localStorage.getItem('portfolioData'));
+                    console.log('  portfolioData contents:', stored);
+                    console.log('  Holdings count:', stored.holdings?.length || 0);
+                    console.log('  Sample holding:', stored.holdings?.[0]);
+                } catch (e) {
+                    console.error('  Failed to parse portfolioData:', e);
+                }
+            }
+            
             // Check for demo mode in URL
             const urlParams = new URLSearchParams(window.location.search);
             const mode = urlParams.get('mode');
@@ -1103,36 +1121,48 @@
                 // Fallback: Try to load from portfolio storage
                 // Use the global portfolioStorage instance (from portfolio-storage.js)
                 // with a safety check in case the script failed to load
+                console.log('💾 Attempting to load from portfolioStorage...');
                 let storedData = null;
                 try {
                     if (typeof portfolioStorage !== 'undefined' && portfolioStorage && typeof portfolioStorage.load === 'function') {
                         storedData = portfolioStorage.load();
+                        console.log('📦 portfolioStorage.load() returned:', storedData);
                     } else if (typeof PortfolioStorage === 'function') {
                         const ps = new PortfolioStorage();
                         storedData = ps.load();
+                        console.log('📦 new PortfolioStorage().load() returned:', storedData);
+                    } else {
+                        console.log('⚠️ portfolioStorage not available');
                     }
                 } catch (e) {
-                    console.warn('Portfolio storage load failed:', e.message);
+                    console.warn('⚠️ Portfolio storage load failed:', e.message);
                 }
                 
                 if (storedData && storedData.holdings && storedData.holdings.length > 0) {
+                    console.log('✅ Found data in portfolioStorage:', storedData.holdings.length, 'holdings');
                     portfolioData = storedData;
                     renderDashboard();
                 } else {
+                    console.log('📁 No data in portfolioStorage, checking plain localStorage...');
                     // Fallback to old localStorage
                     const stored = localStorage.getItem('portfolioData');
                     if (stored) {
+                        console.log('📁 Found portfolioData in localStorage');
                         portfolioData = JSON.parse(stored);
+                        console.log('📦 Parsed data:', portfolioData.holdings?.length || 0, 'holdings');
                         renderDashboard();
                     } else {
+                        console.log('❌ No data found in localStorage');
                         // No data found - auto-load demo for first-time visitors
                         const hasVisited = localStorage.getItem('mfhelper_visited');
                         if (!hasVisited) {
+                            console.log('🎯 First-time visitor, redirecting to demo...');
                             localStorage.setItem('mfhelper_visited', 'true');
                             window.location.href = '/dashboard.html?mode=demo';
                             return;
                         }
                         // Returning visitor with no data - show options
+                        console.log('👋 Returning visitor with no data, showing "get started" options');
                         document.getElementById('dashboardContent').style.display = 'none';
                         document.getElementById('noData').style.display = 'block';
                     }

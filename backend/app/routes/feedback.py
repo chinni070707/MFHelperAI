@@ -2,7 +2,7 @@
 Feedback API endpoints
 Collect user feedback on tool pages and serve to admin panel
 """
-from fastapi import APIRouter, HTTPException, status, Header
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime

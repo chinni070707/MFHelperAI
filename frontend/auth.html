@@ -677,6 +677,23 @@
     <script src="/js/errorHandler.js"></script>
     
     <script>
+        // Helper to redirect after login/signup
+        function redirectAfterAuth() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectUrl = urlParams.get('redirect');
+            
+            if (redirectUrl) {
+                try {
+                    window.location.href = decodeURIComponent(redirectUrl);
+                } catch (e) {
+                    console.error('Redirect failed:', e);
+                    window.location.href = '/dashboard.html';
+                }
+            } else {
+                window.location.href = '/dashboard.html';
+            }
+        }
+
         // Tab switching
         function switchTab(tab) {
             const tabs = document.querySelectorAll('.tab-btn');
@@ -726,7 +743,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        window.location.href = '/dashboard.html';
+                        redirectAfterAuth();
                     } else {
                         localStorage.removeItem('authToken');
                         localStorage.removeItem('userInfo');
@@ -796,14 +813,14 @@
                         localStorage.setItem('userInfo', JSON.stringify(data.user));
                     }
                     
-                    showToast('Welcome! Redirecting to dashboard...', 'success');
+                    showToast('Welcome! Redirecting...', 'success');
                     
                     try {
-                        window.location.href = '/dashboard.html';
+                        redirectAfterAuth();
                     } catch (redirectError) {
                         console.error('Redirect failed:', redirectError);
-                        alert('Login successful! Please click OK to go to dashboard.');
-                        window.location.href = '/dashboard.html';
+                        alert('Login successful! Please click OK to continue.');
+                        redirectAfterAuth();
                     }
                 } else {
                     showToast(data.detail || 'Google sign-in failed', 'error');
@@ -851,10 +868,10 @@
                         localStorage.setItem('userInfo', JSON.stringify(data.user));
                     }
                     
-                    showToast('Welcome back! Redirecting to dashboard...', 'success');
+                    showToast('Welcome back! Redirecting...', 'success');
                     
                     try {
-                        window.location.href = '/dashboard.html';
+                        redirectAfterAuth();
                     } catch (redirectError) {
                         console.error('Redirect failed:', redirectError);
                         const linkDiv = document.createElement('div');
@@ -977,7 +994,7 @@
                         showToast('Account created! Redirecting...', 'success');
                         
                         try {
-                            window.location.href = '/dashboard.html';
+                            redirectAfterAuth();
                         } catch (redirectError) {
                             console.error('Redirect failed:', redirectError);
                             alert('Account created successfully! Click OK to go to dashboard.');
