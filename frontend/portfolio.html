@@ -668,6 +668,42 @@
             padding: 1.25rem 3rem;
         }
 
+        /* CAS import summary stats grid */
+        .cas-summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+        }
+        .cas-stat-box {
+            background: rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            text-align: center;
+        }
+        .cas-stat-box .stat-label {
+            font-size: 0.78rem;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+        .cas-stat-box .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .cas-stat-box .stat-value.positive { color: #d4f5d4; }
+        .cas-stat-box .stat-value.negative { color: #ffd4d4; }
+        .cas-summary-warnings {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
         /* Success message */
         .success-message {
             display: none;
@@ -933,7 +969,30 @@
         <!-- Dashboard CTA (shown after data entry) -->
         <div class="dashboard-cta" id="dashboardCta">
             <h3>✅ Portfolio Ready!</h3>
-            <p>Your portfolio has been set up successfully. View detailed analytics, performance metrics, and insights now.</p>
+            <div class="cas-summary-stats" id="casSummaryStats" style="display:none;">
+                <div class="cas-stat-box">
+                    <div class="stat-label">Funds</div>
+                    <div class="stat-value" id="statFunds">—</div>
+                </div>
+                <div class="cas-stat-box">
+                    <div class="stat-label">Invested</div>
+                    <div class="stat-value" id="statInvested">—</div>
+                </div>
+                <div class="cas-stat-box">
+                    <div class="stat-label">Current Value</div>
+                    <div class="stat-value" id="statCurrent">—</div>
+                </div>
+                <div class="cas-stat-box">
+                    <div class="stat-label">Gain / Loss</div>
+                    <div class="stat-value" id="statGain">—</div>
+                </div>
+                <div class="cas-stat-box">
+                    <div class="stat-label">Returns</div>
+                    <div class="stat-value" id="statReturn">—</div>
+                </div>
+            </div>
+            <div id="casWarnings" class="cas-summary-warnings" style="display:none;"></div>
+            <p id="dashboardCtaText">Your portfolio has been set up successfully. View detailed analytics, performance metrics, and insights now.</p>
             <a href="/dashboard.html" class="cta-button">
                 View Dashboard Analytics →
             </a>
@@ -1155,6 +1214,36 @@
                 document.getElementById('uploadActions').style.display = 'none';
                 document.getElementById('uploadSuccess').style.display = 'block';
                 document.getElementById('dashboardCta').classList.add('show');
+
+                // Populate CAS import summary in Portfolio Ready section
+                if (uploadResult.summary) {
+                    const s = uploadResult.summary;
+                    const fmt = n => '₹' + (n >= 10000000 ? (n / 10000000).toFixed(2) + 'Cr'
+                                          : n >= 100000   ? (n / 100000).toFixed(2) + 'L'
+                                          : n.toLocaleString('en-IN', { maximumFractionDigits: 0 }));
+                    document.getElementById('statFunds').textContent = s.total_funds || 0;
+                    document.getElementById('statInvested').textContent = fmt(s.total_invested || 0);
+                    document.getElementById('statCurrent').textContent = fmt(s.total_current || 0);
+                    const gain = s.total_gain || 0;
+                    const gainEl = document.getElementById('statGain');
+                    gainEl.textContent = (gain >= 0 ? '+' : '') + fmt(Math.abs(gain));
+                    gainEl.className = 'stat-value ' + (gain >= 0 ? 'positive' : 'negative');
+                    const ret = s.return_pct || 0;
+                    const retEl = document.getElementById('statReturn');
+                    retEl.textContent = (ret >= 0 ? '+' : '') + ret.toFixed(1) + '%';
+                    retEl.className = 'stat-value ' + (ret >= 0 ? 'positive' : 'negative');
+                    document.getElementById('casSummaryStats').style.display = 'grid';
+                    const fundsCount = s.total_funds || 0;
+                    document.getElementById('dashboardCtaText').textContent =
+                        `${fundsCount} fund${fundsCount !== 1 ? 's' : ''} imported successfully. View detailed analytics, performance metrics, and insights now.`;
+                }
+                // Show data quality warnings if any
+                const importWarnings = uploadResult.import_summary && uploadResult.import_summary.warnings;
+                if (importWarnings && importWarnings.length > 0) {
+                    const wDiv = document.getElementById('casWarnings');
+                    wDiv.innerHTML = '⚠️ ' + importWarnings.join(' · ');
+                    wDiv.style.display = 'block';
+                }
 
             } catch (error) {
                 statusText.textContent = '❌ ' + error.message;
