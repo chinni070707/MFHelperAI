@@ -5,7 +5,6 @@ Supports CAMS, KFintech, and NSDL/CDSL formats
 from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import Optional
-import casparser
 import tempfile
 import os
 
@@ -70,8 +69,9 @@ async def upload_cas(
             temp_file.write(content)
             temp_file_path = temp_file.name
         
-        # Parse CAS using casparser
+        # Parse CAS using casparser (lazy import — needs libpoppler on Linux)
         try:
+            import casparser
             cas_data = casparser.read_cas_pdf(temp_file_path, password or "")
         except Exception as parse_error:
             raise HTTPException(
@@ -94,25 +94,33 @@ async def upload_cas(
             for scheme in folio.schemes:
                 total_schemes += 1
                 
+                # Import the safe converter
+                from app.services.cas_import import safe_float_convert
+                
+                # Use smart conversion
+                units = safe_float_convert(scheme.close, "units", 0)
+                
                 scheme_info = {
                     "scheme_name": scheme.scheme,
                     "isin": scheme.isin,
                     "amfi_code": scheme.amfi,
                     "type": scheme.type,
-                    "units": float(scheme.close) if scheme.close else 0,
+                    "units": units,
                 }
                 
                 if scheme.valuation:
-                    scheme_value = float(scheme.valuation.value)
-                    scheme_cost = float(scheme.valuation.cost)
+                    # Use robust conversion with fallbacks
+                    scheme_value = safe_float_convert(scheme.valuation.value, "value", 0)
+                    scheme_cost = safe_float_convert(scheme.valuation.cost, "cost", 0)
+                    nav_value = safe_float_convert(scheme.valuation.nav, "NAV", 0)
                     
                     scheme_info.update({
-                        "nav": float(scheme.valuation.nav),
+                        "nav": nav_value,
                         "current_value": scheme_value,
                         "invested_amount": scheme_cost,
                         "gain_loss": scheme_value - scheme_cost,
                         "return_pct": ((scheme_value / scheme_cost - 1) * 100) if scheme_cost > 0 else 0,
-                        "valuation_date": str(scheme.valuation.date)
+                        "valuation_date": str(scheme.valuation.date) if scheme.valuation.date else ""
                     })
                     
                     folio_value += scheme_value
@@ -164,13 +172,28 @@ async def upload_cas(
         
         # Save to database if requested
         if save_to_db:
-            portfolio_id = await save_cas_to_database(
+            import_result = await save_cas_to_database(
                 cas_data=cas_data,
                 user_id=current_user.id,
                 db=db
             )
-            response_data["portfolio_id"] = portfolio_id
-            response_data["message"] = "CAS parsed and saved to database successfully"
+            response_data["portfolio_id"] = import_result["portfolio_id"]
+            response_data["import_stats"] = {
+                "total_imported": import_result["total_imported"],
+                "total_skipped": import_result["total_skipped"],
+                "skipped_schemes": import_result["skipped_schemes"]
+            }
+            
+            # Add warning message if schemes were skipped
+            if import_result["total_skipped"] > 0:
+                response_data["message"] = f"CAS saved - {import_result['total_imported']} holdings imported. ⚠️ {import_result['total_skipped']} schemes had data issues and were skipped."
+                response_data["warnings"] = [
+                    f"Some schemes could not be imported due to invalid data.",
+                    f"{import_result['total_skipped']} schemes were skipped - see details below.",
+                    "This has been logged for admin review."
+                ]
+            else:
+                response_data["message"] = "CAS parsed and saved to database successfully"
         
         return response_data
         
@@ -190,18 +213,21 @@ async def upload_cas(
                 pass
 
 
-async def save_cas_to_database(cas_data, user_id: int, db: Session) -> int:
+async def save_cas_to_database(cas_data, user_id: int, db: Session) -> dict:
     """
     Save parsed CAS data to database
     Creates Portfolio and Holding records, then imports transactions
+    Returns dict with portfolio_id and import statistics
     """
     from app.services.cas_import import import_cas_to_database, import_cas_transactions
     
-    portfolio_id = import_cas_to_database(
+    import_result = import_cas_to_database(
         cas_data=cas_data,
         user_id=user_id,
         db=db
     )
+    
+    portfolio_id = import_result["portfolio_id"]
     
     # Import transactions for XIRR and analytics
     try:
@@ -216,4 +242,4 @@ async def save_cas_to_database(cas_data, user_id: int, db: Session) -> int:
         logger = logging.getLogger(__name__)
         logger.warning(f"Failed to import CAS transactions: {str(e)}")
     
-    return portfolio_id
+    return import_result

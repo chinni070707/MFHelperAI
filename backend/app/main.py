@@ -40,9 +40,8 @@ if cache.is_available():
 else:
     logger.warning("[WARN] Cache unavailable - running without Redis")
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
-logger.info("Database tables created/verified")
+# Database init deferred to startup event (see below)
+# This ensures /health endpoint registers before any blocking DB work
 
 # Auto-seed demo portfolio if table is empty
 def seed_demo_portfolio_if_empty():
@@ -173,7 +172,7 @@ def seed_demo_portfolio_if_empty():
     finally:
         db.close()
 
-seed_demo_portfolio_if_empty()
+# NOTE: seed_demo_portfolio_if_empty() is called in startup event below
 
 app = FastAPI(
     title="MFHelper API",
@@ -184,10 +183,28 @@ app = FastAPI(
 )
 
 # Health check endpoint - registered FIRST for Render.com
+# This MUST be before any middleware or router registration
 @app.get("/health")
 async def health_check_render():
-    """Root health check endpoint for Render.com monitoring"""
+    """Root health check endpoint for Render.com monitoring.
+    Returns immediately without any DB or external dependency checks.
+    """
     return {"status": "healthy", "version": "1.0.0"}
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database and seed data AFTER the app is ready to serve /health."""
+    try:
+        Base.metadata.create_all(bind=engine)
+        logger.info("Database tables created/verified")
+    except Exception as e:
+        logger.error(f"Database init failed (non-fatal): {e}")
+    
+    try:
+        seed_demo_portfolio_if_empty()
+    except Exception as e:
+        logger.error(f"Demo seed failed (non-fatal): {e}")
 
 # Add rate limiter state
 app.state.limiter = limiter
@@ -252,7 +269,7 @@ async def log_requests(request: Request, call_next):
 if not settings.DEBUG:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["localhost", "127.0.0.1", "testserver", "*.mfhelper.com"]  # Added testserver for tests
+        allowed_hosts=["localhost", "127.0.0.1", "testserver", "*.mfhelper.com", "*.onrender.com"]  # Added testserver for tests
     )
 
 # Performance: Response compression (70% size reduction)

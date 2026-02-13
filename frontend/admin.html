@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5RBTST8N');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - MFHelper</title>
@@ -254,6 +262,11 @@
     </style>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RBTST8N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <div class="container">
         <div id="loginSection" style="display: none;">
             <div class="login-form">
@@ -321,6 +334,24 @@
                 <div id="holdingsAmcSummary"></div>
                 <table id="holdingsDataTable"></table>
             </div>
+
+            <!-- CAS Import Logs -->
+            <div class="table-section" id="casLogsSection" style="display: none;">
+                <h2>⚠️ CAS Import Quality Alerts</h2>
+                <div id="casLogsMeta" style="margin-bottom: 20px;"></div>
+                
+                <!-- Conversion Failures -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #ef4444; margin-bottom: 15px;">❌ String Conversion Failures</h3>
+                    <div id="conversionFailuresTable" style="max-height: 400px; overflow-y: auto;"></div>
+                </div>
+                
+                <!-- Import Warnings -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #f59e0b; margin-bottom: 15px;">⚠️ Skipped Schemes</h3>
+                    <div id="importWarningsTable" style="max-height: 400px; overflow-y: auto;"></div>
+                </div>
+            </div>
         </div>
     </div>
     
@@ -383,6 +414,7 @@
                 renderStats(data);
                 await fetchTimeline();
                 await fetchHoldingsDataSummary();
+                await fetchCasImportLogs();
                 await fetchFeedback();
                 
                 document.getElementById('loadingMessage').style.display = 'none';
@@ -737,6 +769,90 @@
             } else {
                 row.style.display = 'none';
                 arrow.textContent = '▶';
+            }
+        }
+
+        // ── CAS Import Logs Section ──
+        async function fetchCasImportLogs() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/cas-import-logs?api_key=${apiKey}&limit=100`);
+                if (!response.ok) return;
+                const data = await response.json();
+                renderCasImportLogs(data);
+            } catch (error) {
+                console.error('Error fetching CAS import logs:', error);
+            }
+        }
+
+        function renderCasImportLogs(data) {
+            const section = document.getElementById('casLogsSection');
+            section.style.display = 'block';
+
+            // Meta information
+            const metaDiv = document.getElementById('casLogsMeta');
+            metaDiv.innerHTML = `
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                    <div style="background:#fef2f2; padding:12px 18px; border-radius:8px; flex:1; min-width:180px; border-left: 4px solid #ef4444;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Conversion Failures</div>
+                        <div style="font-size:28px; font-weight:700; color:#dc2626;">${data.total_conversion_failures}</div>
+                        <div style="font-size:11px; color:#9ca3af;">String-to-float errors</div>
+                    </div>
+                    <div style="background:#fef9c3; padding:12px 18px; border-radius:8px; flex:1; min-width:180px; border-left: 4px solid #f59e0b;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Import Warnings</div>
+                        <div style="font-size:28px; font-weight:700; color:#d97706;">${data.total_import_warnings}</div>
+                        <div style="font-size:11px; color:#9ca3af;">CAS import issues</div>
+                    </div>
+                    <div style="background:#fef3c7; padding:12px 18px; border-radius:8px; flex:1; min-width:180px; border-left: 4px solid #f59e0b;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Skipped Schemes</div>
+                        <div style="font-size:28px; font-weight:700; color:#d97706;">${data.total_skipped_schemes}</div>
+                        <div style="font-size:11px; color:#9ca3af;">Could not import</div>
+                    </div>
+                    <div style="background:#f3f4f6; padding:12px 18px; border-radius:8px; flex:1; min-width:180px;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Log File</div>
+                        <div style="font-size:14px; font-weight:600; color:#1f2937; word-break: break-all;">${data.log_file.split('/').pop() || 'N/A'}</div>
+                        <div style="font-size:11px; color:#9ca3af;">${data.log_exists ? '✅ Exists' : '❌ Not found'}</div>
+                    </div>
+                </div>
+                ${data.total_conversion_failures === 0 && data.total_import_warnings === 0 ? 
+                    '<div style="padding: 20px; background: #f0fdf4; border-radius: 8px; text-align: center; color: #16a34a; font-weight: 600;">✅ No CAS import issues today! All imports successful.</div>' : ''}
+            `;
+
+            // Conversion Failures
+            const convFailDiv = document.getElementById('conversionFailuresTable');
+            if (data.conversion_failures.length > 0) {
+                let html = '<table style="width:100%; font-size:12px; border-collapse: collapse;">';
+                html += '<thead><tr style="background:#f9fafb;"><th style="padding:10px; text-align:left;">Time</th><th style="padding:10px; text-align:left;">Details</th></tr></thead><tbody>';
+                data.conversion_failures.forEach((fail, idx) => {
+                    html += `
+                        <tr style="border-bottom:1px solid #e5e7eb; ${idx % 2 === 0 ? 'background:#fefefe;' : ''}">
+                            <td style="padding:10px; white-space:nowrap; vertical-align:top; font-family: monospace; color:#6b7280;">${fail.timestamp}</td>
+                            <td style="padding:10px; font-family: monospace; color:#374151;">${fail.details}</td>
+                        </tr>
+                    `;
+                });
+                html += '</tbody></table>';
+                convFailDiv.innerHTML = html;
+            } else {
+                convFailDiv.innerHTML = '<div style="padding:15px; background:#f0fdf4; border-radius:6px; color:#16a34a;">✅ No conversion failures</div>';
+            }
+
+            // Import Warnings
+            const warningsDiv = document.getElementById('importWarningsTable');
+            if (data.import_warnings.length > 0) {
+                let html = '<table style="width:100%; font-size:12px; border-collapse: collapse;">';
+                html += '<thead><tr style="background:#f9fafb;"><th style="padding:10px; text-align:left;">Time</th><th style="padding:10px; text-align:left;">Message</th></tr></thead><tbody>';
+                data.import_warnings.forEach((warn, idx) => {
+                    html += `
+                        <tr style="border-bottom:1px solid #e5e7eb; ${idx % 2 === 0 ? 'background:#fefefe;' : ''}">
+                            <td style="padding:10px; white-space:nowrap; vertical-align:top; font-family: monospace; color:#6b7280;">${warn.timestamp}</td>
+                            <td style="padding:10px; font-family: monospace; color:#374151; word-break: break-word;">${warn.message}</td>
+                        </tr>
+                    `;
+                });
+                html += '</tbody></table>';
+                warningsDiv.innerHTML = html;
+            } else {
+                warningsDiv.innerHTML = '<div style="padding:15px; background:#f0fdf4; border-radius:6px; color:#16a34a;">✅ No import warnings</div>';
             }
         }
 

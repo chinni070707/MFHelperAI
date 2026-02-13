@@ -6,11 +6,17 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from datetime import datetime
-import psutil
 import os
 import sys
 from typing import Dict
 import logging
+
+# Lazy import psutil — it's a C extension that may not be available
+try:
+    import psutil
+    HAS_PSUTIL = True
+except ImportError:
+    HAS_PSUTIL = False
 
 from app.database import get_db
 
@@ -60,15 +66,21 @@ async def readiness_check(db: Session = Depends(get_db)) -> Dict:
     
     # Check disk space (at least 100MB free)
     try:
-        disk = psutil.disk_usage('/')
-        checks["disk_space"] = disk.free > 100 * 1024 * 1024  # 100MB
+        if HAS_PSUTIL:
+            disk = psutil.disk_usage('/')
+            checks["disk_space"] = disk.free > 100 * 1024 * 1024  # 100MB
+        else:
+            checks["disk_space"] = True  # Skip if psutil unavailable
     except Exception as e:
         logger.error(f"Disk space check failed: {e}")
     
     # Check memory (at least 100MB available)
     try:
-        memory = psutil.virtual_memory()
-        checks["memory"] = memory.available > 100 * 1024 * 1024  # 100MB
+        if HAS_PSUTIL:
+            memory = psutil.virtual_memory()
+            checks["memory"] = memory.available > 100 * 1024 * 1024  # 100MB
+        else:
+            checks["memory"] = True  # Skip if psutil unavailable
     except Exception as e:
         logger.error(f"Memory check failed: {e}")
     
@@ -91,6 +103,13 @@ async def get_metrics(db: Session = Depends(get_db)) -> Dict:
         Comprehensive metrics about system health and performance
     """
     try:
+        if not HAS_PSUTIL:
+            return {
+                "status": "ok",
+                "timestamp": datetime.utcnow().isoformat(),
+                "message": "Detailed metrics unavailable (psutil not installed)"
+            }
+        
         # CPU metrics
         cpu_percent = psutil.cpu_percent(interval=1)
         cpu_count = psutil.cpu_count()

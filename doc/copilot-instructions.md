@@ -519,7 +519,60 @@ Source: backend/data/fund_holdings.json
 Loaded into DB: fund_master, fund_holdings, fund_sector_allocation
 Update frequency: Weekly (sufficient, funds change monthly)
 Size: ~2-3MB for 1000 funds
+Current: 98 funds, 963 unique stocks (as of Feb 2026)
 ```
+
+### Fund Holdings Data Management
+
+**Data Source:** Holdings are scraped from MoneyControl portfolio pages and stored in `backend/data/fund_holdings.json`.
+
+**Key Scripts:**
+- `scripts/refetch_holdings.py` — Main tool to fetch/refresh holdings from MoneyControl
+- `scripts/validate_holdings.py` — Validates data quality (sectors, weights, duplicates)
+
+**Refetching Holdings:**
+```bash
+cd backend
+
+# List any funds with dummy/placeholder data
+python scripts/refetch_holdings.py --list-dummy
+
+# Refetch all dummy funds
+python scripts/refetch_holdings.py
+
+# Refetch a specific fund
+python scripts/refetch_holdings.py --fund hdfc-top-100-fund
+
+# Add a new fund with a MoneyControl URL
+python scripts/refetch_holdings.py --add axis-bluechip-fund --url https://www.moneycontrol.com/mutual-funds/axis-bluechip-fund-direct-growth/portfolio-holdings/MXXXX
+
+# Refetch a fund with a custom/corrected URL
+python scripts/refetch_holdings.py --fund my-fund --url https://...
+
+# Dry run (show what would be fetched)
+python scripts/refetch_holdings.py --dry-run
+
+# Always validate after changes
+python scripts/validate_holdings.py
+```
+
+**MoneyControl Rate Limiting:**
+- MoneyControl aggressively rate-limits (HTTP 503) after ~3-5 requests
+- The refetch script has built-in retry logic (3 attempts with 8/16/24s backoff)
+- Default delay between funds: 5 seconds
+- If blocked, wait 2-5 minutes before retrying
+- MoneyControl fund codes (e.g., MHD068) are NOT sequential and don't follow a pattern — you must find them from their website manually
+
+**Data Quality Rules:**
+- Every fund must have: name, amc (non-empty), category, holdings (>=3 stocks)
+- Weights should sum to 80-105% (some funds don't list all holdings)
+- Sector names vary across MoneyControl pages (e.g., "Banks" vs "Private sector bank") — this is expected
+- Run `validate_holdings.py` after any data changes; 0 errors required, warnings are acceptable
+
+**Known Issues (as of Feb 2026):**
+- 6 popular funds are missing due to incorrect MoneyControl codes: axis-bluechip-fund, sbi-bluechip-fund, icici-prudential-bluechip-fund, mirae-asset-emerging-bluechip-fund, quantum-elss-tax-saver-fund, quantum-value-fund
+- hdfc-top-100-fund and hdfc-mid-cap-fund share identical data (wrong MC URL for mid-cap)
+- MoneyControl has 2 table formats: basic (9 cols) and extended (12 cols with "Sector Total", "M-Cap") — the scraper picks the table with the most rows
 
 ---
 
@@ -785,6 +838,13 @@ python scripts/load_holdings_to_db.py
 python scripts/weekly_update.py
 ```
 
+**Refetch/Validate Holdings Data:**
+```bash
+python scripts/refetch_holdings.py --list-dummy
+python scripts/refetch_holdings.py --fund <fund-key>
+python scripts/validate_holdings.py
+```
+
 **Test API:**
 ```bash
 curl http://localhost:8000/api/holdings/stats
@@ -792,7 +852,7 @@ curl http://localhost:8000/api/holdings/stats
 
 ---
 
-**Last Updated:** January 29, 2026  
+**Last Updated:** February 13, 2026  
 **Version:** 1.0.0-MVP  
 **Status:** Active Development
 

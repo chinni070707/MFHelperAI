@@ -428,3 +428,88 @@ async def get_holdings_data_summary(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to fetch holdings data summary: {str(e)}"
         )
+
+
+@router.get("/cas-import-logs")
+async def get_cas_import_logs(
+    api_key: str = None,
+    limit: int = 50
+) -> Dict:
+    """
+    Get recent CAS import errors and warnings from logs
+    
+    Query params:
+        api_key: Admin API key for authentication
+        limit: Number of log entries to return (default: 50)
+    
+    Returns:
+        Dictionary with CAS import errors, conversion failures, and skipped schemes
+    """
+    verify_admin(api_key)
+    
+    try:
+        # Read log file
+        log_dir = Path(__file__).parent.parent.parent / 'logs'
+        today_log = log_dir / f"mfhelper_{datetime.now().strftime('%Y%m%d')}.log"
+        
+        conversion_failures = []
+        skipped_schemes = []
+        import_warnings = []
+        
+        if today_log.exists():
+            with open(today_log, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+            
+            # Parse log lines for CAS-related errors
+            for i, line in enumerate(lines):
+                # Conversion failures
+                if "CONVERSION FAILED" in line:
+                    try:
+                        # Extract details from log line
+                        parts = line.split("|")
+                        if len(parts) >= 2:
+                            details = parts[-1].strip()
+                            conversion_failures.append({
+                                "timestamp": parts[0].strip() if len(parts) > 0 else "",
+                                "details": details,
+                                "full_line": line.strip()
+                            })
+                    except:
+                        pass
+                
+                # Skipped schemes warnings
+                if "CAS IMPORT WARNING" in line or "SKIPPED #" in line:
+                    import_warnings.append({
+                        "timestamp": line.split("|")[0].strip() if "|" in line else "",
+                        "message": line.strip()
+                    })
+                
+                # Extract skipped scheme details
+                if "Scheme:" in line and "Folio:" in line:
+                    skipped_schemes.append({
+                        "message": line.strip()
+                    })
+            
+            # Limit results
+            conversion_failures = conversion_failures[-limit:]
+            import_warnings = import_warnings[-limit:]
+            skipped_schemes = skipped_schemes[-limit:]
+        
+        return {
+            "log_file": str(today_log),
+            "log_exists": today_log.exists(),
+            "total_conversion_failures": len(conversion_failures),
+            "total_import_warnings": len(import_warnings),
+            "total_skipped_schemes": len(skipped_schemes),
+            "conversion_failures": conversion_failures,
+            "import_warnings": import_warnings,
+            "skipped_schemes": skipped_schemes,
+            "message": "Recent CAS import issues from today's log file"
+        }
+    
+    except Exception as e:
+        logger.error(f"Error reading CAS import logs: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch CAS import logs: {str(e)}"
+        )

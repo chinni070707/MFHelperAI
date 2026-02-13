@@ -84,6 +84,84 @@ async def get_portfolio(
     }
 
 
+@router.get("/cas-import-summary")
+async def get_cas_import_summary(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get detailed summary of the latest CAS import for debugging and user confirmation.
+    Returns per-holding diagnostic info so users can verify what was loaded.
+    """
+    logger.info(f"Fetching CAS import summary for user: {current_user.email}")
+    
+    # Get latest portfolio
+    portfolio = db.query(Portfolio).filter(
+        Portfolio.user_id == current_user.id
+    ).order_by(Portfolio.snapshot_date.desc()).first()
+    
+    if not portfolio:
+        return {
+            "has_data": False,
+            "message": "No portfolio data found. Please upload a CAS PDF or Excel file."
+        }
+    
+    # Get holdings for this portfolio
+    holdings = db.query(Holding).filter(
+        Holding.portfolio_id == portfolio.id
+    ).all()
+    
+    # Diagnostic info
+    warnings = []
+    funds_with_zero_invested = sum(1 for h in holdings if not h.invested_amount or h.invested_amount == 0)
+    funds_with_zero_current = sum(1 for h in holdings if not h.current_value or h.current_value == 0)
+    
+    if funds_with_zero_invested > 0:
+        warnings.append(f"{funds_with_zero_invested} of {len(holdings)} funds have ₹0 invested amount")
+    if funds_with_zero_current > 0:
+        warnings.append(f"{funds_with_zero_current} of {len(holdings)} funds have ₹0 current value")
+    if portfolio.total_invested == 0 and len(holdings) > 0:
+        warnings.append("Portfolio total invested is ₹0 despite having holdings — CAS parsing may have failed to extract cost data")
+    
+    amcs = sorted(set(h.amc for h in holdings if h.amc))
+    categories = sorted(set(h.category for h in holdings if h.category))
+    
+    holdings_detail = [
+        {
+            "fund_name": h.fund_name,
+            "amc": h.amc or "Unknown",
+            "category": h.category or "Unknown",
+            "invested": h.invested_amount or 0,
+            "current_value": h.current_value or 0,
+            "units": h.units or 0,
+            "nav": h.nav or 0,
+            "gain_loss": h.gain_loss or 0,
+            "return_pct": h.return_pct or 0,
+            "has_invested": bool(h.invested_amount and h.invested_amount > 0),
+            "has_current_value": bool(h.current_value and h.current_value > 0),
+        }
+        for h in holdings
+    ]
+    
+    return {
+        "has_data": True,
+        "portfolio_id": portfolio.id,
+        "portfolio_name": portfolio.name,
+        "source": portfolio.source,
+        "snapshot_date": portfolio.snapshot_date.isoformat() if portfolio.snapshot_date else None,
+        "total_funds": len(holdings),
+        "total_invested": portfolio.total_invested or 0,
+        "total_current": portfolio.total_current or 0,
+        "total_gain": portfolio.total_gain or 0,
+        "return_pct": (portfolio.total_gain / portfolio.total_invested * 100) if portfolio.total_invested and portfolio.total_invested > 0 else 0,
+        "amcs": amcs,
+        "categories": categories,
+        "funds_with_zero_invested": funds_with_zero_invested,
+        "funds_with_zero_current": funds_with_zero_current,
+        "warnings": warnings,
+        "holdings": holdings_detail
+    }
+
+
 @router.post("/save")
 async def save_portfolio(
     data: dict,
@@ -301,27 +379,94 @@ async def get_summary(
 
 @router.get("/history")
 async def get_portfolio_history(
-    limit: int = 10,
+    limit: int = 20,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get historical portfolio snapshots for trend analysis"""
+    """Get historical portfolio snapshots for trend analysis and user profile"""
     portfolios = db.query(Portfolio).filter(
         Portfolio.user_id == current_user.id
     ).order_by(Portfolio.snapshot_date.desc()).limit(limit).all()
     
-    return [
-        {
+    # Get the latest portfolio id to mark it as active
+    latest_id = portfolios[0].id if portfolios else None
+    
+    result = []
+    for p in portfolios:
+        holdings_count = db.query(Holding).filter(Holding.portfolio_id == p.id).count()
+        result.append({
             "id": p.id,
             "name": p.name,
-            "snapshot_date": p.snapshot_date.isoformat(),
-            "total_invested": p.total_invested,
-            "total_current": p.total_current,
-            "total_gain": p.total_gain,
-            "return_pct": (p.total_gain / p.total_invested * 100) if p.total_invested > 0 else 0
+            "source": p.source,
+            "snapshot_date": p.snapshot_date.isoformat() if p.snapshot_date else None,
+            "total_invested": p.total_invested or 0,
+            "total_current": p.total_current or 0,
+            "total_gain": p.total_gain or 0,
+            "return_pct": (p.total_gain / p.total_invested * 100) if p.total_invested and p.total_invested > 0 else 0,
+            "holdings_count": holdings_count,
+            "is_active": p.id == latest_id,
+        })
+    
+    return {
+        "snapshots": result,
+        "total_count": len(result)
+    }
+
+
+@router.get("/snapshot/{portfolio_id}")
+async def get_portfolio_snapshot(
+    portfolio_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Get a specific historical portfolio snapshot with its holdings"""
+    portfolio = db.query(Portfolio).filter(
+        Portfolio.id == portfolio_id,
+        Portfolio.user_id == current_user.id
+    ).first()
+    
+    if not portfolio:
+        raise HTTPException(status_code=404, detail="Portfolio snapshot not found")
+    
+    holdings = db.query(Holding).filter(
+        Holding.portfolio_id == portfolio.id
+    ).all()
+    
+    # Check if this is the latest
+    latest = db.query(Portfolio).filter(
+        Portfolio.user_id == current_user.id
+    ).order_by(Portfolio.snapshot_date.desc()).first()
+    
+    return {
+        "portfolio_id": portfolio.id,
+        "portfolio_name": portfolio.name,
+        "source": portfolio.source,
+        "snapshot_date": portfolio.snapshot_date.isoformat() if portfolio.snapshot_date else None,
+        "is_active": portfolio.id == latest.id if latest else False,
+        "holdings": [
+            {
+                "id": h.id,
+                "fund_name": h.fund_name,
+                "amc": h.amc,
+                "category": h.category,
+                "invested": h.invested_amount,
+                "current_value": h.current_value,
+                "units": h.units,
+                "nav": h.nav,
+                "gain": h.gain_loss,
+                "return_pct": h.return_pct,
+            }
+            for h in holdings
+        ],
+        "summary": {
+            "total_invested": portfolio.total_invested,
+            "total_current": portfolio.total_current,
+            "total_gain": portfolio.total_gain,
+            "return_pct": (portfolio.total_gain / portfolio.total_invested * 100) if portfolio.total_invested and portfolio.total_invested > 0 else 0,
+            "holdings_count": len(holdings),
+            "last_updated": portfolio.snapshot_date.isoformat() if portfolio.snapshot_date else None
         }
-        for p in portfolios
-    ]
+    }
 
 
 @router.get("/latest-id")

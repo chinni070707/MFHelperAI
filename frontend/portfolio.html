@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-5RBTST8N');</script>
+    <!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Setup - MFHelper | Build Your Portfolio</title>
@@ -85,6 +93,82 @@
 
         .nav-link:hover {
             color: var(--primary-green);
+        }
+
+        /* Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item.has-dropdown > a {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .nav-item.has-dropdown > a::before {
+            content: '▼';
+            font-size: 0.65rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.has-dropdown:hover > a::before {
+            transform: rotate(-180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            min-width: 280px;
+            padding: 0.75rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .nav-item.has-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            color: #212529;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: #F9FAFB;
+            color: var(--primary-green);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu a .icon {
+            font-size: 1.25rem;
+            width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 0.5rem 0;
         }
 
         .btn-primary {
@@ -665,13 +749,47 @@
     </style>
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RBTST8N"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="/" class="logo">MFHelper</a>
             <ul class="nav-menu" role="list">
                 <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/tools.html" class="nav-link">Tools</a></li>
+                <li class="nav-item has-dropdown">
+                    <a href="/tools.html" class="nav-link">Tools</a>
+                    <div class="dropdown-menu">
+                        <a href="/overlap-analysis.html">
+                            <span class="icon">🔄</span>
+                            <span>Fund Overlap Analysis</span>
+                        </a>
+                        <a href="/portfolio.html">
+                            <span class="icon">📊</span>
+                            <span>Portfolio Analyzer</span>
+                        </a>
+                        <a href="/fund-comparison.html">
+                            <span class="icon">⚖️</span>
+                            <span>Fund Comparison</span>
+                        </a>
+                        <a href="/risk-analyzer.html">
+                            <span class="icon">⚠️</span>
+                            <span>Risk Analyzer</span>
+                        </a>
+                        <a href="/rebalancing-tool.html">
+                            <span class="icon">⚙️</span>
+                            <span>Rebalancing Tool</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/tools.html">
+                            <span class="icon">🧰</span>
+                            <span>All Tools</span>
+                        </a>
+                    </div>
+                </li>
                 <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
                 <li><a href="/portfolio.html" class="nav-link" style="color: var(--primary-green);" aria-current="page">Portfolio</a></li>
                 <li><a href="/auth.html?tab=signup" class="btn-primary">Get Started</a></li>
@@ -688,7 +806,7 @@
     <main class="container">
         <!-- Hero Section -->
         <div class="hero">
-            <h1>📊 Build Your Portfolio</h1>
+            <h1>📊 Import Your Portfolio</h1>
             <p>Choose how you want to set up your mutual fund portfolio. We'll analyze it and provide detailed insights.</p>
         </div>
 

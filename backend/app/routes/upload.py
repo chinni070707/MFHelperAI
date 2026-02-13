@@ -352,6 +352,12 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
         # Parse the text to extract holdings
         holdings = extract_holdings_from_cas_text(full_text)
         
+        logger.info(f"CAS parsing complete: {len(holdings)} holdings found")
+        for idx, h in enumerate(holdings[:5]):
+            logger.info(f"  Holding {idx+1}: {h.get('fund_name', '?')[:50]} | invested={h.get('invested', 0):.2f} | current={h.get('current_value', 0):.2f} | units={h.get('units', 0):.3f}")
+        if len(holdings) > 5:
+            logger.info(f"  ... and {len(holdings) - 5} more")
+        
         # Calculate totals
         total_invested = sum(h.get('invested', 0) for h in holdings)
         total_current = sum(h.get('current_value', 0) for h in holdings)
@@ -381,64 +387,238 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
 
 
 def extract_holdings_from_cas_text(text: str) -> list:
-    """Extract mutual fund holdings from CAS text"""
+    """Extract mutual fund holdings from CAS text using multiple strategies"""
+    
+    # Strategy 1: KFinTech/CAMS summary table (most reliable)
+    holdings = _parse_summary_table(text)
+    if holdings:
+        logger.info(f"CAS Parser: Strategy 1 (summary table) found {len(holdings)} holdings")
+        return holdings
+    
+    # Strategy 2: Closing Unit Balance pattern (KFinTech detail sections)
+    holdings = _parse_closing_balance_sections(text)
+    if holdings:
+        logger.info(f"CAS Parser: Strategy 2 (closing balance) found {len(holdings)} holdings")
+        return holdings
+    
+    # Strategy 3: PORTFOLIO SUMMARY section (AMC-level totals)
+    holdings = _parse_portfolio_summary(text)
+    if holdings:
+        logger.info(f"CAS Parser: Strategy 3 (portfolio summary) found {len(holdings)} holdings")
+        return holdings
+    
+    # Strategy 4: Fallback — look for fund house names near numbers
+    holdings = fallback_cas_parser(text)
+    if holdings:
+        logger.info(f"CAS Parser: Strategy 4 (fallback) found {len(holdings)} holdings")
+    else:
+        logger.warning("CAS Parser: No holdings found with any strategy")
+    
+    return holdings
+
+
+def _parse_summary_table(text: str) -> list:
+    """
+    Parse the summary table found at the end of KFinTech/CAMS CAS statements.
+    Header: MUTUAL FUND UNITS HELD AS ON <date>
+    Row format: CODE - Fund Name  ISIN  Folio  Units  NAV  Invested  Valuation
+    """
     holdings = []
     
-    # Common patterns in CAS statements
-    # Pattern 1: Fund name followed by folio and details
-    fund_pattern = r'([A-Za-z\s\-]+(?:Fund|Scheme|Plan|Growth|Direct|Regular)[A-Za-z\s\-]*)\s*(?:Folio\s*(?:No)?\.?\s*:?\s*)?(\d+[\d\/]*)'
+    # Find the summary table section
+    summary_start = text.find('MUTUAL FUND UNITS HELD AS ON')
+    if summary_start == -1:
+        # Try alternate headers
+        for alt in ['MUTUAL FUND INVESTMENTS', 'SCHEME WISE VALUATION', 'MUTUAL FUND UNITS HELD']:
+            summary_start = text.find(alt)
+            if summary_start != -1:
+                break
     
-    # Pattern 2: NAV and units
-    nav_pattern = r'NAV[:\s]+(?:Rs\.?\s*)?([\d,]+\.?\d*)'
-    units_pattern = r'(?:Unit\s*Balance|Units)[:\s]+([\d,]+\.?\d*)'
-    value_pattern = r'(?:Valuation|Market\s*Value|Current\s*Value)[:\s]+(?:Rs\.?\s*)?([\d,]+\.?\d*)'
-    cost_pattern = r'(?:Cost\s*Value|Amount\s*Invested|Purchase\s*Value)[:\s]+(?:Rs\.?\s*)?([\d,]+\.?\d*)'
+    if summary_start == -1:
+        return []
     
-    # Split text by common fund separators
-    sections = re.split(r'(?=Registrar\s*:)|(?=ISIN\s*:)|(?=Folio\s*No)', text, flags=re.IGNORECASE)
+    summary_section = text[summary_start:]
     
-    for section in sections:
-        # Try to find fund name
-        fund_match = re.search(fund_pattern, section, re.IGNORECASE)
-        if fund_match:
-            fund_name = fund_match.group(1).strip()
-            folio = fund_match.group(2).strip() if fund_match.group(2) else ''
+    # Pattern: CODE - Fund Name   ISIN   Folio   Units   NAV   Cost   Valuation
+    # The ISIN always starts with INF
+    pattern = r'([A-Z0-9]{2,10})\s*-\s*(.+?)\s+(INF[A-Z0-9]{9})\s+([\d\/]+)\s+([\d,.]+)\s+([\d,.]+)\s+([\d,.]+)\s+([\d,.]+)'
+    
+    for match in re.finditer(pattern, summary_section, re.MULTILINE):
+        try:
+            scheme_code = match.group(1).strip()
+            fund_name = match.group(2).strip()
+            isin = match.group(3).strip()
+            folio = match.group(4).strip()
+            units = float(match.group(5).replace(',', ''))
+            nav = float(match.group(6).replace(',', ''))
+            invested = float(match.group(7).replace(',', ''))
+            valuation = float(match.group(8).replace(',', ''))
             
-            # Extract numeric values
-            nav_match = re.search(nav_pattern, section, re.IGNORECASE)
-            units_match = re.search(units_pattern, section, re.IGNORECASE)
-            value_match = re.search(value_pattern, section, re.IGNORECASE)
-            cost_match = re.search(cost_pattern, section, re.IGNORECASE)
+            # Clean up the fund name
+            fund_name = re.sub(r'\s+', ' ', fund_name).strip(' -_')
             
-            nav = float(nav_match.group(1).replace(',', '')) if nav_match else 0
-            units = float(units_match.group(1).replace(',', '')) if units_match else 0
-            current_value = float(value_match.group(1).replace(',', '')) if value_match else nav * units
-            invested = float(cost_match.group(1).replace(',', '')) if cost_match else current_value
+            amc = determine_amc(fund_name)
+            category = determine_category(fund_name)
+            style = determine_style(fund_name, category)
             
-            if fund_name and (current_value > 0 or units > 0):
-                # Determine AMC from fund name
-                amc = determine_amc(fund_name)
-                category = determine_category(fund_name)
-                style = determine_style(fund_name, category)
+            holdings.append({
+                'fund_name': f"{scheme_code} - {fund_name}" if scheme_code else fund_name,
+                'folio': folio,
+                'isin': isin,
+                'amc': amc,
+                'category': category,
+                'style': style,
+                'units': units,
+                'nav': nav,
+                'invested': invested,
+                'current_value': valuation,
+                'return_1y': '-',
+                'return_3y': '-',
+                'alpha': '-'
+            })
+        except (ValueError, IndexError) as e:
+            logger.debug(f"Skipping unparseable summary row: {e}")
+            continue
+    
+    return holdings
+
+
+def _parse_closing_balance_sections(text: str) -> list:
+    """
+    Parse KFinTech CAS detail sections. Each fund has a section ending with:
+    Closing Unit Balance: UNITS  Market Value on ... : INR VALUE
+    with the scheme name a few lines above (after a folio/ISIN line).
+    """
+    holdings = []
+    lines = text.split('\n')
+    
+    for i, line in enumerate(lines):
+        if 'Closing Unit Balance:' not in line:
+            continue
+        
+        # Extract units
+        units_match = re.search(r'Closing Unit Balance:\s*([\d,.]+)', line)
+        # Market value can be on the same line or the next
+        market_match = re.search(r'Market Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', line)
+        if not market_match and i + 1 < len(lines):
+            market_match = re.search(r'Market Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', lines[i + 1])
+        
+        # Cost value
+        cost_match = re.search(r'Total Cost Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', line)
+        if not cost_match and i + 1 < len(lines):
+            cost_match = re.search(r'Total Cost Value[^:]*:\s*(?:INR|Rs\.?)\s*([\d,.]+)', lines[i + 1])
+        
+        if not units_match or not market_match:
+            continue
+        
+        units = float(units_match.group(1).replace(',', ''))
+        current_value = float(market_match.group(1).replace(',', ''))
+        invested = float(cost_match.group(1).replace(',', '')) if cost_match else 0
+        
+        # Look backward for the scheme name (after folio/ISIN line)
+        scheme_name = None
+        nav = 0
+        folio = ''
+        for j in range(max(0, i - 15), i):
+            l = lines[j]
+            # NAV line
+            nav_match = re.search(r'NAV[^:]*:\s*(?:INR|Rs\.?)?\s*([\d,.]+)', l, re.IGNORECASE)
+            if nav_match:
+                nav = float(nav_match.group(1).replace(',', ''))
+            
+            # Folio/ISIN line often contains: "Nominee...CODE-Scheme Name (ISIN:...Folio No..."
+            if 'ISIN:' in l or ('Folio No' in l and '-' in l):
+                folio_match = re.search(r'Folio No[:\s]*([\d\/]+)', l, re.IGNORECASE)
+                if folio_match:
+                    folio = folio_match.group(1)
                 
-                holdings.append({
-                    'fund_name': clean_fund_name(fund_name),
-                    'folio': folio,
-                    'amc': amc,
-                    'category': category,
-                    'style': style,
-                    'units': units,
-                    'nav': nav,
-                    'invested': invested,
-                    'current_value': current_value,
-                    'return_1y': '-',
-                    'return_3y': '-',
-                    'alpha': '-'
-                })
+                # Extract scheme name: everything after CODE- up to (ISIN or Folio)
+                name_match = re.search(r'[A-Z0-9]+-(.+?)(?:\(|ISIN|Folio|Registrar|$)', l)
+                if name_match:
+                    scheme_name = name_match.group(1).strip(' -')
+                    scheme_name = re.sub(r'\s+', ' ', scheme_name)
+                    break
+                # Try: "Nominee...CODE-FUND_NAME"
+                nominee_match = re.search(r'Nominee.*?[A-Z0-9]+-(.+)', l)
+                if nominee_match:
+                    scheme_name = nominee_match.group(1).strip(' -')
+                    scheme_name = re.sub(r'\s+', ' ', scheme_name)
+                    break
+        
+        if not scheme_name:
+            scheme_name = f"Unknown Fund (line {i})"
+        
+        if units > 0 and current_value > 0:
+            amc = determine_amc(scheme_name)
+            category = determine_category(scheme_name)
+            style = determine_style(scheme_name, category)
+            
+            holdings.append({
+                'fund_name': clean_fund_name(scheme_name),
+                'folio': folio,
+                'amc': amc,
+                'category': category,
+                'style': style,
+                'units': units,
+                'nav': nav,
+                'invested': invested if invested > 0 else current_value,
+                'current_value': current_value,
+                'return_1y': '-',
+                'return_3y': '-',
+                'alpha': '-'
+            })
     
-    # If no holdings found with patterns, try simpler extraction
-    if not holdings:
-        holdings = fallback_cas_parser(text)
+    return holdings
+
+
+def _parse_portfolio_summary(text: str) -> list:
+    """
+    Parse the PORTFOLIO SUMMARY section (AMC-level totals).
+    Format: AMC_NAME  COST_VALUE  MARKET_VALUE
+    This is a last-resort — gives AMC-level data, not scheme-level.
+    """
+    holdings = []
+    
+    if 'PORTFOLIO SUMMARY' not in text:
+        return []
+    
+    summary_start = text.find('PORTFOLIO SUMMARY')
+    summary_end = text.find('Nominee 1', summary_start)
+    if summary_end == -1:
+        summary_end = min(summary_start + 3000, len(text))
+    
+    summary_section = text[summary_start:summary_end]
+    lines = summary_section.split('\n')
+    
+    for line in lines[1:]:
+        line = line.strip()
+        if not line or line.startswith('Total') or line.startswith('PORTFOLIO'):
+            continue
+        
+        parts = line.split()
+        if len(parts) >= 3:
+            try:
+                market_value = float(parts[-1].replace(',', ''))
+                cost_value = float(parts[-2].replace(',', ''))
+                amc_name = ' '.join(parts[:-2])
+                
+                if market_value > 0 and cost_value >= 0 and amc_name:
+                    holdings.append({
+                        'fund_name': f"{amc_name} (Portfolio Summary)",
+                        'folio': '',
+                        'amc': determine_amc(amc_name),
+                        'category': determine_category(amc_name),
+                        'style': determine_style(amc_name),
+                        'units': 0,
+                        'nav': 0,
+                        'invested': cost_value,
+                        'current_value': market_value,
+                        'return_1y': '-',
+                        'return_3y': '-',
+                        'alpha': '-'
+                    })
+            except (ValueError, IndexError):
+                continue
     
     return holdings
 
@@ -745,66 +925,189 @@ async def upload_cas(
     result = parse_cas_pdf(content, password)
     logger.debug(f"CAS parsed successfully: {len(result['holdings'])} holdings found")
     
+    # Build detailed import summary for debugging and user confirmation
+    import_summary = _build_cas_import_summary(result)
+    result['import_summary'] = import_summary
+    
     # Save to database if user is authenticated
     if current_user:
         logger.info(f"Authenticated user found: {current_user.email} (ID: {current_user.id})")
-        try:
-            # Calculate totals
-            total_invested = sum(h.get('invested', 0) for h in result['holdings'])
-            total_current = sum(h.get('current_value', 0) for h in result['holdings'])
-            total_gain = total_current - total_invested
-            
-            # Create a new portfolio snapshot
-            portfolio = Portfolio(
-                user_id=current_user.id,
-                name="CAS Upload",
-                source="cas_pdf",
-                total_invested=total_invested,
-                total_current=total_current,
-                total_gain=total_gain
-            )
-            db.add(portfolio)
-            db.flush()  # Get portfolio.id
-            
-            logger.debug(f"Created portfolio snapshot ID: {portfolio.id}")
-            
-            # Save each holding
-            for idx, holding in enumerate(result['holdings']):
-                logger.debug(f"Saving holding {idx+1}/{len(result['holdings'])}: {holding.get('fund_name', 'Unknown')}")
-                holding_entry = Holding(
-                    user_id=current_user.id,
-                    portfolio_id=portfolio.id,
-                    fund_name=holding.get('fund_name', ''),
-                    folio_number=holding.get('folio', ''),
-                    units=holding.get('units', 0),
-                    nav=holding.get('nav', 0),
-                    invested_amount=holding.get('invested', 0),
-                    current_value=holding.get('current_value', 0),
-                    gain_loss=holding.get('current_value', 0) - holding.get('invested', 0),
-                    return_pct=((holding.get('current_value', 0) - holding.get('invested', 0)) / holding.get('invested', 1) * 100) if holding.get('invested', 0) > 0 else 0,
-                    amc=holding.get('amc', ''),
-                    category=holding.get('category', '')
-                )
-                db.add(holding_entry)
-            
-            db.commit()
-            logger.info(f"✅ Successfully saved portfolio {portfolio.id} with {len(result['holdings'])} holdings for user {current_user.id}")
-            result['saved_to_database'] = True
-            result['user_email'] = current_user.email
-            result['portfolio_id'] = portfolio.id
-            
-        except Exception as e:
-            db.rollback()
-            logger.error(f"❌ Error saving portfolio to database: {str(e)}", exc_info=True)
+        
+        if not result['holdings']:
+            logger.warning(f"⚠️ CAS parsed 0 holdings — nothing to save for user {current_user.email}")
             result['saved_to_database'] = False
-            result['save_error'] = str(e)
+            result['save_error'] = 'No holdings found in CAS PDF. The PDF format may not be supported.'
+            import_summary['saved_to_database'] = False
+            import_summary['save_error'] = result['save_error']
+        else:
+            try:
+                # Keep old portfolios as historical snapshots for trend tracking.
+                # The dashboard always loads the latest by snapshot_date.
+                existing_count = db.query(Portfolio).filter(
+                    Portfolio.user_id == current_user.id
+                ).count()
+                if existing_count > 0:
+                    logger.info(f"User {current_user.id} has {existing_count} existing portfolio(s) — keeping as history")
+                
+                # Calculate totals
+                total_invested = sum(h.get('invested', 0) for h in result['holdings'])
+                total_current = sum(h.get('current_value', 0) for h in result['holdings'])
+                total_gain = total_current - total_invested
+            
+                # Create a new portfolio snapshot
+                portfolio = Portfolio(
+                    user_id=current_user.id,
+                    name="CAS Upload",
+                    source="cas_pdf",
+                    total_invested=total_invested,
+                    total_current=total_current,
+                    total_gain=total_gain
+                )
+                db.add(portfolio)
+                db.flush()  # Get portfolio.id
+                
+                logger.info(f"Created portfolio snapshot ID: {portfolio.id} — {len(result['holdings'])} holdings, invested={total_invested}, current={total_current}")
+                
+                # Save each holding
+                for idx, holding in enumerate(result['holdings']):
+                    logger.debug(f"Saving holding {idx+1}/{len(result['holdings'])}: {holding.get('fund_name', 'Unknown')}")
+                    invested = holding.get('invested', 0)
+                    current_value = holding.get('current_value', 0)
+                    holding_entry = Holding(
+                        user_id=current_user.id,
+                        portfolio_id=portfolio.id,
+                        fund_name=holding.get('fund_name', ''),
+                        folio_number=holding.get('folio', ''),
+                        units=holding.get('units', 0),
+                        nav=holding.get('nav', 0),
+                        invested_amount=invested,
+                        current_value=current_value,
+                        gain_loss=current_value - invested,
+                        return_pct=((current_value - invested) / invested * 100) if invested > 0 else 0,
+                        amc=holding.get('amc', ''),
+                        category=holding.get('category', '')
+                    )
+                    db.add(holding_entry)
+                
+                db.commit()
+                logger.info(f"✅ Successfully saved portfolio {portfolio.id} with {len(result['holdings'])} holdings for user {current_user.id}")
+                result['saved_to_database'] = True
+                result['user_email'] = current_user.email
+                result['portfolio_id'] = portfolio.id
+                import_summary['saved_to_database'] = True
+                import_summary['portfolio_id'] = portfolio.id
+                
+                # Verify data was actually saved by reading it back
+                saved_portfolio = db.query(Portfolio).filter(Portfolio.id == portfolio.id).first()
+                saved_holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio.id).all()
+                import_summary['verification'] = {
+                    'portfolio_found': saved_portfolio is not None,
+                    'portfolio_total_invested': saved_portfolio.total_invested if saved_portfolio else 0,
+                    'portfolio_total_current': saved_portfolio.total_current if saved_portfolio else 0,
+                    'holdings_saved_count': len(saved_holdings),
+                    'holdings_with_invested_gt_zero': sum(1 for h in saved_holdings if h.invested_amount and h.invested_amount > 0),
+                    'holdings_with_current_gt_zero': sum(1 for h in saved_holdings if h.current_value and h.current_value > 0),
+                }
+                
+            except Exception as e:
+                db.rollback()
+                logger.error(f"❌ Error saving portfolio to database: {str(e)}", exc_info=True)
+                result['saved_to_database'] = False
+                result['save_error'] = str(e)
+                import_summary['saved_to_database'] = False
+                import_summary['save_error'] = str(e)
     else:
         logger.warning("⚠️  No authenticated user found - data will not be saved to database")
         result['saved_to_database'] = False
         result['auth_required'] = True
+        import_summary['saved_to_database'] = False
+        import_summary['auth_required'] = True
     
     logger.debug(f"Returning result: saved={result.get('saved_to_database')}")
     return result
+
+
+def _build_cas_import_summary(result: dict) -> dict:
+    """Build a detailed import summary for CAS upload for debugging and user display"""
+    holdings = result.get('holdings', [])
+    summary = result.get('summary', {})
+    
+    warnings = []
+    holdings_detail = []
+    
+    funds_with_zero_invested = 0
+    funds_with_zero_current = 0
+    funds_with_zero_units = 0
+    funds_with_estimated_cost = 0
+    amcs_found = set()
+    categories_found = set()
+    
+    for h in holdings:
+        invested = h.get('invested', 0)
+        current_value = h.get('current_value', 0)
+        units = h.get('units', 0)
+        nav = h.get('nav', 0)
+        fund_name = h.get('fund_name', 'Unknown')
+        amc = h.get('amc', 'Unknown')
+        category = h.get('category', 'Unknown')
+        
+        amcs_found.add(amc)
+        categories_found.add(category)
+        
+        holding_warnings = []
+        if invested == 0:
+            funds_with_zero_invested += 1
+            holding_warnings.append('invested_amount_is_zero')
+        if current_value == 0:
+            funds_with_zero_current += 1
+            holding_warnings.append('current_value_is_zero')
+        if units == 0:
+            funds_with_zero_units += 1
+            holding_warnings.append('units_is_zero')
+        # Detect if invested was estimated (fallback parser sets invested = current_value * 0.9)
+        if invested > 0 and current_value > 0 and abs(invested - current_value * 0.9) < 1:
+            funds_with_estimated_cost += 1
+            holding_warnings.append('invested_amount_estimated')
+        
+        holdings_detail.append({
+            'fund_name': fund_name,
+            'amc': amc,
+            'category': category,
+            'invested': invested,
+            'current_value': current_value,
+            'units': units,
+            'nav': nav,
+            'gain_loss': current_value - invested,
+            'warnings': holding_warnings
+        })
+    
+    # Global warnings
+    if len(holdings) == 0:
+        warnings.append('No holdings were parsed from the CAS PDF. The PDF format may not be supported.')
+    if funds_with_zero_invested > 0:
+        warnings.append(f'{funds_with_zero_invested} of {len(holdings)} funds have ₹0 invested amount — cost data may not have been parsed.')
+    if funds_with_zero_current > 0:
+        warnings.append(f'{funds_with_zero_current} of {len(holdings)} funds have ₹0 current value.')
+    if funds_with_estimated_cost > 0:
+        warnings.append(f'{funds_with_estimated_cost} of {len(holdings)} funds have estimated invested amounts (90% of current value) — actual cost data was not found in PDF.')
+    
+    total_invested = summary.get('total_invested', 0)
+    total_current = summary.get('total_current', 0)
+    
+    return {
+        'total_funds_parsed': len(holdings),
+        'total_invested': total_invested,
+        'total_current': total_current,
+        'total_gain': total_current - total_invested,
+        'return_pct': ((total_current - total_invested) / total_invested * 100) if total_invested > 0 else 0,
+        'amcs_found': sorted(list(amcs_found)),
+        'categories_found': sorted(list(categories_found)),
+        'funds_with_zero_invested': funds_with_zero_invested,
+        'funds_with_zero_current': funds_with_zero_current,
+        'funds_with_estimated_cost': funds_with_estimated_cost,
+        'warnings': warnings,
+        'holdings_detail': holdings_detail
+    }
 
 
 @router.get("/template")

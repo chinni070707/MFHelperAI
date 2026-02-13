@@ -1,0 +1,269 @@
+"""
+CAS Import Service - Convert casparser output to database records
+"""
+from sqlalchemy.orm import Session
+from datetime import datetime
+import re
+from decimal import Decimal
+
+from app.models.models import Portfolio, Holding, Transaction
+
+
+def safe_float_convert(value, field_name="value", default=0.0) -> float:
+    """
+    Safely convert various types to float with multiple fallback strategies
+    
+    Handles:
+    - None values
+    - Decimal objects
+    - Strings with commas: "1,234.56"
+    - Strings with currency symbols: "₹1,234.56" or "$1,234.56"
+    - Strings with spaces: "1 234.56"
+    - Mixed formats: "Rs. 1,234.56"
+    - Scientific notation: "1.23e5"
+    """
+    if value is None or value == '':
+        return default
+    
+    # Already a number
+    if isinstance(value, (int, float)):
+        return float(value)
+    
+    # Decimal from casparser
+    if isinstance(value, Decimal):
+        return float(value)
+    
+    # String parsing with multiple strategies
+    if isinstance(value, str):
+        try:
+            # Strategy 1: Direct conversion (works for clean strings like "123.45")
+            return float(value)
+        except ValueError:
+            try:
+                # Strategy 2: Remove common formatting
+                # Remove currency symbols, commas, spaces
+                cleaned = re.sub(r'[₹$,\s]', '', value)
+                # Remove "Rs" or "Rs." prefix
+                cleaned = re.sub(r'^Rs\.?', '', cleaned, flags=re.IGNORECASE)
+                cleaned = cleaned.strip()
+                
+                if cleaned:
+                    return float(cleaned)
+                else:
+                    return default
+            except ValueError:
+                # Strategy 3: Extract first number found
+                match = re.search(r'-?\d+\.?\d*', value)
+                if match:
+                    try:
+                        return float(match.group())
+                    except ValueError:
+                        pass
+    
+    # If all strategies fail, return default
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.warning(f"Could not convert {field_name}='{value}' to float, using default {default}")
+    return default
+
+
+def detect_category(scheme_name: str) -> str:
+    """
+    Detect fund category from scheme name
+    """
+    scheme_lower = scheme_name.lower()
+    
+    # Equity categories
+    if any(word in scheme_lower for word in ['large cap', 'large & mid', 'bluechip']):
+        return 'Large Cap'
+    elif 'mid cap' in scheme_lower or 'midcap' in scheme_lower:
+        return 'Mid Cap'
+    elif 'small cap' in scheme_lower or 'smallcap' in scheme_lower:
+        return 'Small Cap'
+    elif any(word in scheme_lower for word in ['flexi cap', 'flexicap', 'multi cap', 'multicap']):
+        return 'Flexi Cap'
+    elif any(word in scheme_lower for word in ['focused', 'focus']):
+        return 'Focused'
+    elif any(word in scheme_lower for word in ['elss', 'tax saver', 'tax saving']):
+        return 'ELSS'
+    elif any(word in scheme_lower for word in ['value', 'contra']):
+        return 'Value'
+    elif any(word in scheme_lower for word in ['sectoral', 'thematic', 'pharma', 'healthcare', 'banking', 'technology', 'digital', 'infrastructure']):
+    skipped_schemes = []  # Track what we skip
+    
+    for folio in cas_data.folios:
+        for scheme in folio.schemes:
+            # Skip schemes with zero units
+            if not scheme.close or scheme.close == 0:
+                continue
+            
+            # Extract valuation data with robust conversion
+            if scheme.valuation:
+                # Use smart conversion - tries multiple strategies
+                units = safe_float_convert(scheme.close, "units", 0)
+                nav = safe_float_convert(scheme.valuation.nav, "NAV", 0)
+                current_value = safe_float_convert(scheme.valuation.value, "current_value", 0)
+                invested_amount = safe_float_convert(scheme.valuation.cost, "cost", 0)
+                
+                # Only skip if ALL critical fields are zero (likely complete data failure)
+                if units == 0 and current_value == 0 and invested_amount == 0:
+                    skipped_schemes.append({
+                        "scheme": scheme.scheme,
+                        "folio": folio.folio,
+                        "reason": "All numeric fields are zero or invalid"
+                    })
+                    continue
+                
+                total_invested += invested_amount
+                total_current += current_value
+                
+                # Detect category
+                category = detect_category(scheme.scheme)
+                
+                # Create holding
+                holding = Holding(
+                    fund_name=scheme.scheme,
+                    isin=scheme.isin or '',
+                    amfi_code=scheme.amfi or '',
+                    folio_number=folio.folio,
+                    units=units,
+                    nav=nav,
+                    invested_amount=invested_amount,
+                    current_value=current_value,
+                    category=category,
+                    amc=folio.amc,
+                    rta=scheme.rta or '',
+                    fund_type=scheme.type or 'EQUITY'
+                )
+                
+                holdings_to_create.append(holding)
+    
+    # Log skipped schemes for debugging
+    if skipped_schemes:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(f"Skipped {len(skipped_schemes)} schemes during import: {skipped_schemes}"
+    - portfolio_id of created portfolio
+    """
+    
+    # Create portfolio snapshot
+    portfolio = Portfolio(
+        user_id=user_id,
+        name=f"CAS Import - {datetime.now().strftime('%b %Y')}",
+        source="cas_pdf",
+        upload_date=datetime.utcnow()
+    )
+    
+    # Calculate portfolio totals
+    total_invested = 0
+    total_current = 0
+    
+    holdings_to_create = []
+    
+    for folio in cas_data.folios:
+        for scheme in folio.schemes:
+            # Skip schemes with zero units
+            if not scheme.close or scheme.close == 0:
+                continue
+            
+            # Extract valuation data
+            if scheme.valuation:
+                try:
+                    units = float(scheme.close) if scheme.close else 0
+                    nav = float(scheme.valuation.nav) if scheme.valuation.nav else 0
+                    current_value = float(scheme.valuation.value) if scheme.valuation.value else 0
+                    invested_amount = float(scheme.valuation.cost) if scheme.valuation.cost else 0
+                except (ValueError, TypeError) as e:
+                    # Skip schemes with invalid numeric data
+                    print(f"Warning: Skipping scheme {scheme.scheme} due to conversion error: {e}")
+                    continue
+                
+                total_invested += invested_amount
+                total_current += current_value
+                
+                # Detect category
+                category = detect_category(scheme.scheme)
+                
+                # Create holding
+                holding = Holding(
+                    fund_name=scheme.scheme,
+                    isin=scheme.isin or '',
+                    amfi_code=scheme.amfi or '',
+                    folio_number=folio.folio,
+                    units=units,
+                    nav=nav,
+                    invested_amount=invested_amount,
+                    current_value=current_value,
+                    category=category,
+                    amc=folio.amc,
+                    rta=scheme.rta or '',
+                    fund_type=scheme.type or 'EQUITY'
+                )
+                
+                holdings_to_create.append(holding)
+    
+    # Update portfolio totals
+    portfolio.total_invested = round(total_invested, 2)
+    portfolio.total_current = round(total_current, 2)
+    portfolio.total_gain_loss = round(total_current - total_invested, 2)
+    portfolio.total_return_pct = round(((total_current / total_invested - 1) * 100), 2) if total_invested > 0 else 0
+    
+    # Save to database
+    db.add(portfolio)
+    db.flush()  # Get portfolio ID
+    
+    # Associate holdings with portfolio
+    for holding in holdings_to_create:
+        holding.portfolio_id = portfolio.id
+        db.add(holding)
+    
+    db.commit()
+    db.refresh(portfolio)
+    
+    return portfolio.id
+
+
+def import_cas_transactions(cas_data, portfolio_id: int, db: Session):
+    """
+    Import transaction history from CAS
+    (Optional - for future XIRR calculations)
+    """
+    transactions_to_create = []
+    
+    for folio in cas_data.folios:
+        for scheme in folio.schemes:
+            for txn in scheme.transactions:
+                # Use robust conversion for transactions
+                amount_val = safe_float_convert(txn.amount, "amount", 0)
+                units_val = safe_float_convert(txn.units, "units", 0)
+                nav_val = safe_float_convert(txn.nav, "NAV", 0)
+                
+                # Skip if both amount and units are zero (not a real transaction)
+                if amount_val == 0 and units_val == 0:
+                    continue
+                
+                try:
+                    transaction = Transaction(
+                        portfolio_id=portfolio_id,
+                        fund_name=scheme.scheme,
+                        folio_number=folio.folio,
+                        transaction_date=txn.date,
+                        transaction_type='PURCHASE' if units_val > 0 else 'REDEMPTION',
+                        amount=abs(amount_val),
+                        units=abs(units_val),
+                        nav=nav_val,
+                        description=txn.description if txn.description else ''
+                    )
+                    
+                    transactions_to_create.append(transaction)
+                    
+                except (ValueError, TypeError, AttributeError) as e:
+                    # Skip transaction if date or other field is invalid
+                    continue
+    
+    # Bulk insert transactions
+    if transactions_to_create:
+        db.bulk_save_objects(transactions_to_create)
+        db.commit()
+    
+    return len(transactions_to_create)
