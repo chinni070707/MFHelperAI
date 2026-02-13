@@ -240,6 +240,16 @@ class OverlapAnalyzer:
         # Generate insights
         insights = self._generate_portfolio_insights(stock_analysis, sector_overlap, len(fund_keys))
         
+        # Calculate comprehensive diversification score
+        score_result = self._calculate_diversification_score(
+            stock_analysis=stock_analysis,
+            all_stocks=all_stocks,
+            fund_count=len(fund_key_list),
+            pairwise_overlap=pairwise_overlap,
+            sector_overlap=sector_overlap,
+            fund_holdings_summary=fund_holdings_summary
+        )
+        
         return {
             "total_funds": len(fund_keys),
             "unique_stocks": len(all_stocks),
@@ -248,7 +258,9 @@ class OverlapAnalyzer:
             "top_overlapping_stocks": stock_analysis[:20],
             "sector_concentration": dict(sector_overlap),
             "insights": insights,
-            "diversification_score": self._calculate_diversification_score(stock_analysis, len(fund_keys)),
+            "diversification_score": score_result["score"],
+            "score_label": score_result["label"],
+            "score_breakdown": score_result["breakdown"],
             "pairwise_overlap": pairwise_overlap,
             "fund_holdings_summary": fund_holdings_summary,
             "fund_names": {k: fund_details[k] for k in fund_key_list}
@@ -323,18 +335,173 @@ class OverlapAnalyzer:
         
         return insights
     
-    def _calculate_diversification_score(self, stock_analysis: List[Dict], fund_count: int) -> int:
-        """Calculate diversification score (0-100)"""
-        if not stock_analysis:
-            return 100
+    def _calculate_diversification_score(
+        self,
+        stock_analysis: List[Dict],
+        all_stocks: Dict,
+        fund_count: int,
+        pairwise_overlap: List[Dict],
+        sector_overlap: Dict,
+        fund_holdings_summary: Dict
+    ) -> Dict:
+        """Calculate comprehensive diversification score (0-100) using 5 industry-standard factors.
         
-        # Factors:
-        # 1. Number of overlapping stocks (lower is better)
-        # 2. Concentration in few stocks (lower is better)
-        # 3. Sector diversity (higher is better)
+        Methodology inspired by:
+        - ETMoney/TickerTape weight-based overlap (industry standard in India)
+        - Herfindahl-Hirschman Index (HHI) for sector concentration
+        - Investopedia correlation/count-based diversification metrics
         
-        high_overlap_count = len([s for s in stock_analysis if s["appears_in"] >= fund_count * 0.7])
-        overlap_penalty = (high_overlap_count / len(stock_analysis)) * 50
+        Factors & Weights:
+        1. Stock Overlap Ratio (25%) - % of unique stocks appearing in 2+ funds
+        2. Weight-Based Overlap (30%) - sum of min weights for common stocks (industry standard)
+        3. Sector Concentration HHI (20%) - Herfindahl index on combined sector weights
+        4. Top-Stock Concentration (15%) - combined avg weight of top 5 overlapping stocks
+        5. Average Pairwise Overlap (10%) - mean overlap % across all fund pairs
         
-        score = max(0, 100 - overlap_penalty)
-        return int(score)
+        Labels: Excellent (80-100), Good (60-79), Moderate (40-59), Poor (20-39), Very Poor (0-19)
+        """
+        if not all_stocks:
+            return {"score": 100, "label": "Excellent", "breakdown": {}}
+        
+        total_unique = len(all_stocks)
+        overlapping_count = len(stock_analysis)
+        
+        # Factor 1: Stock Overlap Ratio (25%)
+        overlap_ratio = (overlapping_count / total_unique * 100) if total_unique > 0 else 0
+        if overlap_ratio < 15:
+            f1_score = 100
+        elif overlap_ratio < 30:
+            f1_score = 100 - ((overlap_ratio - 15) / 15) * 25
+        elif overlap_ratio < 50:
+            f1_score = 75 - ((overlap_ratio - 30) / 20) * 25
+        elif overlap_ratio < 65:
+            f1_score = 50 - ((overlap_ratio - 50) / 15) * 25
+        else:
+            f1_score = max(0, 25 - ((overlap_ratio - 65) / 35) * 25)
+        
+        # Factor 2: Weight-Based Overlap (30%) - Industry Standard
+        # For each common stock, take min(weight across funds) and sum
+        weight_overlap_total = 0
+        for stock_info in stock_analysis:
+            fund_weights = stock_info.get("fund_weights", {})
+            if len(fund_weights) >= 2:
+                weight_overlap_total += min(fund_weights.values())
+        
+        if weight_overlap_total < 5:
+            f2_score = 100
+        elif weight_overlap_total < 15:
+            f2_score = 100 - ((weight_overlap_total - 5) / 10) * 30
+        elif weight_overlap_total < 25:
+            f2_score = 70 - ((weight_overlap_total - 15) / 10) * 30
+        elif weight_overlap_total < 35:
+            f2_score = 40 - ((weight_overlap_total - 25) / 10) * 25
+        else:
+            f2_score = max(0, 15 - ((weight_overlap_total - 35) / 15) * 15)
+        
+        # Factor 3: Sector Concentration HHI (20%)
+        combined_sector_weights = defaultdict(float)
+        for fund_name, summary in fund_holdings_summary.items():
+            for sec in summary.get("sectors", []):
+                combined_sector_weights[sec["sector"]] += sec["weight"]
+        
+        total_weight = sum(combined_sector_weights.values())
+        if total_weight > 0:
+            sector_pcts = [(w / total_weight) * 100 for w in combined_sector_weights.values()]
+            hhi = sum(p ** 2 for p in sector_pcts)
+        else:
+            hhi = 0
+        
+        if hhi < 1000:
+            f3_score = 100
+        elif hhi < 2000:
+            f3_score = 100 - ((hhi - 1000) / 1000) * 30
+        elif hhi < 3000:
+            f3_score = 70 - ((hhi - 2000) / 1000) * 30
+        else:
+            f3_score = max(0, 40 - ((hhi - 3000) / 2000) * 40)
+        
+        # Factor 4: Top-Stock Concentration (15%)
+        top5 = stock_analysis[:5]
+        top5_combined_weight = sum(s.get("avg_weight", 0) for s in top5)
+        
+        if top5_combined_weight < 10:
+            f4_score = 100
+        elif top5_combined_weight < 20:
+            f4_score = 100 - ((top5_combined_weight - 10) / 10) * 25
+        elif top5_combined_weight < 30:
+            f4_score = 75 - ((top5_combined_weight - 20) / 10) * 25
+        elif top5_combined_weight < 40:
+            f4_score = 50 - ((top5_combined_weight - 30) / 10) * 25
+        else:
+            f4_score = max(0, 25 - ((top5_combined_weight - 40) / 20) * 25)
+        
+        # Factor 5: Average Pairwise Overlap (10%)
+        if pairwise_overlap:
+            avg_pairwise = sum(p["overlap_pct"] for p in pairwise_overlap) / len(pairwise_overlap)
+        else:
+            avg_pairwise = 0
+        
+        if avg_pairwise < 10:
+            f5_score = 100
+        elif avg_pairwise < 25:
+            f5_score = 100 - ((avg_pairwise - 10) / 15) * 25
+        elif avg_pairwise < 40:
+            f5_score = 75 - ((avg_pairwise - 25) / 15) * 25
+        elif avg_pairwise < 55:
+            f5_score = 50 - ((avg_pairwise - 40) / 15) * 25
+        else:
+            f5_score = max(0, 25 - ((avg_pairwise - 55) / 20) * 25)
+        
+        # Weighted Composite Score
+        final_score = (
+            f1_score * 0.25 +
+            f2_score * 0.30 +
+            f3_score * 0.20 +
+            f4_score * 0.15 +
+            f5_score * 0.10
+        )
+        final_score = int(round(max(0, min(100, final_score))))
+        
+        # Label
+        if final_score >= 80:
+            label = "Excellent"
+        elif final_score >= 60:
+            label = "Good"
+        elif final_score >= 40:
+            label = "Moderate"
+        elif final_score >= 20:
+            label = "Poor"
+        else:
+            label = "Very Poor"
+        
+        return {
+            "score": final_score,
+            "label": label,
+            "breakdown": {
+                "stock_overlap": {
+                    "score": round(f1_score, 1),
+                    "weight": "25%",
+                    "detail": f"{overlapping_count}/{total_unique} stocks overlap ({overlap_ratio:.1f}%)"
+                },
+                "weight_overlap": {
+                    "score": round(f2_score, 1),
+                    "weight": "30%",
+                    "detail": f"{weight_overlap_total:.1f}% weight-based overlap"
+                },
+                "sector_concentration": {
+                    "score": round(f3_score, 1),
+                    "weight": "20%",
+                    "detail": f"Sector HHI: {hhi:.0f} ({len(combined_sector_weights)} sectors)"
+                },
+                "top_stock_concentration": {
+                    "score": round(f4_score, 1),
+                    "weight": "15%",
+                    "detail": f"Top 5 stocks avg weight: {top5_combined_weight:.1f}%"
+                },
+                "pairwise_overlap": {
+                    "score": round(f5_score, 1),
+                    "weight": "10%",
+                    "detail": f"Avg pairwise overlap: {avg_pairwise:.1f}%"
+                }
+            }
+        }

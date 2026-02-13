@@ -899,7 +899,17 @@
                 <div class="summary-card">
                     <div class="summary-label">Diversification Score</div>
                     <div class="summary-value" id="divScore">0</div>
+                    <div id="scoreLabel" style="font-size: 14px; font-weight: 700; margin-top: 4px;"></div>
                 </div>
+            </div>
+
+            <!-- Score Breakdown -->
+            <div class="chart-card" id="scoreBreakdownCard" style="margin-bottom: 24px; display: none;">
+                <div class="chart-title">Diversification Score Breakdown</div>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: -12px; margin-bottom: 16px;">
+                    Industry-standard 5-factor composite using weight-based overlap, HHI sector concentration &amp; pairwise analysis
+                </div>
+                <div id="scoreBreakdown" style="display: grid; gap: 12px;"></div>
             </div>
 
             <!-- Per-Fund Sector Pie Charts -->
@@ -1276,13 +1286,30 @@
 
             // Color-code diversification score
             const scoreEl = document.getElementById('divScore');
-            if (data.diversification_score >= 70) {
+            if (data.diversification_score >= 80) {
+                scoreEl.className = 'summary-value good';
+            } else if (data.diversification_score >= 60) {
                 scoreEl.className = 'summary-value good';
             } else if (data.diversification_score >= 40) {
                 scoreEl.className = 'summary-value warning';
             } else {
                 scoreEl.className = 'summary-value danger';
             }
+
+            // Show score label
+            const labelEl = document.getElementById('scoreLabel');
+            const labelColors = {
+                'Excellent': 'var(--success)',
+                'Good': '#22c55e',
+                'Moderate': 'var(--warning)',
+                'Poor': 'var(--danger)',
+                'Very Poor': '#991b1b'
+            };
+            labelEl.textContent = data.score_label || '';
+            labelEl.style.color = labelColors[data.score_label] || 'var(--text-secondary)';
+
+            // Render score breakdown
+            renderScoreBreakdown(data.score_breakdown);
 
             // Render per-fund pie charts (sector allocation)
             renderMultiplePieCharts(data.fund_holdings_summary);
@@ -1384,6 +1411,44 @@
         }
 
         // Render pie chart
+        // Render score breakdown with progress bars
+        function renderScoreBreakdown(breakdown) {
+            const card = document.getElementById('scoreBreakdownCard');
+            const container = document.getElementById('scoreBreakdown');
+            
+            if (!breakdown || Object.keys(breakdown).length === 0) {
+                card.style.display = 'none';
+                return;
+            }
+            
+            card.style.display = 'block';
+            
+            const factorLabels = {
+                'stock_overlap': '📊 Stock Overlap Ratio',
+                'weight_overlap': '⚖️ Weight-Based Overlap',
+                'sector_concentration': '🏭 Sector Concentration (HHI)',
+                'top_stock_concentration': '🎯 Top-5 Stock Concentration',
+                'pairwise_overlap': '🔗 Pairwise Fund Overlap'
+            };
+            
+            container.innerHTML = Object.entries(breakdown).map(([key, factor]) => {
+                const score = factor.score;
+                const barColor = score >= 70 ? 'var(--success)' : score >= 40 ? 'var(--warning)' : 'var(--danger)';
+                const label = factorLabels[key] || key;
+                
+                return `<div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="min-width: 220px;">
+                        <div style="font-weight: 600; font-size: 13px;">${label}</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">${factor.detail} (${factor.weight})</div>
+                    </div>
+                    <div style="flex: 1; background: var(--bg-dark); border-radius: 6px; height: 10px; overflow: hidden;">
+                        <div style="width: ${score}%; height: 100%; background: ${barColor}; border-radius: 6px; transition: width 0.5s;"></div>
+                    </div>
+                    <div style="min-width: 40px; text-align: right; font-weight: 700; font-size: 14px; color: ${barColor};">${Math.round(score)}</div>
+                </div>`;
+            }).join('');
+        }
+
         // Render multiple per-fund pie charts (sector allocation)
         function renderMultiplePieCharts(fundSummary) {
             const grid = document.getElementById('pieChartsGrid');
