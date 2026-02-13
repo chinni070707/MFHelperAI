@@ -141,6 +141,54 @@ async def register(request: Request, response: Response, user_data: UserCreate, 
     }
 
 
+@router.post("/guest", response_model=Token, status_code=status.HTTP_201_CREATED)
+@limiter.limit("10/minute")  # Rate limit: 10 guest accounts per minute
+async def create_guest_user(request: Request, response: Response, db: Session = Depends(get_db)):
+    """Create a temporary guest user account for unauthenticated users"""
+    import uuid
+    
+    # Generate unique guest email
+    guest_id = str(uuid.uuid4())[:8]
+    guest_email = f"guest_{guest_id}@mfhelper.temp"
+    guest_password = str(uuid.uuid4())  # Random password they won't know
+    
+    logger.info(f"Creating guest user: {guest_email}")
+    
+    # Create guest user
+    hashed_password = get_password_hash(guest_password)
+    
+    new_user = User(
+        email=guest_email,
+        hashed_password=hashed_password,
+        full_name=f"Guest User {guest_id}",
+        is_active=True,
+        is_verified=False,  # Guest users are not verified
+        oauth_provider="guest",  # Mark as guest account
+        oauth_id=guest_id
+    )
+    
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    
+    # Create default settings for user
+    default_settings = UserSettings(user_id=new_user.id)
+    db.add(default_settings)
+    db.commit()
+    
+    logger.info(f"Guest user created successfully: {new_user.email} (ID: {new_user.id})")
+    
+    # Create access token
+    access_token = create_access_token(data={"sub": str(new_user.id), "guest": True})
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": new_user,
+        "is_guest": True
+    }
+
+
 @router.get("/verify-email")
 async def verify_email(token: str, db: Session = Depends(get_db)):
     """

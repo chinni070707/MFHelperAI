@@ -146,16 +146,17 @@
         }
 
         .entry-table-wrapper {
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
+            overflow: visible;
+            margin-bottom: 22rem;
         }
 
         .entry-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .entry-table thead {
@@ -174,6 +175,15 @@
             padding: 1rem;
             border-bottom: 1px solid var(--border-color);
             position: relative;
+            overflow: visible;
+        }
+
+        .entry-table tbody {
+            overflow: visible;
+        }
+
+        .entry-table tbody tr {
+            overflow: visible;
         }
 
         .entry-table tbody tr:hover {
@@ -184,6 +194,7 @@
         .autocomplete-wrapper {
             position: relative;
             width: 100%;
+            z-index: 100;
         }
 
         .form-input,
@@ -228,7 +239,7 @@
             max-height: 300px;
             overflow-y: auto;
             display: none;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
@@ -536,7 +547,7 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', async () => {
             await loadAmcList();
-            addEntryRow(); // Add first row by default
+            await loadExistingData(); // Load existing data if available
         });
 
         // ============ AMC List Loading ============
@@ -555,6 +566,106 @@
                           'Nippon India', 'UTI', 'DSP', 'Franklin Templeton', 'Mirae Asset', 
                           'Parag Parikh', 'Motilal Oswal'];
             }
+        }
+
+        // ============ Load Existing Data ============
+        async function loadExistingData() {
+            const token = localStorage.getItem('authToken');
+            
+            if (!token) {
+                // Not authenticated - add empty row
+                addEntryRow();
+                console.log('No auth token - showing empty form');
+                return;
+            }
+
+            try {
+                // Fetch user's portfolio from database
+                const response = await fetch('/api/portfolio/', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch portfolio');
+                }
+
+                const data = await response.json();
+                console.log('Loaded portfolio data:', data);
+
+                // Check if portfolio exists and has holdings
+                if (data.holdings && data.holdings.length > 0) {
+                    // Pre-populate form with existing data
+                    const tbody = document.getElementById('entryTableBody');
+                    tbody.innerHTML = ''; // Clear existing rows
+
+                    data.holdings.forEach(holding => {
+                        const row = createRowWithData(holding);
+                        tbody.appendChild(row);
+                    });
+
+                    // Show success message
+                    // showToast('Loaded your existing portfolio data', 'success');
+                    console.log(`✅ Pre-populated ${data.holdings.length} holdings`);
+                } else {
+                    // No existing data - add empty row
+                    addEntryRow();
+                    console.log('No existing holdings - showing empty form');
+                }
+            } catch (error) {
+                console.error('Error loading existing data:', error);
+                // On error, show empty form
+                addEntryRow();
+            }
+        }
+
+        // ============ Create Row with Pre-filled Data ============
+        function createRowWithData(holding) {
+            const row = document.createElement('tr');
+            
+            // Generate AMC options with pre-selected value
+            const amcOptions = amcList.map(amc => 
+                `<option value="${amc}" ${amc === holding.amc ? 'selected' : ''}>${amc}</option>`
+            ).join('');
+
+            row.innerHTML = `
+                <td>
+                    <select class="form-select amc-select" onchange="onAmcChange(this)" required>
+                        <option value="">Select AMC...</option>
+                        ${amcOptions}
+                    </select>
+                </td>
+                <td>
+                    <div class="autocomplete-wrapper">
+                        <input type="text" 
+                               class="form-input fund-input" 
+                               placeholder="Search funds..."
+                               data-fund-id="${holding.id || ''}"
+                               data-scheme-name="${holding.fund_name || ''}"
+                               value="${holding.fund_name || ''}"
+                               oninput="onFundInput(this)"
+                               onfocus="onFundFocus(this)"
+                               ${holding.amc ? '' : 'disabled'}
+                               required>
+                        <div class="autocomplete-dropdown"></div>
+                    </div>
+                </td>
+                <td>
+                    <input type="number" 
+                           class="form-input amount-input" 
+                           step="0.01" 
+                           min="0" 
+                           placeholder="10000"
+                           value="${holding.invested || holding.invested_amount || ''}"
+                           required>
+                </td>
+                <td style="text-align: center;">
+                    <button class="remove-btn" onclick="removeRow(this)" title="Remove">×</button>
+                </td>
+            `;
+
+            return row;
         }
 
         // ============ Add/Remove Rows ============
@@ -830,21 +941,34 @@
             saveBtn.innerHTML = '<span class="spinner"></span> Saving...';
 
             try {
-                const token = localStorage.getItem('authToken');
+                let token = localStorage.getItem('authToken');
 
+                // If no token, create a guest user account first
                 if (!token) {
-                    // Guest mode - save to localStorage
-                    localStorage.setItem('portfolioData', JSON.stringify({
-                        holdings: holdings,
-                        source: 'manual_entry',
-                        date: new Date().toISOString()
-                    }));
+                    console.log('No auth token found, creating guest user...');
                     
-                    showSuccess();
-                    return;
+                    const guestResponse = await fetch('/api/auth/guest', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    if (!guestResponse.ok) {
+                        throw new Error('Failed to create guest account');
+                    }
+                    
+                    const guestData = await guestResponse.json();
+                    token = guestData.access_token;
+                    
+                    // Store the guest token
+                    localStorage.setItem('authToken', token);
+                    localStorage.setItem('isGuestUser', 'true');
+                    
+                    console.log('Guest user created successfully');
                 }
 
-                // Authenticated - save to backend
+                // Save to backend (works for both authenticated and guest users)
                 const response = await fetch('/api/portfolio/manual', {
                     method: 'POST',
                     headers: {
@@ -860,10 +984,14 @@
                 }
 
                 const result = await response.json();
-                console.log('Portfolio saved:', result);
+                console.log('✅ Portfolio saved:', result);
 
                 // Mark as authenticated mode
                 localStorage.setItem('portfolioMode', 'authenticated');
+
+                // Wait for database commit before showing success
+                console.log('⏳ Waiting for database commit...');
+                await new Promise(resolve => setTimeout(resolve, 1000));
 
                 showSuccess();
 

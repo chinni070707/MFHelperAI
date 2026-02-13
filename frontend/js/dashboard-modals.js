@@ -14,17 +14,107 @@ async function showManualEntryModal() {
         await loadAmcList();
     }
     
-    // Initialize with 5 empty rows after AMC list is loaded
+    // Load existing data if available
+    await loadExistingManualData();
+}
+
+function closeManualEntryModal() {
+    document.getElementById('manualEntryModal').style.display = 'none';
+}
+
+async function loadExistingManualData() {
     const tbody = document.getElementById('entryTableBody');
-    if (tbody.children.length === 0) {
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+        // Not authenticated - show 5 empty rows
+        tbody.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+            addManualEntryRow();
+        }
+        return;
+    }
+
+    try {
+        // Fetch user's portfolio from database
+        const response = await fetch('/api/portfolio/', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch portfolio');
+        }
+
+        const data = await response.json();
+        console.log('Loaded portfolio data:', data);
+
+        // Check if portfolio exists and has holdings
+        if (data.holdings && data.holdings.length > 0) {
+            // Pre-populate form with existing data
+            tbody.innerHTML = ''; // Clear existing rows
+
+            data.holdings.forEach(holding => {
+                addManualEntryRowWithData(holding);
+            });
+
+            console.log(`✅ Pre-populated ${data.holdings.length} holdings`);
+        } else {
+            // No existing data - add 5 empty rows
+            tbody.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                addManualEntryRow();
+            }
+        }
+    } catch (error) {
+        console.error('Error loading existing data:', error);
+        // On error, show 5 empty rows
+        tbody.innerHTML = '';
         for (let i = 0; i < 5; i++) {
             addManualEntryRow();
         }
     }
 }
 
-function closeManualEntryModal() {
-    document.getElementById('manualEntryModal').style.display = 'none';
+function addManualEntryRowWithData(holding) {
+    const tbody = document.getElementById('entryTableBody');
+    const row = document.createElement('tr');
+    
+    // Generate AMC dropdown options with pre-selected value
+    let amcOptions = '';
+    if (amcList.length === 0) {
+        amcList = ['HDFC', 'ICICI Prudential', 'SBI', 'Axis', 'Kotak', 'DSP', 'Nippon India', 'UTI', 'Mirae Asset', 'Parag Parikh'];
+    }
+    
+    amcOptions = amcList.map(amc => 
+        `<option value="${amc}" ${amc === holding.amc ? 'selected' : ''}>${amc}</option>`
+    ).join('');
+    
+    const fundEnabled = holding.amc ? '' : 'disabled';
+    
+    row.innerHTML = `
+        <td>
+            <select class="amc-select" onchange="onAmcChange(this)" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff;" required>
+                <option value="">Select AMC...</option>
+                ${amcOptions}
+            </select>
+        </td>
+        <td style="position: relative;">
+            <input type="text" class="fund-search" placeholder="${holding.amc ? 'Search funds...' : 'Select AMC first'}" 
+                   oninput="searchFunds(this)" 
+                   onfocus="showFundDropdown(this)"
+                   data-fund-id="${holding.id || ''}" 
+                   value="${holding.fund_name || ''}"
+                   ${fundEnabled}
+                   style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff;"
+                   required>
+            <div class="fund-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(20, 20, 40, 0.98); border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 8px; max-height: 250px; overflow-y: auto; z-index: 1000; margin-top: 4px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);"></div>
+        </td>
+        <td><input type="number" step="0.01" min="0" placeholder="10000" value="${holding.invested || holding.invested_amount || ''}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.3); background: rgba(255, 255, 255, 0.15); color: #ffffff;" required></td>
+        <td><button class="btn" style="padding: 6px 12px; background: rgba(255,0,0,0.2); border-color: #ff4444;" onclick="removeRow(this)">×</button></td>
+    `;
+    tbody.appendChild(row);
 }
 
 async function loadAmcList() {
@@ -249,27 +339,33 @@ async function saveManualEntries() {
     }
     
     try {
-        const token = localStorage.getItem('authToken');
+        let token = localStorage.getItem('authToken');
         
-        // Check if user is authenticated
+        // If no token, create a guest user account first
         if (!token) {
-            // Save as guest mode
-            const portfolioData = portfolioStorage.createPortfolioStructure(holdings, {
-                source: 'manual_entry',
-                entryDate: new Date().toISOString()
+            console.log('No auth token found, creating guest user...');
+            const guestResponse = await fetch('/api/auth/guest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             });
             
-            if (portfolioStorage.saveGuestData(portfolioData)) {
-                alert('Portfolio saved locally! Sign up to sync across devices.');
-                closeManualEntryModal();
-                window.location.reload();
-            } else {
-                alert('Failed to save portfolio locally');
+            if (!guestResponse.ok) {
+                throw new Error('Failed to create guest account');
             }
-            return;
+            
+            const guestData = await guestResponse.json();
+            token = guestData.access_token;
+            
+            // Store the guest token
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('isGuestUser', 'true');
+            
+            console.log('Guest user created successfully');
         }
         
-        // Save to backend for authenticated users
+        // Save to database (works for both authenticated and guest users)
         const response = await fetch('/api/portfolio/manual', {
             method: 'POST',
             headers: {
@@ -282,12 +378,34 @@ async function saveManualEntries() {
         if (!response.ok) throw new Error('Failed to save portfolio');
         
         const data = await response.json();
-        alert('Portfolio saved successfully!');
+        console.log('✅ Portfolio saved:', data);
+        
+        // Also save to localStorage as backup
+        const portfolioData = {
+            holdings: holdings,
+            source: 'manual_entry',
+            savedAt: new Date().toISOString(),
+            portfolio_id: data.portfolio_id
+        };
+        portfolioStorage.save(portfolioData);
+        
+        const isGuest = localStorage.getItem('isGuestUser') === 'true';
+        if (isGuest) {
+            alert('Portfolio saved! Sign up to access your data permanently from any device.');
+        } else {
+            alert('Portfolio saved successfully!');
+        }
+        
         closeManualEntryModal();
+        
+        // Wait for database transaction to complete before reloading
+        console.log('⏳ Waiting for database commit...');
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
         // Reload the page to show the new data
         window.location.reload();
     } catch (error) {
+        console.error('Error saving portfolio:', error);
         alert('Error saving portfolio: ' + error.message);
     }
 }
@@ -365,7 +483,35 @@ async function uploadFile() {
             }
         }
 
-        const token = localStorage.getItem('authToken');
+        let token = localStorage.getItem('authToken');
+        
+        // If no token, create a guest user account first
+        if (!token) {
+            console.log('No auth token found, creating guest user...');
+            statusText.textContent = 'Creating guest account...';
+            
+            const guestResponse = await fetch('/api/auth/guest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!guestResponse.ok) {
+                throw new Error('Failed to create guest account');
+            }
+            
+            const guestData = await guestResponse.json();
+            token = guestData.access_token;
+            
+            // Store the guest token
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('isGuestUser', 'true');
+            
+            console.log('Guest user created successfully');
+            statusText.textContent = 'Uploading...';
+        }
+
         const response = await fetch('/api/upload/cas', {
             method: 'POST',
             headers: {
@@ -388,7 +534,13 @@ async function uploadFile() {
         }
 
         progressBar.style.width = '100%';
-        statusText.textContent = 'Success! Reloading dashboard...';
+        
+        const isGuest = localStorage.getItem('isGuestUser') === 'true';
+        if (isGuest) {
+            statusText.textContent = 'Success! Sign up to save permanently. Reloading...';
+        } else {
+            statusText.textContent = 'Success! Reloading dashboard...';
+        }
 
         // Wait a moment to show success, then reload
         setTimeout(() => {

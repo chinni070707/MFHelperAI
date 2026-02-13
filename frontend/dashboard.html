@@ -1207,6 +1207,20 @@
         let currentMode = 'rebalance';
         let marketCapAllocation = { large: 0, mid: 0, small: 0, other: 0 };
         
+        // 🔍 DEBUG: Log when portfolioData is accessed or modified
+        let portfolioDataSetCount = 0;
+        const originalPortfolioData = portfolioData;
+        
+        // Helper to log portfolioData changes
+        window.logPortfolioDataChange = function(location, newValue) {
+            portfolioDataSetCount++;
+            console.log(`🔄 [${portfolioDataSetCount}] portfolioData SET at ${location}:`, {
+                timestamp: new Date().toISOString(),
+                value: newValue ? `${newValue.holdings?.length || 0} holdings, invested: ${newValue.summary?.total_invested || 0}` : 'null/empty',
+                stack: new Error().stack.split('\n').slice(2, 5).join('\n')
+            });
+        };
+        
         // Check email verification status
         async function checkVerificationStatus() {
             const token = localStorage.getItem('authToken');
@@ -1324,9 +1338,9 @@
                         return; // Successfully loaded from database
                     }
                     
-                    // Retry once after a brief delay (in case of DB commit delay)
-                    console.log('🔄 First load failed, retrying after 1 second...');
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    // Retry with longer delay (in case of fresh save/DB commit delay)
+                    console.log('🔄 First load failed, retrying after 2 seconds...');
+                    await new Promise(resolve => setTimeout(resolve, 2000));
                     const retryLoaded = await loadPortfolioFromDatabase();
                     if (retryLoaded) {
                         console.log('✅ Retry successful!');
@@ -1335,8 +1349,21 @@
                         }
                         return;
                     }
-                    console.warn('⚠️ Database load failed even after retry');
-                    debugPanelAddEvent('error', '⚠️ DB load failed after retry — falling through to localStorage');
+                    
+                    // Third attempt with even longer delay
+                    console.log('🔄 Second retry after 1 more second...');
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const thirdTry = await loadPortfolioFromDatabase();
+                    if (thirdTry) {
+                        console.log('✅ Third attempt successful!');
+                        if (typeof portfolioSourceModal !== 'undefined') {
+                            portfolioSourceModal.close();
+                        }
+                        return;
+                    }
+                    
+                    console.warn('⚠️ Database load failed after 3 attempts');
+                    debugPanelAddEvent('error', '⚠️ DB load failed after 3 retries — falling through to localStorage');
                     if (window.MF_DEBUG && typeof toast !== 'undefined') {
                         toast.warning('Portfolio DB load failed — using fallback. Check debug panel (bottom-right).');
                     }
@@ -1364,17 +1391,24 @@
                 
                 if (storedData && storedData.holdings && storedData.holdings.length > 0) {
                     console.log('✅ Found data in portfolioStorage:', storedData.holdings.length, 'holdings');
+                    window.logPortfolioDataChange('portfolioStorage', storedData);
                     portfolioData = storedData;
+                    console.log('🎯 About to call renderDashboard() at', new Date().toISOString());
                     renderDashboard();
+                    console.log('✅ renderDashboard() completed at', new Date().toISOString());
                 } else {
                     console.log('📁 No data in portfolioStorage, checking plain localStorage...');
                     // Fallback to old localStorage
                     const stored = localStorage.getItem('portfolioData');
                     if (stored) {
                         console.log('📁 Found portfolioData in localStorage');
-                        portfolioData = JSON.parse(stored);
+                        const parsedData = JSON.parse(stored);
+                        window.logPortfolioDataChange('localStorage', parsedData);
+                        portfolioData = parsedData;
                         console.log('📦 Parsed data:', portfolioData.holdings?.length || 0, 'holdings');
+                        console.log('🎯 About to call renderDashboard() at', new Date().toISOString());
                         renderDashboard();
+                        console.log('✅ renderDashboard() completed at', new Date().toISOString());
                     } else {
                         console.log('❌ No data found in localStorage');
                         // No data found - auto-load demo for first-time visitors
@@ -1404,6 +1438,7 @@
                 const data = await response.json();
                 if (data.success && data.holdings && data.holdings.length > 0) {
                     // Transform demo data to portfolio format
+                    console.log('🎯 Setting portfolioData to DEMO mode');
                     portfolioData = {
                         mode: 'demo',
                         holdings: data.holdings.map(h => ({
@@ -1476,22 +1511,39 @@
                 console.log('📊 API Response from /api/portfolio/:', data);
                 debugPanelAddEvent('api', `✅ GET /api/portfolio/ → ${data.holdings?.length || 0} holdings, source=${data.source || 'unknown'}`);
                 
-                // Check if portfolio exists
-                if (!data.holdings || data.holdings.length === 0) {
-                    console.log('⚠️ No portfolio data in database');
+                // Check if portfolio exists - be lenient with the check
+                if (!data || (!data.holdings && !data.summary)) {
+                    console.log('⚠️ No portfolio data in database (completely empty response)');
                     return false;
+                }
+                
+                // If holdings array is empty but we got a response, might be loading issue
+                if (!data.holdings || data.holdings.length === 0) {
+                    console.log('⚠️ Portfolio exists but holdings array is empty');
+                    // Still try to check if summary has data
+                    if (data.summary && data.summary.total_invested > 0) {
+                        console.log('✅ Summary shows data exists, might be a timing issue');
+                        // Continue to try to render what we have
+                    } else {
+                        console.log('⚠️ No portfolio data in database');
+                        return false;
+                    }
                 }
                 
                 console.log('📦 Raw holdings data:', data.holdings);
                 console.log('💰 Raw summary data:', data.summary);
                 
                 // Transform API data to portfolio format
+                // Use empty array as fallback if holdings is undefined
+                const holdings = data.holdings || [];
+                const summary = data.summary || {};
+                
                 portfolioData = {
                     mode: 'database',
                     portfolio_id: data.portfolio_id,
                     portfolio_name: data.portfolio_name || 'My Portfolio',
                     source: data.source || 'upload',
-                    holdings: data.holdings.map(h => ({
+                    holdings: holdings.map(h => ({
                         scheme_name: h.fund_name,
                         fund_name: h.fund_name,
                         category: h.category || 'Others',
@@ -1505,12 +1557,12 @@
                         current_nav: h.nav || 0
                     })),
                     summary: {
-                        total_invested: data.summary.total_invested || 0,
-                        total_current: data.summary.total_current || 0,
-                        total_gain: data.summary.total_gain || 0,
-                        return_pct: data.summary.return_pct || 0
+                        total_invested: summary.total_invested || 0,
+                        total_current: summary.total_current || 0,
+                        total_gain: summary.total_gain || 0,
+                        return_pct: summary.return_pct || 0
                     },
-                    uploadedAt: data.summary.last_updated,
+                    uploadedAt: summary.last_updated || new Date().toISOString(),
                     uploadedFileName: data.source || 'CAS Upload'
                 };
                 
@@ -1532,7 +1584,12 @@
         }
         
         function renderDashboard() {
-            console.log('🎨 renderDashboard called with portfolioData:', portfolioData);
+            console.log('🎨 [RENDER] renderDashboard called at', new Date().toISOString());
+            console.log('🎨 [RENDER] Current portfolioData:', {
+                exists: !!portfolioData,
+                holdingsCount: portfolioData?.holdings?.length || 0,
+                totalInvested: portfolioData?.summary?.total_invested || 0
+            });
             
             if (!portfolioData || !portfolioData.holdings || portfolioData.holdings.length === 0) {
                 console.log('❌ No portfolio data to render');
@@ -1597,9 +1654,43 @@
             updateRebalance();
             
             // Load portfolio history if authenticated
+            const authToken = localStorage.getItem('authToken');
             if (authToken) {
                 loadPortfolioHistory();
             }
+            
+            console.log('✅ [RENDER] Dashboard render complete at', new Date().toISOString());
+            console.log('📊 [RENDER] Final data check:', {
+                holdingsCount: portfolioData?.holdings?.length,
+                totalInvested: portfolioData?.summary?.total_invested
+            });
+            
+            // 🔍 DEBUG: Monitor portfolioData for unexpected changes
+            let monitorCount = 0;
+            const monitorInterval = setInterval(() => {
+                monitorCount++;
+                const currentData = {
+                    exists: !!portfolioData,
+                    holdingsCount: portfolioData?.holdings?.length || 0,
+                    invested: portfolioData?.summary?.total_invested || 0
+                };
+                console.log(`🔍 [MONITOR #${monitorCount}] portfolioData check at ${new Date().toISOString()}:`, currentData);
+                
+                // Stop monitoring after 10 seconds
+                if (monitorCount >= 10) {
+                    clearInterval(monitorInterval);
+                    console.log('🛑 Stopped monitoring portfolioData');
+                }
+                
+                // Alert if data disappears
+                if (portfolioData && portfolioData.holdings && portfolioData.holdings.length > 0) {
+                    // Data is still good
+                } else {
+                    console.error('⚠️⚠️⚠️ [MONITOR] DATA HAS DISAPPEARED!');
+                    console.error('📍 Current stack:', new Error().stack);
+                    clearInterval(monitorInterval);
+                }
+            }, 1000); // Check every second
         }
         
         function calculateSummary(holdings) {
