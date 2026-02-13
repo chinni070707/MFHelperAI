@@ -9,9 +9,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+from contextlib import asynccontextmanager
 import os
 import logging
 import time
+import asyncio
 
 from app.config import settings
 from app.routes import portfolio, upload, analytics, auth, rebalance, errors, holdings, cas, ai, xirr, analysis, demo, funds, overlap
@@ -40,9 +42,8 @@ if cache.is_available():
 else:
     logger.warning("[WARN] Cache unavailable - running without Redis")
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
-logger.info("Database tables created/verified")
+# Database initialization moved to lifespan to not block health checks
+logger.info("Database initialization deferred to lifespan event")
 
 # Auto-seed demo portfolio if table is empty
 def seed_demo_portfolio_if_empty():
@@ -176,22 +177,40 @@ def seed_demo_portfolio_if_empty():
 # Don't seed here - it blocks startup!
 # seed_demo_portfolio_if_empty()
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan context manager - runs on startup and shutdown"""
+    # Startup: Run DB init and seeding in background
+    def init_db_and_seed():
+        """Initialize database tables and seed demo data"""
+        try:
+            logger.info("Creating database tables...")
+            Base.metadata.create_all(bind=engine)
+            logger.info("✅ Database tables created/verified")
+            
+            logger.info("Seeding demo portfolio...")
+            seed_demo_portfolio_if_empty()
+            logger.info("✅ Initialization complete")
+        except Exception as e:
+            logger.error(f"❌ Initialization error: {e}", exc_info=True)
+    
+    # Run initialization in background immediately (don't await)
+    asyncio.create_task(asyncio.to_thread(init_db_and_seed))
+    logger.info("🚀 App ready, database initialization running in background")
+    
+    yield  # App is running
+    
+    # Shutdown: cleanup if needed
+    logger.info("App shutdown")
+
 app = FastAPI(
     title="MFHelper API",
     description="Mutual Fund Portfolio Analytics Platform",
     version="1.0.0",
     docs_url="/api/docs",
-    redoc_url="/api/redoc"
+    redoc_url="/api/redoc",
+    lifespan=lifespan
 )
-
-# Seed demo data on startup (non-blocking)
-@app.on_event("startup")
-async def startup_event():
-    """Initialize app on startup"""
-    import asyncio
-    # Run seeding in background to not block startup
-    asyncio.create_task(asyncio.to_thread(seed_demo_portfolio_if_empty))
-    logger.info("App startup complete, demo seeding running in background")
 
 # Add rate limiter state
 app.state.limiter = limiter
