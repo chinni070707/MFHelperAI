@@ -111,6 +111,60 @@ def generate_fund_holdings_json():
                 'as_of_date': '2026-01-31',
                 'source': 'PPFAS Official Portfolio Disclosure'
             }
+    else:
+        print(f"[SKIP] File not found: {ppfcf_file}")
+    
+    # Parse PPFAS Consolidated
+    print("\n[2/3] Parsing PPFAS Consolidated...")
+    ppfas_file = download_dir / 'PPFAS_Consolidated_January_2026.xls'
+    
+    if ppfas_file.exists():
+        holdings = parse_ppfas_holdings(ppfas_file)
+        if holdings:
+            print(f"[OK] Found {len(holdings)} holdings")
+            
+            # Display top 10
+            print("\nTop 10 holdings:")
+            for i, h in enumerate(holdings[:10], 1):
+                print(f"  {i}. {h['stock']}: {h['weight']}% ({h['sector']})")
+            
+            funds_data['ppfas-consolidated'] = {
+                'name': 'Parag Parikh PPFAS Consolidated Fund',
+                'amc': 'Parag Parikh Mutual Fund',
+                'category': 'Multi Cap',
+                'holdings': holdings,
+                'holdings_count': len(holdings),
+                'as_of_date': '2026-01-31',
+                'source': 'PPFAS Official Portfolio Disclosure'
+            }
+    else:
+        print(f"[SKIP] File not found: {ppfas_file}")
+    
+    # Parse PPLF - Liquid Fund
+    print("\n[3/3] Parsing PPLF - Parag Parikh Liquid Fund...")
+    pplf_file = download_dir / 'PPLF_January_2026.xls'
+    
+    if pplf_file.exists():
+        holdings = parse_ppfas_holdings(pplf_file)
+        if holdings:
+            print(f"[OK] Found {len(holdings)} holdings")
+            
+            # Display top 10
+            print("\nTop 10 holdings:")
+            for i, h in enumerate(holdings[:10], 1):
+                print(f"  {i}. {h['stock']}: {h['weight']}% ({h['sector']})")
+            
+            funds_data['parag-parikh-liquid-fund'] = {
+                'name': 'Parag Parikh Liquid Fund',
+                'amc': 'Parag Parikh Mutual Fund',
+                'category': 'Liquid',
+                'holdings': holdings,
+                'holdings_count': len(holdings),
+                'as_of_date': '2026-01-31',
+                'source': 'PPFAS Official Portfolio Disclosure'
+            }
+    else:
+        print(f"[SKIP] File not found: {pplf_file}")
     
     # Save to fund_holdings.json
     output_file = Path(__file__).parent.parent / 'data' / 'fund_holdings.json'

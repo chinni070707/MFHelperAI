@@ -1,6 +1,6 @@
 {
   "version": "2026-02",
-  "last_updated": "2026-02-12",
+  "last_updated": "2026-02-13",
   "source": "Generated from popular funds - Production ready structure",
   "funds": {
     "hdfc-flexi-cap-fund": {
@@ -3454,6 +3454,826 @@
         "Pharma": 1.3,
         "Power": 1.2
       }
+    },
+    "ppfas-consolidated": {
+      "name": "Parag Parikh PPFAS Consolidated Fund",
+      "amc": "Parag Parikh Mutual Fund",
+      "category": "Multi Cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Limited",
+          "weight": 8.04,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Power Grid Corporation of India Limited",
+          "weight": 6.0,
+          "sector": "Power"
+        },
+        {
+          "stock": "Coal India Limited",
+          "weight": 5.26,
+          "sector": "Consumable Fuels"
+        },
+        {
+          "stock": "ITC Limited",
+          "weight": 5.05,
+          "sector": "Diversified FMCG"
+        },
+        {
+          "stock": "ICICI Bank Limited",
+          "weight": 4.99,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Bajaj Holdings & Investment Limited",
+          "weight": 4.82,
+          "sector": "Finance"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Limited",
+          "weight": 3.75,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Mahindra & Mahindra Limited",
+          "weight": 3.58,
+          "sector": "Automobiles"
+        },
+        {
+          "stock": "Axis Bank Limited",
+          "weight": 3.4,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Bharti Airtel Limited",
+          "weight": 3.11,
+          "sector": "Telecom - Services"
+        },
+        {
+          "stock": "Maruti Suzuki India Limited",
+          "weight": 3.03,
+          "sector": "Automobiles"
+        },
+        {
+          "stock": "HCL Technologies Limited",
+          "weight": 2.97,
+          "sector": "IT - Software"
+        },
+        {
+          "stock": "Infosys Limited",
+          "weight": 2.02,
+          "sector": "IT - Software"
+        },
+        {
+          "stock": "Tata Consultancy Services Limited",
+          "weight": 1.97,
+          "sector": "IT - Software"
+        },
+        {
+          "stock": "Dr. Reddy's Laboratories Limited",
+          "weight": 1.28,
+          "sector": "Pharmaceuticals & Biotechnology"
+        },
+        {
+          "stock": "Cipla Limited",
+          "weight": 1.25,
+          "sector": "Pharmaceuticals & Biotechnology"
+        },
+        {
+          "stock": "Zydus Lifesciences Limited",
+          "weight": 1.24,
+          "sector": "Pharmaceuticals & Biotechnology"
+        },
+        {
+          "stock": "Indian Energy Exchange Limited",
+          "weight": 0.76,
+          "sector": "Capital Markets"
+        },
+        {
+          "stock": "Zydus Wellness Limited",
+          "weight": 0.74,
+          "sector": "Food Products"
+        },
+        {
+          "stock": "Balkrishna Industries Limited",
+          "weight": 0.72,
+          "sector": "Auto Components"
+        },
+        {
+          "stock": "EID Parry India Limited",
+          "weight": 0.51,
+          "sector": "Food Products"
+        },
+        {
+          "stock": "Narayana Hrudayalaya Limited",
+          "weight": 0.26,
+          "sector": "Healthcare Services"
+        },
+        {
+          "stock": "Central Depository Services (India)",
+          "weight": 0.22,
+          "sector": "Capital Markets"
+        },
+        {
+          "stock": "The Great Eastern Shipping Company Limited",
+          "weight": 0.2,
+          "sector": "Transport Services"
+        },
+        {
+          "stock": "Multi Commodity Exchange of India Limited",
+          "weight": 0.15,
+          "sector": "Capital Markets"
+        },
+        {
+          "stock": "ICRA Limited",
+          "weight": 0.14,
+          "sector": "Capital Markets"
+        },
+        {
+          "stock": "Reliance Industries Limited",
+          "weight": 0.69,
+          "sector": "Petroleum Products"
+        },
+        {
+          "stock": "Bajaj Finance Limited",
+          "weight": 0.29,
+          "sector": "Finance"
+        },
+        {
+          "stock": "State Bank of India",
+          "weight": 0.15,
+          "sector": "Banks"
+        },
+        {
+          "stock": "Eternal Limited",
+          "weight": 0.13,
+          "sector": "Retailing"
+        },
+        {
+          "stock": "Jio Financial Services Limited",
+          "weight": 0.12,
+          "sector": "Finance"
+        },
+        {
+          "stock": "Bharat Electronics Limited",
+          "weight": 0.1,
+          "sector": "Aerospace & Defense"
+        },
+        {
+          "stock": "Brookfield India Real Estate Trust",
+          "weight": 0.67,
+          "sector": "Realty"
+        },
+        {
+          "stock": "Embassy Office Parks REIT",
+          "weight": 0.63,
+          "sector": "Realty"
+        },
+        {
+          "stock": "Alphabet Inc A",
+          "weight": 4.39,
+          "sector": "Computer Software: Programming, Data Processing ##"
+        },
+        {
+          "stock": "Meta Platforms Registered Shares A",
+          "weight": 2.91,
+          "sector": "Computer Software: Programming, Data Processing ##"
+        },
+        {
+          "stock": "Amazon Com Inc",
+          "weight": 2.27,
+          "sector": "Catalog/Specialty Distribution ##"
+        },
+        {
+          "stock": "Microsoft Corp",
+          "weight": 2.17,
+          "sector": "Computer Software: Prepackaged Software ##"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Limited (24/09/2026)",
+          "weight": 0.5,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (11/08/2026)",
+          "weight": 0.47,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bank of Baroda (16/09/2026)",
+          "weight": 0.46,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "State Bank of India (27/03/2026)",
+          "weight": 0.44,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (12/06/2026)",
+          "weight": 0.44,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Union Bank of India (25/06/2026) #",
+          "weight": 0.42,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (10/09/2026)",
+          "weight": 0.36,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (18/09/2026)",
+          "weight": 0.36,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Limited (18/12/2026)",
+          "weight": 0.35,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (05/05/2026)",
+          "weight": 0.35,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (18/12/2026)",
+          "weight": 0.32,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Punjab National Bank (20/03/2026)",
+          "weight": 0.3,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (24/06/2026)",
+          "weight": 0.29,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (11/11/2026)",
+          "weight": 0.28,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Union Bank of India (12/06/2026)",
+          "weight": 0.25,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "Indian Bank (12/06/2026)",
+          "weight": 0.25,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bank of Baroda (23/07/2026) #",
+          "weight": 0.23,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (11/06/2026)",
+          "weight": 0.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Indian Bank (28/07/2026) #",
+          "weight": 0.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (24/09/2026)",
+          "weight": 0.21,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (13/10/2026)",
+          "weight": 0.21,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Indian Bank (30/10/2026)",
+          "weight": 0.21,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Union Bank of India (19/01/2027)",
+          "weight": 0.21,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "Indian Bank (22/01/2027)",
+          "weight": 0.21,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Union Bank of India (18/03/2026)",
+          "weight": 0.19,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "Bank of Baroda (16/10/2026)",
+          "weight": 0.18,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (19/01/2027)",
+          "weight": 0.17,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (14/01/2027)",
+          "weight": 0.16,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Indian Bank (06/03/2026)",
+          "weight": 0.15,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Indian Bank (06/05/2026)",
+          "weight": 0.15,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Limited (25/05/2026)",
+          "weight": 0.15,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (12/06/2026)",
+          "weight": 0.15,
+          "sector": "CARE A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (12/06/2026)",
+          "weight": 0.15,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bank of Baroda (15/12/2026)",
+          "weight": 0.14,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "Punjab National Bank (15/12/2026)",
+          "weight": 0.14,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Limited (08/01/2027)",
+          "weight": 0.14,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (12/01/2027)",
+          "weight": 0.14,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (14/01/2027) #",
+          "weight": 0.14,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "ICICI Bank Limited (27/01/2027)",
+          "weight": 0.14,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "Punjab National Bank (24/03/2026)",
+          "weight": 0.13,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (24/03/2026) #",
+          "weight": 0.13,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (25/06/2026)",
+          "weight": 0.13,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bank of Baroda (25/11/2026)",
+          "weight": 0.12,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (16/12/2026)",
+          "weight": 0.12,
+          "sector": "CARE A1+"
+        },
+        {
+          "stock": "Union Bank of India (23/04/2026)",
+          "weight": 0.11,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "Punjab National Bank (12/06/2026)",
+          "weight": 0.11,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (09/07/2026)",
+          "weight": 0.11,
+          "sector": "CARE A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (22/01/2027) #",
+          "weight": 0.1,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (28/01/2027)",
+          "weight": 0.1,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (25/06/2026)",
+          "weight": 0.33,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bajaj Finance Limited (18/06/2026)",
+          "weight": 0.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bajaj Finance Limited (06/05/2026)",
+          "weight": 0.15,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bajaj Finance Limited (26/05/2026)",
+          "weight": 0.15,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "364 Days Tbill (MD 15/10/2026)",
+          "weight": 0.25,
+          "sector": "Sovereign"
+        },
+        {
+          "stock": "364 Days Tbill (MD 15/01/2027)",
+          "weight": 0.15,
+          "sector": "Sovereign"
+        },
+        {
+          "stock": "Parag Parikh Liquid Fund- Direct Plan- Growth",
+          "weight": 0.45,
+          "sector": ""
+        },
+        {
+          "stock": "TRP_020226",
+          "weight": 5.23,
+          "sector": ""
+        },
+        {
+          "stock": "GRAND TOTAL",
+          "weight": 100.0,
+          "sector": "Unknown"
+        },
+        {
+          "stock": "Asian Paints Limited",
+          "weight": 6984770.81,
+          "sector": "Short"
+        },
+        {
+          "stock": "Since Inception (24 May, 2013)",
+          "weight": 8551980.0,
+          "sector": "0.1925438530519148"
+        },
+        {
+          "stock": "January 31, 2025 to January 30, 2026 (Last 1 Year)",
+          "weight": 1062664.02,
+          "sector": "0.06980726354283306"
+        },
+        {
+          "stock": "January 31, 2023 to January 30, 2026 (Last 3 Years)",
+          "weight": 1761511.54,
+          "sector": "0.21634069429593916"
+        },
+        {
+          "stock": "January 29, 2021 to January 30, 2026 (Last 5 Years)",
+          "weight": 2395297.9,
+          "sector": "0.2005706443815145"
+        },
+        {
+          "stock": "January 29, 2016 to January 30, 2026 (Last 10 Years)",
+          "weight": 5222391.85,
+          "sector": "0.18855472291144504"
+        },
+        {
+          "stock": "Market value of Investment",
+          "weight": 318205421.2,
+          "sector": "123839.611492272"
+        },
+        {
+          "stock": "Returns (Annualised) (%)",
+          "weight": 1853.6,
+          "sector": "5.9998785849352"
+        },
+        {
+          "stock": "Nifty 500 (TRI) Returns (Annualised) (%)",
+          "weight": 1477.84,
+          "sector": "5.77748229455702"
+        },
+        {
+          "stock": "Nifty 50 (TRI) Returns (Annualised) (%)",
+          "weight": 1376.66,
+          "sector": "6.98876314516356"
+        },
+        {
+          "stock": "Market value of Investment",
+          "weight": 335032862.59,
+          "sector": "124280.318702245"
+        },
+        {
+          "stock": "Returns (Annualised) (%)",
+          "weight": 1949.04,
+          "sector": "6.69535555262312"
+        },
+        {
+          "stock": "Nifty 500 (TRI) Returns (Annualised) (%)",
+          "weight": 1477.84,
+          "sector": "5.77748229455702"
+        },
+        {
+          "stock": "Nifty 50 (TRI) Returns (Annualised) (%)",
+          "weight": 1376.66,
+          "sector": "6.98876314516356"
+        }
+      ],
+      "holdings_count": 110,
+      "as_of_date": "2026-01-31",
+      "source": "PPFAS Official Portfolio Disclosure"
+    },
+    "parag-parikh-liquid-fund": {
+      "name": "Parag Parikh Liquid Fund",
+      "amc": "Parag Parikh Mutual Fund",
+      "category": "Liquid",
+      "holdings": [
+        {
+          "stock": "7.7201% LIC Housing Finance Limited (12/02/2026)",
+          "weight": 1.23,
+          "sector": "CRISIL AAA"
+        },
+        {
+          "stock": "Punjab National Bank (09/03/2026)",
+          "weight": 4.88,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (13/03/2026)",
+          "weight": 4.88,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (18/03/2026) #",
+          "weight": 3.66,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "National Bank For Agriculture and Rural Development (25/03/2026)",
+          "weight": 3.65,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (25/03/2026)",
+          "weight": 3.65,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Union Bank of India (27/03/2026)",
+          "weight": 3.65,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "Canara Bank (27/02/2026)",
+          "weight": 3.06,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (12/03/2026) #",
+          "weight": 3.05,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Indian Bank (25/03/2026)",
+          "weight": 3.04,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bank of Baroda (08/04/2026)",
+          "weight": 3.03,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (11/03/2026)",
+          "weight": 2.44,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Indian Bank (12/03/2026)",
+          "weight": 2.44,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (18/03/2026)",
+          "weight": 2.44,
+          "sector": "CARE A1+"
+        },
+        {
+          "stock": "Punjab National Bank (20/03/2026)",
+          "weight": 2.44,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Union Bank of India (25/02/2026)",
+          "weight": 1.84,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (27/02/2026) #",
+          "weight": 1.84,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (12/03/2026) #",
+          "weight": 1.83,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bank of Baroda (17/03/2026)",
+          "weight": 1.83,
+          "sector": "IND A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (25/02/2026)",
+          "weight": 1.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Export Import Bank of India (04/03/2026)",
+          "weight": 1.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (06/03/2026) #",
+          "weight": 1.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (13/03/2026)",
+          "weight": 1.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Canara Bank (18/03/2026)",
+          "weight": 1.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "HDFC Bank Limited (24/03/2026) #",
+          "weight": 1.22,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (04/03/2026) #",
+          "weight": 0.61,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Axis Bank Limited (05/03/2026) #",
+          "weight": 0.61,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Punjab National Bank (24/03/2026)",
+          "weight": 0.61,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Small Industries Dev Bank of India (24/02/2026)",
+          "weight": 2.45,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Power Finance Corporation Limited (15/04/2026)",
+          "weight": 2.42,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "LIC Housing Finance Limited (18/02/2026)",
+          "weight": 1.84,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bajaj Finance Limited (24/02/2026) #",
+          "weight": 1.84,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "Bajaj Finance Limited (12/02/2026)",
+          "weight": 0.61,
+          "sector": "ICRA A1+"
+        },
+        {
+          "stock": "LIC Housing Finance Limited (11/03/2026)",
+          "weight": 0.61,
+          "sector": "CRISIL A1+"
+        },
+        {
+          "stock": "91 Days Tbill (MD 17/04/2026)",
+          "weight": 7.29,
+          "sector": "Sovereign"
+        },
+        {
+          "stock": "91 Days Tbill (MD 27/03/2026)",
+          "weight": 1.22,
+          "sector": "Sovereign"
+        },
+        {
+          "stock": "182 Days Tbill (MD 12/02/2026)",
+          "weight": 0.61,
+          "sector": "Sovereign"
+        },
+        {
+          "stock": "5.63% Government of India (12/04/2026)",
+          "weight": 5.28,
+          "sector": "Sovereign"
+        },
+        {
+          "stock": "Corporate Debt Market Development Fund - Class A2 Units",
+          "weight": 0.33,
+          "sector": ""
+        },
+        {
+          "stock": "REP15_300126",
+          "weight": 13.58,
+          "sector": ""
+        },
+        {
+          "stock": "GRAND TOTAL",
+          "weight": 100.0,
+          "sector": "Unknown"
+        },
+        {
+          "stock": "Since Inception (11 May, 2018)",
+          "weight": 1496266.5,
+          "sector": "0.0545673757412628"
+        },
+        {
+          "stock": "January 24, 2026 to January 31, 2026 (Last 7 days)",
+          "weight": 1001111.13,
+          "sector": "0.05893498524501876"
+        },
+        {
+          "stock": "January 16, 2026 to January 31, 2026 (Last 15 Days)",
+          "weight": 1002175.93,
+          "sector": "0.05394821270031702"
+        },
+        {
+          "stock": "December 31, 2025 to January 31, 2026 (Last 1 Month)",
+          "weight": 1004322.25,
+          "sector": "0.051895437222737484"
+        },
+        {
+          "stock": "October 31, 2025 to January 31, 2026 (Last 3 Month)",
+          "weight": 1013941.65,
+          "sector": "0.05632183550933947"
+        },
+        {
+          "stock": "July 31, 2025 to January 31, 2026 (Last 6 Month)",
+          "weight": 1027979.0,
+          "sector": "0.05652881756523596"
+        },
+        {
+          "stock": "January 31, 2025 to January 31, 2026 (Last 1 Year)",
+          "weight": 1061007.49,
+          "sector": "0.06206562426467643"
+        },
+        {
+          "stock": "January 31, 2023 to January 31, 2026 (Last 3 Years)",
+          "weight": 1210225.67,
+          "sector": "0.06666602051350123"
+        },
+        {
+          "stock": "January 31, 2021 to January 31, 2026 (Last 5 Years)",
+          "weight": 1308073.11,
+          "sector": "0.056196597536900095"
+        }
+      ],
+      "holdings_count": 50,
+      "as_of_date": "2026-01-31",
+      "source": "PPFAS Official Portfolio Disclosure"
     }
   }
 }
