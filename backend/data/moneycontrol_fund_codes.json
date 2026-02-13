@@ -1,0 +1,2082 @@
+{
+  "discovered_date": "2026-02-13",
+  "total_funds": 346,
+  "funds": {
+    "MSAA016": {
+      "name": "Samco Large Cap Fund - Direct Plan - Growth",
+      "slug": "samco-large-cap-fund-direct-plan-growth",
+      "code": "MSAA016",
+      "category": "large cap"
+    },
+    "MBA221": {
+      "name": "Bank of India Large Cap Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-large-cap-fund-direct-plan-growth",
+      "code": "MBA221",
+      "category": "large cap"
+    },
+    "MBFA058": {
+      "name": "Bajaj Finserv Large Cap Fund - Direct Plan - Growth",
+      "slug": "bajaj-finserv-large-cap-fund-direct-plan-growth",
+      "code": "MBFA058",
+      "category": "large cap"
+    },
+    "MES080": {
+      "name": "Quant Large Cap Fund - Direct Plan - Growth",
+      "slug": "quant-large-cap-fund-direct-plan-growth",
+      "code": "MES080",
+      "category": "large cap"
+    },
+    "MIM031": {
+      "name": "Groww Large Cap Fund - Direct Plan - Growth",
+      "slug": "groww-large-cap-fund-direct-plan-growth",
+      "code": "MIM031",
+      "category": "large cap"
+    },
+    "MCA212": {
+      "name": "Canara Robeco Large Cap Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-large-cap-fund-direct-plan-growth",
+      "code": "MCA212",
+      "category": "large cap"
+    },
+    "MTE329": {
+      "name": "Franklin India Large Cap Fund - Direct - Growth",
+      "slug": "franklin-india-large-cap-fund-direct-growth",
+      "code": "MTE329",
+      "category": "large cap"
+    },
+    "MMOA016": {
+      "name": "Motilal Oswal Large Cap Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-large-cap-fund-direct-plan-growth",
+      "code": "MMOA016",
+      "category": "large cap"
+    },
+    "MHS353": {
+      "name": "HSBC Large Cap Fund - Direct Plan - Growth",
+      "slug": "hsbc-large-cap-fund-direct-plan-growth",
+      "code": "MHS353",
+      "category": "large cap"
+    },
+    "MLI568": {
+      "name": "Invesco India Largecap Fund - Direct Plan - Growth",
+      "slug": "invesco-india-largecap-fund-direct-plan-growth",
+      "code": "MLI568",
+      "category": "large cap"
+    },
+    "MJM322": {
+      "name": "JM Large Cap Fund - (Direct) - Growth",
+      "slug": "jm-large-cap-fund-direct-growth",
+      "code": "MJM322",
+      "category": "large cap"
+    },
+    "MUT639": {
+      "name": "UTI Large Cap Fund - Direct Plan - Growth",
+      "slug": "uti-large-cap-fund-direct-plan-growth",
+      "code": "MUT639",
+      "category": "large cap"
+    },
+    "MMA096": {
+      "name": "Mirae Asset Large Cap Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-large-cap-fund-direct-plan-growth",
+      "code": "MMA096",
+      "category": "large cap"
+    },
+    "MAB720": {
+      "name": "Baroda BNP Paribas Large Cap Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-large-cap-fund-direct-plan-growth",
+      "code": "MAB720",
+      "category": "large cap"
+    },
+    "MAA181": {
+      "name": "Axis Large Cap Fund - Direct Plan - Growth",
+      "slug": "axis-large-cap-fund-direct-plan-growth",
+      "code": "MAA181",
+      "category": "large cap"
+    },
+    "MIT051": {
+      "name": "ITI Large Cap Fund - Direct Plan - Growth",
+      "slug": "iti-large-cap-fund-direct-plan-growth",
+      "code": "MIT051",
+      "category": "large cap"
+    },
+    "MAG725": {
+      "name": "Bandhan Large Cap Fund - Direct Plan - Growth",
+      "slug": "bandhan-large-cap-fund-direct-plan-growth",
+      "code": "MAG725",
+      "category": "large cap"
+    },
+    "MUK106": {
+      "name": "Union Largecap Fund - Direct Plan - Growth",
+      "slug": "union-largecap-fund-direct-plan-growth",
+      "code": "MUK106",
+      "category": "large cap"
+    },
+    "MDE487": {
+      "name": "PGIM India Large Cap Fund - Direct Plan - Growth",
+      "slug": "pgim-india-large-cap-fund-direct-plan-growth",
+      "code": "MDE487",
+      "category": "large cap"
+    },
+    "MEW090": {
+      "name": "Edelweiss Large Cap Fund - Direct Plan - Growth",
+      "slug": "edelweiss-large-cap-fund-direct-plan-growth",
+      "code": "MEW090",
+      "category": "large cap"
+    },
+    "MHD1169": {
+      "name": "HDFC Large Cap Fund - Direct Plan - Growth",
+      "slug": "hdfc-large-cap-fund-direct-plan-growth",
+      "code": "MHD1169",
+      "category": "large cap"
+    },
+    "MCM130": {
+      "name": "Taurus Large Cap Fund - Direct Plan - Growth",
+      "slug": "taurus-large-cap-fund-direct-plan-growth",
+      "code": "MCM130",
+      "category": "large cap"
+    },
+    "MSB532": {
+      "name": "SBI Large Cap Fund - Direct Plan - Growth",
+      "slug": "sbi-large-cap-fund-direct-plan-growth",
+      "code": "MSB532",
+      "category": "large cap"
+    },
+    "MKM514": {
+      "name": "Kotak Large Cap Fund - Direct Plan - Growth",
+      "slug": "kotak-large-cap-fund-direct-plan-growth",
+      "code": "MKM514",
+      "category": "large cap"
+    },
+    "MRC940": {
+      "name": "Nippon India Large Cap Fund - Direct Plan - Growth",
+      "slug": "nippon-india-large-cap-fund-direct-plan-growth",
+      "code": "MRC940",
+      "category": "large cap"
+    },
+    "MJB161": {
+      "name": "LIC MF Large Cap Fund - Direct Plan - Growth",
+      "slug": "lic-mf-large-cap-fund-direct-plan-growth",
+      "code": "MJB161",
+      "category": "large cap"
+    },
+    "MYM033": {
+      "name": "WhiteOak Capital Large Cap Fund - Direct Plan - Growth",
+      "slug": "whiteoak-capital-large-cap-fund-direct-plan-growth",
+      "code": "MYM033",
+      "category": "large cap"
+    },
+    "MBS813": {
+      "name": "Aditya Birla Sun Life Large Cap Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-large-cap-fund-direct-plan-growth",
+      "code": "MBS813",
+      "category": "large cap"
+    },
+    "MDS568": {
+      "name": "DSP Large Cap Fund - Direct Plan - Growth",
+      "slug": "dsp-large-cap-fund-direct-plan-growth",
+      "code": "MDS568",
+      "category": "large cap"
+    },
+    "MSN1539": {
+      "name": "Sundaram Large Cap Fund - Direct Plan - Growth",
+      "slug": "sundaram-large-cap-fund-direct-plan-growth",
+      "code": "MSN1539",
+      "category": "large cap"
+    },
+    "MTA788": {
+      "name": "Tata Large Cap Fund - Direct Plan - Growth",
+      "slug": "tata-large-cap-fund-direct-plan-growth",
+      "code": "MTA788",
+      "category": "large cap"
+    },
+    "MMH051": {
+      "name": "Mahindra Manulife Large Cap Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-large-cap-fund-direct-plan-growth",
+      "code": "MMH051",
+      "category": "large cap"
+    },
+    "MPI1134": {
+      "name": "ICICI Prudential Large Cap Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-large-cap-fund-direct-plan-growth",
+      "code": "MPI1134",
+      "category": "large cap"
+    },
+    "MPPA013": {
+      "name": "Parag Parikh Large Cap Fund - Direct Plan - Growth",
+      "slug": "parag-parikh-large-cap-fund-direct-plan-growth",
+      "code": "MPPA013",
+      "category": "large cap"
+    },
+    "MPM132": {
+      "name": "Navi Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "navi-flexi-cap-fund-direct-plan-growth",
+      "code": "MPM132",
+      "category": "flexi cap"
+    },
+    "MTRA015": {
+      "name": "TRUSTMF Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "trustmf-flexi-cap-fund-direct-plan-growth",
+      "code": "MTRA015",
+      "category": "flexi cap"
+    },
+    "MBFA004": {
+      "name": "Bajaj Finserv Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "bajaj-finserv-flexi-cap-fund-direct-plan-growth",
+      "code": "MBFA004",
+      "category": "flexi cap"
+    },
+    "MAA737": {
+      "name": "Axis Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "axis-flexi-cap-fund-direct-plan-growth",
+      "code": "MAA737",
+      "category": "flexi cap"
+    },
+    "MBA215": {
+      "name": "Bank of India Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-flexi-cap-fund-direct-plan-growth",
+      "code": "MBA215",
+      "category": "flexi cap"
+    },
+    "MCA202": {
+      "name": "Canara Robeco Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-flexi-cap-fund-direct-plan-growth",
+      "code": "MCA202",
+      "category": "flexi cap"
+    },
+    "MPI4506": {
+      "name": "ICICI Prudential Flexicap Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-flexicap-fund-direct-plan-growth",
+      "code": "MPI4506",
+      "category": "flexi cap"
+    },
+    "MMO031": {
+      "name": "Motilal Oswal Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-flexi-cap-fund-direct-plan-growth",
+      "code": "MMO031",
+      "category": "flexi cap"
+    },
+    "MIT091": {
+      "name": "ITI Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "iti-flexi-cap-fund-direct-plan-growth",
+      "code": "MIT091",
+      "category": "flexi cap"
+    },
+    "MHS333": {
+      "name": "HSBC Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "hsbc-flexi-cap-fund-direct-plan-growth",
+      "code": "MHS333",
+      "category": "flexi cap"
+    },
+    "MJM320": {
+      "name": "JM Flexi Cap Fund - Direct - Growth",
+      "slug": "jm-flexi-cap-fund-direct-growth",
+      "code": "MJM320",
+      "category": "flexi cap"
+    },
+    "MLI1146": {
+      "name": "Invesco India Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "invesco-india-flexi-cap-fund-direct-plan-growth",
+      "code": "MLI1146",
+      "category": "flexi cap"
+    },
+    "MMAA004": {
+      "name": "Mirae Asset Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-flexi-cap-fund-direct-plan-growth",
+      "code": "MMAA004",
+      "category": "flexi cap"
+    },
+    "MUT651": {
+      "name": "UTI Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "uti-flexi-cap-fund-direct-plan-growth",
+      "code": "MUT651",
+      "category": "flexi cap"
+    },
+    "MSA001": {
+      "name": "Samco Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "samco-flexi-cap-fund-direct-plan-growth",
+      "code": "MSA001",
+      "category": "flexi cap"
+    },
+    "MTE315": {
+      "name": "Franklin India Flexi Cap Fund - Direct - Growth",
+      "slug": "franklin-india-flexi-cap-fund-direct-growth",
+      "code": "MTE315",
+      "category": "flexi cap"
+    },
+    "MRC2885": {
+      "name": "Nippon India Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "nippon-india-flexi-cap-fund-direct-plan-growth",
+      "code": "MRC2885",
+      "category": "flexi cap"
+    },
+    "MCFA001": {
+      "name": "Capitalmind Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "capitalmind-flexi-cap-fund-direct-plan-growth",
+      "code": "MCFA001",
+      "category": "flexi cap"
+    },
+    "MDS590": {
+      "name": "DSP Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "dsp-flexi-cap-fund-direct-plan-growth",
+      "code": "MDS590",
+      "category": "flexi cap"
+    },
+    "MUK027": {
+      "name": "Union Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "union-flexi-cap-fund-direct-plan-growth",
+      "code": "MUK027",
+      "category": "flexi cap"
+    },
+    "MNJA007": {
+      "name": "NJ Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "nj-flexi-cap-fund-direct-plan-growth",
+      "code": "MNJA007",
+      "category": "flexi cap"
+    },
+    "MPA159": {
+      "name": "PGIM India Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "pgim-india-flexi-cap-fund-direct-plan-growth",
+      "code": "MPA159",
+      "category": "flexi cap"
+    },
+    "MAMA005": {
+      "name": "Abakkus Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "abakkus-flexi-cap-fund-direct-plan-growth",
+      "code": "MAMA005",
+      "category": "flexi cap"
+    },
+    "MIIA003": {
+      "name": "360 ONE Flexicap Fund - Direct Plan - Growth",
+      "slug": "360-one-flexicap-fund-direct-plan-growth",
+      "code": "MIIA003",
+      "category": "flexi cap"
+    },
+    "MCM149": {
+      "name": "Taurus Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "taurus-flexi-cap-fund-direct-plan-growth",
+      "code": "MCM149",
+      "category": "flexi cap"
+    },
+    "MJSA009": {
+      "name": "JioBlackRock Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "jioblackrock-flexi-cap-fund-direct-plan-growth",
+      "code": "MJSA009",
+      "category": "flexi cap"
+    },
+    "MKM520": {
+      "name": "Kotak Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "kotak-flexi-cap-fund-direct-plan-growth",
+      "code": "MKM520",
+      "category": "flexi cap"
+    },
+    "MSB503": {
+      "name": "SBI Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "sbi-flexi-cap-fund-direct-plan-growth",
+      "code": "MSB503",
+      "category": "flexi cap"
+    },
+    "MTWA015": {
+      "name": "The Wealth Company Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "the-wealth-company-flexi-cap-fund-direct-plan-growth",
+      "code": "MTWA015",
+      "category": "flexi cap"
+    },
+    "MSN1544": {
+      "name": "Sundaram Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "sundaram-flexi-cap-fund-direct-plan-growth",
+      "code": "MSN1544",
+      "category": "flexi cap"
+    },
+    "MJP310": {
+      "name": "Edelweiss Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "edelweiss-flexi-cap-fund-direct-plan-growth",
+      "code": "MJP310",
+      "category": "flexi cap"
+    },
+    "MBS811": {
+      "name": "Aditya Birla Sun Life Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-flexi-cap-fund-direct-plan-growth",
+      "code": "MBS811",
+      "category": "flexi cap"
+    },
+    "MHM003": {
+      "name": "Helios Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "helios-flexi-cap-fund-direct-plan-growth",
+      "code": "MHM003",
+      "category": "flexi cap"
+    },
+    "MWC003": {
+      "name": "WhiteOak Capital Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "whiteoak-capital-flexi-cap-fund-direct-plan-growth",
+      "code": "MWC003",
+      "category": "flexi cap"
+    },
+    "MHD1144": {
+      "name": "HDFC Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "hdfc-flexi-cap-fund-direct-plan-growth",
+      "code": "MHD1144",
+      "category": "flexi cap"
+    },
+    "MBO275": {
+      "name": "Baroda BNP Paribas Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-flexi-cap-fund-direct-plan-growth",
+      "code": "MBO275",
+      "category": "flexi cap"
+    },
+    "MSR007": {
+      "name": "Shriram Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "shriram-flexi-cap-fund-direct-plan-growth",
+      "code": "MSR007",
+      "category": "flexi cap"
+    },
+    "MUMA004": {
+      "name": "Unifi Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "unifi-flexi-cap-fund-direct-plan-growth",
+      "code": "MUMA004",
+      "category": "flexi cap"
+    },
+    "MES041": {
+      "name": "Quant Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "quant-flexi-cap-fund-direct-plan-growth",
+      "code": "MES041",
+      "category": "flexi cap"
+    },
+    "MJB163": {
+      "name": "LIC MF Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "lic-mf-flexi-cap-fund-direct-plan-growth",
+      "code": "MJB163",
+      "category": "flexi cap"
+    },
+    "MAG733": {
+      "name": "Bandhan Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "bandhan-flexi-cap-fund-direct-plan-growth",
+      "code": "MAG733",
+      "category": "flexi cap"
+    },
+    "MMH114": {
+      "name": "Mahindra Manulife Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-flexi-cap-fund-direct-plan-growth",
+      "code": "MMH114",
+      "category": "flexi cap"
+    },
+    "MTA1327": {
+      "name": "Tata Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "tata-flexi-cap-fund-direct-plan-growth",
+      "code": "MTA1327",
+      "category": "flexi cap"
+    },
+    "MPP002": {
+      "name": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
+      "slug": "parag-parikh-flexi-cap-fund-direct-plan-growth",
+      "code": "MPP002",
+      "category": "flexi cap"
+    },
+    "MPI1150": {
+      "name": "ICICI Prudential MidCap Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-midcap-fund-direct-plan-growth",
+      "code": "MPI1150",
+      "category": "mid cap"
+    },
+    "MRC919": {
+      "name": "Nippon India Growth Mid Cap Fund - Direct Plan - Growth",
+      "slug": "nippon-india-growth-mid-cap-fund-direct-plan-growth",
+      "code": "MRC919",
+      "category": "mid cap"
+    },
+    "MAG2158": {
+      "name": "Bandhan Midcap Fund - Direct Plan - Growth",
+      "slug": "bandhan-midcap-fund-direct-plan-growth",
+      "code": "MAG2158",
+      "category": "mid cap"
+    },
+    "MES043": {
+      "name": "Quant Mid Cap Fund - Direct Plan - Growth",
+      "slug": "quant-mid-cap-fund-direct-plan-growth",
+      "code": "MES043",
+      "category": "mid cap"
+    },
+    "MCA338": {
+      "name": "Canara Robeco Mid Cap Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-mid-cap-fund-direct-plan-growth",
+      "code": "MCA338",
+      "category": "mid cap"
+    },
+    "MAB726": {
+      "name": "Baroda BNP Paribas Mid Cap Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-mid-cap-fund-direct-plan-growth",
+      "code": "MAB726",
+      "category": "mid cap"
+    },
+    "MMO027": {
+      "name": "Motilal Oswal Midcap Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-midcap-fund-direct-plan-growth",
+      "code": "MMO027",
+      "category": "mid cap"
+    },
+    "MUK152": {
+      "name": "Union Midcap Fund - Direct Plan - Growth",
+      "slug": "union-midcap-fund-direct-plan-growth",
+      "code": "MUK152",
+      "category": "mid cap"
+    },
+    "MLI556": {
+      "name": "Invesco India Mid Cap Fund - Direct Plan - Growth",
+      "slug": "invesco-india-mid-cap-fund-direct-plan-growth",
+      "code": "MLI556",
+      "category": "mid cap"
+    },
+    "MDS574": {
+      "name": "DSP Midcap Fund - Direct Plan - Growth",
+      "slug": "dsp-midcap-fund-direct-plan-growth",
+      "code": "MDS574",
+      "category": "mid cap"
+    },
+    "MUT637": {
+      "name": "UTI Mid Cap Fund - Direct Plan - Growth",
+      "slug": "uti-mid-cap-fund-direct-plan-growth",
+      "code": "MUT637",
+      "category": "mid cap"
+    },
+    "MKM528": {
+      "name": "Kotak Midcap Fund - Direct Plan - Growth",
+      "slug": "kotak-midcap-fund-direct-plan-growth",
+      "code": "MKM528",
+      "category": "mid cap"
+    },
+    "MMA173": {
+      "name": "Mirae Asset Midcap Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-midcap-fund-direct-plan-growth",
+      "code": "MMA173",
+      "category": "mid cap"
+    },
+    "MJM484": {
+      "name": "JM Midcap Fund - Direct Plan - Growth",
+      "slug": "jm-midcap-fund-direct-plan-growth",
+      "code": "MJM484",
+      "category": "mid cap"
+    },
+    "MCC275": {
+      "name": "HSBC Mid Cap Fund - Direct Plan - Growth",
+      "slug": "hsbc-mid-cap-fund-direct-plan-growth",
+      "code": "MCC275",
+      "category": "mid cap"
+    },
+    "MIB230": {
+      "name": "LIC MF Mid cap Fund - Direct Plan - Growth",
+      "slug": "lic-mf-mid-cap-fund-direct-plan-growth",
+      "code": "MIB230",
+      "category": "mid cap"
+    },
+    "MPA139": {
+      "name": "PGIM India Midcap Fund - Direct Plan - Growth",
+      "slug": "pgim-india-midcap-fund-direct-plan-growth",
+      "code": "MPA139",
+      "category": "mid cap"
+    },
+    "MMH037": {
+      "name": "Mahindra Manulife Mid Cap Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-mid-cap-fund-direct-plan-growth",
+      "code": "MMH037",
+      "category": "mid cap"
+    },
+    "MWC007": {
+      "name": "WhiteOak Capital Mid Cap Fund - Direct Plan - Growth",
+      "slug": "whiteoak-capital-mid-cap-fund-direct-plan-growth",
+      "code": "MWC007",
+      "category": "mid cap"
+    },
+    "MAA194": {
+      "name": "Axis Midcap Fund - Direct Plan - Growth",
+      "slug": "axis-midcap-fund-direct-plan-growth",
+      "code": "MAA194",
+      "category": "mid cap"
+    },
+    "MSN568": {
+      "name": "Sundaram Mid Cap Fund - Direct Plan - Growth",
+      "slug": "sundaram-mid-cap-fund-direct-plan-growth",
+      "code": "MSN568",
+      "category": "mid cap"
+    },
+    "MHMA019": {
+      "name": "Helios Mid Cap Fund - Direct Plan - Growth",
+      "slug": "helios-mid-cap-fund-direct-plan-growth",
+      "code": "MHMA019",
+      "category": "mid cap"
+    },
+    "MTE317": {
+      "name": "Franklin India Mid Cap Fund - Direct - Growth",
+      "slug": "franklin-india-mid-cap-fund-direct-growth",
+      "code": "MTE317",
+      "category": "mid cap"
+    },
+    "MSB505": {
+      "name": "SBI Midcap Fund - Direct Plan - Growth",
+      "slug": "sbi-midcap-fund-direct-plan-growth",
+      "code": "MSB505",
+      "category": "mid cap"
+    },
+    "MBS829": {
+      "name": "Aditya Birla Sun Life Midcap Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-midcap-fund-direct-plan-growth",
+      "code": "MBS829",
+      "category": "mid cap"
+    },
+    "MJP117": {
+      "name": "Edelweiss Mid Cap Fund - Direct Plan - Growth",
+      "slug": "edelweiss-mid-cap-fund-direct-plan-growth",
+      "code": "MJP117",
+      "category": "mid cap"
+    },
+    "MTA776": {
+      "name": "Tata Mid Cap Fund - Direct Plan - Growth",
+      "slug": "tata-mid-cap-fund-direct-plan-growth",
+      "code": "MTA776",
+      "category": "mid cap"
+    },
+    "MIT055": {
+      "name": "ITI Mid Cap Fund - Direct Plan - Growth",
+      "slug": "iti-mid-cap-fund-direct-plan-growth",
+      "code": "MIT055",
+      "category": "mid cap"
+    },
+    "MBAA026": {
+      "name": "Bank of India Mid Cap Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-mid-cap-fund-direct-plan-growth",
+      "code": "MBAA026",
+      "category": "mid cap"
+    },
+    "MHD1161": {
+      "name": "HDFC Mid Cap Fund - Direct Plan - Growth",
+      "slug": "hdfc-mid-cap-fund-direct-plan-growth",
+      "code": "MHD1161",
+      "category": "mid cap"
+    },
+    "MCM132": {
+      "name": "Taurus Mid Cap Fund - Direct Plan - Growth",
+      "slug": "taurus-mid-cap-fund-direct-plan-growth",
+      "code": "MCM132",
+      "category": "mid cap"
+    },
+    "MUK091": {
+      "name": "Union Small Cap Fund - Direct Plan - Growth",
+      "slug": "union-small-cap-fund-direct-plan-growth",
+      "code": "MUK091",
+      "category": "small cap"
+    },
+    "MJMA003": {
+      "name": "JM Small Cap Fund - Direct Plan - Growth",
+      "slug": "jm-small-cap-fund-direct-plan-growth",
+      "code": "MJMA003",
+      "category": "small cap"
+    },
+    "MDS584": {
+      "name": "DSP Small Cap Fund - Direct Plan - Growth",
+      "slug": "dsp-small-cap-fund-direct-plan-growth",
+      "code": "MDS584",
+      "category": "small cap"
+    },
+    "MKM516": {
+      "name": "Kotak Small Cap Fund - Direct Plan - Growth",
+      "slug": "kotak-small-cap-fund-direct-plan-growth",
+      "code": "MKM516",
+      "category": "small cap"
+    },
+    "MTE313": {
+      "name": "Franklin India Small Cap Fund - Direct - Growth",
+      "slug": "franklin-india-small-cap-fund-direct-growth",
+      "code": "MTE313",
+      "category": "small cap"
+    },
+    "MCA312": {
+      "name": "Canara Robeco Small Cap Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-small-cap-fund-direct-plan-growth",
+      "code": "MCA312",
+      "category": "small cap"
+    },
+    "MTRA026": {
+      "name": "TRUSTMF Small Cap Fund - Direct Plan - Growth",
+      "slug": "trustmf-small-cap-fund-direct-plan-growth",
+      "code": "MTRA026",
+      "category": "small cap"
+    },
+    "MAA316": {
+      "name": "Axis Small Cap Fund - Direct Plan - Growth",
+      "slug": "axis-small-cap-fund-direct-plan-growth",
+      "code": "MAA316",
+      "category": "small cap"
+    },
+    "MCC492": {
+      "name": "HSBC Small Cap Fund - Direct Plan - Growth",
+      "slug": "hsbc-small-cap-fund-direct-plan-growth",
+      "code": "MCC492",
+      "category": "small cap"
+    },
+    "MIMA108": {
+      "name": "Groww Small Cap Fund - Direct Plan - Growth",
+      "slug": "groww-small-cap-fund-direct-plan-growth",
+      "code": "MIMA108",
+      "category": "small cap"
+    },
+    "MLI1094": {
+      "name": "Invesco India Smallcap Fund - Direct - Growth",
+      "slug": "invesco-india-smallcap-fund-direct-growth",
+      "code": "MLI1094",
+      "category": "small cap"
+    },
+    "MMAA088": {
+      "name": "Mirae Asset Small Cap Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-small-cap-fund-direct-plan-growth",
+      "code": "MMAA088",
+      "category": "small cap"
+    },
+    "MIT043": {
+      "name": "ITI Small Cap Fund - Direct Plan - Growth",
+      "slug": "iti-small-cap-fund-direct-plan-growth",
+      "code": "MIT043",
+      "category": "small cap"
+    },
+    "MBS833": {
+      "name": "Aditya Birla Sun Life Small cap Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-small-cap-fund-direct-plan-growth",
+      "code": "MBS833",
+      "category": "small cap"
+    },
+    "MMOA011": {
+      "name": "Motilal Oswal Small Cap Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-small-cap-fund-direct-plan-growth",
+      "code": "MMOA011",
+      "category": "small cap"
+    },
+    "MSA031": {
+      "name": "SBI Small Cap Fund - Direct Plan - Growth",
+      "slug": "sbi-small-cap-fund-direct-plan-growth",
+      "code": "MSA031",
+      "category": "small cap"
+    },
+    "MPA1919": {
+      "name": "PGIM India Small Cap Fund - Direct Plan - Growth",
+      "slug": "pgim-india-small-cap-fund-direct-plan-growth",
+      "code": "MPA1919",
+      "category": "small cap"
+    },
+    "MBA203": {
+      "name": "Bank of India Small Cap Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-small-cap-fund-direct-plan-growth",
+      "code": "MBA203",
+      "category": "small cap"
+    },
+    "MQUA004": {
+      "name": "Quantum Small Cap Fund - Direct Plan - Growth",
+      "slug": "quantum-small-cap-fund-direct-plan-growth",
+      "code": "MQUA004",
+      "category": "small cap"
+    },
+    "MIB234": {
+      "name": "LIC MF Small Cap Fund - Direct Plan - Growth",
+      "slug": "lic-mf-small-cap-fund-direct-plan-growth",
+      "code": "MIB234",
+      "category": "small cap"
+    },
+    "MSN572": {
+      "name": "Sundaram Small Cap Fund - Direct Plan - Growth",
+      "slug": "sundaram-small-cap-fund-direct-plan-growth",
+      "code": "MSN572",
+      "category": "small cap"
+    },
+    "MES056": {
+      "name": "Quant Small Cap Fund - Direct Plan - Growth",
+      "slug": "quant-small-cap-fund-direct-plan-growth",
+      "code": "MES056",
+      "category": "small cap"
+    },
+    "MRC935": {
+      "name": "Nippon India Small Cap Fund - Direct Plan - Growth",
+      "slug": "nippon-india-small-cap-fund-direct-plan-growth",
+      "code": "MRC935",
+      "category": "small cap"
+    },
+    "MBFA092": {
+      "name": "Bajaj Finserv Small Cap Fund - Direct Plan - Growth",
+      "slug": "bajaj-finserv-small-cap-fund-direct-plan-growth",
+      "code": "MBFA092",
+      "category": "small cap"
+    },
+    "MBOA019": {
+      "name": "Baroda BNP Paribas Small Cap Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-small-cap-fund-direct-plan-growth",
+      "code": "MBOA019",
+      "category": "small cap"
+    },
+    "MAG2104": {
+      "name": "Bandhan Small Cap Fund - Direct Plan - Growth",
+      "slug": "bandhan-small-cap-fund-direct-plan-growth",
+      "code": "MAG2104",
+      "category": "small cap"
+    },
+    "MMH127": {
+      "name": "Mahindra Manulife Small Cap Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-small-cap-fund-direct-plan-growth",
+      "code": "MMH127",
+      "category": "small cap"
+    },
+    "MSAA020": {
+      "name": "Samco Small Cap Fund - Direct Plan - Growth",
+      "slug": "samco-small-cap-fund-direct-plan-growth",
+      "code": "MSAA020",
+      "category": "small cap"
+    },
+    "MUT3611": {
+      "name": "UTI Small Cap Fund - Direct Plan - Growth",
+      "slug": "uti-small-cap-fund-direct-plan-growth",
+      "code": "MUT3611",
+      "category": "small cap"
+    },
+    "MJP351": {
+      "name": "Edelweiss Small Cap Fund - Direct Plan - Growth",
+      "slug": "edelweiss-small-cap-fund-direct-plan-growth",
+      "code": "MJP351",
+      "category": "small cap"
+    },
+    "MTA1305": {
+      "name": "Tata Small Cap Fund - Direct Plan - Growth",
+      "slug": "tata-small-cap-fund-direct-plan-growth",
+      "code": "MTA1305",
+      "category": "small cap"
+    },
+    "MPI1146": {
+      "name": "ICICI Prudential Smallcap Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-smallcap-fund-direct-plan-growth",
+      "code": "MPI1146",
+      "category": "small cap"
+    },
+    "MMS025": {
+      "name": "HDFC Small Cap Fund - Direct Plan - Growth",
+      "slug": "hdfc-small-cap-fund-direct-plan-growth",
+      "code": "MMS025",
+      "category": "small cap"
+    },
+    "MHMA023": {
+      "name": "Helios Small Cap Fund - Direct Plan - Growth",
+      "slug": "helios-small-cap-fund-direct-plan-growth",
+      "code": "MHMA023",
+      "category": "small cap"
+    },
+    "MSAA018": {
+      "name": "Samco Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "samco-large-mid-cap-fund-direct-plan-growth",
+      "code": "MSAA018",
+      "category": "large and mid cap"
+    },
+    "MBS807": {
+      "name": "Aditya Birla Sun Life Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-large-mid-cap-fund-direct-plan-growth",
+      "code": "MBS807",
+      "category": "large and mid cap"
+    },
+    "MPM103": {
+      "name": "Navi Large & Midcap Fund - Direct Plan - Growth",
+      "slug": "navi-large-midcap-fund-direct-plan-growth",
+      "code": "MPM103",
+      "category": "large and mid cap"
+    },
+    "MUK148": {
+      "name": "Union Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "union-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MUK148",
+      "category": "large and mid cap"
+    },
+    "MAA798": {
+      "name": "Axis Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "axis-large-mid-cap-fund-direct-plan-growth",
+      "code": "MAA798",
+      "category": "large and mid cap"
+    },
+    "MKM522": {
+      "name": "Kotak Large & Midcap Fund - Direct Plan - Growth",
+      "slug": "kotak-large-midcap-fund-direct-plan-growth",
+      "code": "MKM522",
+      "category": "large and mid cap"
+    },
+    "MHMA016": {
+      "name": "Helios Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "helios-large-mid-cap-fund-direct-plan-growth",
+      "code": "MHMA016",
+      "category": "large and mid cap"
+    },
+    "MLI560": {
+      "name": "Invesco India Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "invesco-india-large-mid-cap-fund-direct-plan-growth",
+      "code": "MLI560",
+      "category": "large and mid cap"
+    },
+    "MUT633": {
+      "name": "UTI Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "uti-large-mid-cap-fund-direct-plan-growth",
+      "code": "MUT633",
+      "category": "large and mid cap"
+    },
+    "MMA100": {
+      "name": "Mirae Asset Large & Midcap Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-large-midcap-fund-direct-plan-growth",
+      "code": "MMA100",
+      "category": "large and mid cap"
+    },
+    "MMO070": {
+      "name": "Motilal Oswal Large and Midcap Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-large-and-midcap-fund-direct-plan-growth",
+      "code": "MMO070",
+      "category": "large and mid cap"
+    },
+    "MSN553": {
+      "name": "Sundaram Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "sundaram-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MSN553",
+      "category": "large and mid cap"
+    },
+    "MBFA048": {
+      "name": "Bajaj Finserv Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "bajaj-finserv-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MBFA048",
+      "category": "large and mid cap"
+    },
+    "MRC943": {
+      "name": "Nippon India Vision Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "nippon-india-vision-large-mid-cap-fund-direct-plan-growth",
+      "code": "MRC943",
+      "category": "large and mid cap"
+    },
+    "MBA064": {
+      "name": "Bank of India Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-large-mid-cap-fund-direct-plan-growth",
+      "code": "MBA064",
+      "category": "large and mid cap"
+    },
+    "MHS526": {
+      "name": "HSBC Large & Midcap Fund - Direct Plan - Growth",
+      "slug": "hsbc-large-midcap-fund-direct-plan-growth",
+      "code": "MHS526",
+      "category": "large and mid cap"
+    },
+    "MYMA010": {
+      "name": "WhiteOak Capital Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "whiteoak-capital-large-mid-cap-fund-direct-plan-growth",
+      "code": "MYMA010",
+      "category": "large and mid cap"
+    },
+    "MAG723": {
+      "name": "Bandhan Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "bandhan-large-mid-cap-fund-direct-plan-growth",
+      "code": "MAG723",
+      "category": "large and mid cap"
+    },
+    "MITA017": {
+      "name": "ITI Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "iti-large-mid-cap-fund-direct-plan-growth",
+      "code": "MITA017",
+      "category": "large and mid cap"
+    },
+    "MCA205": {
+      "name": "Canara Robeco Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MCA205",
+      "category": "large and mid cap"
+    },
+    "MPA1928": {
+      "name": "PGIM India Large and Midcap Fund - Direct Plan - Growth",
+      "slug": "pgim-india-large-and-midcap-fund-direct-plan-growth",
+      "code": "MPA1928",
+      "category": "large and mid cap"
+    },
+    "MTE327": {
+      "name": "Franklin India Large & Mid Cap Fund - Direct - Growth",
+      "slug": "franklin-india-large-mid-cap-fund-direct-growth",
+      "code": "MTE327",
+      "category": "large and mid cap"
+    },
+    "MSB501": {
+      "name": "SBI Large & Midcap Fund - Direct Plan - Growth",
+      "slug": "sbi-large-midcap-fund-direct-plan-growth",
+      "code": "MSB501",
+      "category": "large and mid cap"
+    },
+    "MPI1130": {
+      "name": "ICICI Prudential Large & Mid Cap Fund- Direct Plan - Growth",
+      "slug": "icici-prudential-large-mid-cap-fund-direct-plan-growth",
+      "code": "MPI1130",
+      "category": "large and mid cap"
+    },
+    "MBO261": {
+      "name": "Baroda BNP Paribas Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MBO261",
+      "category": "large and mid cap"
+    },
+    "MJMA008": {
+      "name": "JM Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "jm-large-mid-cap-fund-direct-plan-growth",
+      "code": "MJMA008",
+      "category": "large and mid cap"
+    },
+    "MMS029": {
+      "name": "HDFC Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "hdfc-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MMS029",
+      "category": "large and mid cap"
+    },
+    "MJB395": {
+      "name": "LIC MF Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "lic-mf-large-mid-cap-fund-direct-plan-growth",
+      "code": "MJB395",
+      "category": "large and mid cap"
+    },
+    "MDS580": {
+      "name": "DSP Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "dsp-large-mid-cap-fund-direct-plan-growth",
+      "code": "MDS580",
+      "category": "large and mid cap"
+    },
+    "MJP103": {
+      "name": "Edelweiss Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "edelweiss-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MJP103",
+      "category": "large and mid cap"
+    },
+    "MMH069": {
+      "name": "Mahindra Manulife Large & Mid Cap Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-large-mid-cap-fund-direct-plan-growth",
+      "code": "MMH069",
+      "category": "large and mid cap"
+    },
+    "MES058": {
+      "name": "Quant Large and Mid Cap Fund - Direct Plan - Growth",
+      "slug": "quant-large-and-mid-cap-fund-direct-plan-growth",
+      "code": "MES058",
+      "category": "large and mid cap"
+    },
+    "MTRA029": {
+      "name": "TRUSTMF Multi Cap Fund - Direct Plan - Growth",
+      "slug": "trustmf-multi-cap-fund-direct-plan-growth",
+      "code": "MTRA029",
+      "category": "multi cap"
+    },
+    "MIMA033": {
+      "name": "Groww Multicap Fund - Direct Plan - Growth",
+      "slug": "groww-multicap-fund-direct-plan-growth",
+      "code": "MIMA033",
+      "category": "multi cap"
+    },
+    "MKM1399": {
+      "name": "Kotak Multicap Fund - Direct Plan - Growth",
+      "slug": "kotak-multicap-fund-direct-plan-growth",
+      "code": "MKM1399",
+      "category": "multi cap"
+    },
+    "MUK184": {
+      "name": "Union Multicap Fund - Direct Plan - Growth",
+      "slug": "union-multicap-fund-direct-plan-growth",
+      "code": "MUK184",
+      "category": "multi cap"
+    },
+    "MPI1132": {
+      "name": "ICICI Prudential Multicap Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-multicap-fund-direct-plan-growth",
+      "code": "MPI1132",
+      "category": "multi cap"
+    },
+    "MRC914": {
+      "name": "Nippon India Multicap Fund - Direct Plan - Growth",
+      "slug": "nippon-india-multicap-fund-direct-plan-growth",
+      "code": "MRC914",
+      "category": "multi cap"
+    },
+    "MCAA002": {
+      "name": "Canara Robeco Multi Cap Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-multi-cap-fund-direct-plan-growth",
+      "code": "MCAA002",
+      "category": "multi cap"
+    },
+    "MBAA004": {
+      "name": "Bank of India Multicap Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-multicap-fund-direct-plan-growth",
+      "code": "MBAA004",
+      "category": "multi cap"
+    },
+    "MMOA019": {
+      "name": "Motilal Oswal Multi Cap Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-multi-cap-fund-direct-plan-growth",
+      "code": "MMOA019",
+      "category": "multi cap"
+    },
+    "MLI554": {
+      "name": "Invesco India Multicap Fund - Direct Plan - Growth",
+      "slug": "invesco-india-multicap-fund-direct-plan-growth",
+      "code": "MLI554",
+      "category": "multi cap"
+    },
+    "MBO088": {
+      "name": "Baroda BNP Paribas Multi Cap Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-multi-cap-fund-direct-plan-growth",
+      "code": "MBO088",
+      "category": "multi cap"
+    },
+    "MMAA027": {
+      "name": "Mirae Asset Multicap Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-multicap-fund-direct-plan-growth",
+      "code": "MMAA027",
+      "category": "multi cap"
+    },
+    "MAG2138": {
+      "name": "Bandhan Multicap Fund - Direct Plan - Growth",
+      "slug": "bandhan-multicap-fund-direct-plan-growth",
+      "code": "MAG2138",
+      "category": "multi cap"
+    },
+    "MMH029": {
+      "name": "Mahindra Manulife Multi Cap Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-multi-cap-fund-direct-plan-growth",
+      "code": "MMH029",
+      "category": "multi cap"
+    },
+    "MBS3130": {
+      "name": "Aditya Birla Sun Life Multi Cap Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-multi-cap-fund-direct-plan-growth",
+      "code": "MBS3130",
+      "category": "multi cap"
+    },
+    "MTEA003": {
+      "name": "Franklin India Multi Cap Fund - Direct Plan - Growth",
+      "slug": "franklin-india-multi-cap-fund-direct-plan-growth",
+      "code": "MTEA003",
+      "category": "multi cap"
+    },
+    "MIT015": {
+      "name": "ITI Multi Cap Fund - Direct Plan - Growth",
+      "slug": "iti-multi-cap-fund-direct-plan-growth",
+      "code": "MIT015",
+      "category": "multi cap"
+    },
+    "MJB492": {
+      "name": "LIC MF Multi Cap Fund - Direct Plan - Growth",
+      "slug": "lic-mf-multi-cap-fund-direct-plan-growth",
+      "code": "MJB492",
+      "category": "multi cap"
+    },
+    "MHS574": {
+      "name": "HSBC Multi Cap Fund - Direct Plan - Growth",
+      "slug": "hsbc-multi-cap-fund-direct-plan-growth",
+      "code": "MHS574",
+      "category": "multi cap"
+    },
+    "MSAA010": {
+      "name": "Samco Multi Cap Fund - Direct Plan - Growth",
+      "slug": "samco-multi-cap-fund-direct-plan-growth",
+      "code": "MSAA010",
+      "category": "multi cap"
+    },
+    "MPAA016": {
+      "name": "PGIM India Multi Cap Fund - Direct Plan - Growth",
+      "slug": "pgim-india-multi-cap-fund-direct-plan-growth",
+      "code": "MPAA016",
+      "category": "multi cap"
+    },
+    "MJP332": {
+      "name": "Edelweiss Recently Listed IPO Fund - Direct Plan - Growth",
+      "slug": "edelweiss-recently-listed-ipo-fund-direct-plan-growth",
+      "code": "MJP332",
+      "category": "multi cap"
+    },
+    "MYMA004": {
+      "name": "WhiteOak Capital Multi Cap Fund - Direct Plan - Growth",
+      "slug": "whiteoak-capital-multi-cap-fund-direct-plan-growth",
+      "code": "MYMA004",
+      "category": "multi cap"
+    },
+    "MAA957": {
+      "name": "Axis Multicap Fund - Direct Plan - Growth",
+      "slug": "axis-multicap-fund-direct-plan-growth",
+      "code": "MAA957",
+      "category": "multi cap"
+    },
+    "MID309": {
+      "name": "Sundaram Multi Cap Fund - Direct Plan - Growth",
+      "slug": "sundaram-multi-cap-fund-direct-plan-growth",
+      "code": "MID309",
+      "category": "multi cap"
+    },
+    "MHD3487": {
+      "name": "HDFC Multicap Fund - Direct Plan - Growth",
+      "slug": "hdfc-multicap-fund-direct-plan-growth",
+      "code": "MHD3487",
+      "category": "multi cap"
+    },
+    "MEWA007": {
+      "name": "Edelweiss Multi Cap Fund - Direct Plan - Growth",
+      "slug": "edelweiss-multi-cap-fund-direct-plan-growth",
+      "code": "MEWA007",
+      "category": "multi cap"
+    },
+    "MBFA080": {
+      "name": "Bajaj Finserv Multi Cap Fund - Direct Plan - Growth",
+      "slug": "bajaj-finserv-multi-cap-fund-direct-plan-growth",
+      "code": "MBFA080",
+      "category": "multi cap"
+    },
+    "MSB1831": {
+      "name": "SBI Multicap Fund - Direct Plan - Growth",
+      "slug": "sbi-multicap-fund-direct-plan-growth",
+      "code": "MSB1831",
+      "category": "multi cap"
+    },
+    "MUTA098": {
+      "name": "UTI Multi Cap Fund - Direct Plan - Growth",
+      "slug": "uti-multi-cap-fund-direct-plan-growth",
+      "code": "MUTA098",
+      "category": "multi cap"
+    },
+    "MES061": {
+      "name": "Quant Multi Cap Fund - Direct Plan - Growth",
+      "slug": "quant-multi-cap-fund-direct-plan-growth",
+      "code": "MES061",
+      "category": "multi cap"
+    },
+    "MTA1420": {
+      "name": "Tata Multicap Fund - Direct Plan - Growth",
+      "slug": "tata-multicap-fund-direct-plan-growth",
+      "code": "MTA1420",
+      "category": "multi cap"
+    },
+    "MDSA032": {
+      "name": "DSP Multicap Fund - Direct Plan - Growth",
+      "slug": "dsp-multicap-fund-direct-plan-growth",
+      "code": "MDSA032",
+      "category": "multi cap"
+    },
+    "MHD3073": {
+      "name": "HDFC Equity Opportunities Fund - Series II - 1126D May - Direct Plan - Growth",
+      "slug": "hdfc-equity-opportunities-fund-series-ii-1126d-may-direct-plan-growth",
+      "code": "MHD3073",
+      "category": "multi cap"
+    },
+    "MHD3083": {
+      "name": "HDFC Equity Opportunities Fund - Series II - 1100D June - Direct Plan - Growth",
+      "slug": "hdfc-equity-opportunities-fund-series-ii-1100d-june-direct-plan-growth",
+      "code": "MHD3083",
+      "category": "multi cap"
+    },
+    "MKM1087": {
+      "name": "Kotak India Growth Fund - Series IV - Direct Plan - Growth",
+      "slug": "kotak-india-growth-fund-series-iv-direct-plan-growth",
+      "code": "MKM1087",
+      "category": "multi cap"
+    },
+    "MNJA003": {
+      "name": "NJ ELSS Tax Saver Scheme - Direct Plan - Growth",
+      "slug": "nj-elss-tax-saver-scheme-direct-plan-growth",
+      "code": "MNJA003",
+      "category": "elss"
+    },
+    "MTA1114": {
+      "name": "Tata ELSS Fund - Direct Plan - Growth",
+      "slug": "tata-elss-fund-direct-plan-growth",
+      "code": "MTA1114",
+      "category": "elss"
+    },
+    "MIT019": {
+      "name": "ITI ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "iti-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MIT019",
+      "category": "elss"
+    },
+    "MBFA070": {
+      "name": "Bajaj Finserv ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "bajaj-finserv-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MBFA070",
+      "category": "elss"
+    },
+    "MSB1331": {
+      "name": "SBI Long Term Advantage Fund - Series V - Direct Plan - Growth",
+      "slug": "sbi-long-term-advantage-fund-series-v-direct-plan-growth",
+      "code": "MSB1331",
+      "category": "elss"
+    },
+    "MCA200": {
+      "name": "Canara Robeco ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MCA200",
+      "category": "elss"
+    },
+    "MES037": {
+      "name": "Quant ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "quant-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MES037",
+      "category": "elss"
+    },
+    "MIM117": {
+      "name": "Groww ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "groww-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MIM117",
+      "category": "elss"
+    },
+    "MRC938": {
+      "name": "Nippon India ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "nippon-india-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MRC938",
+      "category": "elss"
+    },
+    "MLI550": {
+      "name": "Invesco India ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "invesco-india-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MLI550",
+      "category": "elss"
+    },
+    "MUT619": {
+      "name": "UTI ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "uti-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MUT619",
+      "category": "elss"
+    },
+    "MMA150": {
+      "name": "Mirae Asset ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MMA150",
+      "category": "elss"
+    },
+    "MAB724": {
+      "name": "Baroda BNP Paribas ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MAB724",
+      "category": "elss"
+    },
+    "MSB1217": {
+      "name": "SBI Long Term Advantage Fund - Series III - Direct Plan - Growth",
+      "slug": "sbi-long-term-advantage-fund-series-iii-direct-plan-growth",
+      "code": "MSB1217",
+      "category": "elss"
+    },
+    "MMO035": {
+      "name": "Motilal Oswal ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MMO035",
+      "category": "elss"
+    },
+    "MBA181": {
+      "name": "Bank of India Midcap Tax Fund - Series 1 - Direct Plan - Growth",
+      "slug": "bank-of-india-midcap-tax-fund-series-1-direct-plan-growth",
+      "code": "MBA181",
+      "category": "elss"
+    },
+    "MJB147": {
+      "name": "LIC MF ELSS Tax Saver - Direct Plan - Growth",
+      "slug": "lic-mf-elss-tax-saver-direct-plan-growth",
+      "code": "MJB147",
+      "category": "elss"
+    },
+    "MDS572": {
+      "name": "DSP ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "dsp-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MDS572",
+      "category": "elss"
+    },
+    "MCC258": {
+      "name": "HSBC ELSS Tax saver Fund - Direct Plan - Growth",
+      "slug": "hsbc-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MCC258",
+      "category": "elss"
+    },
+    "MTE311": {
+      "name": "Franklin India ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "franklin-india-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MTE311",
+      "category": "elss"
+    },
+    "MSN1375": {
+      "name": "Sundaram Long Term Tax Advantage Fund - Series III - Direct Plan - Growth",
+      "slug": "sundaram-long-term-tax-advantage-fund-series-iii-direct-plan-growth",
+      "code": "MSN1375",
+      "category": "elss"
+    },
+    "MAA192": {
+      "name": "Axis ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "axis-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MAA192",
+      "category": "elss"
+    },
+    "MSB139": {
+      "name": "SBI Long Term Advantage Fund - Series IV - Direct Plan - Growth",
+      "slug": "sbi-long-term-advantage-fund-series-iv-direct-plan-growth",
+      "code": "MSB139",
+      "category": "elss"
+    },
+    "MBA083": {
+      "name": "Bank of India ELSS Tax Saver - Direct Plan - Growth",
+      "slug": "bank-of-india-elss-tax-saver-direct-plan-growth",
+      "code": "MBA083",
+      "category": "elss"
+    },
+    "MUK034": {
+      "name": "Union ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "union-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MUK034",
+      "category": "elss"
+    },
+    "MSA005": {
+      "name": "Samco ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "samco-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MSA005",
+      "category": "elss"
+    },
+    "MJM315": {
+      "name": "JM ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "jm-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MJM315",
+      "category": "elss"
+    },
+    "MAG741": {
+      "name": "Bandhan ELSS Tax saver Fund - Direct Plan - Growth",
+      "slug": "bandhan-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MAG741",
+      "category": "elss"
+    },
+    "MID329": {
+      "name": "Sundaram ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "sundaram-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MID329",
+      "category": "elss"
+    },
+    "MSN1404": {
+      "name": "Sundaram Long Term Tax Advantage Fund - Series IV - Direct Plan - Growth",
+      "slug": "sundaram-long-term-tax-advantage-fund-series-iv-direct-plan-growth",
+      "code": "MSN1404",
+      "category": "elss"
+    },
+    "MEW088": {
+      "name": "Edelweiss ELSS Tax saver Fund - Direct Plan - Growth",
+      "slug": "edelweiss-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MEW088",
+      "category": "elss"
+    },
+    "MSB1375": {
+      "name": "SBI Long Term Advantage Fund - Series VI - Direct Plan - Growth",
+      "slug": "sbi-long-term-advantage-fund-series-vi-direct-plan-growth",
+      "code": "MSB1375",
+      "category": "elss"
+    },
+    "MSR011": {
+      "name": "Shriram ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "shriram-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MSR011",
+      "category": "elss"
+    },
+    "MBS847": {
+      "name": "Aditya Birla Sun Life ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MBS847",
+      "category": "elss"
+    },
+    "MSN1351": {
+      "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series VI - Direct Plan - Growth",
+      "slug": "sundaram-long-term-micro-cap-tax-advantage-fund-series-vi-direct-plan-growth",
+      "code": "MSN1351",
+      "category": "elss"
+    },
+    "MPI1126": {
+      "name": "ICICI Prudential ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MPI1126",
+      "category": "elss"
+    },
+    "MKM518": {
+      "name": "Kotak ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "kotak-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MKM518",
+      "category": "elss"
+    },
+    "MPM099": {
+      "name": "Navi ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "navi-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MPM099",
+      "category": "elss"
+    },
+    "MWC011": {
+      "name": "WhiteOak Capital ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "whiteoak-capital-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MWC011",
+      "category": "elss"
+    },
+    "MSN1322": {
+      "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series V - Direct Plan - Growth",
+      "slug": "sundaram-long-term-micro-cap-tax-advantage-fund-series-v-direct-plan-growth",
+      "code": "MSN1322",
+      "category": "elss"
+    },
+    "MMH011": {
+      "name": "Mahindra Manulife ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MMH011",
+      "category": "elss"
+    },
+    "MSN1191": {
+      "name": "Sundaram Long Term Tax Advantage Fund - Series II - Direct Plan - Growth",
+      "slug": "sundaram-long-term-tax-advantage-fund-series-ii-direct-plan-growth",
+      "code": "MSN1191",
+      "category": "elss"
+    },
+    "MBA199": {
+      "name": "Bank of India Midcap Tax Fund - Series 2 - Direct Plan - Growth",
+      "slug": "bank-of-india-midcap-tax-fund-series-2-direct-plan-growth",
+      "code": "MBA199",
+      "category": "elss"
+    },
+    "MSN1282": {
+      "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series III - Direct Plan - Growth",
+      "slug": "sundaram-long-term-micro-cap-tax-advantage-fund-series-iii-direct-plan-growth",
+      "code": "MSN1282",
+      "category": "elss"
+    },
+    "MSB499": {
+      "name": "SBI ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "sbi-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MSB499",
+      "category": "elss"
+    },
+    "MHD1167": {
+      "name": "HDFC ELSS Tax saver - Direct Plan - Growth",
+      "slug": "hdfc-elss-tax-saver-direct-plan-growth",
+      "code": "MHD1167",
+      "category": "elss"
+    },
+    "MSN1290": {
+      "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series IV - Direct Plan - Growth",
+      "slug": "sundaram-long-term-micro-cap-tax-advantage-fund-series-iv-direct-plan-growth",
+      "code": "MSN1290",
+      "category": "elss"
+    },
+    "MPA163": {
+      "name": "PGIM India ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "pgim-india-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MPA163",
+      "category": "elss"
+    },
+    "MII074": {
+      "name": "360 ONE ELSS Tax Saver Nifty 50 Index Fund - Direct Plan - Growth",
+      "slug": "360-one-elss-tax-saver-nifty-50-index-fund-direct-plan-growth",
+      "code": "MII074",
+      "category": "elss"
+    },
+    "MPMA003": {
+      "name": "Navi ELSS Tax Saver Nifty 50 Index Fund - Direct Plan - Growth",
+      "slug": "navi-elss-tax-saver-nifty-50-index-fund-direct-plan-growth",
+      "code": "MPMA003",
+      "category": "elss"
+    },
+    "MPI3425": {
+      "name": "ICICI Prudential Long Term Wealth Enhancement Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-long-term-wealth-enhancement-fund-direct-plan-growth",
+      "code": "MPI3425",
+      "category": "elss"
+    },
+    "MCM151": {
+      "name": "Taurus ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "taurus-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MCM151",
+      "category": "elss"
+    },
+    "MQU008": {
+      "name": "Quantum ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "quantum-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MQU008",
+      "category": "elss"
+    },
+    "MPP013": {
+      "name": "Parag Parikh ELSS Tax Saver Fund - Direct Plan - Growth",
+      "slug": "parag-parikh-elss-tax-saver-fund-direct-plan-growth",
+      "code": "MPP013",
+      "category": "elss"
+    },
+    "MPM117": {
+      "name": "Navi Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "navi-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MPM117",
+      "category": "aggressive hybrid"
+    },
+    "MDE513": {
+      "name": "PGIM India Aggressive Hybrid Equity Fund - Direct Plan - Growth",
+      "slug": "pgim-india-aggressive-hybrid-equity-fund-direct-plan-growth",
+      "code": "MDE513",
+      "category": "aggressive hybrid"
+    },
+    "MSB516": {
+      "name": "SBI Equity Hybrid Fund - Direct Plan - Growth",
+      "slug": "sbi-equity-hybrid-fund-direct-plan-growth",
+      "code": "MSB516",
+      "category": "aggressive hybrid"
+    },
+    "MAG1761": {
+      "name": "Bandhan Aggressive Hybrid Fund - Direct plan - Growth",
+      "slug": "bandhan-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MAG1761",
+      "category": "aggressive hybrid"
+    },
+    "MEW086": {
+      "name": "Edelweiss Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "edelweiss-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MEW086",
+      "category": "aggressive hybrid"
+    },
+    "MCA208": {
+      "name": "Canara Robeco Equity Hybrid Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-equity-hybrid-fund-direct-plan-growth",
+      "code": "MCA208",
+      "category": "aggressive hybrid"
+    },
+    "MRC1011": {
+      "name": "Nippon India Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "nippon-india-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MRC1011",
+      "category": "aggressive hybrid"
+    },
+    "MUK156": {
+      "name": "Union Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "union-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MUK156",
+      "category": "aggressive hybrid"
+    },
+    "MCC266": {
+      "name": "HSBC Aggressive Hybrid Fund - Direct - Growth",
+      "slug": "hsbc-aggressive-hybrid-fund-direct-growth",
+      "code": "MCC266",
+      "category": "aggressive hybrid"
+    },
+    "MKM898": {
+      "name": "Kotak Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "kotak-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MKM898",
+      "category": "aggressive hybrid"
+    },
+    "MLI1062": {
+      "name": "Invesco India Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "invesco-india-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MLI1062",
+      "category": "aggressive hybrid"
+    },
+    "MTA718": {
+      "name": "Tata Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "tata-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MTA718",
+      "category": "aggressive hybrid"
+    },
+    "MIM147": {
+      "name": "Groww Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "groww-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MIM147",
+      "category": "aggressive hybrid"
+    },
+    "MUT661": {
+      "name": "UTI Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "uti-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MUT661",
+      "category": "aggressive hybrid"
+    },
+    "MMA146": {
+      "name": "Mirae Asset Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MMA146",
+      "category": "aggressive hybrid"
+    },
+    "MAA765": {
+      "name": "Axis Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "axis-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MAA765",
+      "category": "aggressive hybrid"
+    },
+    "MBA177": {
+      "name": "Bank of India Mid & Small Cap Equity & Debt Fund - Direct Plan - Growth",
+      "slug": "bank-of-india-mid-small-cap-equity-debt-fund-direct-plan-growth",
+      "code": "MBA177",
+      "category": "aggressive hybrid"
+    },
+    "MTE307": {
+      "name": "Franklin India Aggressive Hybrid Fund - Direct - Growth",
+      "slug": "franklin-india-aggressive-hybrid-fund-direct-growth",
+      "code": "MTE307",
+      "category": "aggressive hybrid"
+    },
+    "MJB166": {
+      "name": "LIC MF Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "lic-mf-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MJB166",
+      "category": "aggressive hybrid"
+    },
+    "MJM328": {
+      "name": "JM Aggressive Hybrid Fund - (Direct) - Growth",
+      "slug": "jm-aggressive-hybrid-fund-direct-growth",
+      "code": "MJM328",
+      "category": "aggressive hybrid"
+    },
+    "MHD1163": {
+      "name": "HDFC Hybrid Equity Fund - Direct Plan - Growth",
+      "slug": "hdfc-hybrid-equity-fund-direct-plan-growth",
+      "code": "MHD1163",
+      "category": "aggressive hybrid"
+    },
+    "MAB891": {
+      "name": "Baroda BNP Paribas Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MAB891",
+      "category": "aggressive hybrid"
+    },
+    "MDS608": {
+      "name": "DSP Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "dsp-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MDS608",
+      "category": "aggressive hybrid"
+    },
+    "MBS849": {
+      "name": "Aditya Birla Sun Life Equity Hybrid 95 Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-equity-hybrid-95-fund-direct-plan-growth",
+      "code": "MBS849",
+      "category": "aggressive hybrid"
+    },
+    "MMH055": {
+      "name": "Mahindra Manulife Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MMH055",
+      "category": "aggressive hybrid"
+    },
+    "MPI1136": {
+      "name": "ICICI Prudential Equity & Debt Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-equity-debt-fund-direct-plan-growth",
+      "code": "MPI1136",
+      "category": "aggressive hybrid"
+    },
+    "MID280": {
+      "name": "Sundaram Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "sundaram-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MID280",
+      "category": "aggressive hybrid"
+    },
+    "MSR003": {
+      "name": "Shriram Aggressive Hybrid Fund - Direct Plan \u2013 Growth",
+      "slug": "shriram-aggressive-hybrid-fund-direct-plan-\u2013-growth",
+      "code": "MSR003",
+      "category": "aggressive hybrid"
+    },
+    "MES065": {
+      "name": "Quant Aggressive Hybrid Fund - Direct Plan - Growth",
+      "slug": "quant-aggressive-hybrid-fund-direct-plan-growth",
+      "code": "MES065",
+      "category": "aggressive hybrid"
+    },
+    "MUK144": {
+      "name": "Union Focused Fund - Direct Plan - Growth",
+      "slug": "union-focused-fund-direct-plan-growth",
+      "code": "MUK144",
+      "category": "focused"
+    },
+    "MRC955": {
+      "name": "Nippon India Focused Fund - Direct Plan - Growth",
+      "slug": "nippon-india-focused-fund-direct-plan-growth",
+      "code": "MRC955",
+      "category": "focused"
+    },
+    "MKM1343": {
+      "name": "Kotak Focused Fund - Direct Plan - Growth",
+      "slug": "kotak-focused-fund-direct-plan-growth",
+      "code": "MKM1343",
+      "category": "focused"
+    },
+    "MITA003": {
+      "name": "ITI Focused Fund - Direct Plan - Growth",
+      "slug": "iti-focused-fund-direct-plan-growth",
+      "code": "MITA003",
+      "category": "focused"
+    },
+    "MES049": {
+      "name": "Quant Focused Fund - Direct Plan - Growth",
+      "slug": "quant-focused-fund-direct-plan-growth",
+      "code": "MES049",
+      "category": "focused"
+    },
+    "MCA325": {
+      "name": "Canara Robeco Focused Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-focused-fund-direct-plan-growth",
+      "code": "MCA325",
+      "category": "focused"
+    },
+    "MJM324": {
+      "name": "JM Focused Fund - (Direct) - Growth",
+      "slug": "jm-focused-fund-direct-growth",
+      "code": "MJM324",
+      "category": "focused"
+    },
+    "MID318": {
+      "name": "Sundaram Focused Fund - Direct Plan - Growth",
+      "slug": "sundaram-focused-fund-direct-plan-growth",
+      "code": "MID318",
+      "category": "focused"
+    },
+    "MLI1122": {
+      "name": "Invesco India Focused Fund - Direct Plan - Growth",
+      "slug": "invesco-india-focused-fund-direct-plan-growth",
+      "code": "MLI1122",
+      "category": "focused"
+    },
+    "MMA169": {
+      "name": "Mirae Asset Focused Fund - Direct Plan - Growth",
+      "slug": "mirae-asset-focused-fund-direct-plan-growth",
+      "code": "MMA169",
+      "category": "focused"
+    },
+    "MSB536": {
+      "name": "SBI Focused Fund - Direct Plan - Growth",
+      "slug": "sbi-focused-fund-direct-plan-growth",
+      "code": "MSB536",
+      "category": "focused"
+    },
+    "MHD1150": {
+      "name": "HDFC Focused Fund - Direct Plan - Growth",
+      "slug": "hdfc-focused-fund-direct-plan-growth",
+      "code": "MHD1150",
+      "category": "focused"
+    },
+    "MHS550": {
+      "name": "HSBC Focused Fund - Direct Plan - Growth",
+      "slug": "hsbc-focused-fund-direct-plan-growth",
+      "code": "MHS550",
+      "category": "focused"
+    },
+    "MAG727": {
+      "name": "Bandhan Focused Fund - Direct Plan - Growth",
+      "slug": "bandhan-focused-fund-direct-plan-growth",
+      "code": "MAG727",
+      "category": "focused"
+    },
+    "MIB238": {
+      "name": "LIC MF Focused Fund - Direct Plan - Growth",
+      "slug": "lic-mf-focused-fund-direct-plan-growth",
+      "code": "MIB238",
+      "category": "focused"
+    },
+    "MJP431": {
+      "name": "Edelweiss Focused Fund - Direct Plan - Growth",
+      "slug": "edelweiss-focused-fund-direct-plan-growth",
+      "code": "MJP431",
+      "category": "focused"
+    },
+    "MMO011": {
+      "name": "Motilal Oswal Focused Fund - Direct Plan - Growth",
+      "slug": "motilal-oswal-focused-fund-direct-plan-growth",
+      "code": "MMO011",
+      "category": "focused"
+    },
+    "MOBA003": {
+      "name": "Old Bridge Focused Fund - Direct Plan - Growth",
+      "slug": "old-bridge-focused-fund-direct-plan-growth",
+      "code": "MOBA003",
+      "category": "focused"
+    },
+    "MMH107": {
+      "name": "Mahindra Manulife Focused Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-focused-fund-direct-plan-growth",
+      "code": "MMH107",
+      "category": "focused"
+    },
+    "MII058": {
+      "name": "360 ONE Focused Fund - Direct Plan - Growth",
+      "slug": "360-one-focused-fund-direct-plan-growth",
+      "code": "MII058",
+      "category": "focused"
+    },
+    "MUT3651": {
+      "name": "UTI Focused Fund - Direct Plan - Growth",
+      "slug": "uti-focused-fund-direct-plan-growth",
+      "code": "MUT3651",
+      "category": "focused"
+    },
+    "MPI1124": {
+      "name": "ICICI Prudential Focused Equity Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-focused-equity-fund-direct-plan-growth",
+      "code": "MPI1124",
+      "category": "focused"
+    },
+    "MAA183": {
+      "name": "Axis Focused Fund - Direct Plan - Growth",
+      "slug": "axis-focused-fund-direct-plan-growth",
+      "code": "MAA183",
+      "category": "focused"
+    },
+    "MDS588": {
+      "name": "DSP Focused Fund - Direct Plan - Growth",
+      "slug": "dsp-focused-fund-direct-plan-growth",
+      "code": "MDS588",
+      "category": "focused"
+    },
+    "MBS837": {
+      "name": "Aditya Birla Sun Life Focused Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-focused-fund-direct-plan-growth",
+      "code": "MBS837",
+      "category": "focused"
+    },
+    "MTE325": {
+      "name": "Franklin India Focused Equity Fund - Direct - Growth",
+      "slug": "franklin-india-focused-equity-fund-direct-growth",
+      "code": "MTE325",
+      "category": "focused"
+    },
+    "MTA1357": {
+      "name": "Tata Focused Fund - Direct Plan - Growth",
+      "slug": "tata-focused-fund-direct-plan-growth",
+      "code": "MTA1357",
+      "category": "focused"
+    },
+    "MAB895": {
+      "name": "Baroda BNP Paribas Focused Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-focused-fund-direct-plan-growth",
+      "code": "MAB895",
+      "category": "focused"
+    },
+    "MTA732": {
+      "name": "Tata Value Fund - Direct Plan - Growth",
+      "slug": "tata-value-fund-direct-plan-growth",
+      "code": "MTA732",
+      "category": "value"
+    },
+    "MJM326": {
+      "name": "JM Value Fund - (Direct) - Growth",
+      "slug": "jm-value-fund-direct-growth",
+      "code": "MJM326",
+      "category": "value"
+    },
+    "MIB246": {
+      "name": "LIC MF Value Fund - Direct Plan - Growth",
+      "slug": "lic-mf-value-fund-direct-plan-growth",
+      "code": "MIB246",
+      "category": "value"
+    },
+    "MDS1553": {
+      "name": "DSP Value Fund - Direct Plan - Growth",
+      "slug": "dsp-value-fund-direct-plan-growth",
+      "code": "MDS1553",
+      "category": "value"
+    },
+    "MUK126": {
+      "name": "Union Value Fund - Direct Plan - Growth",
+      "slug": "union-value-fund-direct-plan-growth",
+      "code": "MUK126",
+      "category": "value"
+    },
+    "MIT059": {
+      "name": "ITI Value Fund - Direct Plan - Growth",
+      "slug": "iti-value-fund-direct-plan-growth",
+      "code": "MIT059",
+      "category": "value"
+    },
+    "MCA329": {
+      "name": "Canara Robeco Value Fund - Direct Plan - Growth",
+      "slug": "canara-robeco-value-fund-direct-plan-growth",
+      "code": "MCA329",
+      "category": "value"
+    },
+    "MRC1016": {
+      "name": "Nippon India Value Fund - Direct Plan - Growth",
+      "slug": "nippon-india-value-fund-direct-plan-growth",
+      "code": "MRC1016",
+      "category": "value"
+    },
+    "MAA939": {
+      "name": "Axis Value Fund - Direct Plan - Growth",
+      "slug": "axis-value-fund-direct-plan-growth",
+      "code": "MAA939",
+      "category": "value"
+    },
+    "MAG735": {
+      "name": "Bandhan Value Fund - Direct Plan - Growth",
+      "slug": "bandhan-value-fund-direct-plan-growth",
+      "code": "MAG735",
+      "category": "value"
+    },
+    "MUT635": {
+      "name": "UTI Value Fund - Direct Plan - Growth",
+      "slug": "uti-value-fund-direct-plan-growth",
+      "code": "MUT635",
+      "category": "value"
+    },
+    "MIM083": {
+      "name": "Groww Value Fund - Direct Plan - Growth",
+      "slug": "groww-value-fund-direct-plan-growth",
+      "code": "MIM083",
+      "category": "value"
+    },
+    "MES076": {
+      "name": "Quant Value Fund - Direct Plan - Growth",
+      "slug": "quant-value-fund-direct-plan-growth",
+      "code": "MES076",
+      "category": "value"
+    },
+    "MCC289": {
+      "name": "HSBC Value Fund - Direct Plan - Growth",
+      "slug": "hsbc-value-fund-direct-plan-growth",
+      "code": "MCC289",
+      "category": "value"
+    },
+    "MHD1148": {
+      "name": "HDFC Value Fund - Direct Plan - Growth",
+      "slug": "hdfc-value-fund-direct-plan-growth",
+      "code": "MHD1148",
+      "category": "value"
+    },
+    "MBS831": {
+      "name": "Aditya Birla Sun Life Value Fund - Direct Plan - Growth",
+      "slug": "aditya-birla-sun-life-value-fund-direct-plan-growth",
+      "code": "MBS831",
+      "category": "value"
+    },
+    "MMHA018": {
+      "name": "Mahindra Manulife Value Fund - Direct Plan - Growth",
+      "slug": "mahindra-manulife-value-fund-direct-plan-growth",
+      "code": "MMHA018",
+      "category": "value"
+    },
+    "MTE295": {
+      "name": "Templeton India Value Fund - Direct - Growth",
+      "slug": "templeton-india-value-fund-direct-growth",
+      "code": "MTE295",
+      "category": "value"
+    },
+    "MBOA011": {
+      "name": "Baroda BNP Paribas Value Fund - Direct Plan - Growth",
+      "slug": "baroda-bnp-paribas-value-fund-direct-plan-growth",
+      "code": "MBOA011",
+      "category": "value"
+    },
+    "MPI1116": {
+      "name": "ICICI Prudential Value Fund - Direct Plan - Growth",
+      "slug": "icici-prudential-value-fund-direct-plan-growth",
+      "code": "MPI1116",
+      "category": "value"
+    },
+    "MQU001": {
+      "name": "Quantum Value Fund - Direct Plan - Growth",
+      "slug": "quantum-value-fund-direct-plan-growth",
+      "code": "MQU001",
+      "category": "value"
+    },
+    "MKM530": {
+      "name": "Kotak Contra Fund - Direct Plan - Growth",
+      "slug": "kotak-contra-fund-direct-plan-growth",
+      "code": "MKM530",
+      "category": "contra"
+    },
+    "MSB530": {
+      "name": "SBI Contra Fund - Direct Plan - Growth",
+      "slug": "sbi-contra-fund-direct-plan-growth",
+      "code": "MSB530",
+      "category": "contra"
+    },
+    "MLI566": {
+      "name": "Invesco India Contra Fund - Direct Plan - Growth",
+      "slug": "invesco-india-contra-fund-direct-plan-growth",
+      "code": "MLI566",
+      "category": "contra"
+    }
+  }
+}

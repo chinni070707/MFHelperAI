@@ -313,6 +313,14 @@
                 <h2>⏱️ Recent Portfolio Uploads</h2>
                 <table id="recentActivityTable"></table>
             </div>
+
+            <!-- AMC Holdings Data Summary -->
+            <div class="table-section" id="holdingsDataSection" style="display: none;">
+                <h2>📂 AMC Holdings Data Inventory</h2>
+                <div id="holdingsDataMeta" style="margin-bottom: 20px;"></div>
+                <div id="holdingsAmcSummary"></div>
+                <table id="holdingsDataTable"></table>
+            </div>
         </div>
     </div>
     
@@ -374,6 +382,7 @@
                 
                 renderStats(data);
                 await fetchTimeline();
+                await fetchHoldingsDataSummary();
                 
                 document.getElementById('loadingMessage').style.display = 'none';
                 
@@ -607,6 +616,127 @@
         
         function refreshData() {
             fetchData();
+        }
+
+        async function fetchHoldingsDataSummary() {
+            try {
+                const response = await fetch(`${API_BASE}/api/admin/holdings-data-summary?api_key=${apiKey}`);
+                if (!response.ok) return;
+                const data = await response.json();
+                renderHoldingsDataSummary(data);
+            } catch (error) {
+                console.error('Error fetching holdings data summary:', error);
+            }
+        }
+
+        function renderHoldingsDataSummary(data) {
+            const section = document.getElementById('holdingsDataSection');
+            section.style.display = 'block';
+
+            // File-level meta
+            const meta = data.file_meta;
+            const metaDiv = document.getElementById('holdingsDataMeta');
+            metaDiv.innerHTML = `
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                    <div style="background:#f0f4ff; padding:12px 18px; border-radius:8px; flex:1; min-width:180px;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Total Funds</div>
+                        <div style="font-size:28px; font-weight:700; color:#1f2937;">${data.total_funds}</div>
+                    </div>
+                    <div style="background:#f0fdf4; padding:12px 18px; border-radius:8px; flex:1; min-width:180px;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">AMCs Covered</div>
+                        <div style="font-size:28px; font-weight:700; color:#1f2937;">${data.total_amcs}</div>
+                    </div>
+                    <div style="background:#fefce8; padding:12px 18px; border-radius:8px; flex:1; min-width:180px;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Data Version</div>
+                        <div style="font-size:20px; font-weight:700; color:#1f2937;">${meta.version || 'N/A'}</div>
+                    </div>
+                    <div style="background:#fdf2f8; padding:12px 18px; border-radius:8px; flex:1; min-width:180px;">
+                        <div style="font-size:12px; color:#6b7280; text-transform:uppercase; font-weight:600;">Last Updated</div>
+                        <div style="font-size:20px; font-weight:700; color:#1f2937;">${meta.last_updated || 'N/A'}</div>
+                        <div style="font-size:11px; color:#9ca3af;">File modified: ${meta.file_modified ? new Date(meta.file_modified).toLocaleString() : 'N/A'}</div>
+                    </div>
+                </div>
+            `;
+
+            // AMC table with expandable fund rows
+            const table = document.getElementById('holdingsDataTable');
+            let rows = '';
+            data.amcs.forEach((amc, idx) => {
+                const asOf = amc.latest_as_of_date || '<span style="color:#ef4444;">Not recorded</span>';
+                const sources = amc.sources.length > 0 ? amc.sources.join(', ') : '<span style="color:#9ca3af;">—</span>';
+                const categories = amc.categories.join(', ');
+
+                rows += `
+                    <tr style="cursor:pointer;" onclick="toggleAmcFunds('amc-funds-${idx}', this)">
+                        <td><span class="badge ${idx < 3 ? 'success' : 'info'}">#${idx + 1}</span></td>
+                        <td><strong>${amc.amc}</strong></td>
+                        <td>${amc.fund_count}</td>
+                        <td>${amc.total_holdings}</td>
+                        <td><span style="font-size:12px;">${categories}</span></td>
+                        <td>${asOf}</td>
+                        <td><span style="font-size:12px;">${sources}</span></td>
+                        <td style="font-size:18px;">▶</td>
+                    </tr>
+                    <tr id="amc-funds-${idx}" style="display:none;">
+                        <td colspan="8" style="padding:0;">
+                            <table style="width:100%; background:#f9fafb; margin:0;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding:8px 12px; font-size:11px;">Fund Name</th>
+                                        <th style="padding:8px 12px; font-size:11px;">Category</th>
+                                        <th style="padding:8px 12px; font-size:11px;">Holdings</th>
+                                        <th style="padding:8px 12px; font-size:11px;">As Of Date</th>
+                                        <th style="padding:8px 12px; font-size:11px;">Source</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${amc.funds.map(fund => {
+                                        const fundAsOf = fund.as_of_date || '<span style="color:#ef4444;">N/A</span>';
+                                        const fundSource = fund.source || '<span style="color:#9ca3af;">—</span>';
+                                        const holdingsColor = fund.holdings_count >= 50 ? '#10b981' : fund.holdings_count >= 20 ? '#f59e0b' : '#ef4444';
+                                        return `
+                                            <tr>
+                                                <td style="padding:6px 12px; font-size:13px;">${fund.name}</td>
+                                                <td style="padding:6px 12px; font-size:13px;">${fund.category}</td>
+                                                <td style="padding:6px 12px; font-size:13px;"><span style="color:${holdingsColor}; font-weight:600;">${fund.holdings_count}</span></td>
+                                                <td style="padding:6px 12px; font-size:13px;">${fundAsOf}</td>
+                                                <td style="padding:6px 12px; font-size:13px;">${fundSource}</td>
+                                            </tr>`;
+                                    }).join('')}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>AMC</th>
+                        <th>Funds</th>
+                        <th>Total Holdings</th>
+                        <th>Categories</th>
+                        <th>Latest Data Date</th>
+                        <th>Source</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            `;
+        }
+
+        function toggleAmcFunds(rowId, toggleRow) {
+            const row = document.getElementById(rowId);
+            const arrow = toggleRow.querySelector('td:last-child');
+            if (row.style.display === 'none') {
+                row.style.display = 'table-row';
+                arrow.textContent = '▼';
+            } else {
+                row.style.display = 'none';
+                arrow.textContent = '▶';
+            }
         }
     </script>
     

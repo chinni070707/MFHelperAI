@@ -7,6 +7,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, desc
 from typing import Dict
 from datetime import datetime, timedelta
+from pathlib import Path
+from collections import defaultdict
+import json
 import logging
 import os
 
@@ -320,4 +323,108 @@ async def get_timeline_analytics(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to fetch timeline analytics: {str(e)}"
+        )
+
+
+@router.get("/holdings-data-summary")
+async def get_holdings_data_summary(
+    api_key: str = None,
+) -> Dict:
+    """
+    Get a summary of available AMC holdings data from fund_holdings.json.
+    Shows per-AMC: fund count, total holdings, categories, last fetch date, and data source.
+    """
+    verify_admin(api_key)
+
+    try:
+        # Find fund_holdings.json
+        possible_paths = [
+            Path("backend/data/fund_holdings.json"),
+            Path("data/fund_holdings.json"),
+            Path(__file__).resolve().parent.parent.parent / "data" / "fund_holdings.json",
+        ]
+        holdings_file = None
+        for p in possible_paths:
+            if p.exists():
+                holdings_file = p
+                break
+
+        if not holdings_file:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="fund_holdings.json not found"
+            )
+
+        with open(holdings_file, "r") as f:
+            data = json.load(f)
+
+        file_meta = {
+            "version": data.get("version"),
+            "last_updated": data.get("last_updated"),
+            "source": data.get("source"),
+            "file_modified": datetime.fromtimestamp(holdings_file.stat().st_mtime).isoformat(),
+        }
+
+        funds = data.get("funds", {})
+        amc_map: Dict[str, dict] = defaultdict(lambda: {
+            "amc": "",
+            "fund_count": 0,
+            "total_holdings": 0,
+            "categories": set(),
+            "funds": [],
+            "latest_as_of_date": None,
+            "sources": set(),
+        })
+
+        for key, fund in funds.items():
+            amc_name = fund.get("amc", "Unknown")
+            entry = amc_map[amc_name]
+            entry["amc"] = amc_name
+            entry["fund_count"] += 1
+            h_count = len(fund.get("holdings", []))
+            entry["total_holdings"] += h_count
+            entry["categories"].add(fund.get("category", "Unknown"))
+            as_of = fund.get("as_of_date", "")
+            source = fund.get("source", "")
+            if source:
+                entry["sources"].add(source)
+            if as_of:
+                if entry["latest_as_of_date"] is None or as_of > entry["latest_as_of_date"]:
+                    entry["latest_as_of_date"] = as_of
+            entry["funds"].append({
+                "key": key,
+                "name": fund.get("name", key),
+                "category": fund.get("category", ""),
+                "holdings_count": h_count,
+                "as_of_date": as_of or None,
+                "source": source or None,
+            })
+
+        # Convert sets to lists for JSON serialization
+        amc_list = []
+        for amc_name, info in sorted(amc_map.items(), key=lambda x: -x[1]["fund_count"]):
+            amc_list.append({
+                "amc": info["amc"],
+                "fund_count": info["fund_count"],
+                "total_holdings": info["total_holdings"],
+                "categories": sorted(info["categories"]),
+                "latest_as_of_date": info["latest_as_of_date"],
+                "sources": sorted(info["sources"]),
+                "funds": sorted(info["funds"], key=lambda f: f["name"]),
+            })
+
+        return {
+            "file_meta": file_meta,
+            "total_funds": len(funds),
+            "total_amcs": len(amc_list),
+            "amcs": amc_list,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching holdings data summary: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch holdings data summary: {str(e)}"
         )

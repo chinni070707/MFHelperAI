@@ -1,0 +1,104 @@
+{
+  "download_date": "2026-02-13T09:32:18.283438",
+  "downloaded": [
+    {
+      "rank": 5,
+      "fund": "Mirae Asset Large Cap Fund",
+      "amc": "Mirae",
+      "filepath": "C:\\Users\\mahchi01\\OneDrive - Cadence Design Systems Inc\\Documents\\Sourcecode\\MFHelper\\backend\\data\\portfolio_downloads\\Mirae_Asset_Large_Cap_Fund_latest.pdf",
+      "type": "pdf"
+    }
+  ],
+  "skipped": [
+    {
+      "rank": 1,
+      "name": "HDFC Flexi Cap Fund",
+      "amc": "HDFC"
+    },
+    {
+      "rank": 7,
+      "name": "HDFC Top 100 Fund",
+      "amc": "HDFC"
+    },
+    {
+      "rank": 12,
+      "name": "HDFC Mid Cap Opportunities Fund",
+      "amc": "HDFC"
+    },
+    {
+      "rank": 15,
+      "name": "HDFC Small Cap Fund",
+      "amc": "HDFC"
+    },
+    {
+      "rank": 19,
+      "name": "HDFC Balanced Advantage Fund",
+      "amc": "HDFC"
+    },
+    {
+      "rank": 2,
+      "name": "ICICI Prudential Bluechip Fund",
+      "amc": "ICICI"
+    },
+    {
+      "rank": 9,
+      "name": "ICICI Prudential Equity & Debt Fund",
+      "amc": "ICICI"
+    },
+    {
+      "rank": 3,
+      "name": "SBI Bluechip Fund",
+      "amc": "SBI"
+    },
+    {
+      "rank": 14,
+      "name": "SBI Small Cap Fund",
+      "amc": "SBI"
+    },
+    {
+      "rank": 4,
+      "name": "Axis Bluechip Fund",
+      "amc": "Axis"
+    },
+    {
+      "rank": 11,
+      "name": "Axis Midcap Fund",
+      "amc": "Axis"
+    },
+    {
+      "rank": 16,
+      "name": "Axis Small Cap Fund",
+      "amc": "Axis"
+    },
+    {
+      "rank": 13,
+      "name": "Mirae Asset Emerging Bluechip Fund",
+      "amc": "Mirae"
+    },
+    {
+      "rank": 8,
+      "name": "Kotak Equity Opportunities Fund",
+      "amc": "Kotak"
+    },
+    {
+      "rank": 17,
+      "name": "Kotak Small Cap Fund",
+      "amc": "Kotak"
+    },
+    {
+      "rank": 10,
+      "name": "Nippon India Large Cap Fund",
+      "amc": "Nippon"
+    },
+    {
+      "rank": 18,
+      "name": "Nippon India Small Cap Fund",
+      "amc": "Nippon"
+    },
+    {
+      "rank": 20,
+      "name": "Motilal Oswal Midcap Fund",
+      "amc": "Motilal"
+    }
+  ]
+}
