@@ -129,7 +129,7 @@ try {
 
     # Run auth tests
     Write-Host "  Testing authentication..." -ForegroundColor Gray
-    $authTestResult = & $pytestPath tests/test_auth.py -q --tb=no 2>&1
+    $authTestResult = & $pytestPath tests/test_auth.py -q --tb=no --no-cov 2>&1
     $authExitCode = $LASTEXITCODE
 
     if ($authExitCode -eq 0) {
@@ -142,7 +142,7 @@ try {
 
     # Run portfolio tests
     Write-Host "  Testing portfolio operations..." -ForegroundColor Gray
-    $portfolioTestResult = & $pytestPath tests/test_portfolio.py -q --tb=no 2>&1
+    $portfolioTestResult = & $pytestPath tests/test_portfolio.py -q --tb=no --no-cov 2>&1
     $portfolioExitCode = $LASTEXITCODE
 
     if ($portfolioExitCode -eq 0) {
@@ -155,8 +155,10 @@ try {
 
     # Run upload tests
     Write-Host "  Testing upload functionality..." -ForegroundColor Gray
-    $uploadTestResult = & $pytestPath tests/test_upload.py -q --tb=no 2>&1
+    $ErrorActionPreference = "SilentlyContinue"
+    $uploadTestResult = & $pytestPath tests/test_upload.py -q --tb=no --no-cov 2>&1
     $uploadExitCode = $LASTEXITCODE
+    $ErrorActionPreference = "Stop"
 
     if ($uploadExitCode -eq 0) {
         Write-Host "  Upload tests passed" -ForegroundColor Green

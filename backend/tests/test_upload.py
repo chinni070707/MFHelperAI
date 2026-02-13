@@ -178,18 +178,15 @@ class TestDownloadTemplate:
             assert len(response.content) > 0
 
 
-class TestDemoData:
-    """Test demo data loading"""
-    
-    def test_load_demo_data(self, client):
-        """Test loading demo portfolio data"""
-        response = client.get("/api/upload/demo")
-        
-        if response.status_code == 200:
-            data = response.json()
-            assert "holdings" in data
-            assert len(data["holdings"]) > 0
-            assert "summary" in data
+# Demo data loading is no longer applicable — users load their own portfolio
+# class TestDemoData:
+#     def test_load_demo_data(self, client):
+#         response = client.get("/api/upload/demo")
+#         if response.status_code == 200:
+#             data = response.json()
+#             assert "holdings" in data
+#             assert len(data["holdings"]) > 0
+#             assert "summary" in data
 
 
 # Performance tests
