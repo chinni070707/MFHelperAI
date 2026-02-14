@@ -1629,6 +1629,7 @@
                 document.getElementById('liquidValue').textContent = `₹${(liquidTotal/100000).toFixed(2)}L`;
             }
             
+            renderAssetClassChart(holdings);
             renderAllocationChart(holdings);
             renderFundDistChart(holdings);
             renderAMCChart(holdings);
@@ -1702,6 +1703,86 @@
             'Debt': 'other', 'Hybrid': 'other', 'Balanced Advantage': 'other',
             'Dynamic Bond': 'other', 'Corporate Bond': 'other', 'Arbitrage': 'other'
         };
+        
+        function renderAssetClassChart(holdings) {
+            const assetTotals = { 'Equity': 0, 'Debt': 0, 'Hybrid': 0, 'Commodity': 0, 'Other': 0 };
+            const assetColors = {
+                'Equity': '#7FC04C', 
+                'Debt': '#3B82F6', 
+                'Hybrid': '#F59E0B', 
+                'Commodity': '#EAB308',
+                'Other': '#6B7280'
+            };
+            const assetIcons = {
+                'Equity': '📈', 
+                'Debt': '🏦', 
+                'Hybrid': '⚖️', 
+                'Commodity': '🥇',
+                'Other': '📊'
+            };
+            
+            let total = 0;
+            holdings.forEach(h => {
+                const assetClass = (h.asset_class || 'Equity').trim();
+                const current = parseFloat(h.current_value || 0);
+                assetTotals[assetClass] = (assetTotals[assetClass] || 0) + current;
+                total += current;
+            });
+            
+            // Filter out zero values
+            const labels = [];
+            const values = [];
+            const colors = [];
+            
+            for (const [asset, value] of Object.entries(assetTotals)) {
+                if (value > 0) {
+                    labels.push(asset);
+                    values.push(value);
+                    colors.push(assetColors[asset]);
+                }
+            }
+            
+            // Render pie chart
+            Plotly.newPlot('assetClassChart', [{
+                values: values,
+                labels: labels,
+                type: 'pie',
+                hole: 0.4,
+                marker: { colors: colors },
+                textinfo: 'label+percent',
+                textposition: 'outside',
+                automargin: true,
+                hovertemplate: '<b>%{label}</b><br>₹%{value:,.0f}<br>%{percent}<extra></extra>'
+            }], {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                showlegend: false,
+                margin: { t: 20, b: 20, l: 20, r: 20 }
+            }, { responsive: true });
+            
+            // Render summary cards
+            let summaryHTML = '';
+            for (const [asset, value] of Object.entries(assetTotals)) {
+                if (value > 0) {
+                    const percentage = ((value / total) * 100).toFixed(1);
+                    const icon = assetIcons[asset];
+                    const color = assetColors[asset];
+                    summaryHTML += `
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px; background: rgba(255,255,255,0.5); border-left: 4px solid ${color}; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <span style="font-size: 2rem;">${icon}</span>
+                                <div>
+                                    <div style="font-weight: 700; color: var(--text-primary);">${asset}</div>
+                                    <div style="font-size: 0.85rem; color: var(--text-secondary);">₹${(value/100000).toFixed(2)}L</div>
+                                </div>
+                            </div>
+                            <div style="font-size: 1.5rem; font-weight: 700; color: ${color};">${percentage}%</div>
+                        </div>
+                    `;
+                }
+            }
+            document.getElementById('assetClassSummary').innerHTML = summaryHTML;
+        }
         
         function renderAllocationChart(holdings) {
             const totals = { 'Large Cap': 0, 'Mid Cap': 0, 'Small Cap': 0, 'Flexi/Multi Cap': 0, 'Other': 0 };

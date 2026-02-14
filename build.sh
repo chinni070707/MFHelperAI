@@ -22,4 +22,10 @@ python -c "import fastapi; print(f'FastAPI: {fastapi.__version__}')"
 python -c "import sqlalchemy; print(f'SQLAlchemy: {sqlalchemy.__version__}')"
 python -c "import psycopg2; print(f'psycopg2: {psycopg2.__version__}')"
 
+# Run database migrations
+echo "[MIGRATE] Running database migrations..."
+cd ..
+PYTHONPATH=backend python -m alembic upgrade head
+cd backend
+
 echo "[SUCCESS] Build completed successfully!"
