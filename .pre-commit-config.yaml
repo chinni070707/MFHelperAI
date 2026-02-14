@@ -1,0 +1,61 @@
+# Pre-commit hooks configuration
+# See https://pre-commit.com for more information
+
+repos:
+  # Local hooks for custom scripts
+  - repo: local
+    hooks:
+      # Database connection and schema validation
+      - id: test-database
+        name: Test Database Connection
+        entry: python backend/test_db_connection.py
+        language: system
+        pass_filenames: false
+        stages: [commit]
+        verbose: true
+        
+      # Backend unit tests
+      - id: backend-tests
+        name: Run Backend Tests
+        entry: bash -c 'cd backend && python -m pytest tests/ -v --tb=short -x'
+        language: system
+        pass_filenames: false
+        types: [python]
+        stages: [commit]
+        
+      # Check for common issues in Python files
+      - id: check-python-syntax
+        name: Check Python Syntax
+        entry: bash -c 'python -m py_compile'
+        language: system
+        types: [python]
+        stages: [commit]
+
+  # Standard pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^(.*\.md|.*\.txt)$
+      - id: end-of-file-fixer
+        exclude: ^(.*\.md|.*\.txt)$
+      - id: check-yaml
+        args: ['--unsafe']
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-private-key
+      
+  # Python code formatting (optional - comment out if not desired)
+  # - repo: https://github.com/psf/black
+  #   rev: 23.12.1
+  #   hooks:
+  #     - id: black
+  #       language_version: python3
+  #       args: ['--line-length=100']
+  #       exclude: ^(tests/|migrations/)
+
+# Configuration
+default_stages: [commit]
+fail_fast: false  # Run all hooks even if one fails

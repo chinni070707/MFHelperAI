@@ -205,6 +205,36 @@ async def startup_event():
         seed_demo_portfolio_if_empty()
     except Exception as e:
         logger.error(f"Demo seed failed (non-fatal): {e}")
+    
+    # Auto-seed blog posts on production startup
+    try:
+        from app.services.blog_service import BlogService
+        db = SessionLocal()
+        try:
+            # Check if blog posts exist
+            from app.models.blog import BlogPost
+            post_count = db.query(BlogPost).count()
+            
+            if post_count == 0:
+                logger.info("No blog posts found, running auto-seed...")
+                import subprocess
+                import sys
+                result = subprocess.run(
+                    [sys.executable, "seed_blog.py"],
+                    cwd="backend",
+                    capture_output=True,
+                    text=True
+                )
+                if result.returncode == 0:
+                    logger.info(f"✅ Blog posts auto-seeded: {result.stdout}")
+                else:
+                    logger.warning(f"⚠️ Blog seed had issues: {result.stderr}")
+            else:
+                logger.info(f"Blog posts already exist ({post_count} posts)")
+        finally:
+            db.close()
+    except Exception as e:
+        logger.error(f"Blog auto-seed failed (non-fatal): {e}")
 
 # Add rate limiter state
 app.state.limiter = limiter

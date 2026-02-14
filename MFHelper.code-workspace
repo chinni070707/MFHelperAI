@@ -6,5 +6,8 @@
 		{
 			"path": "../../../../Downloads/CAS"
 		}
-	]
+	],
+	"settings": {
+		"powershell.cwd": "MFHelper"
+	}
 }
