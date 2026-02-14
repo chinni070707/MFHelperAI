@@ -6,7 +6,6 @@ import random
 import string
 from datetime import datetime, timedelta
 from typing import Optional, Dict
-from sqlalchemy.orm import Session
 
 # In-memory OTP storage (for production, use Redis or database)
 otp_store: Dict[str, Dict] = {}

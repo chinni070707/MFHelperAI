@@ -208,7 +208,7 @@ async def startup_event():
     
     # Auto-seed blog posts on production startup
     try:
-        from app.services.blog_service import BlogService
+        from app.database import SessionLocal
         db = SessionLocal()
         try:
             # Check if blog posts exist
