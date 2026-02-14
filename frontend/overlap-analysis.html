@@ -818,25 +818,16 @@
         }
 
         /* Multi Pie Charts Grid - Responsive */
+        /* Pie charts grid: fixed 3-col on desktop, 2-col tablet, 1-col mobile.
+           Fixed columns (not auto-fit) prevent cards from stretching too wide
+           when only 1-2 funds are selected, and keep alignment consistent
+           for 4-6 funds (wraps into rows of 3). */
         .pie-charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-bottom: 24px;
             width: 100%;
-        }
-
-        /* Responsive breakpoints for different number of charts */
-        @media (min-width: 1400px) {
-            .pie-charts-grid {
-                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            }
-        }
-
-        @media (min-width: 1200px) and (max-width: 1399px) {
-            .pie-charts-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
         }
 
         @media (min-width: 768px) and (max-width: 1199px) {
@@ -858,7 +849,7 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            overflow: hidden;
+            overflow: visible; /* visible so Plotly legend is never clipped */
             min-width: 0;
             width: 100%;
             display: flex;
@@ -1739,19 +1730,20 @@
                 const layout = {
                     showlegend: true,
                     legend: {
-                        orientation: 'h',
-                        y: -0.3,
-                        x: 0.5,
-                        xanchor: 'center',
+                        orientation: 'v',      // vertical list — stays inside paper area
+                        x: 1.02,               // just right of donut
+                        y: 1,
+                        xanchor: 'left',
                         yanchor: 'top',
                         font: { size: 9 },
-                        traceorder: 'normal'
+                        traceorder: 'normal',
+                        bgcolor: 'rgba(0,0,0,0)'
                     },
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     font: { color: '#212529', size: 11 },
-                    margin: { t: 5, b: 120, l: 5, r: 5 },
-                    height: 400,
+                    margin: { t: 5, b: 10, l: 5, r: 120 }, // r:120 makes room for vertical legend
+                    height: 320,   // shorter now that legend is beside chart, not below
                     autosize: true
                 };
 
