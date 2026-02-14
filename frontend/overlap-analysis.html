@@ -849,7 +849,7 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            overflow: visible; /* visible so Plotly legend is never clipped */
+            overflow: hidden;   /* safe now: HTML legend is inside card, no SVG bleed */
             min-width: 0;
             width: 100%;
             display: flex;
@@ -896,6 +896,48 @@
             overflow: hidden;
             text-overflow: ellipsis;
             font-size: 12px;
+        }
+        /* HTML legend replacing Plotly built-in legend */
+        .chart-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding: 8px 4px 4px 4px;
+            overflow-y: auto;
+            max-height: 120px;
+            flex-shrink: 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            line-height: 1.3;
+            color: var(--text-primary);
+            min-width: 0;
+        }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-label {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .legend-pct {
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -1708,6 +1750,7 @@
                     <div class="chart-title" title="${shortName}">${shortName}</div>
                     <div class="chart-subtitle">${info.amc} • ${info.total_holdings} holdings</div>
                     <div id="pieChart_${idx}"></div>
+                    <div class="chart-legend" id="legend_${idx}"></div>
                 </div>`;
             }).join('');
 
@@ -1728,22 +1771,12 @@
                 }];
 
                 const layout = {
-                    showlegend: true,
-                    legend: {
-                        orientation: 'v',      // vertical list — stays inside paper area
-                        x: 1.02,               // just right of donut
-                        y: 1,
-                        xanchor: 'left',
-                        yanchor: 'top',
-                        font: { size: 9 },
-                        traceorder: 'normal',
-                        bgcolor: 'rgba(0,0,0,0)'
-                    },
+                    showlegend: false,          // Plotly legend off; HTML legend below
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     font: { color: '#212529', size: 11 },
-                    margin: { t: 5, b: 10, l: 5, r: 120 }, // r:120 makes room for vertical legend
-                    height: 320,   // shorter now that legend is beside chart, not below
+                    margin: { t: 5, b: 5, l: 5, r: 5 },   // symmetric, donut fills width
+                    height: 240,                            // shorter; HTML legend below
                     autosize: true
                 };
 
@@ -1754,7 +1787,21 @@
                 };
 
                 Plotly.newPlot(`pieChart_${idx}`, data, layout, config);
-                
+
+                // Build HTML legend from same sectors + colors used by the chart
+                const legendEl = document.getElementById(`legend_${idx}`);
+                if (legendEl) {
+                    legendEl.innerHTML = sectors.map((s, i) => {
+                        const color = colors[i % colors.length];
+                        const pct = typeof s.weight === 'number' ? s.weight.toFixed(1) : s.weight;
+                        return `<div class="legend-item">
+                            <span class="legend-dot" style="background:${color};"></span>
+                            <span class="legend-label" title="${s.sector}">${s.sector}</span>
+                            <span class="legend-pct">${pct}%</span>
+                        </div>`;
+                    }).join('');
+                }
+
                 // Force resize after plot
                 window.addEventListener('resize', () => {
                     Plotly.Plots.resize(`pieChart_${idx}`);
