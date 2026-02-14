@@ -332,7 +332,8 @@ def _parse_cas_with_casparser(file_content: bytes, password: Optional[str] = Non
     try:
         import casparser
     except ImportError:
-        raise HTTPException(status_code=500, detail="casparser not installed. Run: pip install casparser")
+        # Raise RuntimeError (not HTTPException) so parse_cas_pdf() falls back to PyMuPDF
+        raise RuntimeError("casparser not installed — will fall back to PyMuPDF regex parser")
 
     try:
         # casparser needs a file path, not bytes
@@ -435,21 +436,23 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
 
     # ── Primary: use casparser ────────────────────────────────────────────────
     try:
+        logger.info("[casparser] Attempting CAS parse via casparser library")
         result = _parse_cas_with_casparser(file_content, password)
-        logger.info("CAS parsing via casparser succeeded")
+        logger.info("[casparser] SUCCESS")
         return result
     except HTTPException:
         # Re-raise auth / password errors immediately — no point falling back
         raise
     except Exception as e:
-        logger.warning(f"casparser failed ({e}), falling back to PyMuPDF regex parser")
+        logger.warning(f"[casparser] FAILED: {e} — falling back to PyMuPDF regex parser")
 
     # ── Fallback: PyMuPDF + regex ─────────────────────────────────────────────
     try:
+        logger.info("[PyMuPDF] Starting fallback regex CAS parsing")
         import fitz  # PyMuPDF
 
         doc = fitz.open(stream=file_content, filetype="pdf")
-        logger.debug(f"PDF opened: {doc.page_count} pages, encrypted: {doc.is_encrypted}")
+        logger.debug(f"[PyMuPDF] PDF opened: {doc.page_count} pages, encrypted: {doc.is_encrypted}")
 
         if doc.is_encrypted:
             if not password:
@@ -459,16 +462,16 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
                 )
             if not doc.authenticate(password):
                 raise HTTPException(status_code=400, detail="Invalid password. Please check your PDF password and try again.")
-            logger.info("PDF successfully authenticated")
+            logger.info("[PyMuPDF] PDF successfully authenticated")
 
         full_text = ""
         for page in doc:
             full_text += page.get_text()
         doc.close()
-        logger.debug(f"Extracted {len(full_text)} characters from PDF")
+        logger.debug(f"[PyMuPDF] Extracted {len(full_text)} characters from PDF")
 
         holdings = extract_holdings_from_cas_text(full_text)
-        logger.info(f"CAS fallback (regex) parsing complete: {len(holdings)} holdings found")
+        logger.info(f"[PyMuPDF] Fallback complete: {len(holdings)} holdings found")
 
         total_invested = sum(h.get('invested', 0) for h in holdings)
         total_current = sum(h.get('current_value', 0) for h in holdings)
@@ -489,11 +492,11 @@ def parse_cas_pdf(file_content: bytes, password: Optional[str] = None) -> dict:
         }
 
     except ImportError:
-        raise HTTPException(status_code=500, detail="PDF parsing library not installed. Run: pip install PyMuPDF")
+        raise HTTPException(status_code=500, detail="[PyMuPDF] PDF library not installed. Run: pip install PyMuPDF")
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error parsing CAS PDF: {str(e)}")
+        raise HTTPException(status_code=400, detail=f"[PyMuPDF fallback] Error parsing CAS PDF: {str(e)}")
 
 
 def extract_holdings_from_cas_text(text: str) -> list:
