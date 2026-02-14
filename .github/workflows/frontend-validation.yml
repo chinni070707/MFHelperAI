@@ -48,20 +48,44 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
       
+    - name: Initialize database
+      working-directory: backend
+      run: |
+        echo "Initializing database schema..."
+        python -c "from app.database import engine, Base; from app.models import models; Base.metadata.create_all(bind=engine); print('✅ Database initialized')"
+      
     - name: Start backend server
       working-directory: backend
       run: |
-        nohup python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+        nohup python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 > server.log 2>&1 &
         sleep 10
+        echo "Backend server started"
         
     - name: Verify backend is running
       run: |
-        curl -f http://localhost:8000/health || exit 1
-        echo "\u2705 Backend server is healthy"
+        echo "Checking backend health..."
+        for i in {1..30}; do
+          if curl -f http://localhost:8000/health 2>/dev/null; then
+            echo "✅ Backend server is healthy"
+            exit 0
+          fi
+          echo "Waiting for backend... attempt $i/30"
+          sleep 2
+        done
+        echo "❌ Backend failed to start"
+        cat backend/server.log || true
+        exit 1
       
     - name: Run ALL E2E tests
       working-directory: tests
       run: npx playwright test --project=chromium --reporter=list,html
+      continue-on-error: false
+      
+    - name: Print server logs on failure
+      if: failure()
+      run: |
+        echo "=== Backend Server Logs ==="
+        cat backend/server.log || echo "No server logs found"
       
     - name: Upload test results
       if: always()

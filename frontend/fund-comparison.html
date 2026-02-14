@@ -372,10 +372,10 @@
     <!-- End Google Tag Manager (noscript) -->
     
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="/" class="logo">MFHelper</a>
-            <ul class="nav-menu">
+            <a href="/" class="logo" aria-label="MFHelper Home">MFHelper</a>
+            <ul class="nav-menu" role="list">
                 <li><a href="/" class="nav-link">Home</a></li>
                 <li class="nav-item has-dropdown">
                     <a href="/tools.html" class="nav-link">Tools</a>
@@ -400,6 +400,10 @@
                             <span class="icon">⚙️</span>
                             <span>Rebalancing Tool</span>
                         </a>
+                        <a href="/sip-calculator.html">
+                            <span class="icon">🎯</span>
+                            <span>SIP Calculator</span>
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="/tools.html">
                             <span class="icon">🧰</span>
@@ -408,8 +412,15 @@
                     </div>
                 </li>
                 <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
-                <li><a href="/dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
+                <li><a href="/blog.html" class="nav-link">Blog</a></li>
+                <li><a href="/auth.html?tab=signup" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
             </ul>
+            <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle navigation menu" tabindex="0">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 

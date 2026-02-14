@@ -304,25 +304,55 @@
 <body>
 
 <!-- Navbar injected by navbar-auth.js -->
-<nav class="navbar">
+<nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-container">
-        <a href="/" class="nav-logo"><span class="logo-text">MFHelper</span></a>
-        <ul class="nav-menu">
-            <li><a href="/index.html" class="nav-link">Home</a></li>
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle">▾ Tools</a>
-                <div class="dropdown-content">
-                    <a href="/risk-analyzer.html">Risk Analyzer</a>
-                    <a href="/overlap-analysis.html">Overlap Analysis</a>
-                    <a href="/fund-comparison.html">Fund Comparison</a>
-                    <a href="/rebalancing-tool.html">Rebalancing Tool</a>
+        <a href="/" class="logo" aria-label="MFHelper Home">MFHelper</a>
+        <ul class="nav-menu" role="list">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li class="nav-item has-dropdown">
+                <a href="/tools.html" class="nav-link">Tools</a>
+                <div class="dropdown-menu">
+                    <a href="/overlap-analysis.html">
+                        <span class="icon">🔄</span>
+                        <span>Fund Overlap Analysis</span>
+                    </a>
+                    <a href="/portfolio.html">
+                        <span class="icon">📊</span>
+                        <span>Portfolio Analyzer</span>
+                    </a>
+                    <a href="/fund-comparison.html">
+                        <span class="icon">⚖️</span>
+                        <span>Fund Comparison</span>
+                    </a>
+                    <a href="/risk-analyzer.html">
+                        <span class="icon">⚠️</span>
+                        <span>Risk Analyzer</span>
+                    </a>
+                    <a href="/rebalancing-tool.html">
+                        <span class="icon">⚙️</span>
+                        <span>Rebalancing Tool</span>
+                    </a>
+                    <a href="/sip-calculator.html">
+                        <span class="icon">🎯</span>
+                        <span>SIP Calculator</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/tools.html">
+                        <span class="icon">🧰</span>
+                        <span>All Tools</span>
+                    </a>
                 </div>
             </li>
             <li><a href="/goal-planning.html" class="nav-link">Goal Planning</a></li>
             <li><a href="/portfolio.html" class="nav-link">Portfolio</a></li>
-            <li><a href="/login.html" class="btn btn-outline nav-btn">Sign In</a></li>
-            <li><a href="/signup.html" class="btn btn-primary nav-btn">Get Started</a></li>
+            <li><a href="/blog.html" class="nav-link">Blog</a></li>
+            <li><a href="/auth.html?tab=signup" class="btn-primary" style="text-decoration: none; display: inline-block;">Get Started</a></li>
         </ul>
+        <div class="hamburger" onclick="toggleMenu()" role="button" aria-label="Toggle navigation menu" tabindex="0">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
 </nav>
 

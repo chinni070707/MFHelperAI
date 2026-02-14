@@ -1,6 +1,6 @@
 {
   "version": "2026-02",
-  "last_updated": "2026-02-13",
+  "last_updated": "2026-02-14",
   "source": "MoneyControl + PPFAS Official Portfolio Disclosure",
   "funds": {
     "hdfc-flexi-cap-fund": {
@@ -32392,6 +32392,3613 @@
       "holdings_count": 39,
       "as_of_date": "2026-02-13",
       "source": "MoneyControl Scraping"
+    },
+    "motilal-oswal-large-cap-fund---direct-plan---growth": {
+      "name": "Motilal Oswal Large Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.49,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.73,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.14,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Nifty 50 : Futures Near",
+          "weight": 3.26,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.29,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.18,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMOA016"
+    },
+    "mirae-asset-large-cap-fund---direct-plan---growth": {
+      "name": "Mirae Asset Large Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.31,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.36,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.25,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 0.15,
+          "sector": "Telecom - cellular & fixed line services"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.33,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.39,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMA096"
+    },
+    "hdfc-large-cap-fund---direct-plan---growth": {
+      "name": "HDFC Large Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.31,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Ltd.",
+          "weight": 0.83,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.36,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.42,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Torrent Pharmaceuticals Ltd.",
+          "weight": 0.16,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Bajaj Auto Ltd.",
+          "weight": 0.15,
+          "sector": "2/3 wheelers"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MHD1169"
+    },
+    "taurus-large-cap-fund---direct-plan---growth": {
+      "name": "Taurus Large Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large cap",
+      "holdings": [
+        {
+          "stock": "ITC Limited",
+          "weight": 0.81,
+          "sector": "Diversified fmcg"
+        },
+        {
+          "stock": "Divis Laboratories Ltd.",
+          "weight": 0.98,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.26,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Adani Enterprises Ltd.",
+          "weight": 3.62,
+          "sector": "Trading - minerals"
+        },
+        {
+          "stock": "Oil & Natural Gas Corporation Ltd.",
+          "weight": 1.12,
+          "sector": "Oil exploration & production"
+        },
+        {
+          "stock": "Mazagon Dock Shipbuilders Ltd.",
+          "weight": 0.24,
+          "sector": "Ship building & allied services"
+        },
+        {
+          "stock": "Tata Capital Ltd.",
+          "weight": 0.11,
+          "sector": "Non banking financial company (nbfc)"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCM130"
+    },
+    "dsp-large-cap-fund---direct-plan---growth": {
+      "name": "DSP Large Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.27,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.22,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.4,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.55,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.45,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.43,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MDS568"
+    },
+    "mahindra-manulife-large-cap-fund---direct-plan---growth": {
+      "name": "Mahindra Manulife Large Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.29,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 1.2,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Reliance Industries Ltd.",
+          "weight": 0.16,
+          "sector": "Refineries & marketing"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.29,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.22,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 0.92,
+          "sector": "Telecom - cellular & fixed line services"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.2,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMH051"
+    },
+    "trustmf-flexi-cap-fund---direct-plan---growth": {
+      "name": "TRUSTMF Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 1.11,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.7,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.12,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 1.23,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.65,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 1.28,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Hindustan Zinc Ltd.",
+          "weight": 1.01,
+          "sector": "Zinc"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MTRA015"
+    },
+    "bajaj-finserv-flexi-cap-fund---direct-plan---growth": {
+      "name": "Bajaj Finserv Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 2.35,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 0.6,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 0.92,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.63,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Titan Company Ltd.",
+          "weight": 2.35,
+          "sector": "Gems, jewellery and watches"
+        },
+        {
+          "stock": "MTAR Technologies Ltd.",
+          "weight": 0.82,
+          "sector": "Aerospace & defense"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBFA004"
+    },
+    "hsbc-flexi-cap-fund---direct-plan---growth": {
+      "name": "HSBC Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.28,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.19,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.31,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.33,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.45,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Tech Mahindra Ltd.",
+          "weight": 0.55,
+          "sector": "Computers - software & consulting"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MHS333"
+    },
+    "samco-flexi-cap-fund---direct-plan---growth": {
+      "name": "Samco Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "Coromandel International Ltd.",
+          "weight": 0.18,
+          "sector": "Fertilizers"
+        },
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.15,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.71,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "3M India Ltd.",
+          "weight": 0.15,
+          "sector": "Diversified"
+        },
+        {
+          "stock": "Alkem Laboratories Ltd.",
+          "weight": 0.19,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.61,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "AIA Engineering Ltd.",
+          "weight": 4.42,
+          "sector": "Castings & forgings"
+        },
+        {
+          "stock": "NMDC LTD",
+          "weight": 4.11,
+          "sector": "Industrial minerals"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSA001"
+    },
+    "capitalmind-flexi-cap-fund---direct-plan---growth": {
+      "name": "Capitalmind Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "Ashok Leyland Ltd.",
+          "weight": 0.24,
+          "sector": "Commercial vehicles"
+        },
+        {
+          "stock": "National Aluminium Co. Ltd.",
+          "weight": 0.92,
+          "sector": "Aluminium"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.41,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Coal India Ltd.",
+          "weight": 3.02,
+          "sector": "Coal"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 1.43,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Hindalco Industries Ltd.",
+          "weight": 1.02,
+          "sector": "Aluminium"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 1.0,
+          "sector": "Diversified metals"
+        },
+        {
+          "stock": "Maruti Suzuki India Ltd.",
+          "weight": 0.22,
+          "sector": "Passenger cars & utility vehicles"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCFA001"
+    },
+    "abakkus-flexi-cap-fund---direct-plan---growth": {
+      "name": "Abakkus Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 2.08,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 1.77,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Reliance Industries Ltd.",
+          "weight": 3.86,
+          "sector": "Refineries & marketing"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 1.77,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 1.68,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Oracle Financial Services Software Limited",
+          "weight": 1.35,
+          "sector": "Software products"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 1.61,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 2.37,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.89,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.85,
+          "sector": "Diversified metals"
+        }
+      ],
+      "holdings_count": 10,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MAMA005"
+    },
+    "360-one-flexicap-fund---direct-plan---growth": {
+      "name": "360 ONE Flexicap Fund - Direct Plan - Growth",
+      "amc": "Flexicap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.56,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 0.66,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.24,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "TML Commercial Vehicles Ltd.",
+          "weight": 0.73,
+          "sector": "Commercial vehicles"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 0.11,
+          "sector": "Telecom - cellular & fixed line services"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.42,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MIIA003"
+    },
+    "taurus-flexi-cap-fund---direct-plan---growth": {
+      "name": "Taurus Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "Divis Laboratories Ltd.",
+          "weight": 1.06,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.24,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.52,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.48,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Coal India Ltd.",
+          "weight": 0.44,
+          "sector": "Coal"
+        },
+        {
+          "stock": "Park Medi World Ltd.",
+          "weight": 0.27,
+          "sector": "Hospital"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCM149"
+    },
+    "the-wealth-company-flexi-cap-fund---direct-plan---growth": {
+      "name": "The Wealth Company Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 2.15,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.52,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.47,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.77,
+          "sector": "Diversified metals"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.67,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "TVS Motor Company Ltd.",
+          "weight": 1.17,
+          "sector": "2/3 wheelers"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.33,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MTWA015"
+    },
+    "edelweiss-flexi-cap-fund---direct-plan---growth": {
+      "name": "Edelweiss Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 1.63,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Reliance Industries Ltd.",
+          "weight": 0.11,
+          "sector": "Refineries & marketing"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.27,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.18,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Ultratech Cement Ltd.",
+          "weight": 0.53,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Tata Steel Ltd.",
+          "weight": 0.14,
+          "sector": "Iron & steel products"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MJP310"
+    },
+    "quant-flexi-cap-fund---direct-plan---growth": {
+      "name": "Quant Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "Adani Power Ltd.",
+          "weight": 0.14,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Aurobindo Pharma Ltd.",
+          "weight": 0.53,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "ICICI Bank Ltd. : Futures Near",
+          "weight": 1.97,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Life Insurance Corporation Of India",
+          "weight": 0.16,
+          "sector": "Life insurance"
+        },
+        {
+          "stock": "Aurobindo Pharma Ltd. : Futures Near",
+          "weight": 0.98,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.14,
+          "sector": "Civil construction"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MES041"
+    },
+    "lic-mf-flexi-cap-fund---direct-plan---growth": {
+      "name": "LIC MF Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.82,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Torrent Pharmaceuticals Ltd.",
+          "weight": 0.22,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Ujjivan Small Finance Bank Ltd.",
+          "weight": 0.6,
+          "sector": "Other bank"
+        },
+        {
+          "stock": "CreditAccess Grameen Ltd.",
+          "weight": 0.14,
+          "sector": "Microfinance institutions"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.29,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Apollo Hospitals Enterprises Ltd.",
+          "weight": 0.28,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "Shriram Finance Ltd.",
+          "weight": 0.16,
+          "sector": "Non banking financial company (nbfc)"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MJB163"
+    },
+    "mahindra-manulife-flexi-cap-fund---direct-plan---growth": {
+      "name": "Mahindra Manulife Flexi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "flexi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.3,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.22,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.21,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Bajaj Finance Ltd.",
+          "weight": 0.21,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.12,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Hindustan Unilever Ltd.",
+          "weight": 0.15,
+          "sector": "Diversified fmcg"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMH114"
+    },
+    "icici-prudential-midcap-fund---direct-plan---growth": {
+      "name": "ICICI Prudential MidCap Fund - Direct Plan - Growth",
+      "amc": "MidCap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.12,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Jindal Steel Ltd.",
+          "weight": 0.41,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.63,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "APL Apollo Tubes Ltd.",
+          "weight": 0.36,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.33,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.41,
+          "sector": "Diversified metals"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MPI1150"
+    },
+    "canara-robeco-mid-cap-fund---direct-plan---growth": {
+      "name": "Canara Robeco Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 1.18,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.23,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.19,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Prudential Asset Management Co. Ltd.",
+          "weight": 0.44,
+          "sector": "Investment company"
+        },
+        {
+          "stock": "Max Financial Services Ltd.",
+          "weight": 0.41,
+          "sector": "Life insurance"
+        },
+        {
+          "stock": "Bank of Maharashtra",
+          "weight": 0.12,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCA338"
+    },
+    "union-midcap-fund---direct-plan---growth": {
+      "name": "Union Midcap Fund - Direct Plan - Growth",
+      "amc": "Midcap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.4,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.67,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Shriram Finance Ltd.",
+          "weight": 0.12,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "L&T Finance Holdings Ltd.",
+          "weight": 0.24,
+          "sector": "Investment company"
+        },
+        {
+          "stock": "Mphasis Ltd.",
+          "weight": 0.2,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Jindal Steel Ltd.",
+          "weight": 0.32,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.3,
+          "sector": "Exchange and data platform"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MUK152"
+    },
+    "kotak-midcap-fund---direct-plan---growth": {
+      "name": "Kotak Midcap Fund - Direct Plan - Growth",
+      "amc": "Midcap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.25,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Fortis Healthcare Ltd.",
+          "weight": 0.37,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "Ipca Laboratories Ltd.",
+          "weight": 0.18,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.28,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.34,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Solar Industries India Ltd.",
+          "weight": 0.26,
+          "sector": "Explosives"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MKM528"
+    },
+    "hsbc-mid-cap-fund---direct-plan---growth": {
+      "name": "HSBC Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Ashok Leyland Ltd.",
+          "weight": 0.55,
+          "sector": "Commercial vehicles"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.59,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.17,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 1.31,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.67,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Coforge Ltd.",
+          "weight": 0.37,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Billionbrains Garage Ventures Ltd.",
+          "weight": 0.71,
+          "sector": "Stockbroking & allied"
+        },
+        {
+          "stock": "IDFC First Bank Ltd.",
+          "weight": 0.58,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCC275"
+    },
+    "helios-mid-cap-fund---direct-plan---growth": {
+      "name": "Helios Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.16,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "IDFC First Bank Ltd.",
+          "weight": 0.31,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Fortis Healthcare Ltd.",
+          "weight": 0.35,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "PB Fintech Ltd.",
+          "weight": 0.36,
+          "sector": "Financial technology (fintech)"
+        },
+        {
+          "stock": "Marico Ltd.",
+          "weight": 0.14,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "Escorts Ltd.",
+          "weight": 0.3,
+          "sector": "Tractors"
+        },
+        {
+          "stock": "Phoenix Mills Ltd.",
+          "weight": 0.12,
+          "sector": "Residential, commercial projects"
+        },
+        {
+          "stock": "Nippon Life India Asset Management Ltd.",
+          "weight": 1.57,
+          "sector": "Asset management company"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MHMA019"
+    },
+    "sbi-midcap-fund---direct-plan---growth": {
+      "name": "SBI Midcap Fund - Direct Plan - Growth",
+      "amc": "Midcap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Torrent Power Ltd.",
+          "weight": 0.38,
+          "sector": "Integrated power utilities"
+        },
+        {
+          "stock": "Sundaram Finance Limited",
+          "weight": 0.13,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.37,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "CRISIL Ltd.",
+          "weight": 0.37,
+          "sector": "Other financial services"
+        },
+        {
+          "stock": "Shree Cement Ltd.",
+          "weight": 0.15,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Biocon Ltd.",
+          "weight": 0.19,
+          "sector": "Pharmaceuticals"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSB505"
+    },
+    "edelweiss-mid-cap-fund---direct-plan---growth": {
+      "name": "Edelweiss Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.27,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.15,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.18,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Fortis Healthcare Ltd.",
+          "weight": 0.42,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.18,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Oil India Ltd.",
+          "weight": 0.93,
+          "sector": "Oil exploration & production"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MJP117"
+    },
+    "bank-of-india-mid-cap-fund---direct-plan---growth": {
+      "name": "Bank of India Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Abbott India Ltd.",
+          "weight": 1.76,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.86,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Aurobindo Pharma Ltd.",
+          "weight": 4.53,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Bank of Maharashtra",
+          "weight": 0.22,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "PB Fintech Ltd.",
+          "weight": 0.28,
+          "sector": "Financial technology (fintech)"
+        },
+        {
+          "stock": "Bharat Dynamics Ltd.",
+          "weight": 0.21,
+          "sector": "Aerospace & defense"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBAA026"
+    },
+    "taurus-mid-cap-fund---direct-plan---growth": {
+      "name": "Taurus Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "mid cap",
+      "holdings": [
+        {
+          "stock": "Linde India Ltd.",
+          "weight": 0.27,
+          "sector": "Industrial gases"
+        },
+        {
+          "stock": "Coforge Ltd.",
+          "weight": 0.18,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.5,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Bank Of India",
+          "weight": 0.7,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Rural Electrification Corporation Limited",
+          "weight": 1.16,
+          "sector": "Financial institution"
+        },
+        {
+          "stock": "Aurobindo Pharma Ltd.",
+          "weight": 0.28,
+          "sector": "Pharmaceuticals"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCM132"
+    },
+    "union-small-cap-fund---direct-plan---growth": {
+      "name": "Union Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.65,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Ami Organics Ltd.",
+          "weight": 0.54,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.58,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.82,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.41,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Ujjivan Small Finance Bank Ltd.",
+          "weight": 0.69,
+          "sector": "Other bank"
+        },
+        {
+          "stock": "eClerx Services Ltd.",
+          "weight": 0.25,
+          "sector": "Business process outsourcing (bpo)/ knowledge process outsourcing (kpo)"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MUK091"
+    },
+    "canara-robeco-small-cap-fund---direct-plan---growth": {
+      "name": "Canara Robeco Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.45,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.14,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.14,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "J.b. Chemicals & Pharmaceuticals Ltd.",
+          "weight": 0.12,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Blue Star Ltd.",
+          "weight": 0.15,
+          "sector": "Household appliances"
+        },
+        {
+          "stock": "Ajanta Pharma Limited",
+          "weight": 0.16,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.18,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCA312"
+    },
+    "trustmf-small-cap-fund---direct-plan---growth": {
+      "name": "TRUSTMF Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 1.06,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 1.15,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.74,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Ami Organics Ltd.",
+          "weight": 1.0,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.22,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.25,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Hindustan Copper Ltd.",
+          "weight": 1.25,
+          "sector": "Copper"
+        },
+        {
+          "stock": "Sagility India Ltd.",
+          "weight": 0.33,
+          "sector": "It enabled services"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MTRA026"
+    },
+    "hsbc-small-cap-fund---direct-plan---growth": {
+      "name": "HSBC Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.51,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "eClerx Services Ltd.",
+          "weight": 0.11,
+          "sector": "Business process outsourcing (bpo)/ knowledge process outsourcing (kpo)"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.26,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.16,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Delhivery Ltd.",
+          "weight": 0.16,
+          "sector": "Logistics solution provider"
+        },
+        {
+          "stock": "MTAR Technologies Ltd.",
+          "weight": 0.34,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "IDFC First Bank Ltd.",
+          "weight": 0.3,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MCC492"
+    },
+    "groww-small-cap-fund---direct-plan---growth": {
+      "name": "Groww Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Data Patterns India Ltd.",
+          "weight": 0.98,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Fine Organic Industries Ltd.",
+          "weight": 0.93,
+          "sector": "Specialty chemicals"
+        },
+        {
+          "stock": "S.J.S. Enterprises Ltd.",
+          "weight": 0.92,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Home First Finance Company India Ltd.",
+          "weight": 0.9,
+          "sector": "Housing finance company"
+        },
+        {
+          "stock": "TD Power Systems Ltd.",
+          "weight": 0.78,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Shriram Pistons & Rings Ltd.",
+          "weight": 0.47,
+          "sector": "Auto ancillaries"
+        },
+        {
+          "stock": "Star Health and Allied Insurance Co Ltd.",
+          "weight": 0.24,
+          "sector": "General insurance"
+        },
+        {
+          "stock": "Yatharth Hospital And Trauma Care Services Ltd.",
+          "weight": 0.24,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "Aether Industries Ltd.",
+          "weight": 0.23,
+          "sector": "Specialty chemicals"
+        },
+        {
+          "stock": "Krishna Institute of Medical Sciences Ltd.",
+          "weight": 0.23,
+          "sector": "Hospital"
+        }
+      ],
+      "holdings_count": 10,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MIMA108"
+    },
+    "invesco-india-smallcap-fund---direct---growth": {
+      "name": "Invesco India Smallcap Fund - Direct - Growth",
+      "amc": "Smallcap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Amber Enterprises India Ltd.",
+          "weight": 0.11,
+          "sector": "Household appliances"
+        },
+        {
+          "stock": "Max Healthcare Institute Ltd.",
+          "weight": 3.65,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.47,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.56,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "J K Lakshmi Cement Ltd.",
+          "weight": 0.3,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.26,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MLI1094"
+    },
+    "iti-small-cap-fund---direct-plan---growth": {
+      "name": "ITI Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.32,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Ami Organics Ltd.",
+          "weight": 0.46,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.46,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Cartrade Tech Ltd.",
+          "weight": 0.23,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "WABCO India Ltd.",
+          "weight": 0.14,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.12,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.27,
+          "sector": "Exchange and data platform"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MIT043"
+    },
+    "pgim-india-small-cap-fund---direct-plan---growth": {
+      "name": "PGIM India Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "CCL Products (India) Ltd.",
+          "weight": 0.23,
+          "sector": "Tea & coffee"
+        },
+        {
+          "stock": "Solar Industries India Ltd.",
+          "weight": 0.4,
+          "sector": "Explosives"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.22,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Krishna Institute of Medical Sciences Ltd.",
+          "weight": 0.11,
+          "sector": "Hospital"
+        },
+        {
+          "stock": "J.b. Chemicals & Pharmaceuticals Ltd.",
+          "weight": 0.19,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.41,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MPA1919"
+    },
+    "bajaj-finserv-small-cap-fund---direct-plan---growth": {
+      "name": "Bajaj Finserv Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 1.02,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Ujjivan Small Finance Bank Ltd.",
+          "weight": 0.7,
+          "sector": "Other bank"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.4,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Timken India Ltd.",
+          "weight": 0.39,
+          "sector": "Abrasives & bearings"
+        },
+        {
+          "stock": "S.J.S. Enterprises Ltd.",
+          "weight": 0.6,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "CreditAccess Grameen Ltd.",
+          "weight": 0.12,
+          "sector": "Microfinance institutions"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBFA092"
+    },
+    "baroda-bnp-paribas-small-cap-fund---direct-plan---growth": {
+      "name": "Baroda BNP Paribas Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.27,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "National Aluminium Co. Ltd.",
+          "weight": 0.72,
+          "sector": "Aluminium"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.23,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Can Fin Homes Ltd.",
+          "weight": 0.12,
+          "sector": "Housing finance company"
+        },
+        {
+          "stock": "Radico Khaitan Ltd.",
+          "weight": 0.39,
+          "sector": "Breweries & distilleries"
+        },
+        {
+          "stock": "Ujjivan Small Finance Bank Ltd.",
+          "weight": 0.56,
+          "sector": "Other bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBOA019"
+    },
+    "samco-small-cap-fund---direct-plan---growth": {
+      "name": "Samco Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.72,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "eClerx Services Ltd.",
+          "weight": 0.11,
+          "sector": "Business process outsourcing (bpo)/ knowledge process outsourcing (kpo)"
+        },
+        {
+          "stock": "J.b. Chemicals & Pharmaceuticals Ltd.",
+          "weight": 2.74,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Can Fin Homes Ltd.",
+          "weight": 2.67,
+          "sector": "Housing finance company"
+        },
+        {
+          "stock": "Railtel Corporation of India Ltd.",
+          "weight": 2.54,
+          "sector": "Other telecom services"
+        },
+        {
+          "stock": "Aditya Birla Sun Life AMC Ltd.",
+          "weight": 2.52,
+          "sector": "Asset management company"
+        },
+        {
+          "stock": "Akzo Nobel India Ltd.",
+          "weight": 2.36,
+          "sector": "Paints"
+        },
+        {
+          "stock": "Motherson Sumi Wiring India Ltd.",
+          "weight": 2.35,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Pfizer Ltd.",
+          "weight": 0.15,
+          "sector": "Pharmaceuticals"
+        }
+      ],
+      "holdings_count": 9,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSAA020"
+    },
+    "uti-small-cap-fund---direct-plan---growth": {
+      "name": "UTI Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.49,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.29,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Ami Organics Ltd.",
+          "weight": 0.32,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "TD Power Systems Ltd.",
+          "weight": 0.16,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Ujjivan Small Finance Bank Ltd.",
+          "weight": 0.51,
+          "sector": "Other bank"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.13,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Great Eastern Shipping Co. Ltd.",
+          "weight": 0.17,
+          "sector": "Shipping"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MUT3611"
+    },
+    "edelweiss-small-cap-fund---direct-plan---growth": {
+      "name": "Edelweiss Small Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "small cap",
+      "holdings": [
+        {
+          "stock": "City Union Bank Ltd.",
+          "weight": 0.2,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.67,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.43,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.24,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.11,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "APL Apollo Tubes Ltd.",
+          "weight": 0.17,
+          "sector": "Iron & steel products"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MJP351"
+    },
+    "aditya-birla-sun-life-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Aditya Birla Sun Life Large & Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.39,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.43,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "APL Apollo Tubes Ltd.",
+          "weight": 0.24,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "Jindal Steel Ltd.",
+          "weight": 0.21,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "Astral Ltd.",
+          "weight": 0.18,
+          "sector": "Plastic products - industrial"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.28,
+          "sector": "Aerospace & defense"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBS807"
+    },
+    "union-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Union Large and Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.69,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.32,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Shriram Finance Ltd.",
+          "weight": 0.15,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.14,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.14,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.66,
+          "sector": "Computers - software & consulting"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MUK148"
+    },
+    "axis-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Axis Large & Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.71,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.59,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Torrent Power Ltd.",
+          "weight": 0.17,
+          "sector": "Integrated power utilities"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.33,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.29,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Shriram Finance Ltd.",
+          "weight": 0.28,
+          "sector": "Non banking financial company (nbfc)"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MAA798"
+    },
+    "mirae-asset-large-and-midcap-fund---direct-plan---growth": {
+      "name": "Mirae Asset Large & Midcap Fund - Direct Plan - Growth",
+      "amc": "Midcap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.59,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.14,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.4,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.12,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Lupin Ltd.",
+          "weight": 0.17,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Indusind Bank Ltd.",
+          "weight": 0.22,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMA100"
+    },
+    "motilal-oswal-large-and-midcap-fund---direct-plan---growth": {
+      "name": "Motilal Oswal Large and Midcap Fund - Direct Plan - Growth",
+      "amc": "Midcap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.87,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.93,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Billionbrains Garage Ventures Ltd.",
+          "weight": 1.18,
+          "sector": "Stockbroking & allied"
+        },
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.25,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "PTC Industries Ltd.",
+          "weight": 0.23,
+          "sector": "Other industrial products"
+        },
+        {
+          "stock": "Waaree Energies Ltd.",
+          "weight": 0.23,
+          "sector": "Other electrical equipment"
+        },
+        {
+          "stock": "Apar Industries Ltd.",
+          "weight": 0.12,
+          "sector": "Other electrical equipment"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMO070"
+    },
+    "bajaj-finserv-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Bajaj Finserv Large and Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 2.28,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.17,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.32,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.37,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 1.27,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 0.4,
+          "sector": "Telecom - infrastructure"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBFA048"
+    },
+    "hsbc-large-and-midcap-fund---direct-plan---growth": {
+      "name": "HSBC Large & Midcap Fund - Direct Plan - Growth",
+      "amc": "Midcap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.65,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Billionbrains Garage Ventures Ltd.",
+          "weight": 0.43,
+          "sector": "Stockbroking & allied"
+        },
+        {
+          "stock": "Ashok Leyland Ltd.",
+          "weight": 0.33,
+          "sector": "Commercial vehicles"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 1.23,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.13,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "ICICI Prudential Asset Management Co. Ltd.",
+          "weight": 0.89,
+          "sector": "Investment company"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MHS526"
+    },
+    "bandhan-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Bandhan Large & Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.29,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.48,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.52,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Hindustan Zinc Ltd.",
+          "weight": 0.72,
+          "sector": "Zinc"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.47,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Great Eastern Shipping Co. Ltd.",
+          "weight": 0.13,
+          "sector": "Shipping"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MAG723"
+    },
+    "franklin-india-large-and-mid-cap-fund---direct---growth": {
+      "name": "Franklin India Large & Mid Cap Fund - Direct - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 0.72,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "J.b. Chemicals & Pharmaceuticals Ltd.",
+          "weight": 0.28,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 1.7,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.55,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "HCL Technologies Limited",
+          "weight": 0.29,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.16,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MTE327"
+    },
+    "mahindra-manulife-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Mahindra Manulife Large & Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 0.32,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.25,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Ultratech Cement Ltd.",
+          "weight": 0.27,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 3.05,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.3,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Indusind Bank Ltd.",
+          "weight": 0.34,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMH069"
+    },
+    "quant-large-and-mid-cap-fund---direct-plan---growth": {
+      "name": "Quant Large and Mid Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "large and mid cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd. : Futures Near",
+          "weight": 8.68,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Aurobindo Pharma Ltd.",
+          "weight": 0.93,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Motherson Sumi Systems Ltd.",
+          "weight": 0.29,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.39,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Adani Power Ltd.",
+          "weight": 0.27,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Nifty Bank : Futures Near",
+          "weight": 2.97,
+          "sector": "Exchange and data platform"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MES058"
+    },
+    "groww-multicap-fund---direct-plan---growth": {
+      "name": "Groww Multicap Fund - Direct Plan - Growth",
+      "amc": "Multicap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.8,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.75,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "TD Power Systems Ltd.",
+          "weight": 0.25,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Bank of Maharashtra",
+          "weight": 2.51,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.89,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Schaeffler India Ltd.",
+          "weight": 0.23,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "L&T Finance Holdings Ltd.",
+          "weight": 0.52,
+          "sector": "Investment company"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.53,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MIMA033"
+    },
+    "icici-prudential-multicap-fund---direct-plan---growth": {
+      "name": "ICICI Prudential Multicap Fund - Direct Plan - Growth",
+      "amc": "Multicap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.66,
+          "sector": "Diversified metals"
+        },
+        {
+          "stock": "Ultratech Cement Ltd.",
+          "weight": 0.28,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Jindal Steel Ltd.",
+          "weight": 0.25,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.26,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "BSE Ltd.",
+          "weight": 0.2,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Hindustan Aeronautics Ltd.",
+          "weight": 0.14,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "J S W Steel Ltd.",
+          "weight": 0.11,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "ABB India Ltd.",
+          "weight": 0.17,
+          "sector": "Heavy electrical equipment"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MPI1132"
+    },
+    "nippon-india-multicap-fund---direct-plan---growth": {
+      "name": "Nippon India Multicap Fund - Direct Plan - Growth",
+      "amc": "Multicap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.58,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 1.06,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.41,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.14,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.22,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.23,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MRC914"
+    },
+    "baroda-bnp-paribas-multi-cap-fund---direct-plan---growth": {
+      "name": "Baroda BNP Paribas Multi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "Navin Flourine International Ltd.",
+          "weight": 0.15,
+          "sector": "Commodity chemicals"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 0.9,
+          "sector": "Telecom - cellular & fixed line services"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.39,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indusind Bank Ltd.",
+          "weight": 0.44,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Tech Mahindra Ltd.",
+          "weight": 0.26,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 0.38,
+          "sector": "E-retail/ e-commerce"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBO088"
+    },
+    "mahindra-manulife-multi-cap-fund---direct-plan---growth": {
+      "name": "Mahindra Manulife Multi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.75,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 0.23,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "Ultratech Cement Ltd.",
+          "weight": 0.22,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.21,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.31,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Piramal Finance Ltd.",
+          "weight": 0.15,
+          "sector": "Non banking financial company (nbfc)"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMH029"
+    },
+    "aditya-birla-sun-life-multi-cap-fund---direct-plan---growth": {
+      "name": "Aditya Birla Sun Life Multi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "Reliance Industries Ltd.",
+          "weight": 0.83,
+          "sector": "Refineries & marketing"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.13,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.32,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 1.06,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.23,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.3,
+          "sector": "Diversified metals"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBS3130"
+    },
+    "lic-mf-multi-cap-fund---direct-plan---growth": {
+      "name": "LIC MF Multi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.12,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.25,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Tata Consultancy Services Ltd.",
+          "weight": 0.17,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.22,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "GE T&D India Ltd.",
+          "weight": 0.29,
+          "sector": "Heavy electrical equipment"
+        },
+        {
+          "stock": "Power Finance Corporation Ltd.",
+          "weight": 0.17,
+          "sector": "Financial institution"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MJB492"
+    },
+    "samco-multi-cap-fund---direct-plan---growth": {
+      "name": "Samco Multi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "Marico Ltd.",
+          "weight": 0.46,
+          "sector": "Personal care"
+        },
+        {
+          "stock": "HDFC Asset Management Co. Ltd.",
+          "weight": 0.41,
+          "sector": "Asset management company"
+        },
+        {
+          "stock": "Eicher Motors Ltd.",
+          "weight": 0.17,
+          "sector": "2/3 wheelers"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.43,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.33,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.44,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Hindalco Industries Ltd.",
+          "weight": 0.22,
+          "sector": "Aluminium"
+        },
+        {
+          "stock": "J.b. Chemicals & Pharmaceuticals Ltd.",
+          "weight": 1.4,
+          "sector": "Pharmaceuticals"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSAA010"
+    },
+    "quant-multi-cap-fund---direct-plan---growth": {
+      "name": "Quant Multi Cap Fund - Direct Plan - Growth",
+      "amc": "Cap",
+      "category": "multi cap",
+      "holdings": [
+        {
+          "stock": "Aurobindo Pharma Ltd.",
+          "weight": 0.75,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Nifty 50 : Futures Near",
+          "weight": 3.78,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Adani Power Ltd.",
+          "weight": 0.2,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.26,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "ICICI Bank Ltd. : Futures Near",
+          "weight": 3.01,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "HDFC Bank Ltd. : Futures Near",
+          "weight": 2.89,
+          "sector": "Private sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MES061"
+    },
+    "motilal-oswal-elss-tax-saver-fund---direct-plan---growth": {
+      "name": "Motilal Oswal ELSS Tax Saver Fund - Direct Plan - Growth",
+      "amc": "Saver",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 1.17,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "Piramal Finance Ltd.",
+          "weight": 0.96,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.2,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Billionbrains Garage Ventures Ltd.",
+          "weight": 0.98,
+          "sector": "Stockbroking & allied"
+        },
+        {
+          "stock": "PTC Industries Ltd.",
+          "weight": 0.13,
+          "sector": "Other industrial products"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.55,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Jain Resource Recycling Ltd.",
+          "weight": 1.07,
+          "sector": "Diversified metals"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMO035"
+    },
+    "samco-elss-tax-saver-fund---direct-plan---growth": {
+      "name": "Samco ELSS Tax Saver Fund - Direct Plan - Growth",
+      "amc": "Saver",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "Coromandel International Ltd.",
+          "weight": 0.36,
+          "sector": "Fertilizers"
+        },
+        {
+          "stock": "Muthoot Finance Pvt. Ltd.",
+          "weight": 0.33,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Nippon Life India Asset Management Ltd.",
+          "weight": 0.25,
+          "sector": "Asset management company"
+        },
+        {
+          "stock": "Karur Vysya Bank Ltd",
+          "weight": 0.59,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "APL Apollo Tubes Ltd.",
+          "weight": 0.29,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "Bank of Maharashtra",
+          "weight": 2.67,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSA005"
+    },
+    "shriram-elss-tax-saver-fund---direct-plan---growth": {
+      "name": "Shriram ELSS Tax Saver Fund - Direct Plan - Growth",
+      "amc": "Saver",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.2,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.5,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.17,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.42,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.3,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.25,
+          "sector": "Power generation"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSR011"
+    },
+    "mahindra-manulife-elss-tax-saver-fund---direct-plan---growth": {
+      "name": "Mahindra Manulife ELSS Tax Saver Fund - Direct Plan - Growth",
+      "amc": "Saver",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.34,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.25,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.2,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Bajaj Finance Ltd.",
+          "weight": 0.12,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.14,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Hindustan Unilever Ltd.",
+          "weight": 0.16,
+          "sector": "Diversified fmcg"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMH011"
+    },
+    "sundaram-long-term-tax-advantage-fund---series-ii---direct-plan---growth": {
+      "name": "Sundaram Long Term Tax Advantage Fund - Series II - Direct Plan - Growth",
+      "amc": "Advantage",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "State Bank Of India",
+          "weight": 1.21,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.45,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.35,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Ultratech Cement Ltd.",
+          "weight": 0.45,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.42,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Jindal Steel Ltd.",
+          "weight": 0.33,
+          "sector": "Iron & steel products"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSN1191"
+    },
+    "bank-of-india-midcap-tax-fund---series-2---direct-plan---growth": {
+      "name": "Bank of India Midcap Tax Fund - Series 2 - Direct Plan - Growth",
+      "amc": "Tax",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "Coforge Ltd.",
+          "weight": 0.27,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Bank of Maharashtra",
+          "weight": 0.52,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "UNO Minda Ltd.",
+          "weight": 0.88,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Indian Bank",
+          "weight": 0.49,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Federal Bank Ltd.",
+          "weight": 0.38,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Jindal Stainless Ltd.",
+          "weight": 0.12,
+          "sector": "Iron & steel products"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MBA199"
+    },
+    "sbi-elss-tax-saver-fund---direct-plan---growth": {
+      "name": "SBI ELSS Tax Saver Fund - Direct Plan - Growth",
+      "amc": "Saver",
+      "category": "elss",
+      "holdings": [
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 1.77,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Ltd.",
+          "weight": 1.73,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 1.36,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Tata Steel Ltd.",
+          "weight": 0.34,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.59,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 1.09,
+          "sector": "Computers - software & consulting"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MSB499"
+    },
+    "bandhan-aggressive-hybrid-fund---direct-plan---growth": {
+      "name": "Bandhan Aggressive Hybrid Fund - Direct plan - Growth",
+      "amc": "Hybrid",
+      "category": "aggressive hybrid",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.81,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.25,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.11,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.18,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 0.35,
+          "sector": "Telecom - cellular & fixed line services"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 0.11,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.94,
+          "sector": "Diversified metals"
+        }
+      ],
+      "holdings_count": 7,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MAG1761"
+    },
+    "union-focused-fund---direct-plan---growth": {
+      "name": "Union Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.13,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.61,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Ami Organics Ltd.",
+          "weight": 0.54,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Solar Industries India Ltd.",
+          "weight": 0.4,
+          "sector": "Explosives"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.35,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Torrent Pharmaceuticals Ltd.",
+          "weight": 0.13,
+          "sector": "Pharmaceuticals"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MUK144"
+    },
+    "iti-focused-fund---direct-plan---growth": {
+      "name": "ITI Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "Multi Commodity Exchange Of India Ltd.",
+          "weight": 0.16,
+          "sector": "Exchange and data platform"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.65,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.76,
+          "sector": "Diversified metals"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.52,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "WABCO India Ltd.",
+          "weight": 0.11,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Solar Industries India Ltd.",
+          "weight": 0.41,
+          "sector": "Explosives"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MITA003"
+    },
+    "quant-focused-fund---direct-plan---growth": {
+      "name": "Quant Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.36,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 8.13,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Capri Global Capital Ltd.",
+          "weight": 0.28,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.54,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "HDFC Life Insurance Company Ltd.",
+          "weight": 0.3,
+          "sector": "Life insurance"
+        },
+        {
+          "stock": "Bajaj Auto Ltd. : Futures Near",
+          "weight": 4.37,
+          "sector": "2/3 wheelers"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MES049"
+    },
+    "mirae-asset-focused-fund---direct-plan---growth": {
+      "name": "Mirae Asset Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.61,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.18,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 0.42,
+          "sector": "Telecom - cellular & fixed line services"
+        },
+        {
+          "stock": "Eternal Ltd.",
+          "weight": 1.14,
+          "sector": "E-retail/ e-commerce"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.25,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Sona BLW Precision Forgings Ltd.",
+          "weight": 0.36,
+          "sector": "Auto components & equipments"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMA169"
+    },
+    "hdfc-focused-fund---direct-plan---growth": {
+      "name": "HDFC Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 0.71,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.66,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.63,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Kotak Mahindra Bank Ltd.",
+          "weight": 0.98,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.53,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "HCL Technologies Limited",
+          "weight": 0.24,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Cipla Ltd.",
+          "weight": 0.42,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Bharti Airtel Ltd.",
+          "weight": 1.22,
+          "sector": "Telecom - cellular & fixed line services"
+        }
+      ],
+      "holdings_count": 8,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MHD1150"
+    },
+    "lic-mf-focused-fund---direct-plan---growth": {
+      "name": "LIC MF Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "HDFC Bank Ltd.",
+          "weight": 4.68,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Tata Consultancy Services Ltd.",
+          "weight": 0.23,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Mas Financial Services Ltd.",
+          "weight": 0.38,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Vinati Organics Ltd.",
+          "weight": 0.2,
+          "sector": "Specialty chemicals"
+        },
+        {
+          "stock": "Linde India Ltd.",
+          "weight": 0.28,
+          "sector": "Industrial gases"
+        },
+        {
+          "stock": "CreditAccess Grameen Ltd.",
+          "weight": 0.68,
+          "sector": "Microfinance institutions"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MIB238"
+    },
+    "motilal-oswal-focused-fund---direct-plan---growth": {
+      "name": "Motilal Oswal Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "Ami Organics Ltd.",
+          "weight": 0.71,
+          "sector": "Pharmaceuticals"
+        },
+        {
+          "stock": "Coforge Ltd.",
+          "weight": 0.26,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "MTAR Technologies Ltd.",
+          "weight": 0.99,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "Shriram Finance Ltd.",
+          "weight": 1.53,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Titan Company Ltd.",
+          "weight": 0.34,
+          "sector": "Gems, jewellery and watches"
+        },
+        {
+          "stock": "Aditya Birla Capital Ltd.",
+          "weight": 0.13,
+          "sector": "Life insurance"
+        },
+        {
+          "stock": "Religare Enterprises Ltd.",
+          "weight": 0.11,
+          "sector": "Investment company"
+        },
+        {
+          "stock": "Ultratech Cement Ltd.",
+          "weight": 3.48,
+          "sector": "Cement & cement products"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 3.43,
+          "sector": "Public sector bank"
+        }
+      ],
+      "holdings_count": 9,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MMO011"
+    },
+    "360-one-focused-fund---direct-plan---growth": {
+      "name": "360 ONE Focused Fund - Direct Plan - Growth",
+      "amc": "Focused",
+      "category": "focused",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 1.35,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Indus Towers Ltd.",
+          "weight": 0.64,
+          "sector": "Telecom - infrastructure"
+        },
+        {
+          "stock": "Cholamandalam Investment & Finance Co. Ltd.",
+          "weight": 0.15,
+          "sector": "Non banking financial company (nbfc)"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.67,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Vedanta Ltd.",
+          "weight": 0.66,
+          "sector": "Diversified metals"
+        },
+        {
+          "stock": "TML Commercial Vehicles Ltd.",
+          "weight": 1.05,
+          "sector": "Commercial vehicles"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MII058"
+    },
+    "lic-mf-value-fund---direct-plan---growth": {
+      "name": "LIC MF Value Fund - Direct Plan - Growth",
+      "amc": "Value",
+      "category": "value",
+      "holdings": [
+        {
+          "stock": "TML Commercial Vehicles Ltd.",
+          "weight": 0.79,
+          "sector": "Commercial vehicles"
+        },
+        {
+          "stock": "Maruti Suzuki India Ltd.",
+          "weight": 2.23,
+          "sector": "Passenger cars & utility vehicles"
+        },
+        {
+          "stock": "KSH International Ltd.",
+          "weight": 0.7,
+          "sector": "Aluminium, copper & zinc products"
+        },
+        {
+          "stock": "Mahindra & Mahindra Ltd.",
+          "weight": 0.26,
+          "sector": "Passenger cars & utility vehicles"
+        },
+        {
+          "stock": "Carraro India Ltd.",
+          "weight": 0.16,
+          "sector": "Auto components & equipments"
+        },
+        {
+          "stock": "Garware Hi-Tech Films Ltd.",
+          "weight": 0.23,
+          "sector": "Plastic products - industrial"
+        },
+        {
+          "stock": "KSB Ltd.",
+          "weight": 0.13,
+          "sector": "Compressors, pumps & diesel engines"
+        },
+        {
+          "stock": "Bharat Forge Ltd.",
+          "weight": 1.03,
+          "sector": "Castings & forgings"
+        },
+        {
+          "stock": "Siemens Energy India Ltd.",
+          "weight": 2.89,
+          "sector": "Power generation"
+        }
+      ],
+      "holdings_count": 9,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MIB246"
+    },
+    "bandhan-value-fund---direct-plan---growth": {
+      "name": "Bandhan Value Fund - Direct Plan - Growth",
+      "amc": "Value",
+      "category": "value",
+      "holdings": [
+        {
+          "stock": "Kotak Mahindra Bank Ltd.",
+          "weight": 0.33,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Tata Consultancy Services Ltd.",
+          "weight": 0.19,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.17,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.16,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Jindal Steel Ltd.",
+          "weight": 0.23,
+          "sector": "Iron & steel products"
+        },
+        {
+          "stock": "HDFC Life Insurance Company Ltd.",
+          "weight": 0.31,
+          "sector": "Life insurance"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MAG735"
+    },
+    "quant-value-fund---direct-plan---growth": {
+      "name": "Quant Value Fund - Direct Plan - Growth",
+      "amc": "Value",
+      "category": "value",
+      "holdings": [
+        {
+          "stock": "Life Insurance Corporation Of India",
+          "weight": 0.41,
+          "sector": "Life insurance"
+        },
+        {
+          "stock": "Larsen & Toubro Ltd.",
+          "weight": 0.33,
+          "sector": "Civil construction"
+        },
+        {
+          "stock": "HDFC Bank Ltd. : Futures Near",
+          "weight": 6.76,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Adani Power Ltd.",
+          "weight": 0.15,
+          "sector": "Power generation"
+        },
+        {
+          "stock": "ICICI Bank Ltd. : Futures Near",
+          "weight": 5.2,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "LIC Housing Finance Ltd.",
+          "weight": 0.22,
+          "sector": "Housing finance company"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MES076"
+    },
+    "hdfc-value-fund---direct-plan---growth": {
+      "name": "HDFC Value Fund - Direct Plan - Growth",
+      "amc": "Value",
+      "category": "value",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 0.22,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "Axis Bank Ltd.",
+          "weight": 0.43,
+          "sector": "Private sector bank"
+        },
+        {
+          "stock": "State Bank Of India",
+          "weight": 0.31,
+          "sector": "Public sector bank"
+        },
+        {
+          "stock": "Infosys Ltd.",
+          "weight": 0.14,
+          "sector": "Computers - software & consulting"
+        },
+        {
+          "stock": "Bharat Electronics Ltd.",
+          "weight": 0.31,
+          "sector": "Aerospace & defense"
+        },
+        {
+          "stock": "National Thermal Power Corporation Ltd.",
+          "weight": 0.23,
+          "sector": "Power generation"
+        }
+      ],
+      "holdings_count": 6,
+      "as_of_date": "2026-02-14",
+      "source": "MoneyControl Scraping",
+      "fund_code": "MHD1148"
     }
   }
 }

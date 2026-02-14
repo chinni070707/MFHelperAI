@@ -43,10 +43,10 @@ export default defineConfig({
   },
 
   // Web server configuration (backend serves static files)
-  webServer: {
+  webServer: process.env.CI ? undefined : {
     command: 'cd ../backend && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000',
     url: 'http://localhost:8000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120000,
   },
 

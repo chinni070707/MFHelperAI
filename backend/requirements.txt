@@ -11,10 +11,9 @@ numpy>=1.24.0
 openpyxl>=3.1.0  # Excel support
 
 # PDF Processing
-PyMuPDF>=1.23.0  # Better PDF parsing (fitz)
-# casparser[fast] is optional — needs libpoppler-dev on Linux
-# Install separately if CAS parsing via casparser is needed:
-#   apt-get install -y libpoppler-dev pkg-config && pip install casparser[fast]>=0.7.0
+PyMuPDF>=1.23.0   # Better PDF parsing (fitz), used as casparser fallback
+casparser>=0.7.0  # CAS PDF parser (pdfminer.six backend — no system deps needed on Render)
+# casparser[fast] uses C++ poppler backend (faster) but needs: apt-get install -y libpoppler-dev pkg-config
 
 # Database
 sqlalchemy>=2.0.0

@@ -199,6 +199,37 @@ python backend/verify_database_storage.py
 
 ---
 
+## 🔐 Pre-commit Hooks
+
+Automatically run tests before every commit to catch errors early:
+
+### Setup (One-time)
+
+**Windows:**
+```powershell
+.\scripts\setup-pre-commit.ps1
+```
+
+**Mac/Linux:**
+```bash
+bash scripts/setup-pre-commit.sh
+```
+
+### What Gets Checked
+- ✅ Database connection and schema validation
+- ✅ Python syntax for staged files
+- ⚙️ Backend tests (optional - disabled by default for speed)
+
+### Usage
+Once installed, checks run automatically on every `git commit`. To skip:
+```bash
+git commit --no-verify
+```
+
+See [scripts/PRE_COMMIT_HOOKS.md](scripts/PRE_COMMIT_HOOKS.md) for details.
+
+---
+
 ## 🚢 Deployment
 
 ### Render (Current)
