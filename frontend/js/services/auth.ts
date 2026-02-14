@@ -30,6 +30,7 @@ export interface AuthResponse {
   access_token: string;
   token_type: string;
   user: User;
+  email_verification_sent?: boolean;
 }
 
 export interface UserSettings {

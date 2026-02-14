@@ -313,10 +313,16 @@ export class AuthUI {
     };
 
     try {
-      await authService.register(data);
+      const response = await authService.register(data);
       
-      showToast('Registration successful!', 'success');
       modal.remove();
+      
+      // Show appropriate message based on email verification
+      if (response.email_verification_sent) {
+        showToast('Registration successful! Please check your email to verify your account.', 'success', 5000);
+      } else {
+        showToast('Registration successful!', 'success');
+      }
       
       // Reload page to update UI
       window.location.reload();

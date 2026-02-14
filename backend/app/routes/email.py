@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from app.services.email_service import email_service
 from app.services.otp_service import otp_service
 from app.database import get_db
-from app.models.user import User
+from app.models.models import User
 
 router = APIRouter(prefix="/api/email", tags=["email"])
 
