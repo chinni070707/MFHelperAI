@@ -73,6 +73,7 @@ async def get_portfolio(
             "fund_name": h.fund_name,
             "amc": h.amc,
             "category": h.category,
+            "broker": h.broker,
             "invested": h.invested_amount,
             "current_value": h.current_value,
             "units": h.units,
@@ -137,12 +138,14 @@ async def get_cas_import_summary(
     
     amcs = sorted(set(h.amc for h in holdings if h.amc))
     categories = sorted(set(h.category for h in holdings if h.category))
+    brokers = sorted(set(h.broker for h in holdings if h.broker))
     
     holdings_detail = [
         {
             "fund_name": h.fund_name,
             "amc": h.amc or "Unknown",
             "category": h.category or "Unknown",
+            "broker": h.broker or "Direct",
             "invested": h.invested_amount or 0,
             "current_value": h.current_value or 0,
             "units": h.units or 0,
@@ -168,6 +171,7 @@ async def get_cas_import_summary(
         "return_pct": (portfolio.total_gain / portfolio.total_invested * 100) if portfolio.total_invested and portfolio.total_invested > 0 else 0,
         "amcs": amcs,
         "categories": categories,
+        "brokers": brokers,
         "funds_with_zero_invested": funds_with_zero_invested,
         "funds_with_zero_current": funds_with_zero_current,
         "warnings": warnings,

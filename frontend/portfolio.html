@@ -345,6 +345,65 @@
             box-shadow: none;
         }
 
+        /* Dashboard Quick Access */
+        .dashboard-quick-access {
+            text-align: center;
+            margin: 3rem auto;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, rgba(127, 192, 76, 0.05), rgba(127, 192, 76, 0.02));
+            border-radius: 16px;
+            border: 2px dashed var(--primary-green);
+            max-width: 600px;
+        }
+
+        .quick-access-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+        }
+
+        .btn-dashboard-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--primary-green);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(127, 192, 76, 0.2);
+        }
+
+        .btn-dashboard-primary:hover {
+            background: var(--primary-green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(127, 192, 76, 0.35);
+        }
+
+        .btn-dashboard-primary .dashboard-icon {
+            font-size: 1.3rem;
+        }
+
+        .btn-dashboard-primary .arrow-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-dashboard-primary:hover .arrow-icon {
+            transform: translateX(4px);
+        }
+
+        .import-hint {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
         .badge {
             display: inline-block;
             background: #FEF3C7;
@@ -751,6 +810,22 @@
                 font-size: 1rem;
             }
 
+            .dashboard-quick-access {
+                margin: 2rem auto;
+                padding: 2rem 1.5rem;
+            }
+
+            .btn-dashboard-primary {
+                width: 100%;
+                justify-content: center;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .quick-access-label {
+                font-size: 0.95rem;
+            }
+
             .options-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -859,6 +934,17 @@
         <div class="hero">
             <h1>📊 Import Your Portfolio</h1>
             <p>Choose how you want to set up your mutual fund portfolio. We'll analyze it and provide detailed insights.</p>
+        </div>
+
+        <!-- Dashboard Quick Access -->
+        <div class="dashboard-quick-access">
+            <p class="quick-access-label">Already imported your portfolio?</p>
+            <a href="/dashboard.html" class="btn-dashboard-primary">
+                <span class="dashboard-icon">📊</span>
+                View Dashboard
+                <span class="arrow-icon">→</span>
+            </a>
+            <p class="import-hint">Or import new data below</p>
         </div>
 
         <!-- Options Grid -->

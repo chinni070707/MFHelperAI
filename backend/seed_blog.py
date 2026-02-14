@@ -83,6 +83,10 @@ def seed_blog_posts(db):
     # Blog posts to seed
     posts_data = [
         {
+            "filename": "is-your-mutual-fund-sahi-hai.md",
+            "slug": "is-your-mutual-fund-sahi-hai",
+        },
+        {
             "filename": "getting-started-cas-upload.md",
             "slug": "getting-started-cas-upload",
         },

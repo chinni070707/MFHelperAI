@@ -24,8 +24,10 @@ from app.models.blog import BlogPost, BlogCategory, BlogTag
 class BlogService:
     """Service for blog operations"""
     
-    BLOG_POSTS_DIR = Path("backend/data/blog/posts")
-    BLOG_IMAGES_DIR = Path("backend/data/blog/images")
+    # Get the project root directory (3 levels up from this file: services -> app -> backend -> root)
+    _project_root = Path(__file__).parent.parent.parent.parent
+    BLOG_POSTS_DIR = _project_root / "backend" / "data" / "blog" / "posts"
+    BLOG_IMAGES_DIR = _project_root / "backend" / "data" / "blog" / "images"
     
     # Markdown extensions for rich content
     MD_EXTENSIONS = [

@@ -10,6 +10,7 @@ import logging
 from app.database import get_db
 from app.utils.auth import get_current_user
 from app.models.models import Portfolio, Holding, Transaction
+from app.services.fund_classifier import PortfolioInsightsGenerator
 from datetime import datetime
 
 # Setup logger
@@ -276,3 +277,51 @@ async def compare_index(portfolio_id: int, large_rate: float = 0.12, mid_rate: f
         'hypothetical_by_bucket': bucket_hypo,
         'hypothetical_total': total_hypo
     }
+
+
+@router.post("/portfolio-insights")
+async def get_portfolio_insights(holdings: List[Dict]):
+    """
+    Generate comprehensive portfolio concentration insights including:
+    - AMC concentration risk
+    - Investment style distribution
+    - Real market cap allocation
+    
+    Args:
+        holdings: List of portfolio holdings with fund details
+        
+    Returns:
+        Dict with comprehensive portfolio insights
+    """
+    try:
+        logger.info(f"Generating portfolio insights for {len(holdings)} holdings")
+        
+        if not holdings:
+            return {
+                "error": "No holdings provided",
+                "amc_concentration": {},
+                "investment_style": {},
+                "market_cap_allocation": {}
+            }
+        
+        # Generate all three insights
+        amc_analysis = PortfolioInsightsGenerator.analyze_amc_concentration(holdings)
+        style_analysis = PortfolioInsightsGenerator.analyze_investment_style(holdings)
+        market_cap_analysis = PortfolioInsightsGenerator.analyze_market_cap_allocation(holdings)
+        
+        logger.info(f"Insights generated successfully: {amc_analysis['total_amcs']} AMCs, "
+                   f"{style_analysis['dominant_style']} style dominant, "
+                   f"{market_cap_analysis['large_cap_pct']}% large cap")
+        
+        return {
+            "success": True,
+            "holdings_count": len(holdings),
+            "amc_concentration": amc_analysis,
+            "investment_style": style_analysis,
+            "market_cap_allocation": market_cap_analysis,
+            "generated_at": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        logger.error(f"Error generating portfolio insights: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to generate insights: {str(e)}")

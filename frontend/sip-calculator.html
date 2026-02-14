@@ -96,10 +96,157 @@
             font-weight: 500;
             font-size: 0.95rem;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         .nav-link:hover {
             color: var(--primary-green);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-item.has-dropdown > a {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .nav-item.has-dropdown > a::before {
+            content: '▼';
+            font-size: 0.65rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item.has-dropdown:hover > a::before {
+            transform: rotate(-180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 1rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            min-width: 280px;
+            padding: 0.75rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .nav-item.has-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--bg-light);
+            color: var(--primary-green);
+            padding-left: 1.5rem;
+        }
+
+        .dropdown-menu a .icon {
+            font-size: 1.25rem;
+            width: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 0.5rem 0;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 968px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--white);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                margin-top: 0;
+                padding-left: 1rem;
+                background: transparent;
+            }
+
+            .nav-item.has-dropdown > a::before {
+                display: none;
+            }
         }
 
         /* Main Container */
@@ -553,6 +700,10 @@
                             <span class="icon">⚙️</span>
                             <span>Rebalancing Tool</span>
                         </a>
+                        <a href="/sip-calculator.html">
+                            <span class="icon">🎯</span>
+                            <span>SIP Calculator</span>
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a href="/tools.html">
                             <span class="icon">🧰</span>
@@ -743,6 +894,13 @@
         </div>
     </div>
 
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
+        }
+    </script>
     <script src="/js/sip-calculator.js"></script>
 </body>
 </html>

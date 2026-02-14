@@ -343,6 +343,103 @@
             background: var(--dark-green);
         }
 
+        /* MVP Feature Callout */
+        .mvp-callout {
+            max-width: 1200px;
+            margin: -1rem auto 2rem;
+            padding: 0 2rem;
+        }
+
+        .mvp-callout-inner {
+            background: linear-gradient(135deg, rgba(127,192,76,0.08) 0%, rgba(158,214,112,0.08) 100%);
+            border: 2px solid var(--primary-green);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            box-shadow: 0 4px 20px rgba(127,192,76,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mvp-callout-inner::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            border-radius: 16px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mvp-callout-inner:hover::before {
+            opacity: 0.05;
+        }
+
+        .mvp-callout-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .mvp-callout-content {
+            flex: 1;
+        }
+
+        .mvp-callout-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .mvp-callout-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .mvp-badge {
+            display: inline-block;
+            background: var(--primary-green);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .mvp-callout-text {
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .mvp-callout-example {
+            background: white;
+            border-left: 3px solid var(--primary-green);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+        }
+
+        .mvp-callout-example strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -350,6 +447,29 @@
 
             .mode-toggle {
                 flex-direction: column;
+            }
+
+            .mvp-callout {
+                margin: -0.5rem auto 1.5rem;
+                padding: 0 1rem;
+            }
+
+            .mvp-callout-inner {
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+
+            .mvp-callout-icon {
+                font-size: 2rem;
+            }
+
+            .mvp-callout-title {
+                font-size: 1.2rem;
+            }
+
+            .mvp-callout-text {
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -418,6 +538,27 @@
         <h1>⚙️ Portfolio Rebalancing Tool</h1>
         <p>Adjust your asset allocation to match your investment strategy</p>
     </section>
+
+    <!-- MVP Feature Callout -->
+    <div class="mvp-callout" role="region" aria-label="Key feature highlight">
+        <div class="mvp-callout-inner">
+            <div class="mvp-callout-icon" aria-hidden="true">💡</div>
+            <div class="mvp-callout-content">
+                <div class="mvp-callout-header">
+                    <h2 class="mvp-callout-title">Smart Cap Classification</h2>
+                    <span class="mvp-badge">MVP Feature</span>
+                </div>
+                <p class="mvp-callout-text">
+                    We analyze the <strong>actual stocks</strong> held by each mutual fund, not just the fund category name. 
+                    This gives you precise small/mid/large cap allocation based on real portfolio composition.
+                </p>
+                <div class="mvp-callout-example">
+                    <strong>Example:</strong> A "Small Cap Fund" might actually hold 20% Large Cap stocks. 
+                    Our tool accounts for this, ensuring your rebalancing decisions are based on <em>true</em> market cap exposure.
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Main Content -->
     <main class="container">

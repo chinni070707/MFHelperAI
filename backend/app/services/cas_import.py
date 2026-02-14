@@ -7,6 +7,7 @@ import re
 from decimal import Decimal
 
 from app.models.models import Portfolio, Holding, Transaction
+from app.services.asset_classifier import AssetClassifier
 
 
 def safe_float_convert(value, field_name="value", default=0.0) -> float:
@@ -142,11 +143,25 @@ def import_cas_to_database(cas_data, user_id: int, db
                 total_invested += invested_amount
                 total_current += current_value
                 category = detect_category(scheme.scheme)
+                
+                # Classify asset class
+                asset_class = AssetClassifier.classify(
+                    category=category,
+                    fund_name=scheme.scheme,
+                    fund_type=scheme.type
+                )
+                
+                # Extract broker/distributor/advisor info if available
+                broker = None
+                if hasattr(scheme, 'advisor') and scheme.advisor:
+                    broker = str(scheme.advisor).strip()
+                
                 holding = Holding(
                     fund_name=scheme.scheme, isin=scheme.isin or '', amfi_code=scheme.amfi or '',
                     folio_number=folio.folio, units=units, nav=nav,
                     invested_amount=invested_amount, current_value=current_value,
-                    category=category, amc=folio.amc, rta=scheme.rta or '', fund_type=scheme.type or 'EQUITY'
+                    category=category, asset_class=asset_class, amc=folio.amc, rta=scheme.rta or '',
+                    broker=broker
                 )
                 holdings_to_create.append(holding)
     

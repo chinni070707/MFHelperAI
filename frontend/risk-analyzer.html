@@ -336,6 +336,155 @@
             background: var(--dark-green);
         }
 
+        /* Portfolio Insights Cards */
+        .insights-section {
+            margin: 2rem 0;
+        }
+
+        .insights-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .insights-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .insight-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card.warning {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .insight-card.success {
+            border-color: var(--primary-green);
+            background: rgba(127, 192, 76, 0.05);
+        }
+
+        .insight-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .insight-icon {
+            font-size: 2rem;
+        }
+
+        .insight-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .insight-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-green), #10B981);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .insight-content {
+            margin-top: 1rem;
+        }
+
+        .insight-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .insight-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .insight-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .insight-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .insight-bar-fill {
+            height: 100%;
+            background: var(--primary-green);
+            transition: width 0.5s ease;
+        }
+
+        .insight-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--gray-50);
+            border-left: 4px solid var(--primary-green);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .insight-message.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left-color: #f59e0b;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-50);
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .loading-insights {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .methodology-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -356,6 +505,10 @@
             .risk-table th,
             .risk-table td {
                 padding: 0.75rem 0.5rem;
+            }
+
+            .insights-cards-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -432,6 +585,62 @@
             <div class="chart-container">
                 <div class="chart-title">📊 Portfolio Risk Metrics</div>
                 <div class="metrics-grid" id="metricsGrid"></div>
+            </div>
+
+            <!-- Portfolio Concentration Insights -->
+            <div class="insights-section" id="portfolioInsights" style="display:none;">
+                <h2 class="insights-section-title">🔍 Portfolio Concentration Analysis</h2>
+                
+                <div class="insights-cards-grid">
+                    <!-- AMC Concentration Card -->
+                    <div class="insight-card" id="amcCard">
+                        <div class="insight-card-header">
+                            <span class="insight-icon">🏢</span>
+                            <div>
+                                <div class="insight-title">AMC Concentration</div>
+                            </div>
+                        </div>
+                        <div class="insight-content" id="amcContent">
+                            <div class="loading-insights">Analyzing...</div>
+                        </div>
+                    </div>
+
+                    <!-- Investment Style Card -->
+                    <div class="insight-card" id="styleCard">
+                        <div class="insight-card-header">
+                            <span class="insight-icon">🎨</span>
+                            <div>
+                                <div class="insight-title">Investment Style Mix</div>
+                            </div>
+                        </div>
+                        <div class="insight-content" id="styleContent">
+                            <div class="loading-insights">Analyzing...</div>
+                        </div>
+                    </div>
+
+                    <!-- Market Cap Allocation Card -->
+                    <div class="insight-card" id="marketCapCard">
+                        <div class="insight-card-header">
+                            <span class="insight-icon">📊</span>
+                            <div>
+                                <div class="insight-title">Real Market Cap Split</div>
+                                <span class="insight-badge">✨ Holdings-Based Calculation</span>
+                            </div>
+                        </div>
+                        <div class="insight-content" id="marketCapContent">
+                            <div class="loading-insights">Analyzing...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-box">
+                    <h4>💡 Why These Insights Matter:</h4>
+                    <div class="insights-grid">
+                        <div><strong>AMC Concentration:</strong> Diversifying across fund houses reduces single-point risk and management bias.</div>
+                        <div><strong>Investment Style:</strong> Understanding your style mix (Growth, Value, etc.) helps align with market conditions.</div>
+                        <div><strong>Real Market Cap:</strong> We calculate from actual stock holdings - not just fund names - for accuracy!</div>
+                    </div>
+                </div>
             </div>
 
             <!-- Charts Grid -->
@@ -535,6 +744,7 @@
             renderPerformanceChart(holdings);
             renderRiskChart(holdings);
             renderRiskTable(holdings);
+            loadAndRenderInsights(holdings);
         }
 
         function renderMetrics(holdings) {
@@ -678,6 +888,174 @@
                 `;
             });
             document.getElementById('riskTableBody').innerHTML = html;
+        }
+
+        // Portfolio Insights Functions
+        async function loadAndRenderInsights(holdings) {
+            try {
+                // Show insights section
+                document.getElementById('portfolioInsights').style.display = 'block';
+                
+                // Fetch insights from backend
+                const response = await fetch('/api/analytics/portfolio-insights', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(holdings)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch insights');
+                }
+
+                const insights = await response.json();
+                
+                // Render each insight card
+                renderAMCConcentration(insights.amc_concentration);
+                renderInvestmentStyle(insights.investment_style);
+                renderMarketCapAllocation(insights.market_cap_allocation);
+                
+            } catch (error) {
+                console.error('Error loading portfolio insights:', error);
+                // Hide insights section on error
+                document.getElementById('portfolioInsights').style.display = 'none';
+            }
+        }
+
+        function renderAMCConcentration(data) {
+            const card = document.getElementById('amcCard');
+            const content = document.getElementById('amcContent');
+            
+            // Update card styling based on risk level
+            card.className = 'insight-card';
+            if (data.concentration_risk === 'high') {
+                card.classList.add('warning');
+            } else if (data.concentration_risk === 'low') {
+                card.classList.add('success');
+            }
+            
+            // Build HTML
+            let html = '<div>';
+            
+            // Top AMCs
+            if (data.top_amcs && data.top_amcs.length > 0) {
+                html += '<div style="margin-bottom: 1rem;">';
+                data.top_amcs.slice(0, 3).forEach(amc => {
+                    html += `
+                        <div class="insight-metric">
+                            <span class="insight-label">${amc.name}</span>
+                            <span class="insight-value">${amc.percentage.toFixed(1)}%</span>
+                        </div>
+                        <div class="insight-bar">
+                            <div class="insight-bar-fill" style="width: ${amc.percentage}%"></div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            
+            // Risk message
+            const messageClass = data.concentration_risk === 'high' || data.concentration_risk === 'medium' ? 'warning' : '';
+            html += `
+                <div class="insight-message ${messageClass}">
+                    <strong>${data.total_amcs} AMCs</strong> in your portfolio. ${data.risk_message}
+                </div>
+            `;
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        function renderInvestmentStyle(data) {
+            const content = document.getElementById('styleContent');
+            
+            let html = '<div>';
+            
+            // Style distribution
+            if (data.style_distribution) {
+                const styles = Object.entries(data.style_distribution);
+                html += '<div style="margin-bottom: 1rem;">';
+                styles.forEach(([style, percentage]) => {
+                    html += `
+                        <div class="insight-metric">
+                            <span class="insight-label">${style}</span>
+                            <span class="insight-value">${percentage.toFixed(1)}%</span>
+                        </div>
+                        <div class="insight-bar">
+                            <div class="insight-bar-fill" style="width: ${percentage}%"></div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            
+            // Summary message
+            html += `
+                <div class="insight-message">
+                    <strong>Dominant Style:</strong> ${data.dominant_style}<br>
+                    <strong>Diversification Score:</strong> ${data.diversification_score}/100
+                </div>
+                <div class="methodology-note">${data.note || 'Style inferred from fund names'}</div>
+            `;
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        function renderMarketCapAllocation(data) {
+            const card = document.getElementById('marketCapCard');
+            const content = document.getElementById('marketCapContent');
+            
+            // Update card styling
+            card.className = 'insight-card';
+            if (data.is_balanced) {
+                card.classList.add('success');
+            }
+            
+            let html = '<div>';
+            
+            // Market cap distribution
+            const caps = [
+                { label: 'Large Cap', value: data.large_cap_pct, color: '#7FC04C' },
+                { label: 'Mid Cap', value: data.mid_cap_pct, color: '#3B82F6' },
+                { label: 'Small Cap', value: data.small_cap_pct, color: '#F59E0B' }
+            ];
+            
+            html += '<div style="margin-bottom: 1rem;">';
+            caps.forEach(cap => {
+                html += `
+                    <div class="insight-metric">
+                        <span class="insight-label">${cap.label}</span>
+                        <span class="insight-value">${cap.value}%</span>
+                    </div>
+                    <div class="insight-bar">
+                        <div class="insight-bar-fill" style="width: ${cap.value}%; background: ${cap.color};"></div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            // Risk profile and recommendation
+            html += `
+                <div class="insight-message ${data.is_balanced ? '' : 'warning'}">
+                    <strong>Risk Profile:</strong> ${data.risk_profile}<br>
+                    ${data.recommendation}
+                </div>
+                <div class="methodology-note">
+                    ${data.methodology || 'Calculated from fund categories with stock-level weighting'}
+                    <br><strong>Confidence:</strong> ${data.confidence || 'high'}
+                </div>
+            `;
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
         }
 
         // Load portfolio on page load

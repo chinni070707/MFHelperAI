@@ -100,12 +100,18 @@ async def upload_cas(
                 # Use smart conversion
                 units = safe_float_convert(scheme.close, "units", 0)
                 
+                # Extract broker/advisor information if available
+                broker = None
+                if hasattr(scheme, 'advisor') and scheme.advisor:
+                    broker = str(scheme.advisor).strip()
+                
                 scheme_info = {
                     "scheme_name": scheme.scheme,
                     "isin": scheme.isin,
                     "amfi_code": scheme.amfi,
                     "type": scheme.type,
                     "units": units,
+                    "broker": broker,
                 }
                 
                 if scheme.valuation:

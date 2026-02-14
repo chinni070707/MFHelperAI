@@ -155,7 +155,9 @@ class Holding(Base):
     amc = Column(String(100))
     category = Column(String(50))  # Large Cap, Mid Cap, Small Cap, etc.
     sub_category = Column(String(50))
+    asset_class = Column(String(20), default='Equity')  # Equity, Debt, Hybrid, Commodity, Other
     investment_style = Column(String(50))  # GARP, Momentum, Value, etc.
+    broker = Column(String(255))  # Broker/Distributor/Advisor name from CAS
     
     # Financial data
     units = Column(Float, default=0)
@@ -189,6 +191,7 @@ class Holding(Base):
         Index('idx_holding_user_created', 'user_id', 'created_at'),
         Index('idx_holding_scheme_isin', 'scheme_code', 'isin'),
         Index('idx_holding_amc', 'amc', 'category'),
+        Index('idx_holding_asset_class', 'asset_class', 'user_id'),
     )
 
 
