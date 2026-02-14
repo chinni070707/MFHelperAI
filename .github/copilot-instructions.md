@@ -361,6 +361,155 @@ body { font-size: 1rem; line-height: 1.6; }
 
 ---
 
+## Fund Data Scraping & Validation
+
+### Overview
+MFHelper maintains a comprehensive database of **391 mutual funds** with complete portfolio holdings scraped from MoneyControl. The data is stored in `backend/data/fund_holdings.json` (3.5 MB).
+
+### Data Quality Standards
+- **Minimum weight threshold**: 80% total portfolio weight
+- **Average holdings**: 62.6 stocks per fund
+- **Holdings range**: 18-227 stocks per fund
+- **Coverage**: All major fund categories (Equity, ELSS, Hybrid, etc.)
+
+### Scraping Fund Holdings
+
+**Script Location**: `backend/scripts/scrape_moneycontrol.py`
+
+**Usage:**
+```bash
+# Scrape all remaining funds (skips existing)
+python backend/scripts/scrape_moneycontrol.py
+
+# Scrape specific number of funds
+python backend/scripts/scrape_moneycontrol.py --limit 10
+
+# Force re-scrape (ignore existing data)
+python backend/scripts/scrape_moneycontrol.py --force
+
+# Check scraping progress
+cat backend/scripts/scraping_todo.md
+```
+
+**How It Works:**
+1. Reads fund codes from `backend/data/moneycontrol_fund_codes.json`
+2. For each fund, fetches the portfolio holdings page
+3. **CRITICAL**: Selects the **largest table** (full portfolio, not top-10 summary)
+4. Handles two column layouts:
+   - **Standard**: Stock | Sector | Value(Mn) | % Holdings | 1M Change
+   - **Extended**: Stock | Sector | **Sector Total** | Value(Mn) | % Holdings
+5. Extracts holdings with weight > 0.1%
+6. Saves to `backend/data/fund_holdings.json`
+
+**Key Features:**
+- Rate limiting: 2 seconds between requests
+- Automatic retry on failures
+- Progress tracking in `scraping_todo.md`
+- Validates data quality (≥80% total weight)
+
+### Validating Fund Data
+
+**After scraping, ALWAYS validate:**
+
+```bash
+# 1. Quick quality check
+python backend/scripts/check_data_quality.py
+
+# 2. Comprehensive validation
+python backend/scripts/simple_validate.py
+
+# 3. Clean data (remove funds with <80% weight)
+python backend/scripts/clean_by_weight.py
+```
+
+**Validation Checks:**
+- ✓ Total portfolio weight ≥80%
+- ✓ No negative weights
+- ✓ Reasonable holdings count (>5)
+- ✓ No duplicate funds
+
+**Expected Output:**
+```
+Total Funds: 391
+Average holdings per fund: 62.6
+Weight Distribution:
+  95-100%: 264 funds (67%)
+  90-95%: 84 funds (21%)
+  85-90%: 30 funds (8%)
+  80-85%: 8 funds (2%)
+```
+
+### Data Deployment
+
+**To Production:**
+1. Validate data locally (steps above)
+2. Commit the updated JSON file:
+   ```bash
+   git add backend/data/fund_holdings.json
+   git commit -m "Update fund holdings: 391 funds with complete portfolios"
+   git push origin main
+   ```
+3. Production auto-deploys (Render/Railway pulls updated JSON)
+
+**Note:** The app reads `fund_holdings.json` directly - no database migration needed!
+
+### Troubleshooting
+
+**Issue: Only 10 holdings extracted**
+- ✓ **Fixed!** The scraper now selects the largest table (full portfolio)
+- Old bug: Was selecting top-10 summary table
+
+**Issue: Low total weight (<80%)**
+- MoneyControl may only show partial holdings for some funds
+- Run `clean_by_weight.py` to filter these out
+
+**Issue: Encoding errors**
+- Use `encoding='utf-8', errors='replace'` when reading JSON
+- Already fixed in all validation scripts
+
+**Issue: Missing funds**
+- Some funds have no portfolio page (404 errors)
+- Series funds (closed-end) often unavailable
+- Expected failure rate: ~5-10%
+
+### Fund Data Structure
+
+```json
+{
+  "last_updated": "2026-02-14",
+  "source": "MoneyControl (Complete Portfolios ≥80% weight)",
+  "version": "2026-02",
+  "funds": {
+    "hdfc-flexi-cap-fund": {
+      "name": "HDFC Flexi Cap Fund",
+      "category": "Flexi Cap",
+      "amc": "HDFC Mutual Fund",
+      "holdings": [
+        {
+          "stock": "ICICI Bank Ltd.",
+          "weight": 8.9,
+          "sector": "Private sector bank"
+        }
+      ]
+    }
+  }
+}
+```
+
+### Backup Strategy
+
+**Important backups:**
+- `backend/data/fund_holdings_ORIGINAL_98_FUNDS.json` - Original high-quality dataset
+- `backend/data/fund_holdings_backup_<timestamp>.json` - Timestamped backups
+
+**Before re-scraping:**
+```bash
+# Create backup
+Copy-Item backend/data/fund_holdings.json backend/data/fund_holdings_backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').json
+```
+
+---
+
 ## Questions During Development?
 
 1. **Check** `STYLE_GUIDE.md` for detailed specifications

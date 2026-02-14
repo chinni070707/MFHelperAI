@@ -93,11 +93,16 @@ class MoneyControlScraper:
         
         # Check JSON file
         if self.holdings_file.exists():
-            with open(self.holdings_file, 'r', encoding='utf-8') as f:
-                existing_data = json.load(f)
-                existing_funds = existing_data.get('funds', {})
-                self.existing_in_json = set(existing_funds.keys())
-                print(f"[OK] Found {len(self.existing_in_json)} funds in fund_holdings.json")
+            try:
+                with open(self.holdings_file, 'r', encoding='utf-8', errors='replace') as f:
+                    existing_data = json.load(f)
+                    existing_funds = existing_data.get('funds', {})
+                    self.existing_in_json = set(existing_funds.keys())
+                    print(f"[OK] Found {len(self.existing_in_json)} funds in fund_holdings.json")
+            except Exception as e:
+                print(f"[WARNING] Could not load JSON file: {e}")
+                print(f"[INFO] Will start with empty dataset")
+                self.existing_in_json = set()
         else:
             print("[INFO] No existing fund_holdings.json found")
         
@@ -203,20 +208,34 @@ class MoneyControlScraper:
             soup = BeautifulSoup(response.text, 'html.parser')
             
             # Find the correct table - look for "Stock Invested in" header
+            # IMPORTANT: Pick the table with the MOST rows (full portfolio, not just top 10)
             holdings_table = None
+            table_col_layout = "standard"  # or "extended" if has 'Sector Total'
+            best_row_count = 0
+            
             tables = soup.find_all('table')
             
             for table in tables:
                 header_row = table.find('tr')
                 if header_row:
                     headers = [th.text.strip() for th in header_row.find_all(['th', 'td'])]
-                    if 'Stock Invested in' in headers:
-                        holdings_table = table
-                        break
+                    if 'Stock Invested in' in headers and '% of Total Holdings' in headers:
+                        row_count = len(table.find_all('tr'))
+                        # Pick the table with the most rows (full portfolio)
+                        if row_count > best_row_count:
+                            best_row_count = row_count
+                            holdings_table = table
+                            # Detect column layout
+                            if 'Sector Total' in headers:
+                                table_col_layout = "extended"  # Has extra 'Sector Total' column
+                            else:
+                                table_col_layout = "standard"
             
             if not holdings_table:
                 print("[ERROR] No portfolio holdings table found")
                 return None
+            
+            print(f"[OK] Using table with {best_row_count} rows (layout: {table_col_layout})")
             
             holdings = []
             rows = holdings_table.find_all('tr')[1:]  # Skip header row
@@ -224,16 +243,26 @@ class MoneyControlScraper:
             for row in rows:
                 cols = row.find_all('td')
                 
-                if len(cols) < 5:
+                if len(cols) < 4:
                     continue
                 
-                # Col 0: Stock name (may have # prefix)
-                # Col 1: Sector
-                # Col 4: % of Total Holdings
+                # MoneyControl has two column layouts:
+                # Standard: Stock | Sector | Value(Mn) | % of Total Holdings | 1M Change
+                # Extended: Stock | Sector | Sector Total | Value(Mn) | % of Total Holdings
                 
                 stock_name = cols[0].text.strip().replace('#', '').strip()
+                # Remove leading dash (MoneyControl uses - prefix for some stocks)
+                stock_name = stock_name.lstrip('-').strip()
+                
                 sector = cols[1].text.strip() if len(cols) > 1 else 'Unknown'
-                weight_text = cols[4].text.strip() if len(cols) > 4 else '0'
+                
+                # Get weight from correct column based on layout
+                if table_col_layout == "extended":
+                    # Extended layout: % is in column 4
+                    weight_text = cols[4].text.strip() if len(cols) > 4 else '0'
+                else:
+                    # Standard layout: % is in column 3
+                    weight_text = cols[3].text.strip() if len(cols) > 3 else '0'
                 
                 # Skip summary rows
                 if any(skip in stock_name.lower() for skip in ['total', 'equity', 'debt', 'cash', 'net', 'treps']):
@@ -431,14 +460,14 @@ def main():
     scraper = MoneyControlScraper()
     
     if args.test:
-        print("\n🧪 TEST MODE: Scraping first 5 funds...\n")
+        print("\n[TEST MODE] Scraping first 5 funds...\n")
         scraper.scrape_top_funds(limit=5, force=args.force)
     else:
         limit = args.limit
         if limit:
-            print(f"\n📊 SCRAPING MODE: Up to {limit} funds\n")
+            print(f"\n[SCRAPING MODE] Up to {limit} funds\n")
         else:
-            print("\n🚀 FULL SCRAPING MODE: All available funds\n")
+            print("\n[FULL SCRAPING] All available funds\n")
         scraper.scrape_top_funds(limit=limit, force=args.force)
     
     print("\n" + "="*80)
