@@ -767,98 +767,318 @@
             updateRebalance();
         }
 
+        // Debounce timer so rapid slider moves don't spam the API
+        let _rebalanceTimer = null;
+
         function updateRebalance() {
             const totalEquity = marketCapAllocation.large + marketCapAllocation.mid + marketCapAllocation.small;
             if (totalEquity === 0) return;
-            
+
             const currentLargePct = (marketCapAllocation.large / totalEquity * 100).toFixed(1);
-            const currentMidPct = (marketCapAllocation.mid / totalEquity * 100).toFixed(1);
+            const currentMidPct   = (marketCapAllocation.mid   / totalEquity * 100).toFixed(1);
             const currentSmallPct = (marketCapAllocation.small / totalEquity * 100).toFixed(1);
-            
+
             const targetLarge = parseInt(document.getElementById('largeSlider').value);
-            const targetMid = parseInt(document.getElementById('midSlider').value);
+            const targetMid   = parseInt(document.getElementById('midSlider').value);
             const targetSmall = parseInt(document.getElementById('smallSlider').value);
-            
+
             document.getElementById('largeTarget').textContent = targetLarge + '%';
-            document.getElementById('midTarget').textContent = targetMid + '%';
+            document.getElementById('midTarget').textContent   = targetMid   + '%';
             document.getElementById('smallTarget').textContent = targetSmall + '%';
-            
+
             document.getElementById('largeCurrent').textContent = `Current: ${currentLargePct}%`;
-            document.getElementById('midCurrent').textContent = `Current: ${currentMidPct}%`;
+            document.getElementById('midCurrent').textContent   = `Current: ${currentMidPct}%`;
             document.getElementById('smallCurrent').textContent = `Current: ${currentSmallPct}%`;
-            
+
             const largeDiff = (targetLarge - currentLargePct).toFixed(1);
-            const midDiff = (targetMid - currentMidPct).toFixed(1);
+            const midDiff   = (targetMid   - currentMidPct).toFixed(1);
             const smallDiff = (targetSmall - currentSmallPct).toFixed(1);
-            
+
             document.getElementById('largeDiff').textContent = (largeDiff >= 0 ? '+' : '') + largeDiff + '%';
             document.getElementById('largeDiff').style.color = largeDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
-            document.getElementById('midDiff').textContent = (midDiff >= 0 ? '+' : '') + midDiff + '%';
-            document.getElementById('midDiff').style.color = midDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
+            document.getElementById('midDiff').textContent   = (midDiff >= 0 ? '+' : '') + midDiff + '%';
+            document.getElementById('midDiff').style.color   = midDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
             document.getElementById('smallDiff').textContent = (smallDiff >= 0 ? '+' : '') + smallDiff + '%';
             document.getElementById('smallDiff').style.color = smallDiff >= 0 ? 'var(--primary-green)' : '#ff4757';
-            
-            let html = currentMode === 'rebalance' 
-                ? generateRebalanceActions(totalEquity, targetLarge, targetMid, targetSmall, currentLargePct, currentMidPct, currentSmallPct)
-                : generateFreshInvestmentActions(totalEquity, targetLarge, targetMid, targetSmall, currentLargePct, currentMidPct, currentSmallPct);
-            document.getElementById('rebalanceActions').innerHTML = html;
+
+            // Debounce API call by 400ms so sliders feel instant
+            clearTimeout(_rebalanceTimer);
+            _rebalanceTimer = setTimeout(() => {
+                _fetchAndRenderRebalance(targetLarge, targetMid, targetSmall);
+            }, 400);
         }
 
-        function generateRebalanceActions(total, tgtL, tgtM, tgtS, curL, curM, curS) {
-            const targetLargeAmt = total * tgtL / 100;
-            const targetMidAmt = total * tgtM / 100;
-            const targetSmallAmt = total * tgtS / 100;
-            
-            const sellLarge = Math.max(0, marketCapAllocation.large - targetLargeAmt);
-            const sellMid = Math.max(0, marketCapAllocation.mid - targetMidAmt);
-            const sellSmall = Math.max(0, marketCapAllocation.small - targetSmallAmt);
-            const buyLarge = Math.max(0, targetLargeAmt - marketCapAllocation.large);
-            const buyMid = Math.max(0, targetMidAmt - marketCapAllocation.mid);
-            const buySmall = Math.max(0, targetSmallAmt - marketCapAllocation.small);
-            
-            let html = '<div style="display: grid; gap: 15px;">';
-            
-            if (sellLarge > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.1); border-radius: 8px; border-left: 3px solid #ff4757;"><strong style="color: #ff4757;">📉 SELL Large Cap:</strong> ₹${(sellLarge/100000).toFixed(2)}L</div>`;
-            if (sellMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px; border-left: 3px solid #ffc107;"><strong style="color: #ffc107;">📉 SELL Mid Cap:</strong> ₹${(sellMid/100000).toFixed(2)}L</div>`;
-            if (sellSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.1); border-radius: 8px; border-left: 3px solid #ff4757;"><strong style="color: #ff4757;">📉 SELL Small Cap:</strong> ₹${(sellSmall/100000).toFixed(2)}L</div>`;
-            
-            if (buyLarge > 0) html += `<div style="padding: 15px; background: rgba(127,192,76,0.1); border-radius: 8px; border-left: 3px solid var(--primary-green);"><strong style="color: var(--primary-green);">📈 BUY Large Cap:</strong> ₹${(buyLarge/100000).toFixed(2)}L</div>`;
-            if (buyMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px; border-left: 3px solid #ffc107;"><strong style="color: #ffc107;">📈 BUY Mid Cap:</strong> ₹${(buyMid/100000).toFixed(2)}L</div>`;
-            if (buySmall > 0) html += `<div style="padding: 15px; background: rgba(127,192,76,0.1); border-radius: 8px; border-left: 3px solid var(--primary-green);"><strong style="color: var(--primary-green);">📈 BUY Small Cap:</strong> ₹${(buySmall/100000).toFixed(2)}L</div>`;
-            
-            if (sellLarge === 0 && sellMid === 0 && sellSmall === 0 && buyLarge === 0 && buyMid === 0 && buySmall === 0) {
-                html += '<div style="padding: 15px; background: rgba(127,192,76,0.1); border-radius: 8px;"><strong style="color: var(--primary-green);">✅ Portfolio is already balanced!</strong></div>';
+        async function _fetchAndRenderRebalance(targetLarge, targetMid, targetSmall) {
+            const actionsEl = document.getElementById('rebalanceActions');
+            actionsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-secondary);">Calculating...</div>';
+
+            try {
+                const holdings = (portfolioData && portfolioData.holdings) ? portfolioData.holdings : [];
+                const token = localStorage.getItem('authToken');
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = 'Bearer ' + token;
+
+                const params = new URLSearchParams({
+                    target_large: targetLarge,
+                    target_mid:   targetMid,
+                    target_small: targetSmall,
+                    mode:         currentMode
+                });
+
+                const resp = await fetch(`/api/rebalance/calculate?${params}`, {
+                    method:  'POST',
+                    headers: headers,
+                    body:    JSON.stringify(holdings)
+                });
+
+                if (!resp.ok) throw new Error('API error ' + resp.status);
+                const result = await resp.json();
+
+                if (result.error) {
+                    actionsEl.innerHTML = `<div style="padding:15px;color:#ff4757;">${result.error}</div>`;
+                    return;
+                }
+
+                if (currentMode === 'rebalance') {
+                    actionsEl.innerHTML = _renderRebalanceResult(result);
+                } else {
+                    actionsEl.innerHTML = _renderFreshResult(result);
+                }
+            } catch (err) {
+                console.error('Rebalance API error:', err);
+                // Fallback to client-side simple view
+                actionsEl.innerHTML = _renderSimpleFallback();
             }
-            
-            html += '</div>';
-            
-            if (sellLarge > 0 || sellMid > 0 || sellSmall > 0) {
-                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px;"><strong style="color: #ffc107;">⚠️ Tax Note:</strong><p style="color: var(--text-secondary); margin-top: 5px; font-size: 0.85rem;">Selling may attract LTCG tax (12.5% on gains above ₹1.25L). Consider using "Add Fresh Money" mode to avoid taxes.</p></div>`;
+        }
+
+        // -----------------------------------------------------------------------
+        // Helpers
+        // -----------------------------------------------------------------------
+
+        function _fmtAmt(v) {
+            if (v >= 10000000) return 'Rs.' + (v / 10000000).toFixed(2) + 'Cr';
+            if (v >= 100000)   return 'Rs.' + (v / 100000).toFixed(2) + 'L';
+            return 'Rs.' + Math.round(v).toLocaleString('en-IN');
+        }
+
+        function _gainColor(g) {
+            return g >= 0 ? 'var(--primary-green)' : '#ff4757';
+        }
+
+        // -----------------------------------------------------------------------
+        // Render rebalance (sell+buy) mode
+        // -----------------------------------------------------------------------
+
+        function _renderRebalanceResult(r) {
+            let html = '';
+
+            // ---- SELL SECTION ----
+            const sellOrders = r.sell_orders || [];
+            const sellByBucket = {};
+            sellOrders.forEach(o => {
+                const key = o.category || 'Other';
+                if (!sellByBucket[key]) sellByBucket[key] = [];
+                sellByBucket[key].push(o);
+            });
+
+            const sellTotal = r.sell ? r.sell.total : 0;
+            if (sellOrders.length > 0) {
+                html += `<div style="margin-bottom:20px;">`;
+                html += `<div style="font-weight:700;font-size:1rem;color:#ff4757;margin-bottom:10px;padding:10px 14px;background:rgba(255,71,87,0.08);border-radius:8px;border-left:3px solid #ff4757;">`;
+                html += `SELL — Total ${_fmtAmt(sellTotal)} across ${sellOrders.length} fund(s)`;
+                html += `</div>`;
+
+                Object.entries(sellByBucket).forEach(([bucket, orders]) => {
+                    const bucketTotal = orders.reduce((s, o) => s + (o.sell_amount || 0), 0);
+                    html += `<div style="margin-bottom:12px;">`;
+                    html += `<div style="font-size:0.8rem;font-weight:600;text-transform:uppercase;color:var(--text-secondary);margin-bottom:6px;letter-spacing:0.05em;">${bucket} — ${_fmtAmt(bucketTotal)}</div>`;
+
+                    orders.forEach((o, idx) => {
+                        const gainAmt  = o.gain || 0;
+                        const gainPct  = o.gain_pct || 0;
+                        const taxAmt   = gainAmt > 0 ? gainAmt * 0.125 : 0;
+                        const capExp   = o.cap_exposure_pct != null ? o.cap_exposure_pct + '% cap' : '';
+                        const unitsTxt = o.sell_units != null ? ` &nbsp;|&nbsp; ${o.sell_units} units` : '';
+                        const exitTag  = o.is_full_exit
+                            ? `<span style="background:#ff4757;color:#fff;border-radius:4px;padding:1px 6px;font-size:0.7rem;font-weight:700;margin-left:6px;">FULL EXIT</span>`
+                            : '';
+
+                        html += `<div style="background:#fff;border:1px solid var(--gray-200);border-radius:8px;padding:12px 14px;margin-bottom:8px;">`;
+                        html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;">`;
+                        html += `  <div style="font-weight:600;font-size:0.92rem;">${idx + 1}. ${o.fund}${exitTag}</div>`;
+                        html += `  <div style="font-weight:700;color:#ff4757;white-space:nowrap;">${_fmtAmt(o.sell_amount)}</div>`;
+                        html += `</div>`;
+
+                        html += `<div style="margin-top:5px;font-size:0.8rem;color:var(--text-secondary);display:flex;flex-wrap:wrap;gap:8px;">`;
+                        if (capExp) html += `<span style="background:rgba(255,71,87,0.08);padding:2px 7px;border-radius:4px;">${capExp}</span>`;
+                        html += `<span style="color:${_gainColor(gainAmt)};">${gainAmt >= 0 ? '+' : ''}${_fmtAmt(Math.abs(gainAmt))} (${gainPct >= 0 ? '+' : ''}${gainPct.toFixed(1)}%)</span>`;
+                        if (taxAmt > 0) html += `<span style="color:#ffc107;">Tax ~${_fmtAmt(taxAmt)}</span>`;
+                        if (o.amc)      html += `<span>${o.amc}</span>`;
+                        html += `</div>`;
+
+                        if (unitsTxt || o.reason) {
+                            html += `<div style="margin-top:5px;font-size:0.78rem;color:var(--text-secondary);">`;
+                            if (unitsTxt) html += `<span>${unitsTxt}</span>`;
+                            if (o.reason) html += `<span style="margin-left:${unitsTxt ? '8px' : '0'};">${o.reason}</span>`;
+                            html += `</div>`;
+                        }
+
+                        html += `</div>`;  // fund card
+                    });
+                    html += `</div>`;  // bucket
+                });
+                html += `</div>`;  // sell section
+
+                if (r.tax_estimate > 0) {
+                    html += `<div style="margin-bottom:16px;padding:10px 14px;background:rgba(255,193,7,0.1);border-radius:8px;border-left:3px solid #ffc107;font-size:0.85rem;">`;
+                    html += `<strong style="color:#ffc107;">Estimated LTCG Tax:</strong> ~${_fmtAmt(r.tax_estimate)}`;
+                    html += `<span style="color:var(--text-secondary);margin-left:8px;">(12.5% on gains; exemption Rs.1.25L/yr applies)</span>`;
+                    html += `</div>`;
+                }
             }
-            
+
+            // ---- BUY SECTION ----
+            const buySuggestions = r.buy_suggestions || [];
+            if (buySuggestions.length > 0) {
+                const buyTotal = r.buy ? r.buy.total : buySuggestions.reduce((s, b) => s + (b.amount || 0), 0);
+                html += `<div style="margin-bottom:20px;">`;
+                html += `<div style="font-weight:700;font-size:1rem;color:var(--primary-green);margin-bottom:10px;padding:10px 14px;background:rgba(127,192,76,0.08);border-radius:8px;border-left:3px solid var(--primary-green);">`;
+                html += `BUY — Invest ${_fmtAmt(buyTotal)} in ${buySuggestions.length} bucket(s)`;
+                html += `</div>`;
+                html += _renderBuySuggestions(buySuggestions);
+                html += `</div>`;
+            }
+
+            if (sellOrders.length === 0 && buySuggestions.length === 0) {
+                html += `<div style="padding:15px;background:rgba(127,192,76,0.1);border-radius:8px;text-align:center;"><strong style="color:var(--primary-green);">Portfolio is already balanced!</strong></div>`;
+            }
+
             return html;
         }
 
-        function generateFreshInvestmentActions(total, tgtL, tgtM, tgtS, curL, curM, curS) {
-            const targetTotal = total / (Math.max(curL, curM, curS) / Math.max(tgtL, tgtM, tgtS));
-            const freshTotal = Math.max(0, targetTotal - total);
-            const freshLarge = Math.max(0, (targetTotal * tgtL / 100) - marketCapAllocation.large);
-            const freshMid = Math.max(0, (targetTotal * tgtM / 100) - marketCapAllocation.mid);
-            const freshSmall = Math.max(0, (targetTotal * tgtS / 100) - marketCapAllocation.small);
-            
-            let html = '<div style="display: grid; gap: 15px;">';
-            html += `<div style="padding: 15px; background: rgba(127,192,76,0.2); border-radius: 8px; border-left: 3px solid var(--dark-green);"><strong style="color: var(--dark-green);">💰 Total Fresh Investment Needed:</strong> ₹${(freshTotal/100000).toFixed(2)}L</div>`;
-            
-            if (freshLarge > 0) html += `<div style="padding: 15px; background: rgba(127,192,76,0.05); border-radius: 8px;"><strong style="color: var(--primary-green);">Large Cap:</strong> Add ₹${(freshLarge/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Parag Parikh Flexi Cap, HDFC Flexicap</span></div>`;
-            if (freshMid > 0) html += `<div style="padding: 15px; background: rgba(255,193,7,0.05); border-radius: 8px;"><strong style="color: #ffc107;">Mid Cap:</strong> Add ₹${(freshMid/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Motilal Oswal Midcap, Kotak Emerging Equity</span></div>`;
-            if (freshSmall > 0) html += `<div style="padding: 15px; background: rgba(255,71,87,0.05); border-radius: 8px;"><strong style="color: #ff4757;">Small Cap:</strong> Add ₹${(freshSmall/100000).toFixed(2)}L<br><span style="color: var(--text-secondary); font-size: 0.85rem;">Suggested: Nippon Small Cap, Axis Small Cap</span></div>`;
-            
-            html += '</div>';
-            
-            if (freshTotal > 100000) {
-                html += `<div style="margin-top: 15px; padding: 15px; background: rgba(127,192,76,0.05); border-radius: 8px;"><strong style="color: var(--primary-green);">💡 SIP Alternative:</strong><p style="color: var(--text-secondary); margin-top: 5px; font-size: 0.9rem;">Instead of lumpsum, start SIP of ₹${((freshTotal/12)/1000).toFixed(0)}K/month for 12 months to average out market volatility.</p></div>`;
+        // -----------------------------------------------------------------------
+        // Render fresh investment mode
+        // -----------------------------------------------------------------------
+
+        function _renderFreshResult(r) {
+            const fi = r.fresh_investment || {};
+            const ai = r.after_investment || {};
+            const freshTotal = fi.total || 0;
+
+            let html = '';
+
+            if (freshTotal > 0) {
+                html += `<div style="margin-bottom:16px;padding:12px 14px;background:rgba(127,192,76,0.15);border-radius:8px;border-left:3px solid var(--dark-green);">`;
+                html += `<strong style="color:var(--dark-green);">Total Fresh Investment Needed: ${_fmtAmt(freshTotal)}</strong>`;
+                if (ai.total) {
+                    html += `<div style="font-size:0.8rem;color:var(--text-secondary);margin-top:3px;">Portfolio after: ${_fmtAmt(ai.total)} &nbsp;|&nbsp; Large ${(ai.large_cap_pct||0).toFixed(1)}% / Mid ${(ai.mid_cap_pct||0).toFixed(1)}% / Small ${(ai.small_cap_pct||0).toFixed(1)}%</div>`;
+                }
+                html += `</div>`;
             }
-            
+
+            const buySuggestions = r.buy_suggestions || [];
+            if (buySuggestions.length > 0) {
+                html += _renderBuySuggestions(buySuggestions);
+            }
+
+            if (freshTotal > 100000) {
+                const sipAmt = Math.round((freshTotal / 12) / 1000);
+                html += `<div style="margin-top:14px;padding:12px 14px;background:rgba(127,192,76,0.05);border-radius:8px;font-size:0.85rem;">`;
+                html += `<strong style="color:var(--primary-green);">SIP Alternative:</strong> `;
+                html += `<span style="color:var(--text-secondary);">Start SIP of Rs.${sipAmt}K/month for 12 months to spread market entry risk.</span>`;
+                html += `</div>`;
+            }
+
+            if (freshTotal === 0 && buySuggestions.length === 0) {
+                html += `<div style="padding:15px;background:rgba(127,192,76,0.1);border-radius:8px;text-align:center;"><strong style="color:var(--primary-green);">Portfolio is already balanced!</strong></div>`;
+            }
+
+            return html;
+        }
+
+        // -----------------------------------------------------------------------
+        // Shared: render buy suggestion cards
+        // -----------------------------------------------------------------------
+
+        function _renderBuySuggestions(suggestions) {
+            let html = '';
+            suggestions.forEach(s => {
+                const isTopUp = s.action === 'top_up';
+                const accentColor = isTopUp ? 'var(--primary-green)' : '#ffc107';
+                const bgColor     = isTopUp ? 'rgba(127,192,76,0.06)' : 'rgba(255,193,7,0.06)';
+                const borderColor = isTopUp ? 'var(--primary-green)' : '#ffc107';
+
+                html += `<div style="background:#fff;border:1px solid var(--gray-200);border-radius:8px;margin-bottom:10px;overflow:hidden;">`;
+
+                // Header row
+                html += `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:${bgColor};border-bottom:1px solid var(--gray-200);">`;
+                html += `  <div style="font-weight:700;font-size:0.92rem;color:${accentColor};">BUY — ${s.category}</div>`;
+                html += `  <div style="font-weight:700;color:${accentColor};white-space:nowrap;">${_fmtAmt(s.amount)}</div>`;
+                html += `</div>`;
+
+                // Body
+                html += `<div style="padding:12px 14px;">`;
+
+                if (isTopUp && s.fund) {
+                    html += `<div style="font-weight:600;font-size:0.9rem;margin-bottom:4px;">${s.fund}`;
+                    if (s.amc) html += ` <span style="font-size:0.75rem;font-weight:400;color:var(--text-secondary);">(${s.amc})</span>`;
+                    html += `</div>`;
+                    html += `<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:8px;">${s.reason || 'Already in your portfolio - top up to increase exposure'}</div>`;
+
+                    // Other existing options
+                    const others = (s.existing_options || []).filter(e => e.name !== s.fund);
+                    if (others.length > 0) {
+                        html += `<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:4px;">Other options already in portfolio:</div>`;
+                        html += `<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">`;
+                        others.forEach(e => {
+                            html += `<span style="background:rgba(127,192,76,0.1);border:1px solid rgba(127,192,76,0.3);border-radius:4px;padding:2px 8px;font-size:0.75rem;">${e.name} (${_fmtAmt(e.current_value)})</span>`;
+                        });
+                        html += `</div>`;
+                    }
+                } else {
+                    html += `<div style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:8px;">${s.reason || 'No existing fund in this category'}</div>`;
+                }
+
+                // Generic fallback options
+                const generics = s.generic_options || [];
+                if (generics.length > 0) {
+                    html += `<div style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:4px;">${isTopUp ? 'Or consider a new fund:' : 'Suggested funds:'}</div>`;
+                    html += `<div style="display:flex;flex-wrap:wrap;gap:5px;">`;
+                    generics.forEach(g => {
+                        html += `<span style="background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.35);border-radius:4px;padding:2px 8px;font-size:0.75rem;">${g}</span>`;
+                    });
+                    html += `</div>`;
+                }
+
+                html += `</div></div>`;  // body + card
+            });
+            return html;
+        }
+
+        // Simple fallback if API is unavailable (no fund-level detail)
+        function _renderSimpleFallback() {
+            const total = marketCapAllocation.large + marketCapAllocation.mid + marketCapAllocation.small;
+            if (total === 0) return '';
+            const tgtL = parseInt(document.getElementById('largeSlider').value);
+            const tgtM = parseInt(document.getElementById('midSlider').value);
+            const tgtS = parseInt(document.getElementById('smallSlider').value);
+            const sellL = Math.max(0, marketCapAllocation.large - total * tgtL / 100);
+            const sellM = Math.max(0, marketCapAllocation.mid   - total * tgtM / 100);
+            const sellS = Math.max(0, marketCapAllocation.small - total * tgtS / 100);
+            const buyL  = Math.max(0, total * tgtL / 100 - marketCapAllocation.large);
+            const buyM  = Math.max(0, total * tgtM / 100 - marketCapAllocation.mid);
+            const buyS  = Math.max(0, total * tgtS / 100 - marketCapAllocation.small);
+            let html = '<div style="display:grid;gap:10px;">';
+            if (sellL > 0) html += `<div style="padding:12px;background:rgba(255,71,87,0.1);border-radius:8px;border-left:3px solid #ff4757;"><strong style="color:#ff4757;">SELL Large Cap:</strong> ${_fmtAmt(sellL)}</div>`;
+            if (sellM > 0) html += `<div style="padding:12px;background:rgba(255,193,7,0.1);border-radius:8px;border-left:3px solid #ffc107;"><strong style="color:#ffc107;">SELL Mid Cap:</strong> ${_fmtAmt(sellM)}</div>`;
+            if (sellS > 0) html += `<div style="padding:12px;background:rgba(255,71,87,0.1);border-radius:8px;border-left:3px solid #ff4757;"><strong style="color:#ff4757;">SELL Small Cap:</strong> ${_fmtAmt(sellS)}</div>`;
+            if (buyL  > 0) html += `<div style="padding:12px;background:rgba(127,192,76,0.1);border-radius:8px;border-left:3px solid var(--primary-green);"><strong style="color:var(--primary-green);">BUY Large Cap:</strong> ${_fmtAmt(buyL)}</div>`;
+            if (buyM  > 0) html += `<div style="padding:12px;background:rgba(255,193,7,0.1);border-radius:8px;border-left:3px solid #ffc107;"><strong style="color:#ffc107;">BUY Mid Cap:</strong> ${_fmtAmt(buyM)}</div>`;
+            if (buyS  > 0) html += `<div style="padding:12px;background:rgba(127,192,76,0.1);border-radius:8px;border-left:3px solid var(--primary-green);"><strong style="color:var(--primary-green);">BUY Small Cap:</strong> ${_fmtAmt(buyS)}</div>`;
+            if (!sellL && !sellM && !sellS && !buyL && !buyM && !buyS) {
+                html += `<div style="padding:12px;background:rgba(127,192,76,0.1);border-radius:8px;text-align:center;"><strong style="color:var(--primary-green);">Portfolio is already balanced!</strong></div>`;
+            }
+            html += '</div>';
             return html;
         }
 
