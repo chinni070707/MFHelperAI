@@ -19,6 +19,8 @@ except ImportError:
     HAS_PSUTIL = False
 
 from app.database import get_db
+from pathlib import Path
+import json
 
 router = APIRouter(prefix="/api/health", tags=["Health & Monitoring"])
 logger = logging.getLogger(__name__)
@@ -235,3 +237,105 @@ async def ping() -> Dict:
         "ping": "pong",
         "timestamp": datetime.utcnow().isoformat()
     }
+
+
+@router.get("/funds-data")
+async def check_funds_data() -> Dict:
+    """
+    Health check for fund holdings JSON data
+    Validates data quality, file size, and completeness
+    
+    Returns:
+        Status of fund holdings including count, quality metrics
+    """
+    data_file = Path(__file__).parent.parent.parent / 'data' / 'fund_holdings.json'
+    
+    try:
+        # Check file exists
+        if not data_file.exists():
+            return {
+                "status": "error",
+                "timestamp": datetime.utcnow().isoformat(),
+                "message": "Fund holdings file not found"
+            }
+        
+        # Check file size
+        file_size_mb = data_file.stat().st_size / (1024 * 1024)
+        
+        # Load and validate structure
+        with open(data_file, 'r', encoding='utf-8', errors='replace') as f:
+            data = json.load(f)
+        
+        if 'funds' not in data:
+            return {
+                "status": "error",
+                "timestamp": datetime.utcnow().isoformat(),
+                "message": "Invalid fund holdings structure"
+            }
+        
+        funds = data['funds']
+        fund_count = len(funds)
+        
+        # Calculate statistics
+        total_holdings = sum(len(f.get('holdings', [])) for f in funds.values())
+        avg_holdings = total_holdings / fund_count if fund_count > 0 else 0
+        
+        # Check data quality (≥80% weight)
+        complete_funds = 0
+        for fund in funds.values():
+            total_weight = sum(h.get('weight', 0) for h in fund.get('holdings', []))
+            if total_weight >= 80:
+                complete_funds += 1
+        
+        quality_percent = (complete_funds / fund_count * 100) if fund_count > 0 else 0
+        
+        # Get last update from metadata
+        last_updated = data.get('last_updated', 'Unknown')
+        
+        # Overall status
+        status = "healthy"
+        warnings = []
+        
+        if fund_count < 50:
+            warnings.append(f"Low fund count: {fund_count}")
+            status = "degraded"
+        
+        if quality_percent < 90:
+            warnings.append(f"Data quality below 90%: {quality_percent:.1f}%")
+            status = "degraded"
+        
+        if file_size_mb > 20:
+            warnings.append(f"Large file size: {file_size_mb:.1f}MB (consider database migration)")
+        
+        return {
+            "status": status,
+            "timestamp": datetime.utcnow().isoformat(),
+            "data": {
+                "file_size_mb": round(file_size_mb, 2),
+                "fund_count": fund_count,
+                "complete_funds": complete_funds,
+                "quality_percent": round(quality_percent, 1),
+                "avg_holdings_per_fund": round(avg_holdings, 1),
+                "last_updated": last_updated,
+                "source": data.get('source', 'Unknown'),
+                "version": data.get('version', 'Unknown')
+            },
+            "warnings": warnings if warnings else None,
+            "recommendation": "Consider database migration if file exceeds 20MB or updates become frequent"
+        }
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"JSON decode error in fund holdings: {e}")
+        return {
+            "status": "error",
+            "timestamp": datetime.utcnow().isoformat(),
+            "message": "Fund holdings file is corrupted or invalid JSON"
+        }
+    except Exception as e:
+        logger.error(f"Error checking fund holdings: {e}")
+        return {
+            "status": "error",
+            "timestamp": datetime.utcnow().isoformat(),
+            "message": f"Error checking fund holdings: {str(e)}"
+        }
+
