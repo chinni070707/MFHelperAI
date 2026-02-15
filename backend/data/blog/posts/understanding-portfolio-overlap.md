@@ -6,7 +6,8 @@ tags:
   - portfolio-overlap
   - diversification
   - optimization
-featured_image: "/images/blog/portfolio-overlap.png"
+featured_image: "/images/blog/portfolio-overlap.svg"
+og_image: "/images/blog/portfolio-overlap.svg"
 author_id: 1
 published_at: "2026-02-08T14:30:00Z"
 ---

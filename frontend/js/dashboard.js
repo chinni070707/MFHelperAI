@@ -314,6 +314,47 @@ function renderDashboard() {
     renderRiskTable(holdings);
     renderHoldingsTable(holdings);
     updateRebalance();
+
+    // Async: enrich with fund metrics then re-render risk sections
+    enrichWithFundMetrics(holdings).then(() => {
+        renderRiskChart(holdings);
+        renderMetrics(holdings);
+        renderRiskTable(holdings);
+    });
+}
+
+async function enrichWithFundMetrics(holdings) {
+    try {
+        const fundNames = holdings.map(h => h.fund_name).filter(Boolean);
+        if (fundNames.length === 0) return;
+        const response = await fetch('/api/funds/metrics/batch', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(fundNames)
+        });
+        if (!response.ok) return;
+        const data = await response.json();
+        if (!data.success || !data.results) return;
+        holdings.forEach(h => {
+            const metrics = data.results[h.fund_name];
+            if (!metrics) return;
+            const risk1y = metrics.risk && metrics.risk['1y'] || {};
+            const bench = metrics.benchmark || {};
+            const ret = metrics.returns || {};
+            h._sharpe = risk1y.sharpe;
+            h._sortino = risk1y.sortino;
+            h._std_dev = risk1y.std_dev;
+            h._max_drawdown = risk1y.max_drawdown;
+            h._beta = bench.beta;
+            h._alpha_computed = bench.alpha;
+            if (!h.return_1y && ret['1y']) h.return_1y = ret['1y'].absolute;
+            if (!h.return_3y && ret['3y']) h.return_3y = ret['3y'].cagr || ret['3y'].absolute;
+            if ((!h.alpha || h.alpha === '-') && bench.alpha != null) h.alpha = bench.alpha;
+        });
+        console.log(`Dashboard: Fund metrics enriched ${data.matched}/${fundNames.length}`);
+    } catch (err) {
+        console.warn('Fund metrics API unavailable:', err.message);
+    }
 }
 
 function calculateSummary(holdings) {
@@ -527,11 +568,25 @@ function renderMetrics(holdings) {
     const profitableCount = holdings.filter(h => parseFloat(h.current_value || 0) > parseFloat(h.invested || 0)).length;
     const alphaValues = holdings.filter(h => h.alpha && h.alpha !== '-').map(h => parseFloat(h.alpha));
     const avgAlpha = alphaValues.length > 0 ? alphaValues.reduce((a, b) => a + b, 0) / alphaValues.length : 0;
+
+    // Weighted-average risk metrics
+    let wSharpe = 0, wBeta = 0, wSum = 0;
+    holdings.forEach(h => {
+        const w = parseFloat(h.current_value || 0);
+        if (h._sharpe != null) { wSharpe += h._sharpe * w; wSum += w; }
+        if (h._beta != null) wBeta += h._beta * w;
+    });
+    const avgSharpe = wSum > 0 ? wSharpe / wSum : null;
+    const avgBeta = wSum > 0 ? wBeta / wSum : null;
+    const fmtM = v => v != null ? v.toFixed(2) : '-';
+    const mClr = (v, g = 0) => v != null ? (v >= g ? 'var(--primary-green)' : '#ff4757') : 'var(--text-secondary)';
     
     document.getElementById('metricsGrid').innerHTML = `
         <div class="metric-box"><div class="metric-value" style="color: var(--primary-green);">${holdings.length}</div><div class="metric-label">Total Funds</div></div>
         <div class="metric-box"><div class="metric-value" style="color: var(--primary-green);">${profitableCount}</div><div class="metric-label">Profitable<br>(${((profitableCount/holdings.length)*100).toFixed(0)}%)</div></div>
         <div class="metric-box"><div class="metric-value" style="color: ${avgAlpha >= 0 ? 'var(--primary-green)' : '#ff4757'};">${avgAlpha.toFixed(2)}</div><div class="metric-label">Avg Alpha</div></div>
+        <div class="metric-box"><div class="metric-value" style="color: ${mClr(avgSharpe)};">${fmtM(avgSharpe)}</div><div class="metric-label">Sharpe Ratio</div></div>
+        <div class="metric-box"><div class="metric-value" style="color: ${mClr(avgBeta, 0.5)};">${fmtM(avgBeta)}</div><div class="metric-label">Avg Beta</div></div>
         <div class="metric-box"><div class="metric-value" style="color: var(--primary-green);">₹${(summary.total_current/100000).toFixed(1)}L</div><div class="metric-label">Total Value</div></div>
         <div class="metric-box"><div class="metric-value" style="color: ${summary.return_pct >= 0 ? 'var(--primary-green)' : '#ff4757'};">${summary.return_pct.toFixed(1)}%</div><div class="metric-label">Total Return</div></div>
     `;
@@ -539,12 +594,14 @@ function renderMetrics(holdings) {
 
 function renderRiskTable(holdings) {
     const sorted = [...holdings].sort((a, b) => parseFloat(b.current_value || 0) - parseFloat(a.current_value || 0));
+    const fmt = (v, s = '') => v != null ? parseFloat(v).toFixed(2) + s : '-';
+    const cls = (v, g = 0) => v != null ? (parseFloat(v) >= g ? 'gain' : 'loss') : '';
     let html = '';
     sorted.forEach(h => {
         const invested = parseFloat(h.invested || 0), current = parseFloat(h.current_value || 0);
         const returnPct = invested > 0 ? ((current - invested) / invested * 100).toFixed(1) : '0.0';
         const returnClass = current >= invested ? 'gain' : 'loss';
-        html += `<tr><td>${escapeHtml(h.fund_name || '-')}</td><td>${escapeHtml(h.category || '-')}</td><td>₹${(invested/100000).toFixed(2)}L</td><td>₹${(current/100000).toFixed(2)}L</td><td class="${returnClass}">${current >= invested ? '+' : ''}${returnPct}%</td><td class="${parseFloat(h.alpha) >= 0 ? 'gain' : 'loss'}">${h.alpha || '-'}</td><td>${h.return_1y || h['1Y Return'] || '-'}</td><td>${h.return_3y || h['3Y Return'] || '-'}</td></tr>`;
+        html += `<tr><td>${escapeHtml(h.fund_name || '-')}</td><td>${escapeHtml(h.category || '-')}</td><td>₹${(invested/100000).toFixed(2)}L</td><td>₹${(current/100000).toFixed(2)}L</td><td class="${returnClass}">${current >= invested ? '+' : ''}${returnPct}%</td><td class="${cls(h.alpha)}">${fmt(h.alpha)}</td><td class="${cls(h._beta, 0.5)}">${fmt(h._beta)}</td><td class="${cls(h._sharpe)}">${fmt(h._sharpe)}</td><td>${h.return_1y != null ? parseFloat(h.return_1y).toFixed(1) + '%' : '-'}</td><td>${h.return_3y != null ? parseFloat(h.return_3y).toFixed(1) + '%' : '-'}</td></tr>`;
     });
     document.getElementById('riskTableBody').innerHTML = html;
 }

@@ -61,7 +61,6 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RBTST8N"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-<body>
     <!-- Navigation -->
     <div id="navbar-container"></div>
 
@@ -232,16 +231,27 @@
                 // Display post content
                 displayPost(post);
                 
-                // Increment view count
-                await fetch(`${API_BASE}/posts/${postSlug}/view`, { method: 'POST' });
-                
-                // Highlight code blocks
-                document.querySelectorAll('pre code').forEach((block) => {
-                    hljs.highlightElement(block);
-                });
-                
+                // Show the article immediately after content is populated
                 loadingState.style.display = 'none';
                 articleContent.style.display = 'block';
+                
+                // Non-critical: increment view count (don't block rendering)
+                try {
+                    await fetch(`${API_BASE}/posts/${postSlug}/view`, { method: 'POST' });
+                } catch (e) {
+                    console.warn('Failed to increment view count:', e);
+                }
+                
+                // Non-critical: highlight code blocks
+                try {
+                    if (typeof hljs !== 'undefined') {
+                        document.querySelectorAll('pre code').forEach((block) => {
+                            hljs.highlightElement(block);
+                        });
+                    }
+                } catch (e) {
+                    console.warn('Code highlighting failed:', e);
+                }
                 
             } catch (error) {
                 console.error('Error loading post:', error);

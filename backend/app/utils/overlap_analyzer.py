@@ -7,6 +7,7 @@ from typing import List, Dict
 from pathlib import Path
 from collections import defaultdict
 import logging
+from app.services.amc_extractor import AmcExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -45,17 +46,113 @@ class OverlapAnalyzer:
             logger.error(f"Error loading holdings: {str(e)}")
             return {}
     
+    def _standardize_sector(self, sector: str) -> str:
+        """
+        Standardize sector names to industry-standard categories.
+        Maps MoneyControl's granular sectors to broader BSE/NSE standard sectors.
+        """
+        if not sector or sector == 'Unknown':
+            return 'Others'
+        
+        sector_lower = sector.lower()
+        
+        # Banking & Financial Services
+        if any(term in sector_lower for term in ['bank', 'banking']):
+            return 'Banks'
+        if any(term in sector_lower for term in ['nbfc', 'non banking', 'finance', 'financial']):
+            return 'Financial Services'
+        if 'insurance' in sector_lower:
+            return 'Insurance'
+        
+        # IT & Technology
+        if any(term in sector_lower for term in ['software', 'it ', 'information tech', 'computer']):
+            return 'IT & Software'
+        if any(term in sector_lower for term in ['telecom', 'telecommunication']):
+            return 'Telecom'
+        
+        # Pharma & Healthcare
+        if any(term in sector_lower for term in ['pharma', 'pharmaceutical', 'drug']):
+            return 'Pharmaceuticals'
+        if any(term in sector_lower for term in ['hospital', 'healthcare', 'medical']):
+            return 'Healthcare'
+        
+        # Auto & Ancillaries
+        if any(term in sector_lower for term in ['auto', 'vehicle', 'car', 'wheeler', 'tyre']):
+            return 'Automobiles'
+        
+        # Oil & Gas
+        if any(term in sector_lower for term in ['oil', 'gas', 'petroleum', 'refineries']):
+            return 'Oil & Gas'
+        
+        # Power & Energy
+        if any(term in sector_lower for term in ['power', 'energy', 'electricity']):
+            return 'Power'
+        
+        # Metals & Mining
+        if any(term in sector_lower for term in ['steel', 'metal', 'iron', 'aluminium', 'copper', 'mining']):
+            return 'Metals & Mining'
+        
+        # Cement & Construction
+        if any(term in sector_lower for term in ['cement', 'construction', 'infrastructure']):
+            return 'Construction'
+        
+        # FMCG
+        if any(term in sector_lower for term in ['fmcg', 'consumer goods', 'food product', 'beverage', 'personal care']):
+            return 'FMCG'
+        
+        # Retail & E-commerce
+        if any(term in sector_lower for term in ['retail', 'e-commerce', 'ecommerce', 'e-retail']):
+            return 'Retail'
+        
+        # Real Estate
+        if any(term in sector_lower for term in ['real estate', 'property', 'realty']):
+            return 'Real Estate'
+        
+        # Media & Entertainment
+        if any(term in sector_lower for term in ['media', 'entertainment', 'broadcasting']):
+            return 'Media'
+        
+        # Chemicals
+        if any(term in sector_lower for term in ['chemical', 'fertiliser', 'pesticide']):
+            return 'Chemicals'
+        
+        # Textiles
+        if any(term in sector_lower for term in ['textile', 'apparel', 'garment']):
+            return 'Textiles'
+        
+        # Capital Goods
+        if any(term in sector_lower for term in ['capital goods', 'engineering', 'industrial', 'machinery']):
+            return 'Capital Goods'
+        
+        # If no match, return original (capitalized)
+        return sector.title() if len(sector) < 30 else 'Others'
+    
     def get_fund_list(self) -> List[Dict]:
-        """Get list of available funds"""
+        """Get list of available funds with validated AMC names"""
         funds = []
+        invalid_amc_count = 0
+        
         for key, data in self.fund_data.items():
+            amc = data.get("amc", "Unknown")
+            
+            # Validate and normalize AMC name
+            if not AmcExtractor.is_valid(amc):
+                # Try to extract proper AMC from fund name
+                amc = AmcExtractor.extract(data.get("name", ""))
+                invalid_amc_count += 1
+                logger.warning(f"Invalid AMC '{data.get('amc')}' for fund '{data.get('name')}' - corrected to '{amc}'")
+            
             funds.append({
                 "key": key,
                 "name": data["name"],
-                "amc": data["amc"],
+                "amc": amc,
                 "category": data["category"],
                 "holdings_count": len(data.get("holdings", []))
             })
+        
+        if invalid_amc_count > 0:
+            logger.info(f"Corrected {invalid_amc_count} invalid AMC names on-the-fly")
+        
         return sorted(funds, key=lambda x: x["name"])
     
     def get_fund_holdings(self, fund_key: str) -> Dict:
@@ -214,13 +311,15 @@ class OverlapAnalyzer:
             fund = self.fund_data[key]
             sector_weights = defaultdict(float)
             for h in fund.get("holdings", []):
-                sector_weights[h["sector"]] += h["weight"]
-            # Sort by weight desc, keep top 8 sectors + Others
+                # Standardize sector names to reduce fragmentation
+                sector = self._standardize_sector(h["sector"])
+                sector_weights[sector] += h["weight"]
+            # Sort by weight desc, keep top 10 sectors + Others (increased from 8)
             sorted_sectors = sorted(sector_weights.items(), key=lambda x: -x[1])
-            top_sectors = sorted_sectors[:8]
-            others = sum(w for _, w in sorted_sectors[8:])
+            top_sectors = sorted_sectors[:10]
+            others = sum(w for _, w in sorted_sectors[10:])
             sectors = [{"sector": s, "weight": round(w, 2)} for s, w in top_sectors]
-            if others > 0:
+            if others > 0.5:  # Only show Others if > 0.5%
                 sectors.append({"sector": "Others", "weight": round(others, 2)})
             fund_holdings_summary[fund["name"]] = {
                 "key": key,
@@ -487,27 +586,27 @@ class OverlapAnalyzer:
                 "stock_overlap": {
                     "score": round(f1_score, 1),
                     "weight": "25%",
-                    "detail": f"{overlapping_count}/{total_unique} stocks overlap ({overlap_ratio:.1f}%)"
+                    "detail": f"{overlapping_count}/{total_unique} stocks overlap ({overlap_ratio:.1f}%) - {'✓ Low' if overlap_ratio < 15 else '⚠ High'}"
                 },
                 "weight_overlap": {
                     "score": round(f2_score, 1),
                     "weight": "30%",
-                    "detail": f"{weight_overlap_total:.1f}% total ({normalized_weight_overlap:.1f}% normalized for {fund_count} funds)"
+                    "detail": f"{normalized_weight_overlap:.1f}% normalized overlap - {'✓ Low' if normalized_weight_overlap < 12 else '⚠ High'}"
                 },
                 "sector_concentration": {
                     "score": round(f3_score, 1),
                     "weight": "20%",
-                    "detail": f"Sector HHI: {hhi:.0f} ({len(combined_sector_weights)} sectors)"
+                    "detail": f"HHI: {hhi:.0f} across {len(combined_sector_weights)} sectors - {'✓ Well spread' if hhi < 2000 else '⚠ Concentrated'}"
                 },
                 "top_stock_concentration": {
                     "score": round(f4_score, 1),
                     "weight": "15%",
-                    "detail": f"Top 5 stocks avg weight: {top5_combined_weight:.1f}%"
+                    "detail": f"Top 5 avg: {top5_combined_weight:.1f}% - {'✓ Distributed' if top5_combined_weight < 20 else '⚠ Concentrated'}"
                 },
                 "pairwise_overlap": {
                     "score": round(f5_score, 1),
                     "weight": "10%",
-                    "detail": f"Avg pairwise overlap: {avg_pairwise:.1f}%"
+                    "detail": f"Fund-to-fund: {avg_pairwise:.1f}% avg - {'✓ Independent' if avg_pairwise < 25 else '⚠ Similar'}"
                 }
             }
         }

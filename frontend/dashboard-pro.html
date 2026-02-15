@@ -880,6 +880,8 @@
                                     <th style="padding: 12px; text-align: right; color: var(--text-primary);">Current</th>
                                     <th style="padding: 12px; text-align: right; color: var(--text-primary);">Return %</th>
                                     <th style="padding: 12px; text-align: right; color: var(--text-primary);">Alpha</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">Beta</th>
+                                    <th style="padding: 12px; text-align: right; color: var(--text-primary);">Sharpe</th>
                                     <th style="padding: 12px; text-align: right; color: var(--text-primary);">1Y</th>
                                     <th style="padding: 12px; text-align: right; color: var(--text-primary);">3Y</th>
                                 </tr>
@@ -891,8 +893,10 @@
                     <div class="card mt-4" style="background: var(--secondary-bg); border: 1px solid var(--border-color);">
                         <h4 style="margin-bottom: 12px; color: var(--primary-blue);">📊 Key Risk Metrics Explained:</h4>
                         <div style="display: grid; gap: 12px; font-size: 0.85rem; color: var(--text-secondary);">
-                            <div><strong style="color: var(--text-primary);">Alpha:</strong> Excess return over benchmark. Higher is better, shows fund manager skill.</div>
-                            <div><strong style="color: var(--text-primary);">1Y/3Y Returns:</strong> Trailing returns. Compare with category average.</div>
+                            <div><strong style="color: var(--text-primary);">Alpha:</strong> Excess return over Nifty 50 benchmark. Higher = better fund manager skill.</div>
+                            <div><strong style="color: var(--text-primary);">Beta:</strong> Market sensitivity. 1.0 = moves with market, >1 = more volatile, <1 = defensive.</div>
+                            <div><strong style="color: var(--text-primary);">Sharpe:</strong> Risk-adjusted return. >1 is good, >2 is excellent. Higher = better return per unit risk.</div>
+                            <div><strong style="color: var(--text-primary);">1Y/3Y Returns:</strong> Trailing returns from NAV history. 3Y shown as CAGR.</div>
                             <div><strong style="color: var(--text-primary);">Category:</strong> Fund classification helps compare apples to apples.</div>
                         </div>
                     </div>
@@ -1158,6 +1162,40 @@
             
             // Check for milestones
             checkMilestones();
+
+            // Async: enrich with fund metrics then re-render risk sections
+            enrichWithFundMetrics(portfolioData.holdings).then(() => {
+                renderRiskTable(portfolioData.holdings);
+            });
+        }
+
+        async function enrichWithFundMetrics(holdings) {
+            try {
+                const fundNames = holdings.map(h => h.fund_name).filter(Boolean);
+                if (fundNames.length === 0) return;
+                const response = await fetch('/api/funds/metrics/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(fundNames)
+                });
+                if (!response.ok) return;
+                const data = await response.json();
+                if (!data.success || !data.results) return;
+                holdings.forEach(h => {
+                    const metrics = data.results[h.fund_name];
+                    if (!metrics) return;
+                    const risk1y = metrics.risk && metrics.risk['1y'] || {};
+                    const bench = metrics.benchmark || {};
+                    const ret = metrics.returns || {};
+                    h._sharpe = risk1y.sharpe;
+                    h._beta = bench.beta;
+                    if (!h.return_1y && ret['1y']) h.return_1y = ret['1y'].absolute;
+                    if (!h.return_3y && ret['3y']) h.return_3y = ret['3y'].cagr || ret['3y'].absolute;
+                    if ((!h.alpha || h.alpha === '-') && bench.alpha != null) h.alpha = bench.alpha;
+                });
+            } catch (err) {
+                console.warn('Fund metrics API unavailable:', err.message);
+            }
         }
         
         function calculateSummary(data) {
@@ -2588,6 +2626,8 @@
         }
         
         function renderRiskTable(holdings) {
+            const fmt = (v) => v != null ? parseFloat(v).toFixed(2) : '-';
+            const cls = (v, g = 0) => v != null ? (parseFloat(v) >= g ? '#00ff88' : '#ff4757') : 'var(--text-secondary)';
             const tbody = document.getElementById('riskTableBody');
             tbody.innerHTML = holdings.map(h => `
                 <tr style="border-bottom: 1px solid var(--border-color);">
@@ -2597,8 +2637,10 @@
                     <td style="padding: 12px; text-align: right; color: var(--text-primary); font-weight: 600;">₹${((h.current_value || 0) / 1000).toFixed(0)}K</td>
                     <td style="padding: 12px; text-align: right; color: ${(h.percentage_return || 0) >= 0 ? '#00ff88' : '#ff4757'}; font-weight: 600;">${(h.percentage_return || 0).toFixed(2)}%</td>
                     <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${((h.return_5y || 0) - (h.percentage_return || 0)).toFixed(1)}%</td>
-                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${(h.return_1y || 0).toFixed(1)}%</td>
-                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${(h.return_3y || 0).toFixed(1)}%</td>
+                    <td style="padding: 12px; text-align: right; color: ${cls(h._beta, 0.5)};">${fmt(h._beta)}</td>
+                    <td style="padding: 12px; text-align: right; color: ${cls(h._sharpe)};">${fmt(h._sharpe)}</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${h.return_1y != null ? parseFloat(h.return_1y).toFixed(1) + '%' : '-'}</td>
+                    <td style="padding: 12px; text-align: right; color: var(--text-secondary);">${h.return_3y != null ? parseFloat(h.return_3y).toFixed(1) + '%' : '-'}</td>
                 </tr>
             `).join('');
         }

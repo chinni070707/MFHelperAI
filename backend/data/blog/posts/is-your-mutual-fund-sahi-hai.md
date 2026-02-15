@@ -7,7 +7,8 @@ tags:
   - diversification
   - optimization
   - getting-started
-featured_image: "/images/blog/sahi-hai-validation.png"
+featured_image: "/images/blog/sahi-hai-validation.svg"
+og_image: "/images/blog/sahi-hai-validation.svg"
 author_id: 1
 published_at: "2026-02-14T09:00:00Z"
 ---

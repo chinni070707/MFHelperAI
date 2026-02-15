@@ -858,19 +858,26 @@
            for 4-6 funds (wraps into rows of 3). */
         .pie-charts-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
             margin-bottom: 24px;
             width: 100%;
+            max-width: 100%;
         }
 
-        @media (min-width: 768px) and (max-width: 1199px) {
+        @media (min-width: 1400px) {
+            .pie-charts-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1399px) {
             .pie-charts-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 991px) {
             .pie-charts-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
@@ -879,15 +886,17 @@
 
         .pie-chart-card {
             background: var(--bg-card);
-            padding: 20px;
+            padding: 16px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            overflow: hidden;   /* safe now: HTML legend is inside card, no SVG bleed */
+            overflow: hidden;
             min-width: 0;
+            max-width: 100%;
             width: 100%;
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
         }
 
         .pie-chart-card .chart-title {
@@ -908,8 +917,11 @@
 
         .pie-chart-card > div[id^="pieChart_"] {
             width: 100% !important;
-            min-height: 0;
-            max-height: none;
+            height: 200px !important;
+            min-height: 200px;
+            max-height: 200px;
+            overflow: hidden;
+            position: relative;
         }
 
         /* Weight cell coloring in table */
@@ -1074,9 +1086,13 @@
             <!-- AMC Selector -->
             <div class="amc-selector">
                 <label for="amcSelect">1️⃣ Select Fund House (AMC)</label>
-                <select class="amc-select" id="amcSelect">
-                    <option value="">-- Select a Fund House --</option>
+                <select class="amc-select" id="amcSelect" disabled>
+                    <option value="">🔄 Loading fund houses...</option>
                 </select>
+                <div id="amcLoadingIndicator" style="font-size: 12px; color: var(--text-secondary); margin-top: 6px; display: flex; align-items: center; gap: 6px;">
+                    <div style="width: 12px; height: 12px; border: 2px solid var(--primary-green); border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+                    Loading 391 funds from database...
+                </div>
             </div>
 
             <div class="search-box" id="searchBox" style="display: none;">
@@ -1135,7 +1151,10 @@
                     <div class="summary-value good" id="uniqueStocks">0</div>
                 </div>
                 <div class="summary-card">
-                    <div class="summary-label">Diversification Score</div>
+                    <div class="summary-label" title="Higher score = Better diversification. Score based on stock overlap, weight overlap, sector concentration, top holdings, and fund-to-fund correlation.">
+                        Diversification Score 
+                        <span style="font-size: 10px; opacity: 0.6; cursor: help;">\u24d8</span>
+                    </div>
                     <div class="summary-value" id="divScore">0</div>
                     <div id="scoreLabel" style="font-size: 14px; font-weight: 700; margin-top: 4px;"></div>
                 </div>
@@ -1144,8 +1163,11 @@
             <!-- Score Breakdown -->
             <div class="chart-card" id="scoreBreakdownCard" style="margin-bottom: 24px; display: none;">
                 <div class="chart-title">Diversification Score Breakdown</div>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-top: -12px; margin-bottom: 16px;">
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: -12px; margin-bottom: 12px;">
                     Industry-standard 5-factor composite using weight-based overlap, HHI sector concentration &amp; pairwise analysis
+                </div>
+                <div style="font-size: 12px; color: var(--text-secondary); background: var(--bg-dark); padding: 10px; border-radius: 6px; margin-bottom: 16px; border-left: 3px solid var(--primary-green);">
+                    💡 <strong>How to read:</strong> Higher scores (→100) indicate better diversification. Low overlap is good!
                 </div>
                 <div id="scoreBreakdown" style="display: grid; gap: 12px;"></div>
             </div>
@@ -1421,7 +1443,16 @@
                 }
             } catch (error) {
                 console.error('Error loading funds:', error);
-                alert('Failed to load funds. Please refresh the page.');
+                
+                // Show error state in dropdown
+                const amcSelect = document.getElementById('amcSelect');
+                amcSelect.innerHTML = '<option value="">⚠️ Failed to load. Please refresh.</option>';
+                amcSelect.disabled = false;
+                
+                const loadingIndicator = document.getElementById('amcLoadingIndicator');
+                if (loadingIndicator) {
+                    loadingIndicator.innerHTML = '<span style="color: var(--danger);">⚠️ Failed to load funds. Please refresh the page.</span>';
+                }
             }
         }
 
@@ -1447,7 +1478,14 @@
                     return `<option value="${amc}">${amc} (${fundCount} ${fundCount === 1 ? 'fund' : 'funds'})</option>`;
                 }).join('');
             
-            console.log(`Loaded ${uniqueAMCs.length} AMCs with ${allFunds.length} total funds`);
+            // Enable dropdown and hide loading indicator
+            amcSelect.disabled = false;
+            const loadingIndicator = document.getElementById('amcLoadingIndicator');
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+            
+            console.log(`✅ Loaded ${uniqueAMCs.length} AMCs with ${allFunds.length} total funds`);
         }
 
         // Handle AMC selection
@@ -1757,27 +1795,115 @@
             card.style.display = 'block';
             
             const factorLabels = {
-                'stock_overlap': '📊 Stock Overlap Ratio',
-                'weight_overlap': '⚖️ Weight-Based Overlap',
-                'sector_concentration': '🏭 Sector Concentration (HHI)',
-                'top_stock_concentration': '🎯 Top-5 Stock Concentration',
-                'pairwise_overlap': '🔗 Pairwise Fund Overlap'
+                'stock_overlap': '📊 Stock Uniqueness',
+                'weight_overlap': '⚖️ Low Weight-Based Overlap',
+                'sector_concentration': '🏭 Sector Diversification',
+                'top_stock_concentration': '🎯 Distributed Holdings',
+                'pairwise_overlap': '🔗 Fund Independence'
             };
+            
+            // Explanations for each metric (for advanced users)
+            const factorExplanations = {
+                'stock_overlap': 'Measures what percentage of your total stocks appear in multiple funds. Lower overlap means better diversification.',
+                'weight_overlap': 'Industry-standard metric used by ET Money & TickerTape: sums the minimum weight of each overlapping stock across funds. Lower is better (ideally < 12%).',
+                'sector_concentration': 'HHI (Herfindahl-Hirschman Index) measures sector concentration. Lower values mean funds are spread across more sectors. < 2000 is well diversified, > 3000 is highly concentrated.',
+                'top_stock_concentration': 'Checks if your portfolio is too dependent on a few stocks. Lower concentration means risk is better distributed across holdings.',
+                'pairwise_overlap': 'Average overlap percentage between each pair of funds. Lower means your funds hold different stocks from each other, providing true diversification.'
+            };
+            
+            // Helper function to parse detail string into components
+            function parseDetail(detailStr) {
+                // Split by last " - " to separate status
+                const lastDashIndex = detailStr.lastIndexOf(' - ');
+                let description = detailStr;
+                let status = '';
+                
+                if (lastDashIndex > -1) {
+                    description = detailStr.substring(0, lastDashIndex).trim();
+                    status = detailStr.substring(lastDashIndex + 3).trim();
+                }
+                
+                // Extract key metric value (percentage or number)
+                // Look for patterns like "5.1%", "24.3%", "HHI: 2863", "12/234"
+                let metricValue = '';
+                
+                // Try to find percentage first
+                const percentMatch = description.match(/(\d+\.?\d*%)/);
+                if (percentMatch) {
+                    metricValue = percentMatch[1];
+                } else {
+                    // Try to find HHI value
+                    const hhiMatch = description.match(/HHI:\s*(\d+)/);
+                    if (hhiMatch) {
+                        metricValue = 'HHI: ' + hhiMatch[1];
+                    } else {
+                        // Try to find ratio like "12/234"
+                        const ratioMatch = description.match(/(\d+\/\d+)/);
+                        if (ratioMatch) {
+                            metricValue = ratioMatch[1];
+                        }
+                    }
+                }
+                
+                return { description, metricValue, status };
+            }
             
             container.innerHTML = Object.entries(breakdown).map(([key, factor]) => {
                 const score = factor.score;
                 const barColor = score >= 70 ? 'var(--success)' : score >= 40 ? 'var(--warning)' : 'var(--danger)';
                 const label = factorLabels[key] || key;
+                const explanation = factorExplanations[key] || '';
                 
-                return `<div style="display: flex; align-items: center; gap: 16px;">
-                    <div style="min-width: 220px;">
-                        <div style="font-weight: 600; font-size: 13px;">${label}</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">${factor.detail} (${factor.weight})</div>
+                // Parse the detail string
+                const parsed = parseDetail(factor.detail);
+                
+                // Determine status color
+                const statusColor = parsed.status.includes('✓') ? 'var(--success)' : 
+                                  parsed.status.includes('⚠') ? 'var(--warning)' : 
+                                  'var(--text-secondary)';
+                
+                return `<div style="border: 1px solid var(--bg-dark); border-radius: 8px; padding: 16px; background: var(--bg-card); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                    <!-- Header Row with columns -->
+                    <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--bg-dark);">
+                        <!-- Column 1: Label + Weight -->
+                        <div>
+                            <div style="font-weight: 600; font-size: 15px; color: var(--text-primary); margin-bottom: 4px;">${label}</div>
+                            <div style="font-size: 10px; color: var(--text-secondary); background: var(--bg-dark); padding: 3px 8px; border-radius: 4px; font-weight: 600; display: inline-block;">${factor.weight} weight</div>
+                        </div>
+                        
+                        <!-- Column 2: Metric Value -->
+                        <div style="text-align: center; padding: 8px 16px; background: var(--bg-dark); border-radius: 6px; border-left: 3px solid ${barColor};">
+                            <div style="font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-bottom: 2px;">VALUE</div>
+                            <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); font-family: 'Courier New', monospace;">${parsed.metricValue || 'N/A'}</div>
+                        </div>
+                        
+                        <!-- Column 3: Status -->
+                        <div style="text-align: center; padding: 8px 16px; background: var(--bg-dark); border-radius: 6px;">
+                            <div style="font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-bottom: 2px;">STATUS</div>
+                            <div style="font-size: 13px; font-weight: 700; color: ${statusColor};">${parsed.status || 'N/A'}</div>
+                        </div>
+                        
+                        <!-- Column 4: Score -->
+                        <div style="text-align: center; padding: 8px 16px; background: linear-gradient(135deg, ${barColor}15, ${barColor}05); border-radius: 6px; border: 2px solid ${barColor};">
+                            <div style="font-size: 11px; color: var(--text-secondary); font-weight: 600; margin-bottom: 2px;">SCORE</div>
+                            <div style="font-weight: 700; font-size: 24px; color: ${barColor}; line-height: 1;">${Math.round(score)}</div>
+                        </div>
                     </div>
-                    <div style="flex: 1; background: var(--bg-dark); border-radius: 6px; height: 10px; overflow: hidden;">
-                        <div style="width: ${score}%; height: 100%; background: ${barColor}; border-radius: 6px; transition: width 0.5s;"></div>
+                    
+                    <!-- Full description -->
+                    <div style="font-size: 13px; color: var(--text-primary); margin-bottom: 10px; padding: 8px 12px; background: var(--bg-dark); border-radius: 6px;">
+                        📈 ${parsed.description}
                     </div>
-                    <div style="min-width: 40px; text-align: right; font-weight: 700; font-size: 14px; color: ${barColor};">${Math.round(score)}</div>
+                    
+                    <!-- Explanation -->
+                    <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; padding: 8px 10px; background: linear-gradient(135deg, transparent 0%, var(--bg-dark) 100%); border-radius: 4px;">
+                        💡 ${explanation}
+                    </div>
+                    
+                    <!-- Progress bar -->
+                    <div style="background: var(--bg-dark); border-radius: 4px; height: 8px; overflow: hidden; margin-top: 12px;">
+                        <div style="width: ${score}%; height: 100%; background: ${barColor}; border-radius: 4px; transition: width 0.5s ease-out;"></div>
+                    </div>
                 </div>`;
             }).join('');
         }
@@ -1803,70 +1929,68 @@
                 </div>`;
             }).join('');
 
-            // Render each pie chart
+            // Render each pie chart with proper sizing
             Object.entries(fundSummary).forEach(([name, info], idx) => {
                 const sectors = info.sectors || [];
-                const data = [{
-                    labels: sectors.map(s => s.sector),
-                    values: sectors.map(s => s.weight),
-                    type: 'pie',
-                    hole: 0.45,
-                    marker: { colors: colors },
-                    textinfo: 'percent',
-                    textposition: 'inside',
-                    textfont: { size: 10, color: '#fff' },
-                    hoverinfo: 'label+value+percent',
-                    sort: false
-                }];
+                
+                // Use setTimeout to ensure DOM is ready and sizes are calculated
+                setTimeout(() => {
+                    const container = document.getElementById(`pieChart_${idx}`);
+                    if (!container) return;
+                    
+                    // Get actual rendered container dimensions
+                    const rect = container.getBoundingClientRect();
+                    const chartWidth = Math.max(rect.width, 250); // Minimum 250px
+                    const chartHeight = 200; // Fixed height from CSS
+                    
+                    const data = [{
+                        labels: sectors.map(s => s.sector),
+                        values: sectors.map(s => s.weight),
+                        type: 'pie',
+                        hole: 0.4,
+                        marker: { colors: colors },
+                        textinfo: 'percent',
+                        textposition: 'inside',
+                        textfont: { size: 9, color: '#fff', family: 'Arial, sans-serif' },
+                        hoverinfo: 'label+value+percent',
+                        sort: false,
+                        pull: 0,
+                        rotation: 0
+                    }];
 
-                // Get container width for proper sizing
-                const container = document.getElementById(`pieChart_${idx}`);
-                const containerWidth = container ? container.clientWidth : 300;
+                    const layout = {
+                        showlegend: false,
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#212529', size: 10, family: 'Arial, sans-serif' },
+                        margin: { t: 15, b: 15, l: 15, r: 15 },
+                        height: chartHeight,
+                        width: chartWidth,
+                        autosize: false
+                    };
 
-                const layout = {
-                    showlegend: false,          // Plotly legend off; HTML legend below
-                    paper_bgcolor: 'rgba(0,0,0,0)',
-                    plot_bgcolor: 'rgba(0,0,0,0)',
-                    font: { color: '#212529', size: 11 },
-                    margin: { t: 5, b: 5, l: 5, r: 5 },   // symmetric, donut fills width
-                    height: 240,                            // shorter; HTML legend below
-                    width: containerWidth,
-                    autosize: false
-                };
+                    const config = { 
+                        responsive: false,
+                        displayModeBar: false,
+                        staticPlot: true
+                    };
 
-                const config = { 
-                    responsive: true, 
-                    displayModeBar: false,
-                    staticPlot: false
-                };
-
-                Plotly.newPlot(`pieChart_${idx}`, data, layout, config).then(() => {
-                    // Force immediate resize after plot is created
-                    Plotly.Plots.resize(`pieChart_${idx}`);
-                });
-
-                // Build HTML legend from same sectors + colors used by the chart
-                const legendEl = document.getElementById(`legend_${idx}`);
-                if (legendEl) {
-                    legendEl.innerHTML = sectors.map((s, i) => {
-                        const color = colors[i % colors.length];
-                        const pct = typeof s.weight === 'number' ? s.weight.toFixed(1) : s.weight;
-                        return `<div class="legend-item">
-                            <span class="legend-dot" style="background:${color};"></span>
-                            <span class="legend-label" title="${s.sector}">${s.sector}</span>
-                            <span class="legend-pct">${pct}%</span>
-                        </div>`;
-                    }).join('');
-                }
-
-                // Handle window resize with debounce
-                let resizeTimeout;
-                window.addEventListener('resize', () => {
-                    clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(() => {
-                        Plotly.Plots.resize(`pieChart_${idx}`);
-                    }, 100);
-                });
+                    Plotly.newPlot(`pieChart_${idx}`, data, layout, config);
+                    
+                    // Build HTML legend
+                    const legendEl = document.getElementById(`legend_${idx}`);
+                    if (legendEl) {
+                        legendEl.innerHTML = sectors.map((s, i) => {
+                            const color = colors[i % colors.length];
+                            const pct = typeof s.weight === 'number' ? s.weight.toFixed(1) : s.weight;
+                            return `<div class="legend-item">
+                                <span class="legend-dot" style="background:${color};"></span>
+                                <span class="legend-label" title="${s.sector}">${s.sector}</span>
+                                <span class="legend-pct">${pct}%</span>
+                            </div>`;
+                        }).join('');
+                    }
+                }, 50 * idx); // Stagger rendering by 50ms per chart
             });
         }
 

@@ -507,6 +507,7 @@
                 }
                 
                 if (portfolioData && portfolioData.holdings && portfolioData.holdings.length > 0) {
+                    await enrichWithFundMetrics(portfolioData.holdings);
                     renderComparison();
                 } else {
                     showEmptyState();
@@ -520,6 +521,38 @@
         function showEmptyState() {
             document.getElementById('content').style.display = 'none';
             document.getElementById('emptyState').style.display = 'block';
+        }
+
+        async function enrichWithFundMetrics(holdings) {
+            try {
+                const fundNames = holdings.map(h => h.fund_name).filter(Boolean);
+                if (fundNames.length === 0) return;
+                const response = await fetch('/api/funds/metrics/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(fundNames)
+                });
+                if (!response.ok) return;
+                const data = await response.json();
+                if (!data.success || !data.results) return;
+                holdings.forEach(h => {
+                    const metrics = data.results[h.fund_name];
+                    if (!metrics) return;
+                    const risk1y = metrics.risk && metrics.risk['1y'] || {};
+                    const bench = metrics.benchmark || {};
+                    const ret = metrics.returns || {};
+                    h._sharpe = risk1y.sharpe;
+                    h._sortino = risk1y.sortino;
+                    h._std_dev = risk1y.std_dev;
+                    h._max_drawdown = risk1y.max_drawdown;
+                    h._beta = bench.beta;
+                    if (!h.return_1y && ret['1y']) h.return_1y = ret['1y'].absolute;
+                    if (!h.return_3y && ret['3y']) h.return_3y = ret['3y'].cagr || ret['3y'].absolute;
+                    if ((!h.alpha || h.alpha === '-') && bench.alpha != null) h.alpha = bench.alpha;
+                });
+            } catch (err) {
+                console.warn('Fund metrics API unavailable:', err.message);
+            }
         }
 
         function renderComparison() {
@@ -541,6 +574,11 @@
                 { label: 'Absolute Return', key: 'return_amt', type: 'currency_colored' },
                 { label: 'Return %', key: 'return_pct', type: 'percentage' },
                 { label: 'Alpha', key: 'alpha', type: 'number_colored' },
+                { label: 'Beta', key: '_beta', type: 'number_colored' },
+                { label: 'Sharpe Ratio', key: '_sharpe', type: 'number_colored' },
+                { label: 'Sortino Ratio', key: '_sortino', type: 'number_colored' },
+                { label: 'Std Dev (%)', key: '_std_dev', type: 'number_neutral' },
+                { label: 'Max Drawdown (%)', key: '_max_drawdown', type: 'number_neutral' },
                 { label: '1Y Return', key: 'return_1y', type: 'text' },
                 { label: '3Y Return', key: 'return_3y', type: 'text' },
                 { label: 'Investment Style', key: 'style', type: 'text' },
@@ -595,11 +633,17 @@
                             
                         case 'number_colored':
                             const alpha = parseFloat(h[metric.key]) || 0;
-                            value = h[metric.key] || '-';
+                            value = h[metric.key] != null ? parseFloat(h[metric.key]).toFixed(2) : '-';
                             if (value !== '-') {
                                 td.className = alpha >= 0 ? 'gain' : 'loss';
                                 values.push(alpha);
                             }
+                            break;
+
+                        case 'number_neutral':
+                            const nv = h[metric.key];
+                            value = nv != null ? parseFloat(nv).toFixed(2) + '%' : '-';
+                            if (nv != null) values.push(parseFloat(nv));
                             break;
                             
                         case 'text':
@@ -694,6 +738,23 @@
                         <h4 style="color: #3b82f6; margin-bottom: 0.5rem;">Largest Holding</h4>
                         <p style="font-weight: 600; margin-bottom: 0.25rem;">${largestHolding.fund.fund_name}</p>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Value: <strong>₹${(largestHolding.current/100000).toFixed(2)}L</strong></p>
+                    </div>
+                `;
+            }
+
+            // Best Sharpe Ratio (risk-adjusted)
+            const bestSharpe = holdings.reduce((best, h) => {
+                const sharpe = h._sharpe != null ? h._sharpe : -Infinity;
+                return sharpe > best.sharpe ? { fund: h, sharpe } : best;
+            }, { fund: null, sharpe: -Infinity });
+
+            if (bestSharpe.fund && bestSharpe.sharpe !== -Infinity) {
+                html += `
+                    <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(139,92,246,0.1) 100%); border-radius: 12px; border: 2px solid #a855f7;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📐</div>
+                        <h4 style="color: #a855f7; margin-bottom: 0.5rem;">Best Risk-Adjusted</h4>
+                        <p style="font-weight: 600; margin-bottom: 0.25rem;">${bestSharpe.fund.fund_name}</p>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Sharpe: <strong class="${bestSharpe.sharpe >= 0 ? 'gain' : 'loss'}">${bestSharpe.sharpe.toFixed(2)}</strong></p>
                     </div>
                 `;
             }

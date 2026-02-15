@@ -6,7 +6,8 @@ tags:
   - cas-upload
   - getting-started
   - portfolio
-featured_image: "/images/blog/cas-upload-guide.png"
+featured_image: "/images/blog/cas-upload-guide.svg"
+og_image: "/images/blog/cas-upload-guide.svg"
 author_id: 1
 published_at: "2026-02-10T10:00:00Z"
 ---

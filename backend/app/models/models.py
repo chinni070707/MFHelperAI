@@ -244,6 +244,28 @@ class FundMaster(Base):
     three_year_return = Column(Float)
     five_year_return = Column(Float)
     
+    # Risk/Return metrics (computed from NAV history)
+    sharpe_ratio = Column(Float, nullable=True)
+    sortino_ratio = Column(Float, nullable=True)
+    beta = Column(Float, nullable=True)
+    alpha = Column(Float, nullable=True)
+    std_dev = Column(Float, nullable=True)
+    max_drawdown = Column(Float, nullable=True)
+    r_squared = Column(Float, nullable=True)
+    treynor_ratio = Column(Float, nullable=True)
+    info_ratio = Column(Float, nullable=True)
+    up_capture = Column(Float, nullable=True)
+    down_capture = Column(Float, nullable=True)
+    tracking_error = Column(Float, nullable=True)
+    
+    # Portfolio composition
+    num_stocks = Column(Integer, nullable=True)
+    top5_weight = Column(Float, nullable=True)
+    top10_weight = Column(Float, nullable=True)
+    
+    # MoneyControl code for cross-referencing
+    mc_code = Column(String(20), nullable=True, index=True)
+    
     # Additional fields
     plan_type = Column(String(20), default="Direct")  # Direct or Regular
     current_nav = Column(Float, nullable=True)
@@ -251,6 +273,7 @@ class FundMaster(Base):
     
     # Updated timestamp
     updated_at = Column(DateTime, default=func.now())
+    metrics_updated_at = Column(DateTime, nullable=True)
     
     # Composite Indexes for fund search and lookups
     __table_args__ = (
@@ -269,7 +292,41 @@ class FundMaster(Base):
             'category': self.category,
             'current_nav': self.current_nav,
             'plan_type': self.plan_type,
-            'is_active': self.is_active
+            'is_active': self.is_active,
+            'mc_code': self.mc_code,
+        }
+    
+    def to_metrics_dict(self):
+        """Convert to dictionary with full risk/return metrics"""
+        return {
+            'scheme_code': self.scheme_code,
+            'scheme_name': self.scheme_name,
+            'amc': self.amc,
+            'category': self.category,
+            'current_nav': self.current_nav,
+            'one_year_return': self.one_year_return,
+            'three_year_return': self.three_year_return,
+            'five_year_return': self.five_year_return,
+            'sharpe_ratio': self.sharpe_ratio,
+            'sortino_ratio': self.sortino_ratio,
+            'beta': self.beta,
+            'alpha': self.alpha,
+            'std_dev': self.std_dev,
+            'max_drawdown': self.max_drawdown,
+            'r_squared': self.r_squared,
+            'treynor_ratio': self.treynor_ratio,
+            'info_ratio': self.info_ratio,
+            'up_capture': self.up_capture,
+            'down_capture': self.down_capture,
+            'tracking_error': self.tracking_error,
+            'num_stocks': self.num_stocks,
+            'top5_weight': self.top5_weight,
+            'top10_weight': self.top10_weight,
+            'aum': self.aum,
+            'expense_ratio': self.expense_ratio,
+            'risk_grade': self.risk_grade,
+            'mc_code': self.mc_code,
+            'metrics_updated_at': str(self.metrics_updated_at) if self.metrics_updated_at else None,
         }
     
     def to_dropdown_option(self):

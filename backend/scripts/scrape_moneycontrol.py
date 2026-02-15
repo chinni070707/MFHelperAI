@@ -26,6 +26,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.models.models import FundMaster
+from app.services.amc_extractor import AmcExtractor
 
 class MoneyControlScraper:
     """
@@ -352,8 +353,13 @@ class MoneyControlScraper:
                 holdings = self.scrape_fund_holdings(fund['url'], fund['name'])
                 
                 if holdings and len(holdings) > 5:
-                    # Extract AMC from fund name (before 'Fund')
-                    amc = fund['name'].split(' Fund')[0].split()[-1] if 'Fund' in fund['name'] else 'Unknown'
+                    # Extract AMC from fund name using proper keyword matching
+                    amc = AmcExtractor.extract(fund['name'])
+                    
+                    # Validate AMC is legitimate (not a fund category)
+                    if not AmcExtractor.is_valid(amc):
+                        print(f"  ⚠️  Invalid AMC '{amc}' for fund '{fund['name']}' - setting to Unknown")
+                        amc = 'Unknown'
                     
                     scraped_data[fund_key] = {
                         'name': fund['name'],

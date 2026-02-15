@@ -1,7 +1,7 @@
 {
   "version": "2026-02",
   "last_updated": "2026-02-14",
-  "source": "MoneyControl (Complete Portfolios ≥80% weight)",
+  "source": "MoneyControl (Complete Portfolios \u226580% weight)",
   "funds": {
     "hdfc-flexi-cap-fund": {
       "name": "HDFC Flexi Cap Fund",
@@ -415,7 +415,7 @@
         },
         {
           "stock": "Pearl Global Industries Limited",
-          "sector": "Trading  textiles",
+          "sector": "Trading \u0096 textiles",
           "weight": 1.16
         },
         {
@@ -1875,7 +1875,7 @@
         },
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
-          "sector": "It enabled services  software",
+          "sector": "It enabled services \u0096 software",
           "weight": 0.52
         },
         {
@@ -2590,7 +2590,7 @@
     },
     "mirae-asset-large-cap-fund": {
       "name": "Mirae Asset Large Cap Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Large Cap",
       "holdings": [
         {
@@ -2980,7 +2980,7 @@
     },
     "kotak-small-cap-fund": {
       "name": "Kotak Small Cap Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Small Cap",
       "holdings": [
         {
@@ -3375,7 +3375,7 @@
     },
     "motilal-oswal-midcap-fund": {
       "name": "Motilal Oswal Midcap Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Mid Cap",
       "holdings": [
         {
@@ -3515,7 +3515,7 @@
     },
     "motilal-oswal-small-cap-fund": {
       "name": "Motilal Oswal Small Cap Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Small Cap",
       "holdings": [
         {
@@ -3790,7 +3790,7 @@
     },
     "nippon-india-small-cap-fund": {
       "name": "Nippon India Small Cap Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Small Cap",
       "holdings": [
         {
@@ -5535,7 +5535,7 @@
     },
     "ppfas-consolidated": {
       "name": "Parag Parikh PPFAS Consolidated Fund",
-      "amc": "Parag Parikh Mutual Fund",
+      "amc": "PPFAS Mutual Fund",
       "category": "Multi Cap",
       "holdings": [
         {
@@ -6010,7 +6010,7 @@
     },
     "parag-parikh-liquid-fund": {
       "name": "Parag Parikh Liquid Fund",
-      "amc": "Parag Parikh Mutual Fund",
+      "amc": "PPFAS Mutual Fund",
       "category": "Liquid",
       "holdings": [
         {
@@ -8365,7 +8365,7 @@
         },
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
-          "sector": "It enabled services  software",
+          "sector": "It enabled services \u0096 software",
           "weight": 0.32
         },
         {
@@ -9335,7 +9335,7 @@
     },
     "icici-prudential-large-cap-fund": {
       "name": "ICICI Prudential Large Cap Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Large Cap",
       "holdings": [
         {
@@ -9675,7 +9675,7 @@
     },
     "icici-prudential-flexicap-fund": {
       "name": "ICICI Prudential Flexicap Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Flexi Cap",
       "holdings": [
         {
@@ -9865,7 +9865,7 @@
         },
         {
           "stock": "Pearl Global Industries Limited",
-          "sector": "Trading  textiles",
+          "sector": "Trading \u0096 textiles",
           "weight": 0.64
         },
         {
@@ -10040,7 +10040,7 @@
     },
     "icici-prudential-midcap-fund": {
       "name": "ICICI Prudential MidCap Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Mid Cap",
       "holdings": [
         {
@@ -10425,7 +10425,7 @@
     },
     "icici-prudential-smallcap-fund": {
       "name": "ICICI Prudential Smallcap Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Small Cap",
       "holdings": [
         {
@@ -10955,7 +10955,7 @@
     },
     "icici-prudential-large-mid-cap-fund": {
       "name": "ICICI Prudential Large & Mid Cap Fund- Direct Plan - Growth",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Large And Mid Cap",
       "holdings": [
         {
@@ -11385,7 +11385,7 @@
     },
     "icici-prudential-multicap-fund": {
       "name": "ICICI Prudential Multicap Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Multi Cap",
       "holdings": [
         {
@@ -12050,7 +12050,7 @@
     },
     "icici-prudential-elss-tax-saver-fund": {
       "name": "ICICI Prudential ELSS Tax Saver Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -12485,7 +12485,7 @@
     },
     "icici-prudential-long-term-wealth-enhancement-fund": {
       "name": "ICICI Prudential Long Term Wealth Enhancement Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -12610,7 +12610,7 @@
     },
     "icici-prudential-focused-equity-fund": {
       "name": "ICICI Prudential Focused Equity Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Focused",
       "holdings": [
         {
@@ -12770,7 +12770,7 @@
     },
     "icici-prudential-value-fund": {
       "name": "ICICI Prudential Value Fund",
-      "amc": "ICICI Prudential",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "Value",
       "holdings": [
         {
@@ -13505,7 +13505,7 @@
         },
         {
           "stock": "Pearl Global Industries Limited",
-          "sector": "Trading  textiles",
+          "sector": "Trading \u0096 textiles",
           "weight": 0.85
         },
         {
@@ -18775,7 +18775,7 @@
     },
     "mirae-asset-flexi-cap-fund": {
       "name": "Mirae Asset Flexi Cap Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Flexi Cap",
       "holdings": [
         {
@@ -18910,7 +18910,7 @@
         },
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
-          "sector": "It enabled services  software",
+          "sector": "It enabled services \u0096 software",
           "weight": 1.19
         },
         {
@@ -19210,7 +19210,7 @@
     },
     "mirae-asset-midcap-fund": {
       "name": "Mirae Asset Midcap Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Mid Cap",
       "holdings": [
         {
@@ -19555,7 +19555,7 @@
     },
     "mirae-asset-small-cap-fund": {
       "name": "Mirae Asset Small Cap Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Small Cap",
       "holdings": [
         {
@@ -19955,7 +19955,7 @@
     },
     "mirae-asset-large-midcap-fund": {
       "name": "Mirae Asset Large & Midcap Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Large And Mid Cap",
       "holdings": [
         {
@@ -20390,7 +20390,7 @@
     },
     "mirae-asset-multicap-fund": {
       "name": "Mirae Asset Multicap Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Multi Cap",
       "holdings": [
         {
@@ -20780,7 +20780,7 @@
     },
     "mirae-asset-elss-tax-saver-fund": {
       "name": "Mirae Asset ELSS Tax Saver Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -21125,7 +21125,7 @@
     },
     "mirae-asset-focused-fund": {
       "name": "Mirae Asset Focused Fund",
-      "amc": "Mirae Asset",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "Focused",
       "holdings": [
         {
@@ -21280,7 +21280,7 @@
     },
     "kotak-large-cap-fund": {
       "name": "Kotak Large Cap Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Large Cap",
       "holdings": [
         {
@@ -21595,7 +21595,7 @@
     },
     "kotak-flexi-cap-fund": {
       "name": "Kotak Flexi Cap Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Flexi Cap",
       "holdings": [
         {
@@ -21900,7 +21900,7 @@
     },
     "kotak-midcap-fund": {
       "name": "Kotak Midcap Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Mid Cap",
       "holdings": [
         {
@@ -22240,7 +22240,7 @@
     },
     "kotak-large-midcap-fund": {
       "name": "Kotak Large & Midcap Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Large And Mid Cap",
       "holdings": [
         {
@@ -22580,7 +22580,7 @@
     },
     "kotak-multicap-fund": {
       "name": "Kotak Multicap Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Multi Cap",
       "holdings": [
         {
@@ -22925,7 +22925,7 @@
     },
     "kotak-elss-tax-saver-fund": {
       "name": "Kotak ELSS Tax Saver Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -23225,7 +23225,7 @@
     },
     "kotak-focused-fund": {
       "name": "Kotak Focused Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Focused",
       "holdings": [
         {
@@ -23380,7 +23380,7 @@
     },
     "kotak-contra-fund": {
       "name": "Kotak Contra Fund",
-      "amc": "Kotak Mutual Fund",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "Contra",
       "holdings": [
         {
@@ -23685,7 +23685,7 @@
     },
     "nippon-india-large-cap-fund": {
       "name": "Nippon India Large Cap Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Large Cap",
       "holdings": [
         {
@@ -24040,7 +24040,7 @@
     },
     "nippon-india-flexi-cap-fund": {
       "name": "Nippon India Flexi Cap Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Flexi Cap",
       "holdings": [
         {
@@ -24485,7 +24485,7 @@
     },
     "nippon-india-growth-mid-cap-fund": {
       "name": "Nippon India Growth Mid Cap Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Mid Cap",
       "holdings": [
         {
@@ -24985,7 +24985,7 @@
     },
     "nippon-india-vision-large-mid-cap-fund": {
       "name": "Nippon India Vision Large & Mid Cap Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Large And Mid Cap",
       "holdings": [
         {
@@ -25430,7 +25430,7 @@
     },
     "nippon-india-multicap-fund": {
       "name": "Nippon India Multicap Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Multi Cap",
       "holdings": [
         {
@@ -26080,7 +26080,7 @@
     },
     "nippon-india-elss-tax-saver-fund": {
       "name": "Nippon India ELSS Tax Saver Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -26410,7 +26410,7 @@
     },
     "nippon-india-focused-fund": {
       "name": "Nippon India Focused Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Focused",
       "holdings": [
         {
@@ -26570,7 +26570,7 @@
     },
     "nippon-india-value-fund": {
       "name": "Nippon India Value Fund",
-      "amc": "Nippon India MF",
+      "amc": "Nippon India Mutual Fund",
       "category": "Value",
       "holdings": [
         {
@@ -26935,7 +26935,7 @@
     },
     "parag-parikh-elss-tax-saver-fund": {
       "name": "Parag Parikh ELSS Tax Saver Fund",
-      "amc": "Parag Parikh MF",
+      "amc": "PPFAS Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -27110,7 +27110,7 @@
     },
     "motilal-oswal-large-cap-fund": {
       "name": "Motilal Oswal Large Cap Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Large Cap",
       "holdings": [
         {
@@ -27395,7 +27395,7 @@
     },
     "motilal-oswal-flexi-cap-fund": {
       "name": "Motilal Oswal Flexi Cap Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Flexi Cap",
       "holdings": [
         {
@@ -27495,7 +27495,7 @@
     },
     "motilal-oswal-large-and-midcap-fund": {
       "name": "Motilal Oswal Large and Midcap Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Large And Mid Cap",
       "holdings": [
         {
@@ -27675,7 +27675,7 @@
     },
     "motilal-oswal-multi-cap-fund": {
       "name": "Motilal Oswal Multi Cap Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Multi Cap",
       "holdings": [
         {
@@ -27780,7 +27780,7 @@
     },
     "motilal-oswal-elss-tax-saver-fund": {
       "name": "Motilal Oswal ELSS Tax Saver Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Elss",
       "holdings": [
         {
@@ -27935,7 +27935,7 @@
     },
     "motilal-oswal-focused-fund": {
       "name": "Motilal Oswal Focused Fund",
-      "amc": "Motilal Oswal MF",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "Focused",
       "holdings": [
         {
@@ -28385,7 +28385,7 @@
     },
     "quantum-small-cap-fund": {
       "name": "Quantum Small Cap Fund",
-      "amc": "Quantum MF",
+      "amc": "Quantum Mutual Fund",
       "category": "Small Cap",
       "holdings": [
         {
@@ -29760,7 +29760,7 @@
     },
     "bank-of-india-large-cap-fund---direct-plan---growth": {
       "name": "Bank of India Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bank Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -30011,7 +30011,7 @@
     },
     "bajaj-finserv-large-cap-fund---direct-plan---growth": {
       "name": "Bajaj Finserv Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bajaj Finserv Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -30177,7 +30177,7 @@
     },
     "quant-large-cap-fund---direct-plan---growth": {
       "name": "Quant Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quant Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -30318,7 +30318,7 @@
     },
     "groww-large-cap-fund---direct-plan---growth": {
       "name": "Groww Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Groww Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -30519,7 +30519,7 @@
     },
     "canara-robeco-large-cap-fund---direct-plan---growth": {
       "name": "Canara Robeco Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -30815,7 +30815,7 @@
     },
     "franklin-india-large-cap-fund---direct---growth": {
       "name": "Franklin India Large Cap Fund - Direct - Growth",
-      "amc": "Cap",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -31026,7 +31026,7 @@
     },
     "motilal-oswal-large-cap-fund---direct-plan---growth": {
       "name": "Motilal Oswal Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -31312,7 +31312,7 @@
     },
     "hsbc-large-cap-fund---direct-plan---growth": {
       "name": "HSBC Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HSBC Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -31503,7 +31503,7 @@
     },
     "invesco-india-largecap-fund---direct-plan---growth": {
       "name": "Invesco India Largecap Fund - Direct Plan - Growth",
-      "amc": "Largecap",
+      "amc": "Invesco Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -31759,7 +31759,7 @@
     },
     "jm-large-cap-fund---(direct)---growth": {
       "name": "JM Large Cap Fund - (Direct) - Growth",
-      "amc": "Cap",
+      "amc": "JM Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -32000,7 +32000,7 @@
     },
     "uti-large-cap-fund---direct-plan---growth": {
       "name": "UTI Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "UTI Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -32301,7 +32301,7 @@
     },
     "mirae-asset-large-cap-fund---direct-plan---growth": {
       "name": "Mirae Asset Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -32682,7 +32682,7 @@
     },
     "baroda-bnp-paribas-large-cap-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -33223,7 +33223,7 @@
     },
     "axis-large-cap-fund---direct-plan---growth": {
       "name": "Axis Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Axis Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -33484,7 +33484,7 @@
     },
     "iti-large-cap-fund---direct-plan---growth": {
       "name": "ITI Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ITI Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -33800,7 +33800,7 @@
     },
     "bandhan-large-cap-fund---direct-plan---growth": {
       "name": "Bandhan Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bandhan Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -34121,7 +34121,7 @@
     },
     "union-largecap-fund---direct-plan---growth": {
       "name": "Union Largecap Fund - Direct Plan - Growth",
-      "amc": "Largecap",
+      "amc": "Union Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -34397,7 +34397,7 @@
     },
     "pgim-india-large-cap-fund---direct-plan---growth": {
       "name": "PGIM India Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "PGIM India Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -34653,7 +34653,7 @@
     },
     "edelweiss-large-cap-fund---direct-plan---growth": {
       "name": "Edelweiss Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Edelweiss Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -35014,7 +35014,7 @@
     },
     "hdfc-large-cap-fund---direct-plan---growth": {
       "name": "HDFC Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HDFC Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -35255,7 +35255,7 @@
     },
     "taurus-large-cap-fund---direct-plan---growth": {
       "name": "Taurus Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Taurus Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -35416,7 +35416,7 @@
     },
     "sbi-large-cap-fund---direct-plan---growth": {
       "name": "SBI Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "SBI Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -35632,7 +35632,7 @@
     },
     "kotak-large-cap-fund---direct-plan---growth": {
       "name": "Kotak Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -35943,7 +35943,7 @@
     },
     "nippon-india-large-cap-fund---direct-plan---growth": {
       "name": "Nippon India Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Nippon India Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -36299,7 +36299,7 @@
     },
     "lic-mf-large-cap-fund---direct-plan---growth": {
       "name": "LIC MF Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "LIC Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -36580,7 +36580,7 @@
     },
     "whiteoak-capital-large-cap-fund---direct-plan---growth": {
       "name": "WhiteOak Capital Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "WhiteOak Capital Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -36846,7 +36846,7 @@
     },
     "aditya-birla-sun-life-large-cap-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -37237,7 +37237,7 @@
     },
     "dsp-large-cap-fund---direct-plan---growth": {
       "name": "DSP Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "DSP Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -37398,7 +37398,7 @@
     },
     "sundaram-large-cap-fund---direct-plan---growth": {
       "name": "Sundaram Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Sundaram Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -37574,7 +37574,7 @@
     },
     "tata-large-cap-fund---direct-plan---growth": {
       "name": "Tata Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Tata Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -37805,7 +37805,7 @@
     },
     "mahindra-manulife-large-cap-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -38056,7 +38056,7 @@
     },
     "icici-prudential-large-cap-fund---direct-plan---growth": {
       "name": "ICICI Prudential Large Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "large cap",
       "holdings": [
         {
@@ -38372,7 +38372,7 @@
     },
     "trustmf-flexi-cap-fund---direct-plan---growth": {
       "name": "TRUSTMF Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Trust Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -38663,7 +38663,7 @@
     },
     "bajaj-finserv-flexi-cap-fund---direct-plan---growth": {
       "name": "Bajaj Finserv Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bajaj Finserv Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -38964,7 +38964,7 @@
     },
     "axis-flexi-cap-fund---direct-plan---growth": {
       "name": "Axis Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Axis Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -39250,7 +39250,7 @@
     },
     "bank-of-india-flexi-cap-fund---direct-plan---growth": {
       "name": "Bank of India Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bank Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -39511,7 +39511,7 @@
     },
     "canara-robeco-flexi-cap-fund---direct-plan---growth": {
       "name": "Canara Robeco Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -39862,7 +39862,7 @@
     },
     "icici-prudential-flexicap-fund---direct-plan---growth": {
       "name": "ICICI Prudential Flexicap Fund - Direct Plan - Growth",
-      "amc": "Flexicap",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -40048,7 +40048,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 0.64,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "TML Commercial Vehicles Ltd.",
@@ -40203,7 +40203,7 @@
     },
     "motilal-oswal-flexi-cap-fund---direct-plan---growth": {
       "name": "Motilal Oswal Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -40304,7 +40304,7 @@
     },
     "iti-flexi-cap-fund---direct-plan---growth": {
       "name": "ITI Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ITI Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -40650,7 +40650,7 @@
     },
     "hsbc-flexi-cap-fund---direct-plan---growth": {
       "name": "HSBC Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HSBC Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -41061,7 +41061,7 @@
     },
     "jm-flexi-cap-fund---direct---growth": {
       "name": "JM Flexi Cap Fund - Direct - Growth",
-      "amc": "Cap",
+      "amc": "JM Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -41382,7 +41382,7 @@
     },
     "invesco-india-flexi-cap-fund---direct-plan---growth": {
       "name": "Invesco India Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Invesco Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -41698,7 +41698,7 @@
     },
     "mirae-asset-flexi-cap-fund---direct-plan---growth": {
       "name": "Mirae Asset Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -41834,7 +41834,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.19,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Cummins India Ltd.",
@@ -42129,7 +42129,7 @@
     },
     "uti-flexi-cap-fund---direct-plan---growth": {
       "name": "UTI Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "UTI Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -42415,7 +42415,7 @@
     },
     "samco-flexi-cap-fund---direct-plan---growth": {
       "name": "Samco Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Samco Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -42551,7 +42551,7 @@
     },
     "franklin-india-flexi-cap-fund---direct---growth": {
       "name": "Franklin India Flexi Cap Fund - Direct - Growth",
-      "amc": "Cap",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -42832,7 +42832,7 @@
     },
     "nippon-india-flexi-cap-fund---direct-plan---growth": {
       "name": "Nippon India Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Nippon India Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -43268,7 +43268,7 @@
     },
     "dsp-flexi-cap-fund---direct-plan---growth": {
       "name": "DSP Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "DSP Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -43569,7 +43569,7 @@
     },
     "union-flexi-cap-fund---direct-plan---growth": {
       "name": "Union Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Union Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -43810,7 +43810,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.78,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Ajanta Pharma Limited",
@@ -43920,7 +43920,7 @@
     },
     "nj-flexi-cap-fund---direct-plan---growth": {
       "name": "NJ Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "NJ Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -44176,7 +44176,7 @@
     },
     "pgim-india-flexi-cap-fund---direct-plan---growth": {
       "name": "PGIM India Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "PGIM India Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -44407,7 +44407,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.75,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "HDFC Life Insurance Company Ltd.",
@@ -44557,7 +44557,7 @@
     },
     "abakkus-flexi-cap-fund---direct-plan---growth": {
       "name": "Abakkus Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Abakkus Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -44778,7 +44778,7 @@
     },
     "360-one-flexicap-fund---direct-plan---growth": {
       "name": "360 ONE Flexicap Fund - Direct Plan - Growth",
-      "amc": "Flexicap",
+      "amc": "360 ONE Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -45024,7 +45024,7 @@
     },
     "taurus-flexi-cap-fund---direct-plan---growth": {
       "name": "Taurus Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Taurus Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -45260,7 +45260,7 @@
     },
     "jioblackrock-flexi-cap-fund---direct-plan---growth": {
       "name": "JioBlackRock Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "JioBlackRock Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -45776,7 +45776,7 @@
     },
     "kotak-flexi-cap-fund---direct-plan---growth": {
       "name": "Kotak Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -46077,7 +46077,7 @@
     },
     "sbi-flexi-cap-fund---direct-plan---growth": {
       "name": "SBI Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "SBI Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -46263,7 +46263,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 0.85,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "Aptus Value Housing Finance India Ltd.",
@@ -46398,7 +46398,7 @@
     },
     "the-wealth-company-flexi-cap-fund---direct-plan---growth": {
       "name": "The Wealth Company Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "The Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -46609,7 +46609,7 @@
     },
     "sundaram-flexi-cap-fund---direct-plan---growth": {
       "name": "Sundaram Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Sundaram Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -46875,7 +46875,7 @@
     },
     "edelweiss-flexi-cap-fund---direct-plan---growth": {
       "name": "Edelweiss Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Edelweiss Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -47281,7 +47281,7 @@
     },
     "aditya-birla-sun-life-flexi-cap-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -47662,7 +47662,7 @@
     },
     "helios-flexi-cap-fund---direct-plan---growth": {
       "name": "Helios Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Helios Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -47993,7 +47993,7 @@
     },
     "whiteoak-capital-flexi-cap-fund---direct-plan---growth": {
       "name": "WhiteOak Capital Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "WhiteOak Capital Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -48484,7 +48484,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.22,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Indiqube Spaces Ltd.",
@@ -48619,7 +48619,7 @@
     },
     "hdfc-flexi-cap-fund---direct-plan---growth": {
       "name": "HDFC Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HDFC Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -48875,7 +48875,7 @@
     },
     "baroda-bnp-paribas-flexi-cap-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -49111,7 +49111,7 @@
     },
     "shriram-flexi-cap-fund---direct-plan---growth": {
       "name": "Shriram Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Shriram Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -49467,7 +49467,7 @@
     },
     "unifi-flexi-cap-fund---direct-plan---growth": {
       "name": "Unifi Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Unifi Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -49608,7 +49608,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 1.43,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "Redington Ltd.",
@@ -49763,7 +49763,7 @@
     },
     "quant-flexi-cap-fund---direct-plan---growth": {
       "name": "Quant Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quant Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -49914,7 +49914,7 @@
     },
     "lic-mf-flexi-cap-fund---direct-plan---growth": {
       "name": "LIC MF Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "LIC Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -50300,7 +50300,7 @@
     },
     "bandhan-flexi-cap-fund---direct-plan---growth": {
       "name": "Bandhan Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bandhan Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -50736,7 +50736,7 @@
     },
     "mahindra-manulife-flexi-cap-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -51092,7 +51092,7 @@
     },
     "tata-flexi-cap-fund---direct-plan---growth": {
       "name": "Tata Flexi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Tata Mutual Fund",
       "category": "flexi cap",
       "holdings": [
         {
@@ -51388,7 +51388,7 @@
     },
     "icici-prudential-midcap-fund---direct-plan---growth": {
       "name": "ICICI Prudential MidCap Fund - Direct Plan - Growth",
-      "amc": "MidCap",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -51739,7 +51739,7 @@
     },
     "nippon-india-growth-mid-cap-fund---direct-plan---growth": {
       "name": "Nippon India Growth Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Nippon India Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -52235,7 +52235,7 @@
     },
     "bandhan-midcap-fund---direct-plan---growth": {
       "name": "Bandhan Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Bandhan Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -52656,7 +52656,7 @@
     },
     "quant-mid-cap-fund---direct-plan---growth": {
       "name": "Quant Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quant Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -52792,7 +52792,7 @@
     },
     "canara-robeco-mid-cap-fund---direct-plan---growth": {
       "name": "Canara Robeco Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -53098,7 +53098,7 @@
     },
     "baroda-bnp-paribas-mid-cap-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -53364,7 +53364,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.95,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "JTEKT India Ltd.",
@@ -53424,7 +53424,7 @@
     },
     "motilal-oswal-midcap-fund---direct-plan---growth": {
       "name": "Motilal Oswal Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -53565,7 +53565,7 @@
     },
     "union-midcap-fund---direct-plan---growth": {
       "name": "Union Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Union Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -53866,7 +53866,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.68,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "PB Fintech Ltd.",
@@ -53921,7 +53921,7 @@
     },
     "invesco-india-mid-cap-fund---direct-plan---growth": {
       "name": "Invesco India Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Invesco Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -54157,7 +54157,7 @@
     },
     "dsp-midcap-fund---direct-plan---growth": {
       "name": "DSP Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "DSP Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -54468,7 +54468,7 @@
     },
     "uti-mid-cap-fund---direct-plan---growth": {
       "name": "UTI Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "UTI Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -54919,7 +54919,7 @@
     },
     "kotak-midcap-fund---direct-plan---growth": {
       "name": "Kotak Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -55260,7 +55260,7 @@
     },
     "mirae-asset-midcap-fund---direct-plan---growth": {
       "name": "Mirae Asset Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -55601,7 +55601,7 @@
     },
     "jm-midcap-fund---direct-plan---growth": {
       "name": "JM Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "JM Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -55892,7 +55892,7 @@
     },
     "hsbc-mid-cap-fund---direct-plan---growth": {
       "name": "HSBC Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HSBC Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -56163,7 +56163,7 @@
     },
     "lic-mf-mid-cap-fund---direct-plan---growth": {
       "name": "LIC MF Mid cap Fund - Direct Plan - Growth",
-      "amc": "cap",
+      "amc": "LIC Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -56509,7 +56509,7 @@
     },
     "pgim-india-midcap-fund---direct-plan---growth": {
       "name": "PGIM India Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "PGIM India Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -56970,7 +56970,7 @@
     },
     "mahindra-manulife-mid-cap-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -57286,7 +57286,7 @@
     },
     "whiteoak-capital-mid-cap-fund---direct-plan---growth": {
       "name": "WhiteOak Capital Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "WhiteOak Capital Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -57757,7 +57757,7 @@
     },
     "axis-midcap-fund---direct-plan---growth": {
       "name": "Axis Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Axis Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -58203,7 +58203,7 @@
     },
     "sundaram-mid-cap-fund---direct-plan---growth": {
       "name": "Sundaram Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Sundaram Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -58574,7 +58574,7 @@
     },
     "helios-mid-cap-fund---direct-plan---growth": {
       "name": "Helios Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Helios Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -58910,7 +58910,7 @@
     },
     "franklin-india-mid-cap-fund---direct---growth": {
       "name": "Franklin India Mid Cap Fund - Direct - Growth",
-      "amc": "Cap",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -59361,7 +59361,7 @@
     },
     "sbi-midcap-fund---direct-plan---growth": {
       "name": "SBI Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "SBI Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -59632,7 +59632,7 @@
     },
     "aditya-birla-sun-life-midcap-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -59838,7 +59838,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.02,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Vedanta Ltd.",
@@ -60028,7 +60028,7 @@
     },
     "edelweiss-mid-cap-fund---direct-plan---growth": {
       "name": "Edelweiss Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Edelweiss Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -60454,7 +60454,7 @@
     },
     "tata-mid-cap-fund---direct-plan---growth": {
       "name": "Tata Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Tata Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -60800,7 +60800,7 @@
     },
     "iti-mid-cap-fund---direct-plan---growth": {
       "name": "ITI Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ITI Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -61206,7 +61206,7 @@
     },
     "bank-of-india-mid-cap-fund---direct-plan---growth": {
       "name": "Bank of India Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bank Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -61442,7 +61442,7 @@
     },
     "hdfc-mid-cap-fund---direct-plan---growth": {
       "name": "HDFC Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HDFC Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -61828,7 +61828,7 @@
     },
     "taurus-mid-cap-fund---direct-plan---growth": {
       "name": "Taurus Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Taurus Mutual Fund",
       "category": "mid cap",
       "holdings": [
         {
@@ -62029,7 +62029,7 @@
     },
     "union-small-cap-fund---direct-plan---growth": {
       "name": "Union Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Union Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -62365,7 +62365,7 @@
     },
     "jm-small-cap-fund---direct-plan---growth": {
       "name": "JM Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "JM Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -62701,7 +62701,7 @@
     },
     "dsp-small-cap-fund---direct-plan---growth": {
       "name": "DSP Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "DSP Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -63127,7 +63127,7 @@
     },
     "kotak-small-cap-fund---direct-plan---growth": {
       "name": "Kotak Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -63523,7 +63523,7 @@
     },
     "franklin-india-small-cap-fund---direct---growth": {
       "name": "Franklin India Small Cap Fund - Direct - Growth",
-      "amc": "Cap",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -64004,7 +64004,7 @@
     },
     "canara-robeco-small-cap-fund---direct-plan---growth": {
       "name": "Canara Robeco Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -64465,7 +64465,7 @@
     },
     "trustmf-small-cap-fund---direct-plan---growth": {
       "name": "TRUSTMF Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Trust Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -64816,7 +64816,7 @@
     },
     "axis-small-cap-fund---direct-plan---growth": {
       "name": "Axis Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Axis Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -65147,7 +65147,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.52,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Devyani International Ltd.",
@@ -65497,7 +65497,7 @@
     },
     "hsbc-small-cap-fund---direct-plan---growth": {
       "name": "HSBC Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HSBC Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -66043,7 +66043,7 @@
     },
     "invesco-india-smallcap-fund---direct---growth": {
       "name": "Invesco India Smallcap Fund - Direct - Growth",
-      "amc": "Smallcap",
+      "amc": "Invesco Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -66364,7 +66364,7 @@
     },
     "mirae-asset-small-cap-fund---direct-plan---growth": {
       "name": "Mirae Asset Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -66765,7 +66765,7 @@
     },
     "iti-small-cap-fund---direct-plan---growth": {
       "name": "ITI Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ITI Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -67161,7 +67161,7 @@
     },
     "aditya-birla-sun-life-small-cap-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Small cap Fund - Direct Plan - Growth",
-      "amc": "cap",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -67617,7 +67617,7 @@
     },
     "motilal-oswal-small-cap-fund---direct-plan---growth": {
       "name": "Motilal Oswal Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -67888,7 +67888,7 @@
     },
     "sbi-small-cap-fund---direct-plan---growth": {
       "name": "SBI Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "SBI Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -68244,7 +68244,7 @@
     },
     "pgim-india-small-cap-fund---direct-plan---growth": {
       "name": "PGIM India Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "PGIM India Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -68410,7 +68410,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.3,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Bharat Rasayan Ltd.",
@@ -68580,7 +68580,7 @@
     },
     "bank-of-india-small-cap-fund---direct-plan---growth": {
       "name": "Bank of India Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bank Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -68961,7 +68961,7 @@
     },
     "quantum-small-cap-fund---direct-plan---growth": {
       "name": "Quantum Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quantum Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -69237,7 +69237,7 @@
     },
     "lic-mf-small-cap-fund---direct-plan---growth": {
       "name": "LIC MF Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "LIC Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -69598,7 +69598,7 @@
     },
     "sundaram-small-cap-fund---direct-plan---growth": {
       "name": "Sundaram Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Sundaram Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -69939,7 +69939,7 @@
     },
     "quant-small-cap-fund---direct-plan---growth": {
       "name": "Quant Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quant Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -70370,7 +70370,7 @@
     },
     "nippon-india-small-cap-fund---direct-plan---growth": {
       "name": "Nippon India Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Nippon India Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -71416,7 +71416,7 @@
     },
     "bajaj-finserv-small-cap-fund---direct-plan---growth": {
       "name": "Bajaj Finserv Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bajaj Finserv Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -71797,7 +71797,7 @@
     },
     "baroda-bnp-paribas-small-cap-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -72018,7 +72018,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.1,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Travel Food Services Ltd.",
@@ -72063,7 +72063,7 @@
     },
     "bandhan-small-cap-fund---direct-plan---growth": {
       "name": "Bandhan Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bandhan Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -72769,7 +72769,7 @@
         {
           "stock": "Ecos India Mobility and Hospitality Ltd.",
           "weight": 0.18,
-          "sector": "Road assets�toll, annuity, hybrid-annuity"
+          "sector": "Road assets\ufffdtoll, annuity, hybrid-annuity"
         },
         {
           "stock": "SpiceJet Ltd.",
@@ -72994,7 +72994,7 @@
     },
     "mahindra-manulife-small-cap-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -73360,7 +73360,7 @@
     },
     "samco-small-cap-fund---direct-plan---growth": {
       "name": "Samco Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Samco Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -73531,7 +73531,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 0.79,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "Fairchem Speciality Ltd.",
@@ -73736,7 +73736,7 @@
     },
     "uti-small-cap-fund---direct-plan---growth": {
       "name": "UTI Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "UTI Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -74197,7 +74197,7 @@
     },
     "edelweiss-small-cap-fund---direct-plan---growth": {
       "name": "Edelweiss Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Edelweiss Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -74643,7 +74643,7 @@
     },
     "tata-small-cap-fund---direct-plan---growth": {
       "name": "Tata Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Tata Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -74959,7 +74959,7 @@
     },
     "icici-prudential-smallcap-fund---direct-plan---growth": {
       "name": "ICICI Prudential Smallcap Fund - Direct Plan - Growth",
-      "amc": "Smallcap",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -75470,7 +75470,7 @@
     },
     "hdfc-small-cap-fund---direct-plan---growth": {
       "name": "HDFC Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HDFC Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -75621,7 +75621,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 1.16,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "J K Tyre & Inds. Ltd.",
@@ -75896,7 +75896,7 @@
     },
     "helios-small-cap-fund---direct-plan---growth": {
       "name": "Helios Small Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Helios Mutual Fund",
       "category": "small cap",
       "holdings": [
         {
@@ -76272,7 +76272,7 @@
     },
     "aditya-birla-sun-life-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -76628,7 +76628,7 @@
     },
     "union-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Union Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Union Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -76964,7 +76964,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.56,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Dixon Technologies (India) Ltd.",
@@ -77004,7 +77004,7 @@
     },
     "axis-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Axis Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Axis Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -77540,7 +77540,7 @@
     },
     "kotak-large-and-midcap-fund---direct-plan---growth": {
       "name": "Kotak Large & Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -77861,7 +77861,7 @@
     },
     "helios-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Helios Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Helios Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -78147,7 +78147,7 @@
     },
     "invesco-india-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Invesco India Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Invesco Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -78373,7 +78373,7 @@
     },
     "uti-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "UTI Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "UTI Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -78744,7 +78744,7 @@
     },
     "mirae-asset-large-and-midcap-fund---direct-plan---growth": {
       "name": "Mirae Asset Large & Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -79165,7 +79165,7 @@
     },
     "motilal-oswal-large-and-midcap-fund---direct-plan---growth": {
       "name": "Motilal Oswal Large and Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -79341,7 +79341,7 @@
     },
     "sundaram-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Sundaram Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Sundaram Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -79697,7 +79697,7 @@
     },
     "bajaj-finserv-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Bajaj Finserv Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bajaj Finserv Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -80008,7 +80008,7 @@
     },
     "nippon-india-vision-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Nippon India Vision Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Nippon India Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -80449,7 +80449,7 @@
     },
     "bank-of-india-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Bank of India Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bank Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -80695,7 +80695,7 @@
     },
     "hsbc-large-and-midcap-fund---direct-plan---growth": {
       "name": "HSBC Large & Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "HSBC Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -81026,7 +81026,7 @@
     },
     "whiteoak-capital-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "WhiteOak Capital Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "WhiteOak Capital Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -81512,7 +81512,7 @@
     },
     "bandhan-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Bandhan Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bandhan Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -81793,7 +81793,7 @@
         {
           "stock": "Ecos India Mobility and Hospitality Ltd.",
           "weight": 0.57,
-          "sector": "Road assets�toll, annuity, hybrid-annuity"
+          "sector": "Road assets\ufffdtoll, annuity, hybrid-annuity"
         },
         {
           "stock": "Supreme Industries Ltd.",
@@ -82043,7 +82043,7 @@
     },
     "iti-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "ITI Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ITI Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -82504,7 +82504,7 @@
     },
     "canara-robeco-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Canara Robeco Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -82960,7 +82960,7 @@
     },
     "pgim-india-large-and-midcap-fund---direct-plan---growth": {
       "name": "PGIM India Large and Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "PGIM India Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -83341,7 +83341,7 @@
     },
     "franklin-india-large-and-mid-cap-fund---direct---growth": {
       "name": "Franklin India Large & Mid Cap Fund - Direct - Growth",
-      "amc": "Cap",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -83592,7 +83592,7 @@
     },
     "sbi-large-and-midcap-fund---direct-plan---growth": {
       "name": "SBI Large & Midcap Fund - Direct Plan - Growth",
-      "amc": "Midcap",
+      "amc": "SBI Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -83983,7 +83983,7 @@
     },
     "icici-prudential-large-and-mid-cap-fund--direct-plan---growth": {
       "name": "ICICI Prudential Large & Mid Cap Fund- Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -84404,7 +84404,7 @@
     },
     "baroda-bnp-paribas-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -84655,7 +84655,7 @@
     },
     "jm-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "JM Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "JM Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -84946,7 +84946,7 @@
     },
     "hdfc-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "HDFC Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HDFC Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -85847,7 +85847,7 @@
     },
     "lic-mf-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "LIC MF Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "LIC Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -86263,7 +86263,7 @@
     },
     "dsp-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "DSP Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "DSP Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -86634,7 +86634,7 @@
     },
     "edelweiss-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Edelweiss Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Edelweiss Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -87100,7 +87100,7 @@
     },
     "mahindra-manulife-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Large & Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -87441,7 +87441,7 @@
     },
     "quant-large-and-mid-cap-fund---direct-plan---growth": {
       "name": "Quant Large and Mid Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quant Mutual Fund",
       "category": "large and mid cap",
       "holdings": [
         {
@@ -87617,7 +87617,7 @@
     },
     "trustmf-multi-cap-fund---direct-plan---growth": {
       "name": "TRUSTMF Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Trust Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -87973,7 +87973,7 @@
     },
     "groww-multicap-fund---direct-plan---growth": {
       "name": "Groww Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Groww Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -88299,7 +88299,7 @@
     },
     "kotak-multicap-fund---direct-plan---growth": {
       "name": "Kotak Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -88630,7 +88630,7 @@
     },
     "union-multicap-fund---direct-plan---growth": {
       "name": "Union Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Union Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -88816,7 +88816,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.09,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Ami Organics Ltd.",
@@ -89051,7 +89051,7 @@
     },
     "icici-prudential-multicap-fund---direct-plan---growth": {
       "name": "ICICI Prudential Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -89697,7 +89697,7 @@
     },
     "nippon-india-multicap-fund---direct-plan---growth": {
       "name": "Nippon India Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Nippon India Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -90333,7 +90333,7 @@
     },
     "canara-robeco-multi-cap-fund---direct-plan---growth": {
       "name": "Canara Robeco Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -90864,7 +90864,7 @@
     },
     "bank-of-india-multicap-fund---direct-plan---growth": {
       "name": "Bank of India Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Bank Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -91145,7 +91145,7 @@
     },
     "motilal-oswal-multi-cap-fund---direct-plan---growth": {
       "name": "Motilal Oswal Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -91251,7 +91251,7 @@
     },
     "invesco-india-multicap-fund---direct-plan---growth": {
       "name": "Invesco India Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Invesco Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -91557,7 +91557,7 @@
     },
     "baroda-bnp-paribas-multi-cap-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -91843,7 +91843,7 @@
     },
     "mirae-asset-multicap-fund---direct-plan---growth": {
       "name": "Mirae Asset Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -92234,7 +92234,7 @@
     },
     "bandhan-multicap-fund---direct-plan---growth": {
       "name": "Bandhan Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Bandhan Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -92745,7 +92745,7 @@
     },
     "mahindra-manulife-multi-cap-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -93141,7 +93141,7 @@
     },
     "aditya-birla-sun-life-multi-cap-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -93547,7 +93547,7 @@
     },
     "franklin-india-multi-cap-fund---direct-plan---growth": {
       "name": "Franklin India Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -93803,7 +93803,7 @@
         {
           "stock": "Ecos India Mobility and Hospitality Ltd.",
           "weight": 0.55,
-          "sector": "Road assets�toll, annuity, hybrid-annuity"
+          "sector": "Road assets\ufffdtoll, annuity, hybrid-annuity"
         },
         {
           "stock": "Tenneco Clean Air India Ltd.",
@@ -93853,7 +93853,7 @@
     },
     "iti-multi-cap-fund---direct-plan---growth": {
       "name": "ITI Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "ITI Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -94224,7 +94224,7 @@
     },
     "lic-mf-multi-cap-fund---direct-plan---growth": {
       "name": "LIC MF Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "LIC Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -94635,7 +94635,7 @@
     },
     "hsbc-multi-cap-fund---direct-plan---growth": {
       "name": "HSBC Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "HSBC Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -95146,7 +95146,7 @@
     },
     "pgim-india-multi-cap-fund---direct-plan---growth": {
       "name": "PGIM India Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "PGIM India Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -95617,7 +95617,7 @@
     },
     "edelweiss-recently-listed-ipo-fund---direct-plan---growth": {
       "name": "Edelweiss Recently Listed IPO Fund - Direct Plan - Growth",
-      "amc": "IPO",
+      "amc": "Edelweiss Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -95728,7 +95728,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.78,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Corona Remedies Ltd.",
@@ -95898,7 +95898,7 @@
     },
     "whiteoak-capital-multi-cap-fund---direct-plan---growth": {
       "name": "WhiteOak Capital Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "WhiteOak Capital Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -96419,7 +96419,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.27,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "CSB Bank Ltd.",
@@ -96649,7 +96649,7 @@
     },
     "axis-multicap-fund---direct-plan---growth": {
       "name": "Axis Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Axis Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -97250,7 +97250,7 @@
     },
     "sundaram-multi-cap-fund---direct-plan---growth": {
       "name": "Sundaram Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Sundaram Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -97576,7 +97576,7 @@
     },
     "hdfc-multicap-fund---direct-plan---growth": {
       "name": "HDFC Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "HDFC Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -98107,7 +98107,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.32,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Archean Chemical Industries Ltd.",
@@ -98262,7 +98262,7 @@
     },
     "edelweiss-multi-cap-fund---direct-plan---growth": {
       "name": "Edelweiss Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Edelweiss Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -98788,7 +98788,7 @@
     },
     "bajaj-finserv-multi-cap-fund---direct-plan---growth": {
       "name": "Bajaj Finserv Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Bajaj Finserv Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -99159,7 +99159,7 @@
     },
     "sbi-multicap-fund---direct-plan---growth": {
       "name": "SBI Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "SBI Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -99460,7 +99460,7 @@
     },
     "uti-multi-cap-fund---direct-plan---growth": {
       "name": "UTI Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "UTI Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -99851,7 +99851,7 @@
     },
     "quant-multi-cap-fund---direct-plan---growth": {
       "name": "Quant Multi Cap Fund - Direct Plan - Growth",
-      "amc": "Cap",
+      "amc": "Quant Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -100127,7 +100127,7 @@
     },
     "tata-multicap-fund---direct-plan---growth": {
       "name": "Tata Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "Tata Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -100228,7 +100228,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 1.53,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "Bandhan Bank Ltd.",
@@ -100498,7 +100498,7 @@
     },
     "dsp-multicap-fund---direct-plan---growth": {
       "name": "DSP Multicap Fund - Direct Plan - Growth",
-      "amc": "Multicap",
+      "amc": "DSP Mutual Fund",
       "category": "multi cap",
       "holdings": [
         {
@@ -100844,7 +100844,7 @@
     },
     "nj-elss-tax-saver-scheme---direct-plan---growth": {
       "name": "NJ ELSS Tax Saver Scheme - Direct Plan - Growth",
-      "amc": "Unknown",
+      "amc": "NJ Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -100985,7 +100985,7 @@
     },
     "tata-elss-fund---direct-plan---growth": {
       "name": "Tata ELSS Fund - Direct Plan - Growth",
-      "amc": "ELSS",
+      "amc": "Tata Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -101296,7 +101296,7 @@
     },
     "iti-elss-tax-saver-fund---direct-plan---growth": {
       "name": "ITI ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "ITI Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -101657,7 +101657,7 @@
     },
     "bajaj-finserv-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Bajaj Finserv ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Bajaj Finserv Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -101898,7 +101898,7 @@
     },
     "sbi-long-term-advantage-fund---series-v---direct-plan---growth": {
       "name": "SBI Long Term Advantage Fund - Series V - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "SBI Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -102054,7 +102054,7 @@
     },
     "canara-robeco-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Canara Robeco ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -102420,7 +102420,7 @@
     },
     "quant-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Quant ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Quant Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -102581,7 +102581,7 @@
     },
     "groww-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Groww ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Groww Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -102897,7 +102897,7 @@
     },
     "nippon-india-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Nippon India ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Nippon India Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -103228,7 +103228,7 @@
     },
     "invesco-india-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Invesco India ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Invesco Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -103564,7 +103564,7 @@
     },
     "uti-elss-tax-saver-fund---direct-plan---growth": {
       "name": "UTI ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "UTI Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -103870,7 +103870,7 @@
     },
     "mirae-asset-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Mirae Asset ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -104211,7 +104211,7 @@
     },
     "baroda-bnp-paribas-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -104462,7 +104462,7 @@
     },
     "motilal-oswal-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Motilal Oswal ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -104618,7 +104618,7 @@
     },
     "bank-of-india-midcap-tax-fund---series-1---direct-plan---growth": {
       "name": "Bank of India Midcap Tax Fund - Series 1 - Direct Plan - Growth",
-      "amc": "Tax",
+      "amc": "Bank Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -104854,7 +104854,7 @@
     },
     "lic-mf-elss-tax-saver---direct-plan---growth": {
       "name": "LIC MF ELSS Tax Saver - Direct Plan - Growth",
-      "amc": "Unknown",
+      "amc": "LIC Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -105145,7 +105145,7 @@
     },
     "dsp-elss-tax-saver-fund---direct-plan---growth": {
       "name": "DSP ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "DSP Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -105456,7 +105456,7 @@
     },
     "hsbc-elss-tax-saver-fund---direct-plan---growth": {
       "name": "HSBC ELSS Tax saver Fund - Direct Plan - Growth",
-      "amc": "saver",
+      "amc": "HSBC Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -105537,7 +105537,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 1.7,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "TVS Motor Company Ltd.",
@@ -105857,7 +105857,7 @@
     },
     "franklin-india-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Franklin India ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -106113,7 +106113,7 @@
     },
     "sundaram-long-term-tax-advantage-fund---series-iii---direct-plan---growth": {
       "name": "Sundaram Long Term Tax Advantage Fund - Series III - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -106329,7 +106329,7 @@
     },
     "axis-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Axis ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Axis Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -106765,7 +106765,7 @@
     },
     "sbi-long-term-advantage-fund---series-iv---direct-plan---growth": {
       "name": "SBI Long Term Advantage Fund - Series IV - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "SBI Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -106911,7 +106911,7 @@
     },
     "bank-of-india-elss-tax-saver---direct-plan---growth": {
       "name": "Bank of India ELSS Tax Saver - Direct Plan - Growth",
-      "amc": "Unknown",
+      "amc": "Bank Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -107167,7 +107167,7 @@
     },
     "union-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Union ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Union Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -107373,7 +107373,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.9,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "LTIMindtree Ltd.",
@@ -107553,7 +107553,7 @@
     },
     "samco-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Samco ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Samco Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -107739,7 +107739,7 @@
     },
     "jm-elss-tax-saver-fund---direct-plan---growth": {
       "name": "JM ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "JM Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -107990,7 +107990,7 @@
     },
     "bandhan-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Bandhan ELSS Tax saver Fund - Direct Plan - Growth",
-      "amc": "saver",
+      "amc": "Bandhan Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -108316,7 +108316,7 @@
     },
     "sundaram-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Sundaram ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -108582,7 +108582,7 @@
     },
     "sundaram-long-term-tax-advantage-fund---series-iv---direct-plan---growth": {
       "name": "Sundaram Long Term Tax Advantage Fund - Series IV - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -108798,7 +108798,7 @@
     },
     "edelweiss-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Edelweiss ELSS Tax saver Fund - Direct Plan - Growth",
-      "amc": "saver",
+      "amc": "Edelweiss Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -109259,7 +109259,7 @@
     },
     "sbi-long-term-advantage-fund---series-vi---direct-plan---growth": {
       "name": "SBI Long Term Advantage Fund - Series VI - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "SBI Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -109445,7 +109445,7 @@
     },
     "shriram-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Shriram ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Shriram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -109801,7 +109801,7 @@
     },
     "aditya-birla-sun-life-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -110102,7 +110102,7 @@
     },
     "sundaram-long-term-micro-cap-tax-advantage-fund---series-vi---direct-plan---growth": {
       "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series VI - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -110313,7 +110313,7 @@
     },
     "icici-prudential-elss-tax-saver-fund---direct-plan---growth": {
       "name": "ICICI Prudential ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -110699,7 +110699,7 @@
     },
     "kotak-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Kotak ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -110985,7 +110985,7 @@
     },
     "whiteoak-capital-elss-tax-saver-fund---direct-plan---growth": {
       "name": "WhiteOak Capital ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "WhiteOak Capital Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -111526,7 +111526,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.23,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Onesource Specialty Pharma Ltd.",
@@ -111631,7 +111631,7 @@
     },
     "sundaram-long-term-micro-cap-tax-advantage-fund---series-v---direct-plan---growth": {
       "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series V - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -111847,7 +111847,7 @@
     },
     "mahindra-manulife-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Mahindra Manulife ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -112183,7 +112183,7 @@
     },
     "sundaram-long-term-tax-advantage-fund---series-ii---direct-plan---growth": {
       "name": "Sundaram Long Term Tax Advantage Fund - Series II - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -112349,7 +112349,7 @@
     },
     "bank-of-india-midcap-tax-fund---series-2---direct-plan---growth": {
       "name": "Bank of India Midcap Tax Fund - Series 2 - Direct Plan - Growth",
-      "amc": "Tax",
+      "amc": "Bank Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -112605,7 +112605,7 @@
     },
     "sundaram-long-term-micro-cap-tax-advantage-fund---series-iii---direct-plan---growth": {
       "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series III - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -112816,7 +112816,7 @@
     },
     "sbi-elss-tax-saver-fund---direct-plan---growth": {
       "name": "SBI ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "SBI Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -113167,7 +113167,7 @@
     },
     "hdfc-elss-tax-saver---direct-plan---growth": {
       "name": "HDFC ELSS Tax saver - Direct Plan - Growth",
-      "amc": "Unknown",
+      "amc": "HDFC Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -113458,7 +113458,7 @@
     },
     "sundaram-long-term-micro-cap-tax-advantage-fund---series-iv---direct-plan---growth": {
       "name": "Sundaram Long Term Micro Cap Tax Advantage Fund - Series IV - Direct Plan - Growth",
-      "amc": "Advantage",
+      "amc": "Sundaram Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -113669,7 +113669,7 @@
     },
     "pgim-india-elss-tax-saver-fund---direct-plan---growth": {
       "name": "PGIM India ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "PGIM India Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -113920,7 +113920,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 0.71,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "Tube Investments Of India Ltd.",
@@ -114000,7 +114000,7 @@
     },
     "360-one-elss-tax-saver-nifty-50-index-fund---direct-plan---growth": {
       "name": "360 ONE ELSS Tax Saver Nifty 50 Index Fund - Direct Plan - Growth",
-      "amc": "Index",
+      "amc": "360 ONE Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -114261,7 +114261,7 @@
     },
     "icici-prudential-long-term-wealth-enhancement-fund---direct-plan---growth": {
       "name": "ICICI Prudential Long Term Wealth Enhancement Fund - Direct Plan - Growth",
-      "amc": "Enhancement",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -114387,7 +114387,7 @@
     },
     "taurus-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Taurus ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Taurus Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -114563,7 +114563,7 @@
     },
     "quantum-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Quantum ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "Quantum Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -114719,7 +114719,7 @@
     },
     "parag-parikh-elss-tax-saver-fund---direct-plan---growth": {
       "name": "Parag Parikh ELSS Tax Saver Fund - Direct Plan - Growth",
-      "amc": "Saver",
+      "amc": "PPFAS Mutual Fund",
       "category": "elss",
       "holdings": [
         {
@@ -114885,7 +114885,7 @@
     },
     "union-focused-fund---direct-plan---growth": {
       "name": "Union Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Union Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115041,7 +115041,7 @@
     },
     "nippon-india-focused-fund---direct-plan---growth": {
       "name": "Nippon India Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Nippon India Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115202,7 +115202,7 @@
     },
     "kotak-focused-fund---direct-plan---growth": {
       "name": "Kotak Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115358,7 +115358,7 @@
     },
     "iti-focused-fund---direct-plan---growth": {
       "name": "ITI Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "ITI Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115519,7 +115519,7 @@
     },
     "quant-focused-fund---direct-plan---growth": {
       "name": "Quant Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Quant Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115630,7 +115630,7 @@
     },
     "canara-robeco-focused-fund---direct-plan---growth": {
       "name": "Canara Robeco Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115791,7 +115791,7 @@
     },
     "jm-focused-fund---(direct)---growth": {
       "name": "JM Focused Fund - (Direct) - Growth",
-      "amc": "Focused",
+      "amc": "JM Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -115937,7 +115937,7 @@
     },
     "sundaram-focused-fund---direct-plan---growth": {
       "name": "Sundaram Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Sundaram Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116098,7 +116098,7 @@
     },
     "invesco-india-focused-fund---direct-plan---growth": {
       "name": "Invesco India Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Invesco Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116209,7 +116209,7 @@
     },
     "mirae-asset-focused-fund---direct-plan---growth": {
       "name": "Mirae Asset Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Mirae Asset Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116360,7 +116360,7 @@
     },
     "sbi-focused-fund---direct-plan---growth": {
       "name": "SBI Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "SBI Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116496,7 +116496,7 @@
     },
     "hdfc-focused-fund---direct-plan---growth": {
       "name": "HDFC Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "HDFC Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116652,7 +116652,7 @@
     },
     "hsbc-focused-fund---direct-plan---growth": {
       "name": "HSBC Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "HSBC Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116803,7 +116803,7 @@
     },
     "bandhan-focused-fund---direct-plan---growth": {
       "name": "Bandhan Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Bandhan Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -116954,7 +116954,7 @@
     },
     "lic-mf-focused-fund---direct-plan---growth": {
       "name": "LIC MF Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "LIC Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -117115,7 +117115,7 @@
     },
     "edelweiss-focused-fund---direct-plan---growth": {
       "name": "Edelweiss Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Edelweiss Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -117276,7 +117276,7 @@
     },
     "motilal-oswal-focused-fund---direct-plan---growth": {
       "name": "Motilal Oswal Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Motilal Oswal Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -117437,7 +117437,7 @@
     },
     "old-bridge-focused-fund---direct-plan---growth": {
       "name": "Old Bridge Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Old Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -117563,7 +117563,7 @@
     },
     "mahindra-manulife-focused-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -117719,7 +117719,7 @@
     },
     "360-one-focused-fund---direct-plan---growth": {
       "name": "360 ONE Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "360 ONE Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -117875,7 +117875,7 @@
     },
     "uti-focused-fund---direct-plan---growth": {
       "name": "UTI Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "UTI Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118031,7 +118031,7 @@
     },
     "icici-prudential-focused-equity-fund---direct-plan---growth": {
       "name": "ICICI Prudential Focused Equity Fund - Direct Plan - Growth",
-      "amc": "Equity",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118192,7 +118192,7 @@
     },
     "axis-focused-fund---direct-plan---growth": {
       "name": "Axis Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Axis Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118348,7 +118348,7 @@
     },
     "dsp-focused-fund---direct-plan---growth": {
       "name": "DSP Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "DSP Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118499,7 +118499,7 @@
     },
     "aditya-birla-sun-life-focused-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118660,7 +118660,7 @@
     },
     "franklin-india-focused-equity-fund---direct---growth": {
       "name": "Franklin India Focused Equity Fund - Direct - Growth",
-      "amc": "Equity",
+      "amc": "Franklin Templeton Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118816,7 +118816,7 @@
     },
     "tata-focused-fund---direct-plan---growth": {
       "name": "Tata Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Tata Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -118967,7 +118967,7 @@
     },
     "baroda-bnp-paribas-focused-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Focused Fund - Direct Plan - Growth",
-      "amc": "Focused",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "focused",
       "holdings": [
         {
@@ -119088,7 +119088,7 @@
         {
           "stock": "Inventurus Knowledge Solutions Ltd.",
           "weight": 1.72,
-          "sector": "It enabled services � software"
+          "sector": "It enabled services \ufffd software"
         },
         {
           "stock": "ICICI Bank Ltd.",
@@ -119113,7 +119113,7 @@
     },
     "tata-value-fund---direct-plan---growth": {
       "name": "Tata Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Tata Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -119294,7 +119294,7 @@
     },
     "jm-value-fund---(direct)---growth": {
       "name": "JM Value Fund - (Direct) - Growth",
-      "amc": "Value",
+      "amc": "JM Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -119565,7 +119565,7 @@
     },
     "lic-mf-value-fund---direct-plan---growth": {
       "name": "LIC MF Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "LIC Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -119856,7 +119856,7 @@
     },
     "dsp-value-fund---direct-plan---growth": {
       "name": "DSP Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "DSP Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -120197,7 +120197,7 @@
     },
     "union-value-fund---direct-plan---growth": {
       "name": "Union Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Union Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -120518,7 +120518,7 @@
     },
     "iti-value-fund---direct-plan---growth": {
       "name": "ITI Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "ITI Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -120889,7 +120889,7 @@
     },
     "canara-robeco-value-fund---direct-plan---growth": {
       "name": "Canara Robeco Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Canara Robeco Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -121180,7 +121180,7 @@
     },
     "nippon-india-value-fund---direct-plan---growth": {
       "name": "Nippon India Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Nippon India Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -121541,7 +121541,7 @@
     },
     "axis-value-fund---direct-plan---growth": {
       "name": "Axis Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Axis Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -121997,7 +121997,7 @@
     },
     "bandhan-value-fund---direct-plan---growth": {
       "name": "Bandhan Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Bandhan Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -122298,7 +122298,7 @@
     },
     "uti-value-fund---direct-plan---growth": {
       "name": "UTI Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "UTI Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -122599,7 +122599,7 @@
     },
     "groww-value-fund---direct-plan---growth": {
       "name": "Groww Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Groww Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -122860,7 +122860,7 @@
     },
     "quant-value-fund---direct-plan---growth": {
       "name": "Quant Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Quant Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -123011,7 +123011,7 @@
     },
     "hsbc-value-fund---direct-plan---growth": {
       "name": "HSBC Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "HSBC Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -123197,7 +123197,7 @@
         {
           "stock": "Pearl Global Industries Limited",
           "weight": 0.92,
-          "sector": "Trading � textiles"
+          "sector": "Trading \ufffd textiles"
         },
         {
           "stock": "Welspun Living Ltd.",
@@ -123412,7 +123412,7 @@
     },
     "hdfc-value-fund---direct-plan---growth": {
       "name": "HDFC Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "HDFC Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -123763,7 +123763,7 @@
     },
     "aditya-birla-sun-life-value-fund---direct-plan---growth": {
       "name": "Aditya Birla Sun Life Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Aditya Birla Sun Life Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -124124,7 +124124,7 @@
     },
     "mahindra-manulife-value-fund---direct-plan---growth": {
       "name": "Mahindra Manulife Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Mahindra Manulife Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -124455,7 +124455,7 @@
     },
     "templeton-india-value-fund---direct---growth": {
       "name": "Templeton India Value Fund - Direct - Growth",
-      "amc": "Value",
+      "amc": "Templeton Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -124696,7 +124696,7 @@
     },
     "baroda-bnp-paribas-value-fund---direct-plan---growth": {
       "name": "Baroda BNP Paribas Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Baroda BNP Paribas Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -124977,7 +124977,7 @@
     },
     "icici-prudential-value-fund---direct-plan---growth": {
       "name": "ICICI Prudential Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "ICICI Prudential Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -125293,7 +125293,7 @@
     },
     "quantum-value-fund---direct-plan---growth": {
       "name": "Quantum Value Fund - Direct Plan - Growth",
-      "amc": "Value",
+      "amc": "Quantum Mutual Fund",
       "category": "value",
       "holdings": [
         {
@@ -125449,7 +125449,7 @@
     },
     "kotak-contra-fund---direct-plan---growth": {
       "name": "Kotak Contra Fund - Direct Plan - Growth",
-      "amc": "Contra",
+      "amc": "Kotak Mahindra Mutual Fund",
       "category": "contra",
       "holdings": [
         {
@@ -125755,7 +125755,7 @@
     },
     "sbi-contra-fund---direct-plan---growth": {
       "name": "SBI Contra Fund - Direct Plan - Growth",
-      "amc": "Contra",
+      "amc": "SBI Mutual Fund",
       "category": "contra",
       "holdings": [
         {
@@ -126136,7 +126136,7 @@
     },
     "invesco-india-contra-fund---direct-plan---growth": {
       "name": "Invesco India Contra Fund - Direct Plan - Growth",
-      "amc": "Contra",
+      "amc": "Invesco Mutual Fund",
       "category": "contra",
       "holdings": [
         {

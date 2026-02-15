@@ -651,7 +651,7 @@
                 </div>
                 
                 <div class="chart-container">
-                    <div class="chart-title">⚡ Risk-Return Analysis (Alpha vs Category)</div>
+                    <div class="chart-title">⚡ Risk-Return Analysis (Sharpe vs Beta)</div>
                     <div id="riskChart" style="height: 400px;"></div>
                 </div>
             </div>
@@ -668,6 +668,10 @@
                             <th>Current</th>
                             <th>Return %</th>
                             <th>Alpha</th>
+                            <th>Beta</th>
+                            <th>Sharpe</th>
+                            <th>Sortino</th>
+                            <th>Std Dev</th>
                             <th>1Y</th>
                             <th>3Y</th>
                         </tr>
@@ -678,9 +682,12 @@
                 <div class="insights-box">
                     <h4>📊 Key Risk Metrics Explained:</h4>
                     <div class="insights-grid">
-                        <div><strong>Alpha:</strong> Excess return over benchmark. Higher is better, shows fund manager skill.</div>
-                        <div><strong>1Y/3Y Returns:</strong> Trailing returns. Compare with category average.</div>
-                        <div><strong>Category:</strong> Fund classification helps compare apples to apples.</div>
+                        <div><strong>Alpha:</strong> Excess return over benchmark (Nifty 50). Higher = better fund manager skill.</div>
+                        <div><strong>Beta:</strong> Market sensitivity. Beta 1.0 = moves with market. &gt;1 = more volatile, &lt;1 = defensive.</div>
+                        <div><strong>Sharpe Ratio:</strong> Risk-adjusted return. &gt;1 is good, &gt;2 is excellent. Higher = better return per unit risk.</div>
+                        <div><strong>Sortino Ratio:</strong> Like Sharpe but only penalizes downside volatility. Higher = fewer bad surprises.</div>
+                        <div><strong>Std Dev (σ):</strong> Annualized volatility. Lower = smoother ride. 10-15% is typical for equity funds.</div>
+                        <div><strong>1Y/3Y Returns:</strong> Trailing returns from MFAPI NAV data. 3Y shown as CAGR.</div>
                     </div>
                 </div>
 
@@ -741,14 +748,60 @@
             document.getElementById('emptyState').style.display = 'block';
         }
 
-        function renderAll() {
+        async function renderAll() {
             const holdings = portfolioData.holdings;
+            // Enrich holdings with fund metrics (beta, sharpe, sortino, etc.)
+            await enrichWithFundMetrics(holdings);
             renderMetrics(holdings);
             renderPerformanceChart(holdings);
             renderRiskChart(holdings);
             renderRiskTable(holdings);
             loadAndRenderInsights(holdings);
             renderRiskVerdict(holdings);
+        }
+
+        async function enrichWithFundMetrics(holdings) {
+            try {
+                const fundNames = holdings.map(h => h.fund_name).filter(Boolean);
+                if (fundNames.length === 0) return;
+                const response = await fetch('/api/funds/metrics/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(fundNames)
+                });
+                if (!response.ok) return;
+                const data = await response.json();
+                if (!data.success || !data.results) return;
+
+                holdings.forEach(h => {
+                    const metrics = data.results[h.fund_name];
+                    if (!metrics) return;
+                    const risk1y = metrics.risk && metrics.risk['1y'] || {};
+                    const bench = metrics.benchmark || {};
+                    const ret = metrics.returns || {};
+                    // Merge risk metrics into holding
+                    h._sharpe = risk1y.sharpe;
+                    h._sortino = risk1y.sortino;
+                    h._std_dev = risk1y.std_dev;
+                    h._max_drawdown = risk1y.max_drawdown;
+                    h._beta = bench.beta;
+                    h._alpha_computed = bench.alpha;
+                    h._r_squared = bench.r_squared;
+                    h._treynor = bench.treynor;
+                    h._info_ratio = bench.info_ratio;
+                    h._up_capture = bench.up_capture;
+                    h._down_capture = bench.down_capture;
+                    h._tracking_error = bench.tracking_error;
+                    // Fill returns if missing
+                    if (!h.return_1y && ret['1y']) h.return_1y = ret['1y'].absolute;
+                    if (!h.return_3y && ret['3y']) h.return_3y = ret['3y'].cagr || ret['3y'].absolute;
+                    // Fill alpha from benchmark if missing
+                    if ((!h.alpha || h.alpha === '-') && bench.alpha != null) h.alpha = bench.alpha;
+                });
+                console.log(`Fund metrics enriched: ${data.matched}/${fundNames.length} matched`);
+            } catch (err) {
+                console.warn('Fund metrics API unavailable:', err.message);
+            }
         }
 
         function renderMetrics(holdings) {
@@ -759,19 +812,28 @@
             const profitableCount = holdings.filter(h => parseFloat(h.current_value || 0) > parseFloat(h.invested || 0)).length;
             const alphaValues = holdings.filter(h => h.alpha && h.alpha !== '-').map(h => parseFloat(h.alpha));
             const avgAlpha = alphaValues.length > 0 ? alphaValues.reduce((a, b) => a + b, 0) / alphaValues.length : 0;
+
+            // Weighted-average risk metrics (weighted by current value)
+            let wSharpe = 0, wBeta = 0, wSortino = 0, wStdDev = 0, wSum = 0;
+            holdings.forEach(h => {
+                const w = parseFloat(h.current_value || 0);
+                if (h._sharpe != null) { wSharpe += h._sharpe * w; wSum += w; }
+                if (h._beta != null) wBeta += h._beta * w;
+                if (h._sortino != null) wSortino += h._sortino * w;
+                if (h._std_dev != null) wStdDev += h._std_dev * w;
+            });
+            const avgSharpe = wSum > 0 ? wSharpe / wSum : null;
+            const avgBeta = wSum > 0 ? wBeta / wSum : null;
+            const avgSortino = wSum > 0 ? wSortino / wSum : null;
+            const avgStdDev = wSum > 0 ? wStdDev / wSum : null;
+            
+            const fmtMetric = (v, suffix = '') => v != null ? v.toFixed(2) + suffix : '-';
+            const metricColor = (v, goodAbove = 0) => v != null ? (v >= goodAbove ? '#7FC04C' : '#ff4757') : '#9ca3af';
             
             document.getElementById('metricsGrid').innerHTML = `
                 <div class="metric-box">
                     <div class="metric-value">${holdings.length}</div>
                     <div class="metric-label">Total Funds</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-value">${profitableCount}</div>
-                    <div class="metric-label">Profitable (${((profitableCount/holdings.length)*100).toFixed(0)}%)</div>
-                </div>
-                <div class="metric-box">
-                    <div class="metric-value" style="color: ${avgAlpha >= 0 ? 'white' : '#ffcccc'};">${avgAlpha.toFixed(2)}</div>
-                    <div class="metric-label">Avg Alpha</div>
                 </div>
                 <div class="metric-box">
                     <div class="metric-value">₹${(totalCurrent/100000).toFixed(1)}L</div>
@@ -780,6 +842,26 @@
                 <div class="metric-box">
                     <div class="metric-value" style="color: ${returnPct >= 0 ? 'white' : '#ffcccc'};">${returnPct.toFixed(1)}%</div>
                     <div class="metric-label">Total Return</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value" style="color: ${avgAlpha >= 0 ? 'white' : '#ffcccc'};">${avgAlpha.toFixed(2)}</div>
+                    <div class="metric-label">Avg Alpha</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value" style="color: ${metricColor(avgSharpe)};">${fmtMetric(avgSharpe)}</div>
+                    <div class="metric-label">Sharpe Ratio</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value" style="color: ${metricColor(avgBeta, 0.5)};">${fmtMetric(avgBeta)}</div>
+                    <div class="metric-label">Avg Beta</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value" style="color: ${metricColor(avgSortino)};">${fmtMetric(avgSortino)}</div>
+                    <div class="metric-label">Sortino Ratio</div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value" style="color: white;">${fmtMetric(avgStdDev, '%')}</div>
+                    <div class="metric-label">Volatility (σ)</div>
                 </div>
             `;
         }
@@ -818,29 +900,47 @@
         }
 
         function renderRiskChart(holdings) {
-            const data = holdings.filter(h => h.alpha && h.alpha !== '-').map(h => ({
+            // Use Sharpe vs Beta scatter (richer than alpha vs category)
+            const data = holdings.filter(h => h._sharpe != null && h._beta != null).map(h => ({
                 name: h.fund_name ? h.fund_name.substring(0, 15) : 'Unknown',
-                alpha: parseFloat(h.alpha) || 0, 
+                sharpe: h._sharpe,
+                beta: h._beta,
+                alpha: parseFloat(h.alpha) || 0,
                 category: h.category || 'Other',
                 current: parseFloat(h.current_value || 0)
             }));
             
+            // Fallback to alpha chart if no metrics
             if (data.length === 0) {
-                document.getElementById('riskChart').innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 50px;">No alpha data available</p>';
+                const fallback = holdings.filter(h => h.alpha && h.alpha !== '-').map(h => ({
+                    name: h.fund_name ? h.fund_name.substring(0, 15) : 'Unknown',
+                    alpha: parseFloat(h.alpha) || 0,
+                    category: h.category || 'Other',
+                    current: parseFloat(h.current_value || 0)
+                }));
+                if (fallback.length === 0) {
+                    document.getElementById('riskChart').innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 50px;">No risk data available</p>';
+                    return;
+                }
+                Plotly.newPlot('riskChart', [{
+                    x: fallback.map(d => d.category), y: fallback.map(d => d.alpha),
+                    mode: 'markers+text', type: 'scatter',
+                    marker: { size: fallback.map(d => Math.sqrt(d.current / 10000) + 10), color: '#7FC04C', opacity: 0.8 },
+                    text: fallback.map(d => d.name), textposition: 'top center', textfont: { size: 9 }
+                }], {
+                    paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+                    xaxis: { title: 'Category', gridcolor: '#f3f4f6' },
+                    yaxis: { title: 'Alpha', gridcolor: '#f3f4f6', zeroline: true, zerolinecolor: '#ffc107' },
+                    margin: { t: 30, b: 50, l: 60, r: 20 }
+                }, { responsive: true });
                 return;
             }
             
-            const categoryColors = { 
-                'Large Cap': '#7FC04C', 
-                'Mid Cap': '#ffc107', 
-                'Small Cap': '#ff4757', 
-                'Flexi Cap': '#7FC04C', 
-                'International': '#9c27b0' 
-            };
+            const categoryColors = { 'Large Cap': '#7FC04C', 'Mid Cap': '#ffc107', 'Small Cap': '#ff4757', 'Flexi Cap': '#7FC04C', 'International': '#9c27b0' };
             
             Plotly.newPlot('riskChart', [{
-                x: data.map(d => d.category), 
-                y: data.map(d => d.alpha), 
+                x: data.map(d => d.beta), 
+                y: data.map(d => d.sharpe), 
                 mode: 'markers+text', 
                 type: 'scatter',
                 marker: { 
@@ -851,33 +951,30 @@
                 text: data.map(d => d.name), 
                 textposition: 'top center', 
                 textfont: { size: 9 },
-                hovertemplate: '<b>%{text}</b><br>Category: %{x}<br>Alpha: %{y:.2f}<extra></extra>'
+                hovertemplate: '<b>%{text}</b><br>Beta: %{x:.2f}<br>Sharpe: %{y:.2f}<br>Alpha: ' + data.map(d => d.alpha.toFixed(2)).join(',') + '<extra></extra>'
             }], {
                 paper_bgcolor: 'rgba(0,0,0,0)', 
                 plot_bgcolor: 'rgba(0,0,0,0)',
-                xaxis: { 
-                    title: 'Category', 
-                    gridcolor: '#f3f4f6' 
-                },
-                yaxis: { 
-                    title: 'Alpha', 
-                    gridcolor: '#f3f4f6', 
-                    zeroline: true, 
-                    zerolinecolor: '#ffc107' 
-                },
-                margin: { t: 30, b: 50, l: 60, r: 20 }
+                xaxis: { title: 'Beta (Market Sensitivity)', gridcolor: '#f3f4f6', zeroline: true, zerolinecolor: '#e5e7eb' },
+                yaxis: { title: 'Sharpe Ratio (Risk-Adjusted Return)', gridcolor: '#f3f4f6', zeroline: true, zerolinecolor: '#ffc107' },
+                margin: { t: 30, b: 50, l: 60, r: 20 },
+                annotations: [{
+                    x: 1.0, y: 1.0, text: '✦ Ideal Zone', showarrow: false,
+                    font: { size: 10, color: '#7FC04C' }, xref: 'x', yref: 'y'
+                }]
             }, { responsive: true });
         }
 
         function renderRiskTable(holdings) {
             const sorted = [...holdings].sort((a, b) => parseFloat(b.current_value || 0) - parseFloat(a.current_value || 0));
+            const fmt = (v, suffix = '') => v != null ? parseFloat(v).toFixed(2) + suffix : '-';
+            const cls = (v, good = 0) => v != null ? (parseFloat(v) >= good ? 'gain' : 'loss') : '';
             let html = '';
             sorted.forEach(h => {
                 const invested = parseFloat(h.invested || 0);
                 const current = parseFloat(h.current_value || 0);
                 const returnPct = invested > 0 ? ((current - invested) / invested * 100).toFixed(1) : '0.0';
                 const returnClass = current >= invested ? 'gain' : 'loss';
-                const alphaClass = parseFloat(h.alpha) >= 0 ? 'gain' : 'loss';
                 html += `
                     <tr>
                         <td>${h.fund_name || '-'}</td>
@@ -885,9 +982,13 @@
                         <td>₹${(invested/100000).toFixed(2)}L</td>
                         <td>₹${(current/100000).toFixed(2)}L</td>
                         <td class="${returnClass}">${current >= invested ? '+' : ''}${returnPct}%</td>
-                        <td class="${alphaClass}">${h.alpha || '-'}</td>
-                        <td>${h.return_1y || h['1Y Return'] || '-'}</td>
-                        <td>${h.return_3y || h['3Y Return'] || '-'}</td>
+                        <td class="${cls(h.alpha)}">${fmt(h.alpha)}</td>
+                        <td class="${cls(h._beta, 0.5)}">${fmt(h._beta)}</td>
+                        <td class="${cls(h._sharpe)}">${fmt(h._sharpe)}</td>
+                        <td class="${cls(h._sortino)}">${fmt(h._sortino)}</td>
+                        <td>${fmt(h._std_dev, '%')}</td>
+                        <td>${h.return_1y != null ? parseFloat(h.return_1y).toFixed(1) + '%' : '-'}</td>
+                        <td>${h.return_3y != null ? parseFloat(h.return_3y).toFixed(1) + '%' : '-'}</td>
                     </tr>
                 `;
             });

@@ -6,7 +6,8 @@ tags:
   - sip
   - investment-strategy
   - wealth-building
-featured_image: "/images/blog/sip-strategies.png"
+featured_image: "/images/blog/sip-strategies.svg"
+og_image: "/images/blog/sip-strategies.svg"
 author_id: 1
 published_at: "2026-02-05T09:00:00Z"
 ---

@@ -15,15 +15,15 @@
 .blog-header {
     background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
     color: white;
-    padding: 120px 20px 60px;
+    padding: 40px 20px 30px;
     text-align: center;
     margin-top: 70px;
 }
 
 .blog-header h1 {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .blog-header .highlight {
@@ -34,10 +34,10 @@
 }
 
 .blog-header .subtitle {
-    font-size: 1.25rem;
+    font-size: 1rem;
     opacity: 0.95;
     max-width: 600px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1rem;
 }
 
 /* Search Container */
@@ -54,16 +54,16 @@
 
 .search-input {
     flex: 1;
-    padding: 16px 24px;
+    padding: 10px 20px;
     border: none;
-    font-size: 1rem;
+    font-size: 0.95rem;
     outline: none;
 }
 
 .search-btn {
     background: var(--primary-green);
     border: none;
-    padding: 16px 24px;
+    padding: 10px 20px;
     color: white;
     cursor: pointer;
     transition: background 0.3s;
@@ -77,10 +77,7 @@
 .filter-bar {
     background: white;
     border-bottom: 1px solid var(--gray-100);
-    padding: 20px;
-    position: sticky;
-    top: 70px;
-    z-index: 100;
+    padding: 12px 20px;
 }
 
 .filter-bar .container {
@@ -676,11 +673,11 @@
 /* Responsive */
 @media (max-width: 768px) {
     .blog-header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .blog-header .subtitle {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
     
     .blog-grid {

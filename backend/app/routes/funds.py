@@ -2,17 +2,39 @@
 Funds List Routes
 Provides searchable mutual fund master list for manual entry
 """
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Body
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 from typing import List, Optional
+import json
 import logging
+from pathlib import Path
 
 from app.database import get_db
 from app.models.models import FundMaster
 
 router = APIRouter(prefix="/funds", tags=["Funds"])
 logger = logging.getLogger(__name__)
+
+# Lazy-loaded fund metrics cache
+_fund_metrics_cache = None
+_fund_metrics_mtime = 0
+
+
+def _load_fund_metrics():
+    """Load fund_metrics.json with file-mtime caching."""
+    global _fund_metrics_cache, _fund_metrics_mtime
+    metrics_file = Path(__file__).parent.parent.parent / "data" / "fund_metrics.json"
+    if not metrics_file.exists():
+        return {}
+    mtime = metrics_file.stat().st_mtime
+    if _fund_metrics_cache is None or mtime != _fund_metrics_mtime:
+        with open(metrics_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        _fund_metrics_cache = data.get("funds", {})
+        _fund_metrics_mtime = mtime
+        logger.info(f"Loaded fund metrics: {len(_fund_metrics_cache)} funds")
+    return _fund_metrics_cache
 
 
 @router.get("/list")
@@ -163,6 +185,183 @@ async def get_amc_list(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# -------------------------------------------------------------------
+# Fund Metrics Endpoints (computed from NAV history)
+# Must be BEFORE /{fund_id} to avoid path-parameter conflict
+# -------------------------------------------------------------------
+
+@router.get("/metrics")
+async def get_fund_metrics(
+    name: Optional[str] = Query(None, description="Search by fund name (substring match)"),
+    mc_code: Optional[str] = Query(None, description="MoneyControl fund code"),
+    scheme_code: Optional[str] = Query(None, description="AMFI scheme code"),
+):
+    """
+    Get computed risk/return metrics for a fund from fund_metrics.json.
+    
+    Returns: Sharpe, Sortino, Beta, Alpha, StdDev, Max Drawdown, 
+    Returns (1M-10Y), Benchmark metrics (R-squared, Treynor, Info Ratio,
+    Up/Down Capture), and Portfolio stats.
+    """
+    metrics = _load_fund_metrics()
+    
+    if not metrics:
+        raise HTTPException(status_code=404, detail="Fund metrics data not available. Run scrape_fund_metrics.py first.")
+    
+    # Search by MoneyControl code
+    if mc_code:
+        fund = metrics.get(mc_code)
+        if fund:
+            return {"success": True, "fund": fund}
+        raise HTTPException(status_code=404, detail=f"No metrics found for MC code: {mc_code}")
+    
+    # Search by AMFI scheme code
+    if scheme_code:
+        for code, fund in metrics.items():
+            if str(fund.get("scheme_code")) == str(scheme_code):
+                return {"success": True, "fund": fund}
+        raise HTTPException(status_code=404, detail=f"No metrics found for scheme code: {scheme_code}")
+    
+    # Search by name (substring)
+    if name:
+        name_lower = name.lower()
+        results = []
+        for code, fund in metrics.items():
+            fund_name = fund.get("name", "").lower()
+            if name_lower in fund_name:
+                results.append({**fund, "_mc_code": code})
+        
+        if results:
+            return {"success": True, "count": len(results), "funds": results[:20]}
+        raise HTTPException(status_code=404, detail=f"No funds matching: {name}")
+    
+    # No filter - return summary
+    return {
+        "success": True,
+        "total_funds": len(metrics),
+        "funds_available": list(metrics.keys())[:50],
+    }
+
+
+@router.post("/metrics/batch")
+async def get_fund_metrics_batch(
+    fund_names: List[str] = Body(..., description="List of fund names to look up"),
+):
+    """
+    Get metrics for multiple funds at once (used by risk analyzer page).
+    
+    Accepts a list of fund names and returns the best matching metrics
+    for each. Uses fuzzy substring matching.
+    """
+    metrics = _load_fund_metrics()
+    
+    if not metrics:
+        return {"success": False, "error": "Fund metrics not available", "results": {}}
+    
+    results = {}
+    
+    for query_name in fund_names:
+        if not query_name:
+            continue
+        
+        query_lower = query_name.lower()
+        # Remove common suffixes for better matching
+        query_clean = query_lower
+        for suffix in [" - direct plan - growth", " - direct - growth",
+                       " - growth option", " - direct plan", " direct growth",
+                       " growth", " direct"]:
+            query_clean = query_clean.replace(suffix, "")
+        query_clean = query_clean.strip()
+        
+        best_match = None
+        best_score = 0
+        
+        for code, fund in metrics.items():
+            fund_name_lower = fund.get("name", "").lower()
+            
+            # Exact match
+            if query_lower == fund_name_lower:
+                best_match = fund
+                best_match["_mc_code"] = code
+                best_score = 100
+                break
+            
+            # Clean name match
+            fund_clean = fund_name_lower
+            for suffix in [" - direct plan - growth option", " - growth option",
+                           " - direct plan", " direct growth", " growth", " direct"]:
+                fund_clean = fund_clean.replace(suffix, "")
+            fund_clean = fund_clean.strip()
+            
+            if query_clean == fund_clean:
+                best_match = {**fund, "_mc_code": code}
+                best_score = 90
+                continue
+            
+            # Substring match
+            if query_clean in fund_clean or fund_clean in query_clean:
+                score = len(query_clean) / max(len(fund_clean), 1) * 80
+                if score > best_score:
+                    best_match = {**fund, "_mc_code": code}
+                    best_score = score
+        
+        if best_match:
+            results[query_name] = best_match
+    
+    return {
+        "success": True,
+        "matched": len(results),
+        "total_requested": len(fund_names),
+        "results": results,
+    }
+
+
+@router.get("/metrics/summary")
+async def get_fund_metrics_summary():
+    """
+    Get a summary of available fund metrics data.
+    Useful for checking data freshness and coverage.
+    """
+    metrics = _load_fund_metrics()
+    metrics_file = Path(__file__).parent.parent.parent / "data" / "fund_metrics.json"
+    
+    if not metrics:
+        return {"available": False, "message": "No fund metrics data available"}
+    
+    # Read file header
+    with open(metrics_file, "r", encoding="utf-8") as f:
+        full_data = json.load(f)
+    
+    # Compute coverage stats
+    has_risk = sum(1 for f in metrics.values() if f.get("risk", {}).get("1y"))
+    has_benchmark = sum(1 for f in metrics.values() if f.get("benchmark", {}).get("available"))
+    has_portfolio = sum(1 for f in metrics.values() if f.get("portfolio", {}).get("num_stocks"))
+    
+    categories = {}
+    for fund in metrics.values():
+        cat = fund.get("mc_category", fund.get("category", "Unknown"))
+        categories[cat] = categories.get(cat, 0) + 1
+    
+    return {
+        "available": True,
+        "total_funds": len(metrics),
+        "last_updated": full_data.get("last_updated"),
+        "source": full_data.get("source"),
+        "risk_free_rate": full_data.get("risk_free_rate"),
+        "benchmark": full_data.get("benchmark"),
+        "coverage": {
+            "risk_metrics": has_risk,
+            "benchmark_metrics": has_benchmark,
+            "portfolio_stats": has_portfolio,
+        },
+        "categories": categories,
+    }
+
+
+# -------------------------------------------------------------------
+# Individual Fund Details (catch-all route - MUST be last)
+# -------------------------------------------------------------------
+
 @router.get("/{fund_id}")
 async def get_fund_details(fund_id: int, db: Session = Depends(get_db)):
     """Get detailed information about a specific fund"""
@@ -263,4 +462,3 @@ async def validate_fund_data(
     except Exception as e:
         logger.error(f"Error validating fund data: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-
