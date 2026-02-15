@@ -470,6 +470,15 @@
             color: var(--text-secondary);
         }
 
+        /* Top Chart Area */
+        .top-chart-area {
+            margin-bottom: 2rem;
+        }
+
+        .top-chart-area .chart-container {
+            min-height: 350px;
+        }
+
         /* Chart Container */
         .chart-container {
             background: var(--white);
@@ -744,6 +753,14 @@
             </div>
         </div>
 
+        <!-- Top Chart Area -->
+        <div class="top-chart-area" id="topChartArea" style="display: none;">
+            <div class="chart-container">
+                <div class="chart-title" id="topChartTitle">📈 Wealth Growth Over Time</div>
+                <div id="topChart"></div>
+            </div>
+        </div>
+
         <div class="calculator-grid">
             <!-- Input Section -->
             <div class="input-card">
@@ -933,14 +950,27 @@
             }
             const totalInvested = parseFloat(data.summary.total_invested || 0);
             const xirr = parseFloat(data.summary.xirr || data.summary.return_pct || 12);
-            // Estimate monthly SIP from transaction data (approximate as total/months)
-            const monthsApprox = 36; // default assumption
-            const estMonthlySIP = Math.round(totalInvested / monthsApprox / 1000) * 1000;
 
-            if (document.getElementById('sipAmount')) document.getElementById('sipAmount').value = Math.max(1000, estMonthlySIP);
+            // Estimate monthly SIP using actual portfolio tenure where available
+            // Prefer snapshot_date or created_at from portfolio response
+            let monthsApprox = 36; // fallback
+            let tenureNote = '(estimated ~3yr tenure)';
+            const dateStr = data.snapshot_date || data.created_at || (data.summary && data.summary.start_date);
+            if (dateStr) {
+                const startDate = new Date(dateStr);
+                const now = new Date();
+                const diffMonths = Math.max(1, Math.round((now - startDate) / (1000 * 60 * 60 * 24 * 30.44)));
+                // Cap at 360 months (30 years) for sanity
+                monthsApprox = Math.min(360, diffMonths);
+                const yrs = (monthsApprox / 12).toFixed(1);
+                tenureNote = `(${yrs}yr actual tenure)`;
+            }
+            const estMonthlySIP = Math.round(totalInvested / monthsApprox / 500) * 500;
+
+            if (document.getElementById('sipAmount')) document.getElementById('sipAmount').value = Math.max(500, estMonthlySIP);
             if (document.getElementById('returnRate')) document.getElementById('returnRate').value = Math.min(25, Math.max(6, parseFloat(xirr.toFixed(1))));
 
-            _showPortfolioLoadedBanner(`Loaded from your portfolio: ~Rs.${(estMonthlySIP/1000).toFixed(0)}K/month SIP, ${xirr.toFixed(1)}% return`);
+            _showPortfolioLoadedBanner(`Loaded from your portfolio: ~Rs.${(estMonthlySIP/1000).toFixed(1)}K/month SIP ${tenureNote}, ${xirr.toFixed(1)}% return`);
         }
 
         async function _loadMyPortfolioGoal() {

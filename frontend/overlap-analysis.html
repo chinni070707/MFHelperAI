@@ -1195,6 +1195,7 @@
 
             <!-- Recommended Actions Panel -->
             <div id="recommendedActionsPanel" style="display:none;margin-bottom:24px;"></div>
+            <div id="diversificationSuggestionsPanel" style="display:none;margin-bottom:24px;"></div>
 
             <!-- Overlapping Stocks Table -->
             <div class="overlap-table">
@@ -1693,6 +1694,9 @@
 
             // Render recommended actions
             renderRecommendedActions(data);
+
+            // Load diversification suggestions for highest-overlap fund (async, non-blocking)
+            _loadDiversificationSuggestions(data);
 
             // Show results
             document.getElementById('results').classList.add('shown');
@@ -2244,6 +2248,87 @@
             html += `</div></div>`;
             panel.innerHTML = html;
             panel.style.display = 'block';
+        }
+
+        // -----------------------------------------------------------------------
+        // Diversification Suggestions — calls /api/overlap/recommendations/{key}
+        // for the fund with the highest pairwise overlap score
+        // -----------------------------------------------------------------------
+        async function _loadDiversificationSuggestions(data) {
+            const panel = document.getElementById('diversificationSuggestionsPanel');
+            if (!panel) return;
+
+            // Only show if diversification score is below 70 (room for improvement)
+            const divScore = parseFloat(data.diversification_score) || 0;
+            if (divScore >= 70) return;
+
+            // Pick the fund key that appears in the most high-overlap pairs
+            const pairwise = data.pairwise_overlap || {};
+            const fundScores = {};
+            Object.entries(pairwise).forEach(([key, val]) => {
+                if (typeof val === 'number' && val >= 30) {
+                    // key format: "fund_a vs fund_b"
+                    const parts = key.split(' vs ');
+                    parts.forEach(p => { fundScores[p] = (fundScores[p] || 0) + val; });
+                }
+            });
+            const topFundKey = Object.entries(fundScores).sort((a, b) => b[1] - a[1])[0];
+            if (!topFundKey) return;
+
+            const fundKey = topFundKey[0];
+
+            try {
+                const resp = await fetch(`${API_BASE}/api/overlap/recommendations/${encodeURIComponent(fundKey)}`);
+                if (!resp.ok) return;
+                const recData = await resp.json();
+
+                // recData expected: { fund_key, recommendations: [{fund_key, fund_name, overlap_pct, reason}] }
+                const recs = recData.recommendations || recData.similar_funds || recData.low_overlap_funds || [];
+                if (recs.length === 0) return;
+
+                const top5 = recs.slice(0, 5);
+                const displayFundName = (fundKey || '').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+                let html = `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 20px;">`;
+                html += `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">`;
+                html += `<div style="font-weight:700;font-size:0.95rem;">Low-Overlap Alternatives for <span style="color:var(--primary-green,#7FC04C);">${displayFundName}</span></div>`;
+                html += `<span style="font-size:0.75rem;color:#6b7280;background:#f3f4f6;padding:3px 8px;border-radius:4px;">Diversification Score: ${divScore}/100</span>`;
+                html += `</div>`;
+                html += `<p style="font-size:0.82rem;color:#6b7280;margin:0 0 12px;">These funds have the least stock overlap with your highest-overlap fund. Adding one could improve portfolio diversification:</p>`;
+                html += `<div style="display:flex;flex-direction:column;gap:8px;">`;
+
+                top5.forEach((rec, i) => {
+                    const name = rec.fund_name || rec.name || (rec.fund_key || '').replace(/_/g, ' ');
+                    const overlap = rec.overlap_pct != null ? rec.overlap_pct : rec.overlap;
+                    const overlapStr = overlap != null ? `${parseFloat(overlap).toFixed(0)}% overlap` : '';
+                    const reason = rec.reason || '';
+                    const medalColor = i === 0 ? '#f59e0b' : '#9ca3af';
+
+                    html += `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;">`;
+                    html += `<span style="font-weight:700;font-size:0.9rem;color:${medalColor};min-width:18px;">${i + 1}.</span>`;
+                    html += `<div style="flex:1;min-width:0;">`;
+                    html += `<div style="font-size:0.83rem;font-weight:600;color:#111827;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${name}</div>`;
+                    if (overlapStr || reason) {
+                        html += `<div style="font-size:0.75rem;color:#6b7280;margin-top:2px;">${[overlapStr, reason].filter(Boolean).join(' — ')}</div>`;
+                    }
+                    html += `</div>`;
+                    if (overlapStr) {
+                        const overlapNum = parseFloat(overlap) || 0;
+                        const chipColor = overlapNum < 15 ? '#22c55e' : overlapNum < 30 ? '#f59e0b' : '#ef4444';
+                        html += `<span style="font-size:0.72rem;font-weight:700;color:${chipColor};background:${chipColor}18;padding:2px 7px;border-radius:4px;white-space:nowrap;">${overlapStr}</span>`;
+                    }
+                    html += `</div>`;
+                });
+
+                html += `</div>`;
+                html += `<p style="font-size:0.75rem;color:#9ca3af;margin:10px 0 0;">Tip: Adding a fund from a different category (Mid Cap, Debt, International) can also boost diversification.</p>`;
+                html += `</div>`;
+
+                panel.innerHTML = html;
+                panel.style.display = 'block';
+            } catch (e) {
+                console.warn('Diversification suggestions failed:', e);
+            }
         }
 
         // Initialize

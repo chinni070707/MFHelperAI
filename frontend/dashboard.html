@@ -1182,6 +1182,49 @@
             </div>
         </div>
 
+        <!-- AI Portfolio Chat Panel -->
+        <div id="aiChatPanel" style="display:none;margin-bottom:24px;">
+            <div class="table-container" style="padding:0;overflow:hidden;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--gray-200,#e5e7eb);background:var(--gray-50,#f9fafb);">
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="font-size:1.1rem;">&#129302;</span>
+                        <span style="font-weight:700;font-size:0.95rem;">AI Portfolio Assistant</span>
+                        <span style="font-size:0.7rem;background:#22c55e22;color:#22c55e;border:1px solid #22c55e44;border-radius:4px;padding:2px 6px;font-weight:600;">BETA</span>
+                    </div>
+                    <button onclick="_clearChatHistory()" title="Clear chat history" style="background:none;border:1px solid var(--gray-200,#e5e7eb);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:0.75rem;color:var(--text-secondary,#6b7280);display:flex;align-items:center;gap:4px;">
+                        &#128465; Clear History
+                    </button>
+                </div>
+                <div id="dashboardChatMessages" style="height:240px;overflow-y:auto;padding:14px 20px;display:flex;flex-direction:column;gap:8px;">
+                    <div style="font-size:0.82rem;color:#6b7280;text-align:center;padding:20px 0;">Ask anything about your portfolio — allocation, risk, rebalancing, tax...</div>
+                </div>
+                <div style="display:flex;gap:8px;padding:12px 20px;border-top:1px solid var(--gray-200,#e5e7eb);">
+                    <input id="dashboardChatInput" type="text" placeholder="e.g. Which funds should I exit? Am I over-diversified?" style="flex:1;padding:8px 12px;border:1px solid var(--gray-200,#e5e7eb);border-radius:8px;font-size:0.85rem;background:white;color:var(--text-primary,#111827);" />
+                    <button id="dashboardChatSend" style="padding:8px 16px;background:var(--primary-green,#7FC04C);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.85rem;">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Leaderboard -->
+        <div id="performanceLeaderboardSection" style="display:none;margin-bottom:24px;">
+            <div class="table-container" style="padding:20px 24px;">
+                <div style="font-weight:700;font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;">
+                    Performance Leaderboard
+                    <span style="font-size:0.75rem;font-weight:400;color:var(--text-secondary,#6b7280);">Ranked by absolute return %</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="leaderboardGrid">
+                    <div>
+                        <div style="font-size:0.78rem;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Top Performers</div>
+                        <div id="leaderboardTop" style="display:flex;flex-direction:column;gap:6px;"></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.78rem;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Needs Attention</div>
+                        <div id="leaderboardBottom" style="display:flex;flex-direction:column;gap:6px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Portfolio History Section -->
         <div id="portfolioHistorySection" class="table-container" style="display: none;">
             <div class="chart-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -1668,6 +1711,8 @@
             // Load health score and benchmark comparison asynchronously
             _loadPortfolioHealthScore();
             _loadBenchmarkComparison();
+            _renderPerformanceLeaderboard(holdings);
+            _showAiChatPanel();
 
             // Load portfolio history if authenticated
             const authToken = localStorage.getItem('authToken');
@@ -3301,6 +3346,78 @@
                 const actEl = document.getElementById('healthActions');
                 if (actEl) { actEl.innerHTML = ''; }
             }
+        }
+
+        // -----------------------------------------------------------------------
+        // AI Chat Panel — show for authenticated users + clear history
+        // -----------------------------------------------------------------------
+        function _showAiChatPanel() {
+            const token = localStorage.getItem('authToken');
+            if (!token) return;
+            const panel = document.getElementById('aiChatPanel');
+            if (panel) panel.style.display = 'block';
+        }
+
+        async function _clearChatHistory() {
+            const token = localStorage.getItem('authToken');
+            if (!token) return;
+            try {
+                const resp = await fetch('/api/ai/chat/history', {
+                    method: 'DELETE',
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const messagesEl = document.getElementById('dashboardChatMessages');
+                if (messagesEl) {
+                    messagesEl.innerHTML = '<div style="font-size:0.82rem;color:#6b7280;text-align:center;padding:20px 0;">Chat history cleared. Ask me anything about your portfolio!</div>';
+                }
+                if (resp.ok) {
+                    window.showToast && window.showToast('Chat history cleared', 'success');
+                }
+            } catch (e) {
+                window.showToast && window.showToast('Could not clear history', 'error');
+            }
+        }
+
+        // -----------------------------------------------------------------------
+        // Performance Leaderboard — client-side ranked top/bottom performers
+        // -----------------------------------------------------------------------
+        function _renderPerformanceLeaderboard(holdings) {
+            const section = document.getElementById('performanceLeaderboardSection');
+            const topEl   = document.getElementById('leaderboardTop');
+            const botEl   = document.getElementById('leaderboardBottom');
+            if (!section || !topEl || !botEl || !holdings || holdings.length < 2) return;
+
+            const withReturn = holdings
+                .filter(h => parseFloat(h.invested || 0) > 0 && parseFloat(h.current_value || 0) > 0)
+                .map(h => ({
+                    name: (h.fund_name || '').substring(0, 40),
+                    ret: (parseFloat(h.current_value) - parseFloat(h.invested)) / parseFloat(h.invested) * 100,
+                    invested: parseFloat(h.invested),
+                    current: parseFloat(h.current_value)
+                }))
+                .sort((a, b) => b.ret - a.ret);
+
+            if (withReturn.length < 2) return;
+
+            const top = withReturn.slice(0, 3);
+            const bottom = withReturn.slice(-3).reverse();
+
+            function _card(item, isTop) {
+                const color = isTop ? '#22c55e' : (item.ret < 0 ? '#ef4444' : '#f59e0b');
+                const sign  = item.ret >= 0 ? '+' : '';
+                const arrow = isTop ? '&#9650;' : '&#9660;';
+                return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:${color}0f;border:1px solid ${color}33;border-radius:8px;gap:8px;">
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-size:0.8rem;font-weight:600;color:var(--text-primary,#111827);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</div>
+                        <div style="font-size:0.72rem;color:#6b7280;margin-top:1px;">Invested Rs.${(item.invested/100000).toFixed(1)}L</div>
+                    </div>
+                    <span style="font-size:0.85rem;font-weight:700;color:${color};white-space:nowrap;">${arrow} ${sign}${item.ret.toFixed(1)}%</span>
+                </div>`;
+            }
+
+            topEl.innerHTML    = top.map(h => _card(h, true)).join('');
+            botEl.innerHTML    = bottom.map(h => _card(h, false)).join('');
+            section.style.display = 'block';
         }
 
         // -----------------------------------------------------------------------
