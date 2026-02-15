@@ -138,16 +138,32 @@
     // Handle logout
     window.handleLogout = function(event) {
         event.preventDefault();
-        
-        // Clear auth data
+
+        // Clear auth credentials
         localStorage.removeItem('authToken');
         localStorage.removeItem('userInfo');
-        
+
+        // SECURITY: Clear ALL portfolio data so the next user on this browser
+        // cannot see the previous user's financial data
+        const portfolioKeys = [
+            'portfolioMode',
+            'portfolioLoadedAt',
+            'portfolioData',
+            'guestPortfolioData',
+            'demoPortfolioData',
+            'demoLoadedAt',
+            'portfolioSummary',
+            'lastPortfolioId'
+        ];
+        portfolioKeys.forEach(k => localStorage.removeItem(k));
+        // Also clear any sessionStorage portfolio data
+        portfolioKeys.forEach(k => sessionStorage.removeItem(k));
+
         // Show toast if available
         if (window.toast) {
             toast.success('Logged out successfully');
         }
-        
+
         // Redirect to home
         setTimeout(() => {
             window.location.href = '/';

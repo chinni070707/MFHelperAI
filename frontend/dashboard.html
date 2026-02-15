@@ -40,6 +40,9 @@
     <link rel="stylesheet" href="/css/design-system.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     
+    <!-- Auth Guard - must load first (no defer) -->
+    <script src="/js/auth-guard.js"></script>
+    
     <!-- Google Analytics -->
     <script src="/js/analytics.js" defer></script>
     <script src="/js/navbar-auth.js" defer></script>
@@ -49,13 +52,8 @@
     <script src="/js/errorHandler.js" defer></script>
     <script src="/js/responsive.js" defer></script>
     <script src="/js/overlap.js" defer></script>
-    <script src="/js/portfolio-storage.js" defer></script>
     <script src="/js/auth-modals.js" defer></script>
-    <script src="/js/conversion-prompts.js" defer></script>
     <script src="/js/export-email-gate.js" defer></script>
-    <script src="/js/portfolio-source-modal.js" defer></script>
-    <script src="/js/demo-banner.js" defer></script>
-    <script src="/js/guest-banner.js" defer></script>
     
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
 
@@ -838,37 +836,6 @@
     
     <!-- Main Content -->
     <main id="main-content" role="main">
-    <!-- No Data State -->
-    <div id="noData" class="no-data" style="display: none;">
-        <h2>📊 Welcome to Your Portfolio Dashboard</h2>
-        <p style="font-size: 1.1rem; margin-bottom: 30px;">Get started by choosing one of the options below:</p>
-        
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px;">
-            <button class="btn btn-primary" onclick="loadDemoAndRedirect()" style="min-width: 180px;">
-                🎯 Try Demo Portfolio
-            </button>
-            <button class="btn btn-primary" onclick="showUploadModal()" style="min-width: 180px;">
-                📁 Upload CAS
-            </button>
-            <button class="btn btn-primary" onclick="showManualEntryModal()" style="min-width: 180px;">
-                ✏️ Manual Entry
-            </button>
-        </div>
-        
-        <div style="text-align: left; max-width: 600px; margin: 0 auto; background: #FFFFFF; padding: 20px; border-radius: 12px; border: 1px solid #E9ECEF; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
-            <p style="margin-bottom: 15px; font-weight: 600; color: #4CAF50;">💡 New to MFHelper?</p>
-            <ul style="margin: 0; padding-left: 20px; line-height: 1.8; color: #495057;">
-                <li><strong>Demo Portfolio:</strong> Explore features with sample data</li>
-                <li><strong>Upload CAS:</strong> Import your portfolio from NSDL/CAMS statement</li>
-                <li><strong>Manual Entry:</strong> Add funds manually for maximum privacy</li>
-            </ul>
-        </div>
-
-        <p style="margin-top: 20px; font-size: 0.85rem; color: #6C757D;">
-            🔒 Your data is stored locally in your browser. We respect your privacy.
-        </p>
-    </div>
-    
     <!-- Dashboard Content -->
     <div id="dashboardContent">
         <!-- Email Verification Banner (shown if not verified) -->
@@ -1348,185 +1315,44 @@
             // Check email verification status for authenticated users
             await checkVerificationStatus();
             
-            // DEBUG: Check what's in localStorage
-            console.log('🔍 DEBUG - Checking localStorage:');
-            console.log('  portfolioMode:', localStorage.getItem('portfolioMode'));
-            console.log('  authToken:', localStorage.getItem('authToken') ? 'present' : 'null');
-            console.log('  portfolioData:', localStorage.getItem('portfolioData') ? 'present' : 'null');
-            console.log('  guestPortfolioData:', localStorage.getItem('guestPortfolioData') ? 'present' : 'null');
-            
-            if (localStorage.getItem('portfolioData')) {
-                try {
-                    const stored = JSON.parse(localStorage.getItem('portfolioData'));
-                    console.log('  portfolioData contents:', stored);
-                    console.log('  Holdings count:', stored.holdings?.length || 0);
-                    console.log('  Sample holding:', stored.holdings?.[0]);
-                } catch (e) {
-                    console.error('  Failed to parse portfolioData:', e);
-                }
+            // Auth guard ensures token exists; load portfolio from database
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                // Should not happen (auth-guard.js redirects), but just in case
+                window.location.replace('/auth.html?redirect=' + encodeURIComponent(window.location.pathname));
+                return;
             }
             
-            // Check for demo mode in URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const mode = urlParams.get('mode');
-            
-            if (mode === 'demo') {
-                // Load demo portfolio from API
-                await loadDemoPortfolio();
-            } else {
-                // Check if user is authenticated
-                const token = localStorage.getItem('authToken');
-                
-                if (token) {
-                    debugPanelAddEvent('auth', '🔑 Auth token found, loading from DB...');
-                    // Try to load from database first for authenticated users
-                    const loadedFromDB = await loadPortfolioFromDatabase();
-                    if (loadedFromDB) {
-                        // Close portfolio source modal if it somehow appeared
-                        if (typeof portfolioSourceModal !== 'undefined') {
-                            portfolioSourceModal.close();
-                        }
-                        return; // Successfully loaded from database
-                    }
-                    
-                    // Retry with longer delay (in case of fresh save/DB commit delay)
-                    console.log('🔄 First load failed, retrying after 2 seconds...');
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    const retryLoaded = await loadPortfolioFromDatabase();
-                    if (retryLoaded) {
-                        console.log('✅ Retry successful!');
-                        if (typeof portfolioSourceModal !== 'undefined') {
-                            portfolioSourceModal.close();
-                        }
-                        return;
-                    }
-                    
-                    // Third attempt with even longer delay
-                    console.log('🔄 Second retry after 1 more second...');
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    const thirdTry = await loadPortfolioFromDatabase();
-                    if (thirdTry) {
-                        console.log('✅ Third attempt successful!');
-                        if (typeof portfolioSourceModal !== 'undefined') {
-                            portfolioSourceModal.close();
-                        }
-                        return;
-                    }
-                    
-                    console.warn('⚠️ Database load failed after 3 attempts');
-                    debugPanelAddEvent('error', '⚠️ DB load failed after 3 retries — falling through to localStorage');
-                    if (window.MF_DEBUG && typeof toast !== 'undefined') {
-                        toast.warning('Portfolio DB load failed — using fallback. Check debug panel (bottom-right).');
-                    }
-                }
-                
-                // Fallback: Try to load from portfolio storage
-                // Use the global portfolioStorage instance (from portfolio-storage.js)
-                // with a safety check in case the script failed to load
-                console.log('💾 Attempting to load from portfolioStorage...');
-                let storedData = null;
-                try {
-                    if (typeof portfolioStorage !== 'undefined' && portfolioStorage && typeof portfolioStorage.load === 'function') {
-                        storedData = portfolioStorage.load();
-                        console.log('📦 portfolioStorage.load() returned:', storedData);
-                    } else if (typeof PortfolioStorage === 'function') {
-                        const ps = new PortfolioStorage();
-                        storedData = ps.load();
-                        console.log('📦 new PortfolioStorage().load() returned:', storedData);
-                    } else {
-                        console.log('⚠️ portfolioStorage not available');
-                    }
-                } catch (e) {
-                    console.warn('⚠️ Portfolio storage load failed:', e.message);
-                }
-                
-                if (storedData && storedData.holdings && storedData.holdings.length > 0) {
-                    console.log('✅ Found data in portfolioStorage:', storedData.holdings.length, 'holdings');
-                    window.logPortfolioDataChange('portfolioStorage', storedData);
-                    portfolioData = storedData;
-                    console.log('🎯 About to call renderDashboard() at', new Date().toISOString());
-                    renderDashboard();
-                    console.log('✅ renderDashboard() completed at', new Date().toISOString());
-                } else {
-                    console.log('📁 No data in portfolioStorage, checking plain localStorage...');
-                    // Fallback to old localStorage
-                    const stored = localStorage.getItem('portfolioData');
-                    if (stored) {
-                        console.log('📁 Found portfolioData in localStorage');
-                        const parsedData = JSON.parse(stored);
-                        window.logPortfolioDataChange('localStorage', parsedData);
-                        portfolioData = parsedData;
-                        console.log('📦 Parsed data:', portfolioData.holdings?.length || 0, 'holdings');
-                        console.log('🎯 About to call renderDashboard() at', new Date().toISOString());
-                        renderDashboard();
-                        console.log('✅ renderDashboard() completed at', new Date().toISOString());
-                    } else {
-                        console.log('❌ No data found in localStorage');
-                        // No data found - auto-load demo for first-time visitors
-                        const hasVisited = localStorage.getItem('mfhelper_visited');
-                        if (!hasVisited) {
-                            console.log('🎯 First-time visitor, redirecting to demo...');
-                            localStorage.setItem('mfhelper_visited', 'true');
-                            window.location.href = '/dashboard.html?mode=demo';
-                            return;
-                        }
-                        // Returning visitor with no data - show options
-                        console.log('👋 Returning visitor with no data, showing "get started" options');
-                        document.getElementById('dashboardContent').style.display = 'none';
-                        document.getElementById('noData').style.display = 'block';
-                    }
-                }
+            debugPanelAddEvent('auth', '🔑 Auth token found, loading from DB...');
+
+            // SECURITY: Purge any guest/demo portfolio data left over from a previous
+            // session or a different user. Authenticated users always load from the DB.
+            ['portfolioMode','portfolioLoadedAt','guestPortfolioData',
+             'demoPortfolioData','demoLoadedAt'].forEach(k => {
+                localStorage.removeItem(k);
+                sessionStorage.removeItem(k);
+            });
+
+            // Try to load from database (with one retry for fresh uploads)
+            let loadedFromDB = await loadPortfolioFromDatabase();
+            if (!loadedFromDB) {
+                console.log('🔄 First load returned no data, retrying after 1.5 seconds...');
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                loadedFromDB = await loadPortfolioFromDatabase();
             }
+            
+            if (loadedFromDB) {
+                console.log('✅ Portfolio loaded from database');
+                return;
+            }
+            
+            // No portfolio data found — redirect to upload page
+            console.log('📁 No portfolio data in database, redirecting to upload page...');
+            window.showToast?.('Upload your CAS statement to get started', 'info');
+            setTimeout(() => {
+                window.location.href = '/portfolio.html';
+            }, 1000);
         });
-        
-        async function loadDemoPortfolio() {
-            try {
-                const response = await fetch('/api/demo/portfolio');
-                if (!response.ok) {
-                    throw new Error('Failed to load demo portfolio');
-                }
-                
-                const data = await response.json();
-                if (data.success && data.holdings && data.holdings.length > 0) {
-                    // Transform demo data to portfolio format
-                    console.log('🎯 Setting portfolioData to DEMO mode');
-                    portfolioData = {
-                        mode: 'demo',
-                        holdings: data.holdings.map(h => ({
-                            scheme_name: h.scheme_name,
-                            fund_name: h.scheme_name,
-                            scheme_code: h.scheme_code,
-                            category: h.category || 'Others',
-                            amc: h.amc || 'Unknown',
-                            invested: h.invested_amount,
-                            current_value: h.current_value,  // Use current_value to match calculateSummary
-                            gain: h.gain_loss,
-                            return_pct: h.gain_loss_percent,
-                            units: h.units,
-                            avg_cost: h.avg_cost,
-                            current_nav: h.current_nav
-                        })),
-                        summary: data.totals,
-                        uploadedAt: new Date().toISOString(),
-                        uploadedFileName: 'Demo Portfolio'
-                    };
-                    
-                    renderDashboard();
-                } else {
-                    throw new Error('No demo holdings found');
-                }
-            } catch (error) {
-                console.error('Error loading demo portfolio:', error);
-                document.getElementById('dashboardContent').style.display = 'none';
-                document.getElementById('noData').style.display = 'block';
-                window.showToast?.('Failed to load demo portfolio', 'error');
-            }
-        }
-        
-        // Function to load demo portfolio and redirect
-        function loadDemoAndRedirect() {
-            window.location.href = '/dashboard.html?mode=demo';
-        }
         
         async function loadPortfolioFromDatabase() {
             try {
@@ -2398,7 +2224,7 @@
             try {
                 const resp = await fetch('/api/ai/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer demo-token` },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('authToken') || ''}` },
                     body: JSON.stringify({ message })
                 });
                 if (!resp.ok) throw new Error('AI chat failed');
