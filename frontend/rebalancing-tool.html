@@ -440,6 +440,32 @@
             font-weight: 600;
         }
 
+        @media (max-width: 968px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--white);
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+                z-index: 999;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -1084,6 +1110,12 @@
 
         // Load portfolio on page load
         document.addEventListener('DOMContentLoaded', loadPortfolio);
+
+        // Mobile navigation toggle
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            if (navMenu) navMenu.classList.toggle('active');
+        }
     </script>
 </body>
 </html>

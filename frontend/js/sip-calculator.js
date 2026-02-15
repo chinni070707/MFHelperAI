@@ -735,17 +735,17 @@ function plotGrowthChart(regularSIP, stepUpSIP, scenarios) {
         },
         xaxis: {
             title: 'Investment Period',
-            gridcolor: '#2D3748',
-            color: '#9CA3AF'
+            gridcolor: '#E5E7EB',
+            color: '#6B7280'
         },
         yaxis: {
-            title: 'Amount (₹)',
-            gridcolor: '#2D3748',
-            color: '#9CA3AF'
+            title: 'Amount (Rs.)',
+            gridcolor: '#E5E7EB',
+            color: '#6B7280'
         },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#FFFFFF' },
+        font: { color: '#111827' },
         hovermode: 'x unified',
         margin: { t: 20, b: 80, l: 80, r: 20 }
     };
@@ -805,17 +805,17 @@ function plotGoalChart(data) {
         },
         xaxis: {
             title: 'Years',
-            gridcolor: '#2D3748',
-            color: '#9CA3AF'
+            gridcolor: '#E5E7EB',
+            color: '#6B7280'
         },
         yaxis: {
-            title: 'Amount (₹)',
-            gridcolor: '#2D3748',
-            color: '#9CA3AF'
+            title: 'Amount (Rs.)',
+            gridcolor: '#E5E7EB',
+            color: '#6B7280'
         },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#FFFFFF' },
+        font: { color: '#111827' },
         margin: { t: 20, b: 80, l: 80, r: 20 }
     };
 
@@ -877,17 +877,17 @@ function plotRetirementChart(data) {
         },
         xaxis: {
             title: 'Age (Years)',
-            gridcolor: '#2D3748',
-            color: '#9CA3AF'
+            gridcolor: '#E5E7EB',
+            color: '#6B7280'
         },
         yaxis: {
-            title: 'Amount (₹)',
-            gridcolor: '#2D3748',
-            color: '#9CA3AF'
+            title: 'Amount (Rs.)',
+            gridcolor: '#E5E7EB',
+            color: '#6B7280'
         },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        font: { color: '#FFFFFF' },
+        font: { color: '#111827' },
         hovermode: 'x unified',
         margin: { t: 20, b: 80, l: 80, r: 20 }
     };

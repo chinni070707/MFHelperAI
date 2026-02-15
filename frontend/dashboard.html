@@ -922,12 +922,13 @@
                 <div class="xirr-value" id="portfolio-xirr">-- %</div>
                 <div class="card-sub">Internal Rate of Return (annualized)</div>
                 <div class="compare-box">
-                    <label style="font-size:0.9rem;">Portfolio ID: <input type="number" id="portfolio-id-input" style="width:120px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);"></label>
-                    <div style="margin-top:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                        <label style="font-size:0.85rem;">Large %: <input id="large-rate" type="number" step="0.01" value="12" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
-                        <label style="font-size:0.85rem;">Mid %: <input id="mid-rate" type="number" step="0.01" value="14" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
-                        <label style="font-size:0.85rem;">Small %: <input id="small-rate" type="number" step="0.01" value="16" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
-                        <button class="btn btn-secondary" id="fetch-xirr-btn">Fetch XIRR & Compare</button>
+                    <!-- Portfolio ID hidden from user — auto-populated from loaded portfolio -->
+                    <input type="hidden" id="portfolio-id-input">
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                        <label style="font-size:0.85rem; color:var(--text-secondary);">Large %: <input id="large-rate" type="number" step="0.01" value="12" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
+                        <label style="font-size:0.85rem; color:var(--text-secondary);">Mid %: <input id="mid-rate" type="number" step="0.01" value="14" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
+                        <label style="font-size:0.85rem; color:var(--text-secondary);">Small %: <input id="small-rate" type="number" step="0.01" value="16" style="width:70px; margin-left:6px; padding:6px; border:1px solid var(--gray-200); border-radius:6px; background:white; color:var(--text-primary);">%</label>
+                        <button class="btn btn-secondary" id="fetch-xirr-btn">Recalculate</button>
                     </div>
                     <div id="compare-results" style="margin-top:10px; font-size:0.9rem; color:#cbd5e1;"></div>
                 </div>
@@ -2344,6 +2345,13 @@
             const pidInput = document.getElementById('portfolio-id-input');
             if (!pidInput) return;
 
+            // First try to read from already-loaded portfolioData
+            if (portfolioData && portfolioData.portfolio_id) {
+                pidInput.value = portfolioData.portfolio_id;
+                fetchXirrAndCompare();
+                return;
+            }
+
             const headers = { 'Content-Type': 'application/json' };
             const token = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
             if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -2353,9 +2361,10 @@
                 if (resp.ok) {
                     const data = await resp.json();
                     pidInput.value = data.id;
+                    fetchXirrAndCompare();
                 }
             } catch (e) {
-                // Silent fail — user can enter manually
+                // Silent fail
             }
         }
 
@@ -3240,6 +3249,19 @@
                 section.style.display = 'block';
             } catch (e) {
                 console.warn('Health score load failed:', e);
+                // Show section with a graceful unavailable state instead of hiding it
+                section.style.display = 'block';
+                document.getElementById('healthScoreBadge').textContent = '--';
+                const gradeBadge = document.getElementById('healthGradeBadge');
+                if (gradeBadge) { gradeBadge.textContent = ''; }
+                const compEl = document.getElementById('healthComponents');
+                if (compEl) {
+                    compEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--text-secondary,#6b7280);font-size:0.85rem;">
+                        Health score unavailable &mdash; <a href="#" onclick="location.reload();return false;" style="color:var(--primary-green,#7FC04C);">try refreshing</a>
+                    </div>`;
+                }
+                const actEl = document.getElementById('healthActions');
+                if (actEl) { actEl.innerHTML = ''; }
             }
         }
 
