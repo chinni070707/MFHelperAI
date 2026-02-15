@@ -13,76 +13,67 @@ services:
     buildCommand: |
       echo "Running production cleanup..."
       chmod +x ../scripts/cleanup-production.sh
-      bash ../scripts/cleanup-production.sh || echo "⚠️ Cleanup script not found (non-blocking)"
+      bash ../scripts/cleanup-production.sh || echo "Warning: Cleanup script not found (non-blocking)"
       echo "Installing Python dependencies..."
       pip install -r requirements.txt
       echo "Running database migrations..."
       cd .. && PYTHONPATH=backend python -m alembic upgrade head
       cd backend
       echo "Running database tests..."
-      python test_db_connection.py || echo "⚠️ Warning: Database test failed (non-blocking)"
+      python test_db_connection.py || echo "Warning: Database test failed (non-blocking)"
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
-    
+
     # Health check endpoint
     healthCheckPath: /health
-    
+
     # Environment Variables
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.9"
-      
+
       - key: DEBUG
         value: "false"
-      
+
+      # DATABASE_URL is injected automatically from the PostgreSQL database below
+      # via the fromDatabase reference. Do NOT set a sqlite:// value here in production.
       - key: DATABASE_URL
-        value: "sqlite:///./mfhelper.db"  # Will be replaced with PostgreSQL after DB creation
-      
+        fromDatabase:
+          name: mfhelper-db
+          property: connectionString
+
       - key: SECRET_KEY
         generateValue: true  # Render generates secure random value
-      
+
       - key: JWT_SECRET_KEY
         generateValue: true  # Render generates secure random value
-      
-      # Redis disabled for now
-      # - key: REDIS_URL
-      #   fromService:
-      #     type: redis
-      #     name: mfhelper-redis
-      #     property: connectionString
-      
+
       # AI Configuration (Disabled by default on Render)
       - key: AI_ENABLED
         value: "false"
-      
+
       - key: AI_TYPE
         value: "ollama"
-      
-      # Optional: Add your API keys here or via Render Dashboard
+
+      # Optional: Set these in Render Dashboard -> Environment
       - key: CAMS_API_KEY
-        sync: false  # Set this in Render Dashboard
-      
+        sync: false
+
       - key: KFINTECH_API_KEY
-        sync: false  # Set this in Render Dashboard
-      
+        sync: false
+
       - key: SENTRY_DSN
-        sync: false  # Optional: For error tracking
-    
+        sync: false
+
     # Auto-deploy on push to main branch
     autoDeploy: true
 
-  # Redis Cache - DISABLED (create database first)
-  # Uncomment after creating a PostgreSQL database
-  # - type: redis
-  #   name: mfhelper-redis
-  #   region: singapore
-  #   plan: free
-  #   maxmemoryPolicy: allkeys-lru
-  #   ipAllowList: []
-
-# PostgreSQL Database - DISABLED (uncomment to create)
-# First deploy with SQLite, then add PostgreSQL later
-# databases:
-#   - name: mfhelper-db
-#     databaseName: mfhelper
-#     user: mfhelper
-#     plan: free
+# PostgreSQL Database (persistent, survives deploys, user-isolated)
+# REPLACES the previous SQLite setup which used ephemeral disk storage.
+# SQLite on Render's ephemeral disk was wiped on every deploy, causing all
+# portfolio integer IDs to reset and users to see each other's data.
+databases:
+  - name: mfhelper-db
+    databaseName: mfhelper
+    user: mfhelper
+    plan: free
+    region: singapore

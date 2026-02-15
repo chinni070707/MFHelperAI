@@ -20,8 +20,11 @@ async def get_portfolio_xirr(portfolio_id: int, db: Session = Depends(get_db), c
     if not portfolio:
         raise HTTPException(status_code=404, detail="Portfolio not found")
 
-    # Fetch holdings for portfolio
-    holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio_id).all()
+    # Fetch holdings — always filter by user_id as defense-in-depth
+    holdings = db.query(Holding).filter(
+        Holding.portfolio_id == portfolio_id,
+        Holding.user_id == current_user.id
+    ).all()
     holding_ids = [h.id for h in holdings]
 
     # Fetch transactions for these holdings

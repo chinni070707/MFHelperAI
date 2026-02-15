@@ -202,8 +202,11 @@ async def compare_index(portfolio_id: int, large_rate: float = 0.12, mid_rate: f
     if not portfolio:
         raise HTTPException(status_code=404, detail="Portfolio not found")
 
-    # Fetch holdings and transactions
-    holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio_id).all()
+    # Fetch holdings — always filter by user_id as defense-in-depth
+    holdings = db.query(Holding).filter(
+        Holding.portfolio_id == portfolio_id,
+        Holding.user_id == current_user.id
+    ).all()
     holding_ids = [h.id for h in holdings]
     transactions = db.query(Transaction).filter(Transaction.holding_id.in_(holding_ids)).order_by(Transaction.transaction_date).all()
 
