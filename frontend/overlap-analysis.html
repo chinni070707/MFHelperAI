@@ -643,11 +643,13 @@
             border: 1px solid var(--border-color);
             overflow-x: auto;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 600px;
         }
 
         thead {
@@ -659,6 +661,7 @@
             text-align: left;
             font-weight: 600;
             border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
         }
 
         td {
@@ -668,6 +671,37 @@
 
         tr:hover {
             background: var(--bg-card-hover);
+        }
+
+        /* Mobile optimizations for table */
+        @media (max-width: 768px) {
+            .overlap-table {
+                padding: 16px;
+                border-radius: 8px;
+            }
+            
+            table {
+                min-width: 500px;
+                font-size: 13px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+            }
+            
+            /* Sticky first column when scrolling horizontally */
+            th:first-child, td:first-child {
+                position: sticky;
+                left: 0;
+                background: var(--bg-card);
+                z-index: 1;
+                box-shadow: 2px 0 4px rgba(0,0,0,0.05);
+            }
+            
+            thead th:first-child {
+                background: var(--bg-dark);
+                z-index: 2;
+            }
         }
 
         .stock-badge {
@@ -1136,6 +1170,9 @@
                     <!-- Insights will be added here -->
                 </div>
             </div>
+
+            <!-- Recommended Actions Panel -->
+            <div id="recommendedActionsPanel" style="display:none;margin-bottom:24px;"></div>
 
             <!-- Overlapping Stocks Table -->
             <div class="overlap-table">
@@ -1607,6 +1644,9 @@
             // Render stocks table with per-fund weight columns
             renderStocksTable(data.top_overlapping_stocks, data.fund_names);
 
+            // Render recommended actions
+            renderRecommendedActions(data);
+
             // Show results
             document.getElementById('results').classList.add('shown');
         }
@@ -1770,6 +1810,10 @@
                     sort: false
                 }];
 
+                // Get container width for proper sizing
+                const container = document.getElementById(`pieChart_${idx}`);
+                const containerWidth = container ? container.clientWidth : 300;
+
                 const layout = {
                     showlegend: false,          // Plotly legend off; HTML legend below
                     paper_bgcolor: 'rgba(0,0,0,0)',
@@ -1777,7 +1821,8 @@
                     font: { color: '#212529', size: 11 },
                     margin: { t: 5, b: 5, l: 5, r: 5 },   // symmetric, donut fills width
                     height: 240,                            // shorter; HTML legend below
-                    autosize: true
+                    width: containerWidth,
+                    autosize: false
                 };
 
                 const config = { 
@@ -1786,7 +1831,10 @@
                     staticPlot: false
                 };
 
-                Plotly.newPlot(`pieChart_${idx}`, data, layout, config);
+                Plotly.newPlot(`pieChart_${idx}`, data, layout, config).then(() => {
+                    // Force immediate resize after plot is created
+                    Plotly.Plots.resize(`pieChart_${idx}`);
+                });
 
                 // Build HTML legend from same sectors + colors used by the chart
                 const legendEl = document.getElementById(`legend_${idx}`);
@@ -1802,9 +1850,13 @@
                     }).join('');
                 }
 
-                // Force resize after plot
+                // Handle window resize with debounce
+                let resizeTimeout;
                 window.addEventListener('resize', () => {
-                    Plotly.Plots.resize(`pieChart_${idx}`);
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        Plotly.Plots.resize(`pieChart_${idx}`);
+                    }, 100);
                 });
             });
         }
@@ -1860,15 +1912,37 @@
                 hovertemplate: '%{y} vs %{x}: %{z}% overlap<extra></extra>'
             }];
 
+            // Responsive margins based on screen size
+            const isMobile = window.innerWidth <= 768;
+            const marginLeft = isMobile ? Math.min(80, n * 20) : 150;
+            const marginBottom = isMobile ? Math.min(60, n * 15) : 100;
+            const marginRight = isMobile ? 40 : 60;
+            const fontSize = isMobile ? 9 : 12;
+            
             const layout = {
                 paper_bgcolor: 'rgba(0,0,0,0)',
                 plot_bgcolor: 'rgba(0,0,0,0)',
-                font: { color: '#212529' },
-                xaxis: { tickangle: -30, automargin: true, side: 'bottom' },
-                yaxis: { automargin: true, autorange: 'reversed' },
-                annotations: annotations,
-                margin: { l: 150, r: 60, t: 20, b: 100 },
-                height: Math.max(350, n * 60 + 150)
+                font: { color: '#212529', size: fontSize },
+                xaxis: { 
+                    tickangle: -30, 
+                    automargin: true, 
+                    side: 'bottom',
+                    tickfont: { size: fontSize }
+                },
+                yaxis: { 
+                    automargin: true, 
+                    autorange: 'reversed',
+                    tickfont: { size: fontSize }
+                },
+                annotations: annotations.map(ann => ({
+                    ...ann,
+                    font: { 
+                        color: ann.font.color, 
+                        size: fontSize 
+                    }
+                })),
+                margin: { l: marginLeft, r: marginRight, t: 20, b: marginBottom },
+                height: Math.max(isMobile ? 300 : 350, n * (isMobile ? 50 : 60) + 150)
             };
 
             Plotly.newPlot('heatmapChart', data, layout, { responsive: true, displayModeBar: false });
@@ -1936,6 +2010,107 @@
                     ${weightCells}
                 </tr>`;
             }).join('');
+        }
+
+        // -----------------------------------------------------------------------
+        // Recommended Actions Panel
+        // -----------------------------------------------------------------------
+        function renderRecommendedActions(data) {
+            const panel = document.getElementById('recommendedActionsPanel');
+            if (!panel) return;
+
+            const overlapRatio   = parseFloat(data.overlap_ratio) || 0;
+            const divScore       = parseFloat(data.diversification_score) || 0;
+            const topStocks      = data.top_overlapping_stocks || [];
+            const pairwise       = data.pairwise_overlap || {};
+            const fundNames      = data.fund_names || [];
+
+            let actions = [];
+
+            // 1. High pairwise overlap pairs
+            const highPairs = [];
+            Object.entries(pairwise).forEach(([key, val]) => {
+                if (typeof val === 'number' && val >= 40) {
+                    highPairs.push({ pair: key, pct: val });
+                }
+            });
+            highPairs.sort((a, b) => b.pct - a.pct);
+            highPairs.slice(0, 2).forEach(hp => {
+                const names = hp.pair.replace(/_/g, ' ').split(' vs ');
+                actions.push({
+                    severity: 'high',
+                    icon: '&#9888;',
+                    color: '#ef4444',
+                    bg: 'rgba(239,68,68,0.08)',
+                    border: 'rgba(239,68,68,0.25)',
+                    text: `${hp.pct.toFixed(0)}% overlap between two funds in your selection. These funds hold many of the same stocks — owning both adds little diversification.`,
+                    cta: 'Consider replacing one with a Mid Cap or Small Cap fund',
+                    link: '/rebalancing-tool.html'
+                });
+            });
+
+            // 2. Top 3 most widespread stocks
+            const widespreadStocks = topStocks.filter(s => s.appears_in >= 3).slice(0, 3);
+            if (widespreadStocks.length > 0) {
+                const names = widespreadStocks.map(s => s.stock).join(', ');
+                actions.push({
+                    severity: 'medium',
+                    icon: '&#9642;',
+                    color: '#f59e0b',
+                    bg: 'rgba(245,158,11,0.08)',
+                    border: 'rgba(245,158,11,0.25)',
+                    text: `${names} appear across 3+ of your funds. These stocks dominate your effective portfolio.`,
+                    cta: null,
+                    link: null
+                });
+            }
+
+            // 3. Good diversification — positive message
+            if (divScore >= 70 && highPairs.length === 0) {
+                actions.push({
+                    severity: 'low',
+                    icon: '&#10003;',
+                    color: '#22c55e',
+                    bg: 'rgba(34,197,94,0.08)',
+                    border: 'rgba(34,197,94,0.25)',
+                    text: `Diversification score is ${divScore}. Your fund selection is reasonably well-diversified with minimal overlap.`,
+                    cta: null,
+                    link: null
+                });
+            }
+
+            // 4. Low overall diversification
+            if (divScore < 50) {
+                actions.push({
+                    severity: 'high',
+                    icon: '&#9888;',
+                    color: '#ef4444',
+                    bg: 'rgba(239,68,68,0.08)',
+                    border: 'rgba(239,68,68,0.25)',
+                    text: `Overall diversification score is only ${divScore}/100. Your funds are highly correlated — a market fall will hit all of them equally.`,
+                    cta: 'Rebalance or add uncorrelated asset classes',
+                    link: '/rebalancing-tool.html'
+                });
+            }
+
+            if (actions.length === 0) return;
+
+            let html = `<div style="background:#fff;border:1px solid var(--gray-200,#e5e7eb);border-radius:12px;padding:16px 20px;">`;
+            html += `<div style="font-weight:700;font-size:0.95rem;margin-bottom:12px;">Recommended Actions</div>`;
+            html += `<div style="display:flex;flex-direction:column;gap:10px;">`;
+            actions.forEach(a => {
+                html += `<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:${a.bg};border:1px solid ${a.border};border-radius:8px;">`;
+                html += `<span style="color:${a.color};font-size:1.1rem;flex-shrink:0;margin-top:1px;">${a.icon}</span>`;
+                html += `<div style="flex:1;min-width:0;">`;
+                html += `<div style="font-size:0.83rem;color:var(--text-primary,#212529);">${a.text}</div>`;
+                if (a.cta && a.link) {
+                    html += `<a href="${a.link}" style="display:inline-block;margin-top:6px;font-size:0.78rem;font-weight:600;color:${a.color};text-decoration:none;">${a.cta} &rarr;</a>`;
+                }
+                html += `</div></div>`;
+            });
+            html += `</div></div>`;
+            panel.innerHTML = html;
+            panel.style.display = 'block';
         }
 
         // Initialize
