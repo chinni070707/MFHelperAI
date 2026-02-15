@@ -103,9 +103,10 @@ async def analyze_portfolio(
                 detail="Portfolio not found. Please upload your portfolio first."
             )
         
-        # Get holdings
+        # Get holdings — always include user_id as defense-in-depth
         holdings = db.query(Holding).filter(
-            Holding.portfolio_id == portfolio.id
+            Holding.portfolio_id == portfolio.id,
+            Holding.user_id == current_user.id
         ).all()
         
         if not holdings:
@@ -176,7 +177,8 @@ async def chat_with_ai(
         portfolio_data = None
         if portfolio:
             holdings = db.query(Holding).filter(
-                Holding.portfolio_id == portfolio.id
+                Holding.portfolio_id == portfolio.id,
+                Holding.user_id == current_user.id
             ).all()
             
             portfolio_data = {

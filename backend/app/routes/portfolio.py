@@ -51,11 +51,12 @@ async def get_portfolio(
             "message": "No portfolio data. Please upload Excel or CAS."
         }
     
-    # Get holdings for this portfolio
+    # Get holdings for this portfolio — always include user_id as defense-in-depth
     holdings = db.query(Holding).filter(
-        Holding.portfolio_id == portfolio.id
+        Holding.portfolio_id == portfolio.id,
+        Holding.user_id == current_user.id
     ).all()
-    
+
     # Format response
     summary = {
         "total_invested": portfolio.total_invested,
@@ -119,11 +120,12 @@ async def get_cas_import_summary(
             "message": "No portfolio data found. Please upload a CAS PDF or Excel file."
         }
     
-    # Get holdings for this portfolio
+    # Get holdings for this portfolio — always include user_id as defense-in-depth
     holdings = db.query(Holding).filter(
-        Holding.portfolio_id == portfolio.id
+        Holding.portfolio_id == portfolio.id,
+        Holding.user_id == current_user.id
     ).all()
-    
+
     # Diagnostic info
     warnings = []
     funds_with_zero_invested = sum(1 for h in holdings if not h.invested_amount or h.invested_amount == 0)
@@ -356,8 +358,11 @@ async def get_holdings(
     if not portfolio:
         return []
     
-    holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio.id).all()
-    
+    holdings = db.query(Holding).filter(
+        Holding.portfolio_id == portfolio.id,
+        Holding.user_id == current_user.id
+    ).all()
+
     return [
         {
             "fund_name": h.fund_name,
@@ -410,7 +415,10 @@ async def get_portfolio_history(
     
     result = []
     for p in portfolios:
-        holdings_count = db.query(Holding).filter(Holding.portfolio_id == p.id).count()
+        holdings_count = db.query(Holding).filter(
+            Holding.portfolio_id == p.id,
+            Holding.user_id == current_user.id
+        ).count()
         result.append({
             "id": p.id,
             "name": p.name,
@@ -446,9 +454,10 @@ async def get_portfolio_snapshot(
         raise HTTPException(status_code=404, detail="Portfolio snapshot not found")
     
     holdings = db.query(Holding).filter(
-        Holding.portfolio_id == portfolio.id
+        Holding.portfolio_id == portfolio.id,
+        Holding.user_id == current_user.id
     ).all()
-    
+
     # Check if this is the latest
     latest = db.query(Portfolio).filter(
         Portfolio.user_id == current_user.id

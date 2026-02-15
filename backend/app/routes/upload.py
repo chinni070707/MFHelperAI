@@ -1163,9 +1163,15 @@ async def upload_cas(
                 import_summary['saved_to_database'] = True
                 import_summary['portfolio_id'] = portfolio.id
                 
-                # Verify data was actually saved by reading it back
-                saved_portfolio = db.query(Portfolio).filter(Portfolio.id == portfolio.id).first()
-                saved_holdings = db.query(Holding).filter(Holding.portfolio_id == portfolio.id).all()
+                # Verify data was actually saved by reading it back (always filter by user_id)
+                saved_portfolio = db.query(Portfolio).filter(
+                    Portfolio.id == portfolio.id,
+                    Portfolio.user_id == current_user.id
+                ).first()
+                saved_holdings = db.query(Holding).filter(
+                    Holding.portfolio_id == portfolio.id,
+                    Holding.user_id == current_user.id
+                ).all()
                 import_summary['verification'] = {
                     'portfolio_found': saved_portfolio is not None,
                     'portfolio_total_invested': saved_portfolio.total_invested if saved_portfolio else 0,
