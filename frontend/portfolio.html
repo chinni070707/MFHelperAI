@@ -1000,7 +1000,18 @@
                         <div class="success-icon">✅</div>
                         <h4>Portfolio Imported Successfully!</h4>
                         <p>Your holdings have been imported. Head to the dashboard to see your analysis.</p>
-                        <a href="/dashboard.html" class="cta-button">View Dashboard →</a>
+                        <a href="/dashboard.html" class="cta-button">View Dashboard &rarr;</a>
+                    </div>
+
+                    <!-- Smart Insights Card (shown after upload) -->
+                    <div id="smartInsightsCard" style="display:none;margin-top:16px;text-align:left;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+                        <div style="font-weight:700;font-size:0.92rem;margin-bottom:10px;color:#212529;">Quick Portfolio Insights</div>
+                        <div id="smartInsightsList" style="display:flex;flex-direction:column;gap:7px;font-size:0.82rem;"></div>
+                        <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">
+                            <a href="/rebalancing-tool.html" style="padding:6px 14px;background:#7FC04C;color:#fff;border-radius:6px;font-size:0.78rem;font-weight:600;text-decoration:none;">Rebalance Now</a>
+                            <a href="/overlap-analysis.html" style="padding:6px 14px;border:1px solid #7FC04C;color:#7FC04C;border-radius:6px;font-size:0.78rem;font-weight:600;text-decoration:none;">Check Overlap</a>
+                            <a href="/goal-planning.html" style="padding:6px 14px;border:1px solid #7FC04C;color:#7FC04C;border-radius:6px;font-size:0.78rem;font-weight:600;text-decoration:none;">Plan Goals</a>
+                        </div>
                     </div>
 
                     <div class="upload-actions" id="uploadActions">
@@ -1315,6 +1326,9 @@
                 document.getElementById('uploadActions').style.display = 'none';
                 document.getElementById('uploadSuccess').style.display = 'block';
                 document.getElementById('dashboardCta').classList.add('show');
+
+                // Render smart insights from upload result
+                _showSmartInsights(uploadResult);
 
                 // Populate CAS import summary in Portfolio Ready section
                 if (uploadResult.summary) {
@@ -1661,6 +1675,94 @@
                 menu.classList.remove('active');
             }
         });
+
+        // -----------------------------------------------------------------------
+        // Smart Insights after CAS upload
+        // -----------------------------------------------------------------------
+        function _showSmartInsights(result) {
+            const card    = document.getElementById('smartInsightsCard');
+            const listEl  = document.getElementById('smartInsightsList');
+            if (!card || !listEl) return;
+
+            const holdings = result.holdings || [];
+            const summary  = result.summary  || {};
+            if (holdings.length === 0) return;
+
+            const insights = [];
+
+            // 1. Cap allocation insight
+            const total = parseFloat(summary.total_current || 0);
+            if (total > 0) {
+                const largeCats = ['large cap', 'flexi cap', 'multi cap', 'large & mid', 'elss', 'focused'];
+                const midCats   = ['mid cap'];
+                const smallCats = ['small cap'];
+                let large = 0, mid = 0, small = 0;
+                holdings.forEach(h => {
+                    const v = parseFloat(h.current_value || 0);
+                    const c = (h.category || '').toLowerCase();
+                    if (largeCats.some(x => c.includes(x))) large += v;
+                    else if (midCats.some(x => c.includes(x))) mid += v;
+                    else if (smallCats.some(x => c.includes(x))) small += v;
+                });
+                const largePct  = large / total * 100;
+                const midPct    = mid   / total * 100;
+                const smallPct  = small / total * 100;
+
+                if (largePct > 65) {
+                    insights.push({ color: '#f59e0b', text: `${largePct.toFixed(0)}% in Large Cap — consider adding Mid Cap for better growth potential.` });
+                } else if (smallPct > 35) {
+                    insights.push({ color: '#ef4444', text: `${smallPct.toFixed(0)}% in Small Cap — high risk. Consider rebalancing toward Large Cap for stability.` });
+                } else {
+                    insights.push({ color: '#22c55e', text: `Allocation: Large ${largePct.toFixed(0)}% / Mid ${midPct.toFixed(0)}% / Small ${smallPct.toFixed(0)}% — reasonable diversification.` });
+                }
+            }
+
+            // 2. Best and worst performing fund
+            const fundsWithReturn = holdings.filter(h => parseFloat(h.invested || 0) > 0);
+            if (fundsWithReturn.length >= 2) {
+                const sorted = fundsWithReturn.slice().sort((a, b) => {
+                    const ra = (parseFloat(a.current_value || 0) - parseFloat(a.invested || 0)) / parseFloat(a.invested) * 100;
+                    const rb = (parseFloat(b.current_value || 0) - parseFloat(b.invested || 0)) / parseFloat(b.invested) * 100;
+                    return rb - ra;
+                });
+                const best  = sorted[0];
+                const worst = sorted[sorted.length - 1];
+                const bestRet  = (parseFloat(best.current_value || 0) - parseFloat(best.invested)) / parseFloat(best.invested) * 100;
+                const worstRet = (parseFloat(worst.current_value || 0) - parseFloat(worst.invested)) / parseFloat(worst.invested) * 100;
+                const bestName  = (best.fund_name  || '').substring(0, 35);
+                const worstName = (worst.fund_name || '').substring(0, 35);
+                insights.push({ color: '#22c55e', text: `Best performer: ${bestName} (+${bestRet.toFixed(1)}%)` });
+                if (worstRet < -5) {
+                    insights.push({ color: '#ef4444', text: `Laggard: ${worstName} (${worstRet.toFixed(1)}%) — consider tax-loss harvesting.` });
+                }
+            }
+
+            // 3. AMC concentration
+            const amcMap = {};
+            holdings.forEach(h => {
+                const amc = h.amc || 'Unknown';
+                amcMap[amc] = (amcMap[amc] || 0) + parseFloat(h.current_value || 0);
+            });
+            const sortedAmcs = Object.entries(amcMap).sort((a, b) => b[1] - a[1]);
+            if (sortedAmcs.length > 0 && total > 0) {
+                const topAmc = sortedAmcs[0];
+                const topPct = topAmc[1] / total * 100;
+                if (topPct > 45) {
+                    insights.push({ color: '#f59e0b', text: `${topPct.toFixed(0)}% with ${topAmc[0]} — high AMC concentration. Consider diversifying across fund houses.` });
+                }
+            }
+
+            if (insights.length === 0) return;
+
+            listEl.innerHTML = insights.map(i => `
+                <div style="display:flex;gap:8px;align-items:flex-start;">
+                    <span style="color:${i.color};flex-shrink:0;font-size:1rem;line-height:1.4;">&#9658;</span>
+                    <span style="color:#374151;">${i.text}</span>
+                </div>
+            `).join('');
+
+            card.style.display = 'block';
+        }
     </script>
 </body>
 </html>

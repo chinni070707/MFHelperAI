@@ -1427,18 +1427,27 @@
 
         // Populate AMC dropdown with unique AMCs
         function populateAMCDropdown() {
-            const amcSet = new Set();
+            const amcMap = new Map();
+            
+            // Count funds per AMC
             allFunds.forEach(fund => {
                 if (fund.amc) {
-                    amcSet.add(fund.amc);
+                    amcMap.set(fund.amc, (amcMap.get(fund.amc) || 0) + 1);
                 }
             });
             
-            uniqueAMCs = Array.from(amcSet).sort();
+            // Convert to sorted array
+            uniqueAMCs = Array.from(amcMap.keys()).sort();
             
+            // Build dropdown with fund counts
             const amcSelect = document.getElementById('amcSelect');
             amcSelect.innerHTML = '<option value="">-- Select a Fund House --</option>' +
-                uniqueAMCs.map(amc => `<option value="${amc}">${amc}</option>`).join('');
+                uniqueAMCs.map(amc => {
+                    const fundCount = amcMap.get(amc);
+                    return `<option value="${amc}">${amc} (${fundCount} ${fundCount === 1 ? 'fund' : 'funds'})</option>`;
+                }).join('');
+            
+            console.log(`Loaded ${uniqueAMCs.length} AMCs with ${allFunds.length} total funds`);
         }
 
         // Handle AMC selection

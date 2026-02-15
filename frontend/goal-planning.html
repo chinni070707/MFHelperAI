@@ -669,7 +669,142 @@
     <!-- Goal Planning React App (bundled locally via esbuild - no CDN required) -->
     <!-- Source: src/goal-planning.jsx | Build: cd frontend && npm run build:goals -->
     <script src="/js/goal-planning-bundle.js"></script>
-    
+
+    <!-- Portfolio Gap Check Panel (vanilla JS, loads after React bundle) -->
+    <div id="portfolioGapSection" style="max-width:1100px;margin:0 auto 40px;padding:0 1.5rem;display:none;">
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px 24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+                <div>
+                    <div style="font-weight:700;font-size:1rem;">Portfolio Gap Check</div>
+                    <div style="font-size:0.82rem;color:#6b7280;margin-top:2px;">See if your current portfolio will meet your goals</div>
+                </div>
+                <button onclick="_checkPortfolioGap()" style="padding:8px 18px;background:#7FC04C;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:0.85rem;">
+                    Check My Portfolio
+                </button>
+            </div>
+            <div id="portfolioGapResult"></div>
+        </div>
+    </div>
+
+    <script>
+        async function _checkPortfolioGap() {
+            const resultEl = document.getElementById('portfolioGapResult');
+            resultEl.innerHTML = '<div style="color:#6b7280;font-size:0.85rem;">Loading portfolio data...</div>';
+            document.getElementById('portfolioGapSection').style.display = 'block';
+
+            try {
+                const token = localStorage.getItem('authToken');
+                const headers = {};
+                if (token) headers['Authorization'] = 'Bearer ' + token;
+
+                // Fetch portfolio
+                let portfolioData = null;
+                if (token) {
+                    const r = await fetch('/api/portfolio/', { headers });
+                    if (r.ok) portfolioData = await r.json();
+                }
+                if (!portfolioData && typeof portfolioStorage !== 'undefined') {
+                    portfolioData = portfolioStorage.getGuestData();
+                }
+                if (!portfolioData || !portfolioData.summary) {
+                    resultEl.innerHTML = '<div style="color:#ef4444;font-size:0.85rem;">No portfolio found. Upload your CAS PDF on the <a href="/portfolio.html">Portfolio page</a> first.</div>';
+                    return;
+                }
+
+                const totalCurrent = parseFloat(portfolioData.summary.total_current || 0);
+                const xirr = parseFloat(portfolioData.summary.xirr || portfolioData.summary.return_pct || 12);
+                const pid  = portfolioData.portfolio_id;
+
+                // Try goal-checker API
+                const goals = [];
+                if (pid && token) {
+                    try {
+                        const gr = await fetch(`/api/goals/`, { headers });
+                        if (gr.ok) {
+                            const gd = await gr.json();
+                            if (Array.isArray(gd)) goals.push(...gd);
+                        }
+                    } catch(e) {}
+                }
+
+                // Build results
+                let html = '';
+
+                // Portfolio summary row
+                html += `<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px;padding:12px;background:#f9fafb;border-radius:8px;font-size:0.85rem;">`;
+                html += `<span><strong>Current Corpus:</strong> Rs.${(totalCurrent/100000).toFixed(2)}L</span>`;
+                html += `<span><strong>Portfolio XIRR:</strong> ${xirr.toFixed(1)}%</span>`;
+                html += `</div>`;
+
+                if (goals.length === 0) {
+                    // Generic projection without specific goals
+                    const yrs = [5, 10, 15, 20];
+                    html += '<div style="font-size:0.85rem;color:#6b7280;margin-bottom:8px;">Projected growth of your current corpus at ' + xirr.toFixed(1) + '% XIRR:</div>';
+                    html += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">';
+                    yrs.forEach(y => {
+                        const fv = totalCurrent * Math.pow(1 + xirr / 100, y);
+                        html += `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 14px;text-align:center;">
+                            <div style="font-weight:700;color:#16a34a;">Rs.${(fv/100000).toFixed(1)}L</div>
+                            <div style="font-size:0.75rem;color:#6b7280;">in ${y} years</div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                    html += '<div style="font-size:0.8rem;color:#6b7280;">Add goals in the planner above to see goal-specific gap analysis.</div>';
+                } else {
+                    // Show per-goal gap analysis
+                    html += '<div style="display:flex;flex-direction:column;gap:10px;">';
+                    goals.slice(0, 5).forEach(goal => {
+                        const targetAmt  = parseFloat(goal.target_amount || 0);
+                        const targetYrs  = Math.max(1, parseInt(goal.target_age || 60) - parseInt(goal.current_age || 35));
+                        const projFV     = totalCurrent * Math.pow(1 + xirr / 100, targetYrs);
+                        const gap        = targetAmt - projFV;
+                        const pctFunded  = targetAmt > 0 ? Math.min(100, projFV / targetAmt * 100) : 0;
+                        const onTrack    = gap <= 0;
+                        const statusColor = onTrack ? '#22c55e' : pctFunded >= 60 ? '#f59e0b' : '#ef4444';
+                        const statusText  = onTrack ? 'On Track' : pctFunded >= 60 ? 'Partial' : 'Needs Attention';
+
+                        const sipNeeded  = gap > 0 && targetYrs > 0
+                            ? Math.round((gap * xirr / 100 / 12) / (Math.pow(1 + xirr / 100 / 12, targetYrs * 12) - 1))
+                            : 0;
+
+                        html += `<div style="border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px;">`;
+                        html += `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">`;
+                        html += `<strong style="font-size:0.9rem;">${goal.name || 'Goal'}</strong>`;
+                        html += `<span style="background:${statusColor}22;border:1px solid ${statusColor}66;color:${statusColor};border-radius:12px;padding:2px 10px;font-size:0.75rem;font-weight:700;">${statusText}</span>`;
+                        html += `</div>`;
+                        // Progress bar
+                        html += `<div style="background:#e5e7eb;border-radius:4px;height:6px;margin-bottom:8px;overflow:hidden;">`;
+                        html += `<div style="height:100%;width:${pctFunded.toFixed(0)}%;background:${statusColor};border-radius:4px;"></div></div>`;
+                        html += `<div style="font-size:0.8rem;color:#6b7280;display:flex;flex-wrap:wrap;gap:10px;">`;
+                        html += `<span>Target: Rs.${(targetAmt/100000).toFixed(1)}L</span>`;
+                        html += `<span>Projected: Rs.${(projFV/100000).toFixed(1)}L (${pctFunded.toFixed(0)}% funded)</span>`;
+                        if (!onTrack && sipNeeded > 0) {
+                            html += `<span style="color:#ef4444;font-weight:600;">Top-up SIP needed: Rs.${(sipNeeded/1000).toFixed(1)}K/month</span>`;
+                        }
+                        html += `</div></div>`;
+                    });
+                    html += '</div>';
+                }
+
+                html += `<div style="margin-top:12px;font-size:0.78rem;color:#9ca3af;">Projections use your current corpus and XIRR. Adding monthly SIPs will improve the outcome.</div>`;
+                resultEl.innerHTML = html;
+            } catch(e) {
+                console.error('Gap check failed:', e);
+                resultEl.innerHTML = '<div style="color:#ef4444;font-size:0.85rem;">Could not load portfolio data. Please try again.</div>';
+            }
+        }
+
+        // Auto-show section if user is logged in and has portfolio
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    document.getElementById('portfolioGapSection').style.display = 'block';
+                }
+            }, 1500);
+        });
+    </script>
+
     <!-- Footer -->
     <div id="footer-placeholder"></div>
     <script src="/js/footer.js"></script>

@@ -683,6 +683,9 @@
                         <div><strong>Category:</strong> Fund classification helps compare apples to apples.</div>
                     </div>
                 </div>
+
+                <!-- Risk Verdict & CTA -->
+                <div id="riskVerdictPanel" style="display:none;margin-top:20px;"></div>
             </div>
         </div>
 
@@ -745,6 +748,7 @@
             renderRiskChart(holdings);
             renderRiskTable(holdings);
             loadAndRenderInsights(holdings);
+            renderRiskVerdict(holdings);
         }
 
         function renderMetrics(holdings) {
@@ -1056,6 +1060,95 @@
         function toggleMenu() {
             const navMenu = document.querySelector('.nav-menu');
             navMenu.classList.toggle('active');
+        }
+
+        // -----------------------------------------------------------------------
+        // Risk Verdict — plain-English interpretation + rebalancing CTA
+        // -----------------------------------------------------------------------
+        function renderRiskVerdict(holdings) {
+            const panel = document.getElementById('riskVerdictPanel');
+            if (!panel) return;
+
+            // Infer risk level from cap allocation
+            const total = holdings.reduce((s, h) => s + parseFloat(h.current_value || 0), 0);
+            if (total === 0) return;
+
+            let largePct = 0, midPct = 0, smallPct = 0;
+            const largeCats = ['large cap', 'flexi cap', 'multi cap', 'large & mid', 'elss', 'focused', 'contra'];
+            const midCats   = ['mid cap'];
+            const smallCats = ['small cap'];
+            holdings.forEach(h => {
+                const v   = parseFloat(h.current_value || 0);
+                const cat = (h.category || '').toLowerCase();
+                if (largeCats.some(c => cat.includes(c))) largePct += v;
+                else if (midCats.some(c => cat.includes(c))) midPct += v;
+                else if (smallCats.some(c => cat.includes(c))) smallPct += v;
+            });
+            largePct = total > 0 ? largePct / total * 100 : 0;
+            midPct   = total > 0 ? midPct   / total * 100 : 0;
+            smallPct = total > 0 ? smallPct / total * 100 : 0;
+
+            // Avg return
+            const returns = holdings.map(h => parseFloat(h.return_pct || h.gain_pct || 0)).filter(v => !isNaN(v));
+            const avgReturn = returns.length > 0 ? returns.reduce((a, b) => a + b, 0) / returns.length : 0;
+
+            // Determine risk level
+            let riskLevel = 'Moderate', riskColor = '#f59e0b', riskBg = 'rgba(245,158,11,0.08)';
+            if (smallPct > 30 || midPct > 50) { riskLevel = 'High'; riskColor = '#ef4444'; riskBg = 'rgba(239,68,68,0.08)'; }
+            else if (largePct > 70) { riskLevel = 'Low'; riskColor = '#22c55e'; riskBg = 'rgba(34,197,94,0.08)'; }
+
+            // Return quality
+            let returnQuality = 'Medium';
+            if (avgReturn > 15) returnQuality = 'High';
+            else if (avgReturn < 8) returnQuality = 'Low';
+
+            // Build interpretation items
+            const items = [];
+            if (smallPct > 30) {
+                items.push(`<strong>Small Cap is ${smallPct.toFixed(0)}% of your portfolio.</strong> Small caps are volatile — a 30%+ drawdown is possible in bear markets. If this concerns you, consider shifting some to Large Cap.`);
+            }
+            if (midPct > 40) {
+                items.push(`<strong>Mid Cap is ${midPct.toFixed(0)}% of your portfolio.</strong> Mid caps offer growth but with higher swings than large caps.`);
+            }
+            if (largePct > 70) {
+                items.push(`<strong>Large Cap is ${largePct.toFixed(0)}% of your portfolio.</strong> Your portfolio is conservative and stable. You may be leaving mid/small cap growth on the table.`);
+            }
+            if (riskLevel === 'High' && returnQuality !== 'High') {
+                items.push(`<strong>You are taking HIGH risk for ${returnQuality.toUpperCase()} returns.</strong> Consider rebalancing — more large cap allocation can improve risk-adjusted returns without sacrificing much upside.`);
+            }
+            if (riskLevel === 'Low' && returnQuality === 'Low') {
+                items.push(`<strong>Conservative allocation with below-average returns.</strong> Adding 10-20% Mid Cap could boost long-term performance without significantly increasing risk.`);
+            }
+
+            // Suggest rebalance target
+            let rebalanceTarget = '';
+            if (riskLevel === 'High') {
+                rebalanceTarget = encodeURIComponent(JSON.stringify({ large: 50, mid: 30, small: 20 }));
+            } else if (riskLevel === 'Low' && largePct > 70) {
+                rebalanceTarget = encodeURIComponent(JSON.stringify({ large: 50, mid: 30, small: 20 }));
+            }
+
+            let html = `<div style="background:${riskBg};border:1px solid ${riskColor}44;border-radius:10px;padding:16px 18px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">`;
+            html += `<strong style="font-size:0.95rem;">Risk vs Return Verdict</strong>`;
+            html += `<span style="background:${riskColor}22;border:1px solid ${riskColor}66;color:${riskColor};border-radius:12px;padding:3px 12px;font-size:0.8rem;font-weight:700;">${riskLevel} Risk — ${returnQuality} Returns</span>`;
+            html += `</div>`;
+
+            if (items.length > 0) {
+                html += `<div style="display:flex;flex-direction:column;gap:8px;font-size:0.83rem;color:var(--text-primary,#212529);">`;
+                items.forEach(item => {
+                    html += `<div style="display:flex;gap:8px;"><span style="color:${riskColor};flex-shrink:0;">&#9658;</span><span>${item}</span></div>`;
+                });
+                html += `</div>`;
+            }
+
+            html += `<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">`;
+            html += `<a href="/rebalancing-tool.html" style="padding:8px 16px;background:var(--primary-green,#7FC04C);color:#fff;border-radius:8px;font-size:0.82rem;font-weight:600;text-decoration:none;">Go to Rebalancing Tool</a>`;
+            html += `<a href="/overlap-analysis.html" style="padding:8px 16px;background:transparent;border:1px solid var(--primary-green,#7FC04C);color:var(--primary-green,#7FC04C);border-radius:8px;font-size:0.82rem;font-weight:600;text-decoration:none;">Check Fund Overlap</a>`;
+            html += `</div></div>`;
+
+            panel.innerHTML = html;
+            panel.style.display = 'block';
         }
 
         // Load portfolio on page load

@@ -461,6 +461,9 @@
                 </div>
             </div>
 
+            <!-- Overlap Warning Panel -->
+            <div id="overlapWarningPanel" style="display:none;margin-bottom:20px;"></div>
+
             <!-- Summary Insights -->
             <div class="chart-container">
                 <div class="chart-title">🏆 Performance Winners</div>
@@ -632,6 +635,9 @@
 
             // Render performance winners
             renderWinners(holdings);
+
+            // Async: check overlap between funds (non-blocking)
+            _checkFundOverlap(holdings);
         }
 
         function renderWinners(holdings) {
@@ -693,6 +699,69 @@
             }
 
             winnersDiv.innerHTML = html;
+        }
+
+        // -----------------------------------------------------------------------
+        // Overlap warning between portfolio funds
+        // -----------------------------------------------------------------------
+        async function _checkFundOverlap(holdings) {
+            const panel = document.getElementById('overlapWarningPanel');
+            if (!panel || holdings.length < 2) return;
+
+            try {
+                // Build fund keys from fund names (normalize: lowercase, spaces->underscores)
+                const fundKeys = holdings.map(h => {
+                    const name = (h.fund_name || '').toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+                    return name;
+                }).filter(Boolean);
+
+                if (fundKeys.length < 2) return;
+
+                const resp = await fetch('/api/overlap/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fund_keys: fundKeys, analysis_type: 'portfolio' })
+                });
+
+                if (!resp.ok) return;
+                const data = await resp.json();
+                if (data.status !== 'success') return;
+
+                const d = data.data || data;
+                const overlapRatio  = parseFloat(d.overlap_ratio || 0);
+                const divScore      = parseFloat(d.diversification_score || 0);
+                const topStocks     = (d.top_overlapping_stocks || []).slice(0, 5);
+
+                if (overlapRatio < 20 && divScore >= 70) return; // No warning needed
+
+                let bgColor = 'rgba(245,158,11,0.08)', borderColor = 'rgba(245,158,11,0.3)', iconColor = '#f59e0b';
+                if (overlapRatio >= 40) { bgColor = 'rgba(239,68,68,0.08)'; borderColor = 'rgba(239,68,68,0.25)'; iconColor = '#ef4444'; }
+
+                let html = `<div style="background:${bgColor};border:1px solid ${borderColor};border-radius:10px;padding:14px 18px;">`;
+                html += `<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">`;
+                html += `<strong style="font-size:0.92rem;color:${iconColor};">Overlap Alert — ${overlapRatio.toFixed(0)}% of stocks are shared</strong>`;
+                html += `<a href="/overlap-analysis.html" style="font-size:0.78rem;font-weight:600;color:${iconColor};text-decoration:none;">View Full Analysis &rarr;</a>`;
+                html += `</div>`;
+
+                if (topStocks.length > 0) {
+                    const stockNames = topStocks.map(s => s.stock).join(', ');
+                    html += `<div style="font-size:0.82rem;color:#6b7280;margin-bottom:6px;">Top common holdings: <strong>${stockNames}</strong></div>`;
+                }
+
+                html += `<div style="font-size:0.82rem;color:#6b7280;">`;
+                if (overlapRatio >= 40) {
+                    html += `High overlap means these funds behave similarly — owning both provides little extra diversification. `;
+                    html += `<a href="/overlap-analysis.html" style="color:${iconColor};font-weight:600;">Check if a different fund would diversify better.</a>`;
+                } else {
+                    html += `Moderate overlap detected. Diversification score: ${divScore}/100.`;
+                }
+                html += `</div></div>`;
+
+                panel.innerHTML = html;
+                panel.style.display = 'block';
+            } catch(e) {
+                console.warn('Overlap check failed:', e);
+            }
         }
 
         // Load portfolio on page load

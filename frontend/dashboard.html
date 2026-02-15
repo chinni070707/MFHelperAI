@@ -939,6 +939,26 @@
             </div>
         </div>
         
+        <!-- Portfolio Health Score Card -->
+        <div id="healthScoreSection" style="display:none;margin-bottom:24px;">
+            <div class="chart-container" style="padding:20px 24px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+                    <div>
+                        <div class="chart-title" style="margin-bottom:2px;">Portfolio Health Score</div>
+                        <div style="font-size:0.82rem;color:var(--text-secondary);">Based on diversification, risk, performance, allocation and cost</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:16px;">
+                        <div id="healthScoreBadge" style="font-size:2rem;font-weight:800;line-height:1;">--</div>
+                        <div id="healthGradeBadge" style="font-size:0.85rem;font-weight:700;padding:4px 12px;border-radius:20px;background:#e5e7eb;color:#374151;">--</div>
+                    </div>
+                </div>
+                <!-- Component bars -->
+                <div id="healthComponents" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px;"></div>
+                <!-- Action items -->
+                <div id="healthActions" style="margin-top:14px;"></div>
+            </div>
+        </div>
+
         <!-- Asset Class Allocation Chart -->
         <div class="chart-container" style="margin-bottom: 30px;">
             <div class="chart-title">🎯 Asset Class Allocation</div>
@@ -1637,7 +1657,11 @@
             renderPerformanceChart(holdings);
             renderRiskChart(holdings);
             renderHoldingsTable(holdings);
-            
+
+            // Load health score and benchmark comparison asynchronously
+            _loadPortfolioHealthScore();
+            _loadBenchmarkComparison();
+
             // Load portfolio history if authenticated
             const authToken = localStorage.getItem('authToken');
             if (authToken) {
@@ -3124,6 +3148,142 @@
             renderDebugEvents();
             updateDebugStatus();
         }
+        // -----------------------------------------------------------------------
+        // Portfolio Health Score (calls /api/ai/portfolio/analyze)
+        // -----------------------------------------------------------------------
+        async function _loadPortfolioHealthScore() {
+            const section = document.getElementById('healthScoreSection');
+            if (!section) return;
+            const token = localStorage.getItem('authToken');
+            if (!token || !portfolioData || !portfolioData.portfolio_id) return;
+
+            try {
+                const resp = await fetch('/api/ai/portfolio/analyze', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!resp.ok) return;
+                const data = await resp.json();
+
+                const score = data.health_score || data.overall_score || 0;
+                const grade = data.grade || data.health_grade || '';
+                const components = data.components || data.score_components || {};
+                const actions   = data.recommendations || data.action_items || data.insights || [];
+
+                // Colour by score
+                const scoreColor = score >= 75 ? '#22c55e' : score >= 50 ? '#f59e0b' : '#ef4444';
+                const gradeColors = { A: '#22c55e', B: '#84cc16', C: '#f59e0b', D: '#f97316', F: '#ef4444' };
+                const gradeColor = gradeColors[grade] || '#6b7280';
+
+                document.getElementById('healthScoreBadge').textContent = score + '/100';
+                document.getElementById('healthScoreBadge').style.color = scoreColor;
+
+                const gradeBadge = document.getElementById('healthGradeBadge');
+                gradeBadge.textContent = grade ? `Grade ${grade}` : '';
+                gradeBadge.style.background = gradeColor + '22';
+                gradeBadge.style.color = gradeColor;
+                gradeBadge.style.border = '1px solid ' + gradeColor + '66';
+
+                // Render component bars
+                const compLabels = {
+                    diversification: 'Diversification',
+                    risk: 'Risk',
+                    performance: 'Performance',
+                    allocation: 'Allocation',
+                    cost: 'Cost'
+                };
+                const compEl = document.getElementById('healthComponents');
+                let compHtml = '';
+                Object.entries(compLabels).forEach(([key, label]) => {
+                    const val = components[key] || 0;
+                    const col = val >= 75 ? '#22c55e' : val >= 50 ? '#f59e0b' : '#ef4444';
+                    compHtml += `<div style="background:var(--gray-100,#f3f4f6);border-radius:8px;padding:10px 12px;">
+                        <div style="display:flex;justify-content:space-between;font-size:0.75rem;font-weight:600;margin-bottom:5px;">
+                            <span style="color:var(--text-secondary,#6b7280);">${label}</span>
+                            <span style="color:${col};">${Math.round(val)}</span>
+                        </div>
+                        <div style="background:#e5e7eb;border-radius:4px;height:5px;overflow:hidden;">
+                            <div style="height:100%;width:${Math.min(100,val)}%;background:${col};border-radius:4px;transition:width 0.6s;"></div>
+                        </div>
+                    </div>`;
+                });
+                compEl.innerHTML = compHtml;
+
+                // Render top 3 action items
+                const actEl = document.getElementById('healthActions');
+                const topActions = Array.isArray(actions) ? actions.slice(0, 3) : [];
+                if (topActions.length > 0) {
+                    const actionLinks = {
+                        'rebalanc': '/rebalancing-tool.html',
+                        'overlap': '/overlap-analysis.html',
+                        'diversif': '/overlap-analysis.html',
+                        'risk': '/risk-analyzer.html',
+                        'goal': '/goal-planning.html'
+                    };
+                    let aHtml = '<div style="display:flex;flex-direction:column;gap:6px;">';
+                    topActions.forEach(a => {
+                        const text = typeof a === 'string' ? a : (a.message || a.text || JSON.stringify(a));
+                        let href = '#';
+                        const lower = text.toLowerCase();
+                        for (const [kw, url] of Object.entries(actionLinks)) {
+                            if (lower.includes(kw)) { href = url; break; }
+                        }
+                        aHtml += `<div style="display:flex;align-items:flex-start;gap:8px;font-size:0.82rem;color:var(--text-secondary,#6b7280);">
+                            <span style="color:#f59e0b;flex-shrink:0;margin-top:1px;">&#9654;</span>
+                            <span>${text}</span>
+                            ${href !== '#' ? `<a href="${href}" style="margin-left:auto;white-space:nowrap;font-size:0.75rem;color:var(--primary-green,#7FC04C);text-decoration:none;font-weight:600;">Fix &rarr;</a>` : ''}
+                        </div>`;
+                    });
+                    aHtml += '</div>';
+                    actEl.innerHTML = aHtml;
+                }
+
+                section.style.display = 'block';
+            } catch (e) {
+                console.warn('Health score load failed:', e);
+            }
+        }
+
+        // -----------------------------------------------------------------------
+        // XIRR vs Benchmark (calls /api/analytics/compare_index/{portfolio_id})
+        // -----------------------------------------------------------------------
+        async function _loadBenchmarkComparison() {
+            const compareEl = document.getElementById('compare-results');
+            if (!compareEl) return;
+            const token = localStorage.getItem('authToken');
+            const pid = portfolioData && portfolioData.portfolio_id;
+            if (!token || !pid) return;
+
+            try {
+                const resp = await fetch(`/api/analytics/compare_index/${pid}`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!resp.ok) return;
+                const data = await resp.json();
+
+                // Expected fields: portfolio_xirr, benchmark_xirr, benchmark_name, alpha
+                const pxirr = data.portfolio_xirr || data.xirr || 0;
+                const bxirr = data.benchmark_xirr || data.nifty50_xirr || data.index_return || 0;
+                const bname = data.benchmark_name || data.index_name || 'Nifty 50';
+                const alpha = pxirr - bxirr;
+
+                if (pxirr === 0 && bxirr === 0) return;
+
+                const alphaColor = alpha >= 0 ? '#22c55e' : '#ef4444';
+                const alphaText  = (alpha >= 0 ? '+' : '') + alpha.toFixed(1) + '% vs ' + bname;
+
+                compareEl.innerHTML = `
+                    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:4px;">
+                        <span>Your XIRR: <strong>${pxirr.toFixed(1)}%</strong></span>
+                        <span style="color:var(--text-secondary,#6b7280);">|</span>
+                        <span>${bname}: <strong>${bxirr.toFixed(1)}%</strong></span>
+                        <span style="background:${alphaColor}22;border:1px solid ${alphaColor}66;color:${alphaColor};
+                               border-radius:12px;padding:2px 10px;font-size:0.8rem;font-weight:700;">${alphaText}</span>
+                    </div>`;
+            } catch (e) {
+                console.warn('Benchmark comparison failed:', e);
+            }
+        }
+
         // Show debug panel only on localhost or ?debug=true
         if (window.MF_DEBUG) {
             document.addEventListener('DOMContentLoaded', () => {
