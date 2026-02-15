@@ -3,16 +3,13 @@ Blog Routes - Public blog endpoints for reading posts and managing content
 """
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, or_
-from typing import List, Optional
-from datetime import datetime
+from sqlalchemy import and_
+from typing import Optional
 import logging
 
 from app.database import get_db
-from app.models.models import User
 from app.models.blog import BlogPost, BlogCategory, BlogTag
 from app.services.blog_service import BlogService
-from app.utils.auth import get_current_user
 
 # Setup logger
 logger = logging.getLogger(__name__)

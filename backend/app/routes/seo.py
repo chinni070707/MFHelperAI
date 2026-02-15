@@ -4,7 +4,6 @@ SEO Routes - Sitemap, robots.txt, and SEO-related endpoints
 from fastapi import APIRouter, Response, Depends
 from sqlalchemy.orm import Session
 from datetime import datetime
-from typing import List
 import logging
 
 from app.database import get_db

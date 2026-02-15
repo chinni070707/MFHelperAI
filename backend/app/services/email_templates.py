@@ -2,7 +2,6 @@
 Email HTML Templates
 All email templates follow responsive design best practices
 """
-from typing import Optional
 
 # Base template wrapper
 def base_email_template(content: str) -> str:

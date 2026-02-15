@@ -3,7 +3,7 @@ AMC Name Extractor Service
 Extracts and validates Asset Management Company names from fund names.
 """
 
-from typing import Optional, Set
+from typing import Set
 
 class AmcExtractor:
     """Service for extracting and validating AMC names from mutual fund names."""

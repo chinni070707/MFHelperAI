@@ -2,21 +2,15 @@
 MFHelper - Blog Service Layer
 Handles blog post parsing, rendering, and related operations
 """
-import os
 import re
 import math
-from typing import List, Optional, Dict, Any
-from datetime import datetime
+from typing import List, Dict, Any
 from pathlib import Path
 
 import frontmatter
 import markdown
-from markdown.extensions.codehilite import CodeHiliteExtension
-from markdown.extensions.fenced_code import FencedCodeExtension
-from markdown.extensions.tables import TableExtension
-from markdown.extensions.toc import TocExtension
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, and_, func
+from sqlalchemy import or_, and_
 
 from app.models.blog import BlogPost, BlogCategory, BlogTag
 

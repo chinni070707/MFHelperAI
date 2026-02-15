@@ -2,15 +2,12 @@
 Email verification endpoints
 Handles OTP generation, verification, and email sending
 """
-from fastapi import APIRouter, HTTPException, Depends, BackgroundTasks
+from fastapi import APIRouter, HTTPException, BackgroundTasks
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-from sqlalchemy.orm import Session
 
 from app.services.email_service import email_service
 from app.services.otp_service import otp_service
-from app.database import get_db
-from app.models.models import User
 
 router = APIRouter(prefix="/api/email", tags=["email"])
 
@@ -158,7 +155,7 @@ async def send_feedback(
     """
     
     # Send confirmation email to user
-    result = await email_service.send_feedback_confirmation(
+    await email_service.send_feedback_confirmation(
         to=request.email,
         name=request.name,
         feedback_type=request.feedback_type
